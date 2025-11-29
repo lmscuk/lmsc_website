@@ -12,8 +12,8 @@ extra_head %}
   document.addEventListener("DOMContentLoaded", () => {
     $("#page-table").DataTable({
       pageLength: 25,
-      order: [[4, "desc"]],
-      columnDefs: [{ orderable: false, targets: [5] }],
+      order: [[5, "desc"]],
+      columnDefs: [{ orderable: false, targets: [6] }],
     });
   });
 </script>
@@ -46,6 +46,52 @@ extra_head %}
   </a>
 </header>
 
+{% if nav_stats %}
+<section class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <article class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+      Total Pages
+    </p>
+    <p class="mt-2 text-2xl font-bold text-slate-900">{{ nav_stats.total }}</p>
+    {% if nav_stats.nav_counts.hidden %}
+    <p class="mt-1 text-xs text-slate-500">
+      {{ nav_stats.nav_counts.hidden }} hidden/private pages.
+    </p>
+    {% endif %}
+  </article>
+  <article class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+      SEO Complete
+    </p>
+    <p class="mt-2 text-2xl font-bold text-emerald-700">
+      {{ nav_stats.meta_complete }}/{{ nav_stats.total }}
+    </p>
+    {% if nav_stats.meta_missing %}
+    <p class="mt-1 text-xs text-slate-500">
+      {{ nav_stats.meta_missing }} pages need metadata.
+    </p>
+    {% endif %}
+  </article>
+  <article class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+      In Navigation
+    </p>
+    <p class="mt-2 text-2xl font-bold text-primary">
+      {{ nav_stats.nav_visible }}
+      <span class="text-sm font-semibold text-slate-400">main/dropdown</span>
+    </p>
+  </article>
+  <article class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+      Footer Links
+    </p>
+    <p class="mt-2 text-2xl font-bold text-secondary">
+      {{ nav_stats.nav_footer }}
+    </p>
+  </article>
+</section>
+{% endif %}
+
 <section class="bg-white rounded-3xl border border-slate-100 shadow-sm">
   <div class="overflow-x-auto">
     <table
@@ -57,6 +103,7 @@ extra_head %}
       >
         <tr>
           <th class="px-6 py-3 text-left">Page</th>
+          <th class="px-6 py-3 text-left">SEO</th>
           <th class="px-6 py-3 text-left">Slug</th>
           <th class="px-6 py-3 text-left">Display</th>
           <th class="px-6 py-3 text-left">Template</th>
@@ -65,7 +112,8 @@ extra_head %}
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-200 bg-white">
-        {% for page in pages %}
+        {% for page in pages %} {% set view_url = page_urls.get(page['id']) or
+        url_for('render_dynamic_page', slug=page['slug']) %}
         <tr class="hover:bg-slate-50">
           <td class="px-6 py-4">
             <p class="font-semibold text-slate-900">{{ page['page_name'] }}</p>
@@ -77,12 +125,46 @@ extra_head %}
             <p class="text-xs text-slate-400 mt-1 line-clamp-2">
               {{ page['meta_description'] }}
             </p>
+            {% endif %} {% if page['id'] in meta_gaps %}
+            <p class="mt-2 text-xs font-semibold text-amber-600">
+              Complete SEO fields to improve indexing.
+            </p>
             {% endif %}
           </td>
           <td class="px-6 py-4">
-            <code class="rounded bg-slate-100 px-2 py-1 text-xs text-slate-600"
-              >{{ page['slug'] }}</code
+            <div class="flex flex-wrap gap-2">
+              {% set has_title = page['seo_title'] %} {% set has_description =
+              page['meta_description'] %}
+              <span
+                class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold {% if has_title %}border-emerald-200 bg-emerald-50 text-emerald-700{% else %}border-amber-200 bg-amber-50 text-amber-700{% endif %}"
+              >
+                <span
+                  class="h-2 w-2 rounded-full {% if has_title %}bg-emerald-500{% else %}bg-amber-500{% endif %}"
+                ></span>
+                Title
+              </span>
+              <span
+                class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold {% if has_description %}border-emerald-200 bg-emerald-50 text-emerald-700{% else %}border-amber-200 bg-amber-50 text-amber-700{% endif %}"
+              >
+                <span
+                  class="h-2 w-2 rounded-full {% if has_description %}bg-emerald-500{% else %}bg-amber-500{% endif %}"
+                ></span>
+                Description
+              </span>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <a
+              href="{{ view_url }}"
+              class="hover:text-primary"
+              target="_blank"
+              rel="noopener"
             >
+              <code
+                class="rounded bg-slate-100 px-2 py-1 text-xs text-slate-600"
+                >{{ page['slug'] }}</code
+              >
+            </a>
           </td>
           <td class="px-6 py-4">
             {% if page['nav_display'] == 'main' %}
@@ -94,6 +176,11 @@ extra_head %}
             <span
               class="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700"
               >Dropdown</span
+            >
+            {% elif page['nav_display'] == 'footer' %}
+            <span
+              class="inline-flex items-center rounded-full bg-lime-50 px-3 py-1 text-xs font-semibold text-lime-700"
+              >Footer</span
             >
             {% else %}
             <span
@@ -119,7 +206,7 @@ extra_head %}
           <td class="px-6 py-4">
             <div class="flex items-center gap-2">
               <a
-                href="{{ url_for('render_dynamic_page', slug=page['slug']) }}"
+                href="{{ view_url }}"
                 class="text-xs font-semibold text-primary hover:underline"
                 target="_blank"
                 rel="noopener"
@@ -147,7 +234,7 @@ extra_head %}
         </tr>
         {% else %}
         <tr>
-          <td colspan="6" class="px-6 py-8 text-center text-slate-500">
+          <td colspan="7" class="px-6 py-8 text-center text-slate-500">
             No managed pages yet. Create one to begin configuring SEO and
             navigation.
           </td>

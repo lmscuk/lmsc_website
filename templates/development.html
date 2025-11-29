@@ -1,8 +1,6 @@
-{% extends 'base.html' %}
-{% set meta = page_meta or {} %}
-{% block title %}{{ meta.get('seo_title') or 'Under Development | LMSC' }}{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% set meta = page_meta or {} %} {% block title %}{{
+meta.get('seo_title') or 'Under Development | LMSC' }}{% endblock %} {% block
+content %}
 <section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
   <div class="container mx-auto px-6">
     <div class="grid items-center gap-16 md:grid-cols-2 lg:gap-20">
@@ -47,9 +45,13 @@
             </div>
           </div>
           <div class="flex items-start gap-3 rounded-2xl bg-white/60 p-5">
-            <span class="text-primary"><i class="fas fa-envelope-open-text"></i></span>
+            <span class="text-primary"
+              ><i class="fas fa-envelope-open-text"></i
+            ></span>
             <div>
-              <p class="text-sm font-semibold text-primary">Need details now?</p>
+              <p class="text-sm font-semibold text-primary">
+                Need details now?
+              </p>
               <p class="text-sm text-gray-600">
                 Email us at
                 <a
@@ -73,7 +75,9 @@
           <div
             class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-xl"
           >
-            <div class="h-64 w-full bg-gradient-to-br from-primary/10 to-sky-100">
+            <div
+              class="h-64 w-full bg-gradient-to-br from-primary/10 to-sky-100"
+            >
               <img
                 src="{{ url_for('static', filename='Images/Image 7.jpg') }}"
                 alt="Team collaborating on new content"
@@ -81,7 +85,9 @@
               />
             </div>
             <div class="space-y-4 p-6">
-              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              <p
+                class="text-sm font-semibold uppercase tracking-[0.2em] text-primary"
+              >
                 Behind the scenes
               </p>
               <h2 class="text-xl font-semibold text-slate-900">
@@ -122,7 +128,9 @@
           </li>
           <li class="flex gap-3">
             <span class="text-primary font-bold">✓</span>
-            <span>Links to related information while the page is in progress</span>
+            <span
+              >Links to related information while the page is in progress</span
+            >
           </li>
           <li class="flex gap-3">
             <span class="text-primary font-bold">✓</span>

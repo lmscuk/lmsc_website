@@ -241,6 +241,44 @@
                       </li>
                     </ul>
                   </li>
+                  <li>
+                    <p
+                      class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400"
+                    >
+                      Insights
+                    </p>
+                    <ul
+                      role="list"
+                      class="-mx-2 mt-3 space-y-1 text-sm font-semibold"
+                    >
+                      <li>
+                        <a
+                          href="{{ url_for('admin_analytics') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint == 'admin_analytics' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M4 19h16M7 16v-5m5 5V8m5 8V6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Site Analytics
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <li class="mt-auto -mx-2">
                     <div class="rounded-md bg-slate-50 p-3">
                       <p class="text-xs text-slate-500">Signed in as</p>
@@ -429,6 +467,41 @@
                       </svg>
                     </span>
                     Policy Management
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p
+                class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400"
+              >
+                Insights
+              </p>
+              <ul role="list" class="-mx-2 mt-3 space-y-1">
+                <li>
+                  <a
+                    href="{{ url_for('admin_analytics') }}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint == 'admin_analytics' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          d="M4 19h16M7 16v-5m5 5V8m5 8V6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    Site Analytics
                   </a>
                 </li>
               </ul>

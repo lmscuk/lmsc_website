@@ -1,3 +1,4 @@
+import hashlib
 import os
 import re
 import sqlite3
@@ -5,9 +6,10 @@ from collections.abc import Sequence
 from datetime import datetime, timedelta
 from functools import wraps
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 from flask import (Flask, flash, g, redirect, render_template, request,
-                   session, url_for)
+                   send_from_directory, session, url_for)
 from flask_mail import Mail, Message
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
@@ -29,7 +31,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "nav_display": "hidden",
         "seo_title": "London Maths & Science College | Specialist STEM Sixth Form",
         "meta_description": (
-            "Discover London Maths & Science College, a specialist 16–19 STEM sixth form in London "
+            "Discover London Maths & Science College, a specialist 16-19 STEM sixth form in London "
             "offering A Levels, GCSEs and clear routes to top universities."
         ),
     },
@@ -42,7 +44,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "seo_title": "About London Maths & Science College | Who We Are",
         "meta_description": (
             "Learn about our mission, values and leadership at London Maths & Science College, the "
-            "specialist STEM sixth form for ambitious 16–19 students."
+            "specialist STEM sixth form for ambitious 16-19 students."
         ),
     },
     {
@@ -277,6 +279,29 @@ PAGE_ENDPOINT_OVERRIDES: dict[str, str] = {
     "policies": "policies_page",
 }
 
+SOCIAL_DOMAINS = (
+    "facebook.com",
+    "instagram.com",
+    "twitter.com",
+    "t.co",
+    "linkedin.com",
+    "youtube.com",
+    "tiktok.com",
+    "snapchat.com",
+    "pinterest.com",
+)
+
+SEARCH_DOMAINS = (
+    "google.",
+    "bing.",
+    "yahoo.",
+    "duckduckgo.",
+    "baidu.",
+    "yandex.",
+    "ask.com",
+    "ecosia.org",
+)
+
 
 mail = Mail()
 
@@ -424,6 +449,146 @@ def create_app() -> Flask:
         except OSError:
             pass
 
+    def safe_int(value: object) -> int | None:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return None
+
+    def is_probably_bot(user_agent: str) -> bool:
+        if not user_agent:
+            return False
+        lowered = user_agent.lower()
+        bot_tokens = (
+            "bot",
+            "spider",
+            "crawl",
+            "slurp",
+            "phantom",
+            "headless",
+            "pingdom",
+        )
+        return any(token in lowered for token in bot_tokens)
+
+    def detect_device_details(user_agent: str) -> tuple[str, str]:
+        ua = (user_agent or "").lower()
+        device_type = "Desktop"
+        if "ipad" in ua or "tablet" in ua:
+            device_type = "Tablet"
+        elif "mobile" in ua or "iphone" in ua or "android" in ua:
+            device_type = "Mobile"
+
+        device_os = "Other"
+        if "windows" in ua:
+            device_os = "Windows"
+        elif "mac os" in ua or "macintosh" in ua:
+            device_os = "macOS"
+        elif "iphone" in ua or "ipad" in ua or "ios" in ua:
+            device_os = "iOS"
+        elif "android" in ua:
+            device_os = "Android"
+        elif "linux" in ua:
+            device_os = "Linux"
+
+        return device_type, device_os
+
+    def extract_country_from_headers(req, language: str | None) -> str:
+        header_keys = (
+            "CF-IPCountry",
+            "X-Appengine-Country",
+            "X-Country-Code",
+        )
+        for key in header_keys:
+            value = req.headers.get(key)
+            if value and value not in {"", "XX"}:
+                return value.upper()
+
+        if language and "-" in language:
+            return language.split("-")[-1].upper()
+
+        return "Unknown"
+
+    def extract_slug_from_path(path: str | None) -> str | None:
+        if not path:
+            return None
+        clean_path = path.split("?")[0].split("#")[0]
+        if clean_path == "/":
+            return "home"
+        stripped = clean_path.strip("/")
+        if not stripped:
+            return "home"
+        parts = stripped.split("/")
+        if parts[0] == "pages" and len(parts) > 1:
+            return parts[1]
+        return parts[-1]
+
+    def classify_traffic_source(
+        url: str | None,
+        referrer: str | None,
+        host: str,
+    ) -> tuple[str, str | None, str | None, str | None, str | None]:
+        traffic_source = "Direct"
+        utm_source = None
+        utm_medium = None
+        utm_campaign = None
+        referrer_domain = None
+
+        if url:
+            parsed_url = urlparse(url)
+            params = parse_qs(parsed_url.query)
+            utm_source = params.get("utm_source", [None])[0]
+            utm_medium = params.get("utm_medium", [None])[0]
+            utm_campaign = params.get("utm_campaign", [None])[0]
+
+        if referrer:
+            ref_parsed = urlparse(referrer)
+            referrer_domain = ref_parsed.netloc.lower()
+            if referrer_domain and referrer_domain.startswith("www."):
+                referrer_domain = referrer_domain[4:]
+            if referrer_domain:
+                referrer_domain = referrer_domain.split(":")[0]
+
+        host = host.lower()
+        if host.startswith("www."):
+            host = host[4:]
+        if host:
+            host = host.split(":")[0]
+
+        if utm_medium:
+            medium = utm_medium.lower()
+            if medium in {"email", "newsletter"}:
+                traffic_source = "Email"
+            elif medium in {"cpc", "ppc", "paid", "paid-search"}:
+                traffic_source = "Paid Search"
+            elif medium in {"social", "paid-social"}:
+                traffic_source = "Paid Social"
+            elif medium in {"display", "banner"}:
+                traffic_source = "Display"
+            else:
+                traffic_source = medium.title()
+        elif referrer_domain:
+            if host and referrer_domain.endswith(host):
+                traffic_source = "Internal"
+            elif any(token in referrer_domain for token in SOCIAL_DOMAINS):
+                traffic_source = "Social"
+            elif any(token in referrer_domain for token in SEARCH_DOMAINS):
+                traffic_source = "Organic Search"
+            else:
+                traffic_source = "Referral"
+        else:
+            traffic_source = "Direct"
+
+        return traffic_source, utm_source, utm_medium, utm_campaign, referrer_domain
+
+    def compute_percent_change(current: float | int, previous: float | int) -> float | None:
+        if previous in (None, 0):
+            return None
+        try:
+            change = ((float(current) - float(previous)) / float(previous)) * 100.0
+        except (TypeError, ZeroDivisionError):
+            return None
+        return round(change, 1)
+
     def guess_policy_title_from_filename(filename: str) -> str:
         stem = Path(filename).stem
         cleaned = re.sub(r"[_\-]+", " ", stem)
@@ -523,6 +688,43 @@ def create_app() -> Flask:
         db.execute(
             "CREATE INDEX IF NOT EXISTS idx_policies_title ON policies(title)"
         )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS analytics_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                visitor_id TEXT,
+                session_id TEXT,
+                page_slug TEXT,
+                page_title TEXT,
+                path TEXT,
+                url TEXT,
+                referrer TEXT,
+                referrer_domain TEXT,
+                traffic_source TEXT,
+                utm_source TEXT,
+                utm_medium TEXT,
+                utm_campaign TEXT,
+                device_type TEXT,
+                device_os TEXT,
+                language TEXT,
+                country TEXT,
+                timezone TEXT,
+                screen_width INTEGER,
+                screen_height INTEGER,
+                is_session_start INTEGER DEFAULT 0,
+                created_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_analytics_created_at ON analytics_events(created_at)"
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_analytics_session ON analytics_events(session_id)"
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_analytics_slug ON analytics_events(page_slug)"
+        )
         db.commit()
 
     def ensure_default_admin() -> None:
@@ -544,6 +746,8 @@ def create_app() -> Flask:
     def seed_existing_pages() -> None:
         db = get_db()
         placement_choices = {"main", "dropdown", "footer", "hidden"}
+        existing_count = db.execute("SELECT COUNT(*) AS total FROM pages").fetchone()["total"]
+        allow_seed_inserts = existing_count == 0
 
         for seed in DEFAULT_PAGE_SEEDS:
             slug = str(seed["slug"])
@@ -561,8 +765,9 @@ def create_app() -> Flask:
                 "SELECT * FROM pages WHERE slug = ?",
                 (slug,),
             ).fetchone()
-
             if existing is None:
+                if not allow_seed_inserts:
+                    continue
                 now = current_timestamp()
                 db.execute(
                     """
@@ -813,6 +1018,14 @@ def create_app() -> Flask:
         now = current_timestamp()
 
         if page_id is None:
+            existing = db.execute(
+                "SELECT id FROM pages WHERE slug = ?",
+                (slug,),
+            ).fetchone()
+            if existing is not None:
+                page_id = int(existing["id"])
+
+        if page_id is None:
             cursor = db.execute(
                 """
                 INSERT INTO pages (
@@ -924,6 +1137,14 @@ def create_app() -> Flask:
         init_db()
         ensure_default_admin()
         seed_existing_pages()
+
+    @app.route("/robots.txt")
+    def robots_txt():
+        return send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
+
+    @app.route("/llms.txt")
+    def llms_txt():
+        return send_from_directory(app.static_folder, "llms.txt", mimetype="text/plain")
 
     @app.route("/")
     def index() -> str:
@@ -1040,6 +1261,116 @@ def create_app() -> Flask:
         create_lead("subscription", email=email, source=source)
         flash("Thanks for subscribing — we will keep you updated.", "success")
         return redirect(request.referrer or url_for("index"))
+
+    @app.post("/analytics/track")
+    def analytics_track():
+        if not request.is_json:
+            return ("", 204)
+
+        origin = request.headers.get("Origin")
+        if origin and not origin.startswith(request.host_url.rstrip("/")):
+            return ("", 204)
+
+        payload = request.get_json(silent=True) or {}
+        path = str(payload.get("path") or "")
+        if path.startswith("/admin"):
+            return ("", 204)
+
+        user_agent = request.headers.get("User-Agent", "")
+        if is_probably_bot(user_agent):
+            return ("", 204)
+
+        url_value = payload.get("url")
+        if not path and url_value:
+            try:
+                path = urlparse(url_value).path or ""
+            except ValueError:
+                path = ""
+
+        referrer_value = payload.get("referrer") or request.referrer
+
+        language = payload.get("language")
+        visitor_id = payload.get("visitor_id")
+        if not visitor_id:
+            fallback_key = f"{request.headers.get('X-Forwarded-For', request.remote_addr)}|{user_agent}"
+            visitor_id = hashlib.sha256(fallback_key.encode("utf-8", "ignore")).hexdigest()[:32]
+
+        session_id = payload.get("session_id")
+        if not session_id:
+            session_hash_source = f"{visitor_id}|{payload.get('is_session_start')}|{current_timestamp()}"
+            session_id = hashlib.sha256(session_hash_source.encode("utf-8", "ignore")).hexdigest()[:32]
+
+        page_slug = payload.get("page_slug") or extract_slug_from_path(path)
+        page_title = payload.get("page_title")
+
+        traffic_source, utm_source, utm_medium, utm_campaign, referrer_domain = classify_traffic_source(
+            url_value,
+            referrer_value,
+            request.host or "",
+        )
+
+        country = extract_country_from_headers(request, language)
+        timezone = payload.get("timezone")
+        screen_width = safe_int(payload.get("screen_width"))
+        screen_height = safe_int(payload.get("screen_height"))
+        is_session_start = 1 if payload.get("is_session_start") else 0
+
+        device_type, device_os = detect_device_details(user_agent)
+
+        db = get_db()
+        db.execute(
+            """
+            INSERT INTO analytics_events (
+                visitor_id,
+                session_id,
+                page_slug,
+                page_title,
+                path,
+                url,
+                referrer,
+                referrer_domain,
+                traffic_source,
+                utm_source,
+                utm_medium,
+                utm_campaign,
+                device_type,
+                device_os,
+                language,
+                country,
+                timezone,
+                screen_width,
+                screen_height,
+                is_session_start,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                visitor_id,
+                session_id,
+                page_slug,
+                page_title,
+                path or None,
+                url_value,
+                referrer_value,
+                referrer_domain,
+                traffic_source,
+                utm_source,
+                utm_medium,
+                utm_campaign,
+                device_type,
+                device_os,
+                language,
+                country,
+                timezone,
+                screen_width,
+                screen_height,
+                is_session_start,
+                current_timestamp(),
+            ),
+        )
+        db.commit()
+        return ("", 204)
 
     @app.route("/admin/login", methods=["GET", "POST"])
     def admin_login() -> str:
@@ -1172,6 +1503,504 @@ def create_app() -> Flask:
             status_counts=status_counts,
         )
 
+    @app.route("/admin/analytics")
+    @login_required
+    def admin_analytics() -> str:
+        db = get_db()
+        allowed_ranges = [7, 30, 60, 90, 180]
+        try:
+            range_days = int(request.args.get("range", "30"))
+        except ValueError:
+            range_days = 30
+        if range_days not in allowed_ranges:
+            range_days = 30
+
+        current_range_label = f"-{range_days} day"
+        previous_range_label = f"-{2 * range_days} day"
+        comparison_label = f"vs previous {range_days} days"
+        range_label = f"Last {range_days} days"
+
+        totals = db.execute(
+            """
+            SELECT
+                COUNT(*) AS page_views,
+                COUNT(DISTINCT visitor_id) AS unique_visitors,
+                COUNT(DISTINCT session_id) AS sessions
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            """,
+            (current_range_label,),
+        ).fetchone()
+
+        previous_totals = db.execute(
+            """
+            SELECT
+                COUNT(*) AS page_views,
+                COUNT(DISTINCT visitor_id) AS unique_visitors,
+                COUNT(DISTINCT session_id) AS sessions
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+              AND datetime(created_at) < datetime('now', ?)
+            """,
+            (previous_range_label, current_range_label),
+        ).fetchone()
+
+        page_views = totals["page_views"] or 0
+        unique_visitors = totals["unique_visitors"] or 0
+        sessions = totals["sessions"] or 0
+
+        prev_page_views = previous_totals["page_views"] or 0
+        prev_unique_visitors = previous_totals["unique_visitors"] or 0
+        prev_sessions = previous_totals["sessions"] or 0
+
+        session_summary = db.execute(
+            """
+            SELECT
+                SUM(CASE WHEN views = 1 THEN 1 ELSE 0 END) AS single_page_sessions,
+                COUNT(*) AS total_sessions
+            FROM (
+                SELECT session_id, COUNT(*) AS views
+                FROM analytics_events
+                WHERE datetime(created_at) >= datetime('now', ?)
+                GROUP BY session_id
+            )
+            """,
+            (current_range_label,),
+        ).fetchone()
+
+        previous_session_summary = db.execute(
+            """
+            SELECT
+                SUM(CASE WHEN views = 1 THEN 1 ELSE 0 END) AS single_page_sessions,
+                COUNT(*) AS total_sessions
+            FROM (
+                SELECT session_id, COUNT(*) AS views
+                FROM analytics_events
+                WHERE datetime(created_at) >= datetime('now', ?)
+                  AND datetime(created_at) < datetime('now', ?)
+                GROUP BY session_id
+            )
+            """,
+            (previous_range_label, current_range_label),
+        ).fetchone()
+
+        single_page_sessions = session_summary["single_page_sessions"] or 0
+        total_sessions = session_summary["total_sessions"] or 0
+        bounce_rate = round((single_page_sessions / total_sessions) * 100, 1) if total_sessions else 0.0
+
+        prev_single_page_sessions = previous_session_summary["single_page_sessions"] or 0
+        prev_total_sessions = previous_session_summary["total_sessions"] or 0
+        prev_bounce_rate = (
+            round((prev_single_page_sessions / prev_total_sessions) * 100, 1)
+            if prev_total_sessions
+            else 0.0
+        )
+
+        avg_pages_per_session = round(page_views / sessions, 2) if sessions else 0.0
+        prev_avg_pages_per_session = round(prev_page_views / prev_sessions, 2) if prev_sessions else 0.0
+
+        lead_row = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM leads
+            WHERE datetime(created_at) >= datetime('now', ?)
+            """,
+            (current_range_label,),
+        ).fetchone()
+        lead_count = lead_row["total"] or 0
+        conversion_rate = round((lead_count / sessions) * 100, 1) if sessions else 0.0
+
+        prev_lead_row = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM leads
+            WHERE datetime(created_at) >= datetime('now', ?)
+              AND datetime(created_at) < datetime('now', ?)
+            """,
+            (previous_range_label, current_range_label),
+        ).fetchone()
+        prev_lead_count = prev_lead_row["total"] or 0
+        prev_conversion_rate = (
+            round((prev_lead_count / prev_sessions) * 100, 1)
+            if prev_sessions
+            else 0.0
+        )
+
+        new_visitors_row = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM (
+                SELECT visitor_id, MIN(datetime(created_at)) AS first_seen
+                FROM analytics_events
+                GROUP BY visitor_id
+                HAVING datetime(first_seen) >= datetime('now', ?)
+            )
+            """,
+            (current_range_label,),
+        ).fetchone()
+        new_visitors = new_visitors_row["total"] or 0
+        returning_visitors = max(unique_visitors - new_visitors, 0)
+        new_visitor_rate = round((new_visitors / unique_visitors) * 100, 1) if unique_visitors else 0.0
+
+        prev_new_visitors_row = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM (
+                SELECT visitor_id, MIN(datetime(created_at)) AS first_seen
+                FROM analytics_events
+                GROUP BY visitor_id
+                HAVING datetime(first_seen) >= datetime('now', ?)
+                  AND datetime(first_seen) < datetime('now', ?)
+            )
+            """,
+            (previous_range_label, current_range_label),
+        ).fetchone()
+        prev_new_visitors = prev_new_visitors_row["total"] or 0
+        prev_new_visitor_rate = (
+            round((prev_new_visitors / prev_unique_visitors) * 100, 1)
+            if prev_unique_visitors
+            else 0.0
+        )
+
+        avg_daily_views = round(page_views / range_days, 1) if range_days else page_views
+        prev_avg_daily_views = round(prev_page_views / range_days, 1) if range_days else prev_page_views
+
+        def trend_direction(change: float | None) -> str:
+            if change is None:
+                return "neutral"
+            if change > 0:
+                return "up"
+            if change < 0:
+                return "down"
+            return "neutral"
+
+        def build_card(
+            label: str,
+            value: float | int,
+            prev_value: float | int,
+            value_format: str,
+            *,
+            invert: bool = False,
+            supplement: str | None = None,
+        ) -> dict[str, object]:
+            change = compute_percent_change(value, prev_value)
+            direction_basis = -change if (change is not None and invert) else change
+            return {
+                "label": label,
+                "value": value,
+                "trend": change,
+                "trend_direction": trend_direction(direction_basis),
+                "caption": comparison_label,
+                "format": value_format,
+                "supplement": supplement,
+            }
+
+        kpi_cards = [
+            build_card("Page Views", page_views, prev_page_views, "number"),
+            build_card("Sessions", sessions, prev_sessions, "number"),
+            build_card("Unique Visitors", unique_visitors, prev_unique_visitors, "number"),
+            build_card("Bounce Rate", bounce_rate, prev_bounce_rate, "percent", invert=True),
+            build_card("Pages / Session", avg_pages_per_session, prev_avg_pages_per_session, "decimal"),
+            build_card("Lead Conversion", conversion_rate, prev_conversion_rate, "percent"),
+            build_card(
+                "New Visitor Share",
+                new_visitor_rate,
+                prev_new_visitor_rate,
+                "percent",
+                supplement=f"{new_visitors:,} new / {unique_visitors:,} unique",
+            ),
+            build_card("Avg Daily Views", avg_daily_views, prev_avg_daily_views, "decimal"),
+        ]
+
+        daily_rows = db.execute(
+            """
+            SELECT DATE(created_at) AS day,
+                   COUNT(*) AS page_views,
+                   COUNT(DISTINCT session_id) AS sessions,
+                   COUNT(DISTINCT visitor_id) AS unique_visitors
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY day
+            ORDER BY day
+            """,
+            (current_range_label,),
+        ).fetchall()
+
+        day_map = {row["day"]: row for row in daily_rows}
+        day_labels: list[str] = []
+        page_views_series: list[int] = []
+        sessions_series: list[int] = []
+        unique_series: list[int] = []
+        now_utc = datetime.utcnow()
+        for offset in range(range_days - 1, -1, -1):
+            day_point = now_utc - timedelta(days=offset)
+            day_key = day_point.strftime("%Y-%m-%d")
+            day_labels.append(day_point.strftime("%d %b"))
+            row = day_map.get(day_key)
+            if row:
+                page_views_series.append(row["page_views"] or 0)
+                sessions_series.append(row["sessions"] or 0)
+                unique_series.append(row["unique_visitors"] or 0)
+            else:
+                page_views_series.append(0)
+                sessions_series.append(0)
+                unique_series.append(0)
+
+        daily_chart = {
+            "labels": day_labels,
+            "page_views": page_views_series,
+            "sessions": sessions_series,
+            "unique": unique_series,
+        }
+
+        hourly_rows = db.execute(
+            """
+            SELECT STRFTIME('%H', created_at) AS hour,
+                   COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY hour
+            ORDER BY hour
+            """,
+            (current_range_label,),
+        ).fetchall()
+        hour_map = {row["hour"]: row["visits"] for row in hourly_rows}
+        hourly_labels = [f"{hour:02d}:00" for hour in range(24)]
+        hourly_values = [hour_map.get(f"{hour:02d}", 0) for hour in range(24)]
+        hourly_chart = {"labels": hourly_labels, "values": hourly_values}
+
+        device_rows = db.execute(
+            """
+            SELECT COALESCE(NULLIF(device_type, ''), 'Unknown') AS device_type,
+                   COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY device_type
+            ORDER BY visits DESC
+            """,
+            (current_range_label,),
+        ).fetchall()
+        device_chart = {
+            "labels": [row["device_type"] for row in device_rows],
+            "values": [row["visits"] for row in device_rows],
+        }
+
+        os_rows = db.execute(
+            """
+            SELECT COALESCE(NULLIF(device_os, ''), 'Other') AS device_os,
+                   COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY device_os
+            ORDER BY visits DESC
+            """,
+            (current_range_label,),
+        ).fetchall()
+
+        traffic_rows = db.execute(
+            """
+            SELECT COALESCE(NULLIF(traffic_source, ''), 'Direct') AS traffic_source,
+                   COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY traffic_source
+            ORDER BY visits DESC
+            """,
+            (current_range_label,),
+        ).fetchall()
+        traffic_chart = {
+            "labels": [row["traffic_source"] for row in traffic_rows],
+            "values": [row["visits"] for row in traffic_rows],
+        }
+
+        country_rows = db.execute(
+            """
+            SELECT COALESCE(NULLIF(country, ''), 'Unknown') AS country,
+                   COUNT(*) AS visits,
+                   COUNT(DISTINCT visitor_id) AS unique_visitors
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY country
+            ORDER BY visits DESC
+            LIMIT 10
+            """,
+            (current_range_label,),
+        ).fetchall()
+        country_chart = {
+            "labels": [row["country"] for row in country_rows[:6]],
+            "values": [row["visits"] for row in country_rows[:6]],
+        }
+
+        referrer_rows = db.execute(
+            """
+            SELECT
+                COALESCE(NULLIF(referrer_domain, ''), traffic_source) AS domain,
+                traffic_source,
+                COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY domain, traffic_source
+            ORDER BY visits DESC
+            LIMIT 10
+            """,
+            (current_range_label,),
+        ).fetchall()
+
+        timezone_rows = db.execute(
+            """
+            SELECT COALESCE(NULLIF(timezone, ''), 'Unknown') AS timezone,
+                   COUNT(*) AS visits
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY timezone
+            ORDER BY visits DESC
+            LIMIT 8
+            """,
+            (current_range_label,),
+        ).fetchall()
+
+        page_lookup = {row["slug"]: row for row in fetch_all_pages()}
+        top_pages_rows = db.execute(
+            """
+            SELECT
+                page_slug,
+                COALESCE(NULLIF(page_title, ''), NULL) AS page_title,
+                path,
+                COUNT(*) AS views,
+                COUNT(DISTINCT session_id) AS sessions
+            FROM analytics_events
+            WHERE datetime(created_at) >= datetime('now', ?)
+            GROUP BY page_slug, page_title, path
+            ORDER BY views DESC
+            LIMIT 10
+            """,
+            (current_range_label,),
+        ).fetchall()
+
+        def resolve_public_url(slug: str | None, path_value: str | None) -> str:
+            if slug:
+                endpoint = PAGE_ENDPOINT_OVERRIDES.get(slug)
+                if endpoint:
+                    try:
+                        return url_for(endpoint)
+                    except Exception:
+                        pass
+                try:
+                    return url_for("render_dynamic_page", slug=slug)
+                except Exception:
+                    pass
+            if path_value:
+                return path_value
+            return "#"
+
+        top_pages: list[dict[str, object]] = []
+        for row in top_pages_rows:
+            slug = row["page_slug"]
+            page_title = row["page_title"]
+            page_record = page_lookup.get(slug) if slug else None
+            display_name = (
+                page_title
+                or (page_record["page_name"] if page_record else None)
+                or (slug.capitalize() if slug else (row["path"] or "Unknown"))
+            )
+            share = round((row["views"] / page_views) * 100, 1) if page_views else 0.0
+            top_pages.append(
+                {
+                    "title": display_name,
+                    "slug": slug,
+                    "views": row["views"],
+                    "sessions": row["sessions"],
+                    "share": share,
+                    "url": resolve_public_url(slug, row["path"]),
+                }
+            )
+
+        top_countries = [
+            {
+                "country": row["country"],
+                "visits": row["visits"],
+                "unique": row["unique_visitors"],
+                "share": round((row["visits"] / page_views) * 100, 1) if page_views else 0.0,
+            }
+            for row in country_rows
+        ]
+
+        referrer_table = [
+            {
+                "domain": row["domain"],
+                "visits": row["visits"],
+                "source": row["traffic_source"],
+            }
+            for row in referrer_rows
+        ]
+
+        timezone_table = [
+            {
+                "timezone": row["timezone"],
+                "visits": row["visits"],
+            }
+            for row in timezone_rows
+        ]
+
+        device_table = [
+            {
+                "device_type": row["device_type"],
+                "visits": row["visits"],
+                "share": round((row["visits"] / page_views) * 100, 1) if page_views else 0.0,
+            }
+            for row in device_rows
+        ]
+
+        os_table = [
+            {
+                "device_os": row["device_os"],
+                "visits": row["visits"],
+                "share": round((row["visits"] / page_views) * 100, 1) if page_views else 0.0,
+            }
+            for row in os_rows
+        ]
+
+        traffic_table = [
+            {
+                "source": row["traffic_source"],
+                "visits": row["visits"],
+                "share": round((row["visits"] / page_views) * 100, 1) if page_views else 0.0,
+            }
+            for row in traffic_rows
+        ]
+
+        context = {
+            "range_days": range_days,
+            "range_label": range_label,
+            "comparison_label": comparison_label,
+            "range_options": allowed_ranges,
+            "kpi_cards": kpi_cards,
+            "daily_chart": daily_chart,
+            "hourly_chart": hourly_chart,
+            "device_chart": device_chart,
+            "traffic_chart": traffic_chart,
+            "country_chart": country_chart,
+            "top_pages": top_pages,
+            "top_countries": top_countries,
+            "referrer_table": referrer_table,
+            "timezone_table": timezone_table,
+            "device_table": device_table,
+            "os_table": os_table,
+            "traffic_table": traffic_table,
+            "lead_count": lead_count,
+            "returning_visitors": returning_visitors,
+            "new_visitors": new_visitors,
+            "new_visitor_rate": new_visitor_rate,
+            "conversion_rate": conversion_rate,
+            "page_views": page_views,
+            "sessions_total": sessions,
+            "unique_visitors": unique_visitors,
+            "bounce_rate": bounce_rate,
+            "avg_pages_per_session": avg_pages_per_session,
+        }
+
+        return render_template("admin/analytics.html", **context)
+
     @app.route("/admin/pages")
     @login_required
     def admin_pages() -> str:
@@ -1181,9 +2010,9 @@ def create_app() -> Flask:
         meta_missing_ids: set[int] = set()
 
         for page in pages:
-            display = page.get("nav_display") or "hidden"
+            display = page["nav_display"] or "hidden"
             nav_counts[display] = nav_counts.get(display, 0) + 1
-            if not page.get("seo_title") or not page.get("meta_description"):
+            if not page["seo_title"] or not page["meta_description"]:
                 meta_missing_ids.add(page["id"])
 
         total_pages = len(pages)
@@ -1197,12 +2026,24 @@ def create_app() -> Flask:
             "nav_footer": nav_counts.get("footer", 0),
         }
 
+        def page_admin_url(page_row: sqlite3.Row) -> str:
+            endpoint = PAGE_ENDPOINT_OVERRIDES.get(page_row["slug"])
+            if endpoint:
+                try:
+                    return url_for(endpoint)
+                except Exception:
+                    pass
+            return url_for("render_dynamic_page", slug=page_row["slug"])
+
+        page_urls = {page["id"]: page_admin_url(page) for page in pages}
+
         return render_template(
             "admin/pages/index.html",
             pages=pages,
             parent_lookup=parent_lookup,
             nav_stats=stats,
             meta_gaps=meta_missing_ids,
+            page_urls=page_urls,
         )
 
     @app.route("/admin/policies", methods=["GET", "POST"])
@@ -1258,13 +2099,29 @@ def create_app() -> Flask:
         flash("Policy deleted.", "info")
         return redirect(url_for("admin_policies"))
 
-    def build_nav_parent_choices(exclude_id: int | None = None) -> list[sqlite3.Row]:
+    def build_nav_parent_choices(
+        *, exclude_id: int | None = None, include_parent_id: int | None = None
+    ) -> list[sqlite3.Row]:
         pages = fetch_all_pages()
         choices: list[sqlite3.Row] = []
+        fallback_parent: sqlite3.Row | None = None
+
         for page in pages:
             if exclude_id is not None and page["id"] == exclude_id:
                 continue
-            choices.append(page)
+
+            if page["nav_display"] == "main":
+                choices.append(page)
+            elif include_parent_id is not None and page["id"] == include_parent_id:
+                fallback_parent = page
+
+        if include_parent_id is not None and all(
+            choice["id"] != include_parent_id for choice in choices
+        ):
+            if fallback_parent is not None:
+                choices.append(fallback_parent)
+
+        choices.sort(key=lambda row: (row["nav_order"], row["page_name"]))
         return choices
 
     def parse_nav_values(form, *, exclude_id: int | None = None) -> tuple[str, int | None, int]:
@@ -1406,7 +2263,9 @@ def create_app() -> Flask:
             return redirect(url_for("admin_pages"))
 
         template_options = available_templates()
-        parent_choices = build_nav_parent_choices(exclude_id=page_id)
+        parent_choices = build_nav_parent_choices(
+            exclude_id=page_id, include_parent_id=page["nav_parent_id"]
+        )
 
         if request.method == "POST":
             page_name = request.form.get("page_name", "").strip()
@@ -1513,6 +2372,13 @@ def create_app() -> Flask:
             return redirect(url_for("index"))
 
         page_dict = dict(page)
+        page_name = page_dict.get("page_name")
+        if page_name and not page_dict.get("seo_title"):
+            page_dict["seo_title"] = f"{page_name} | London Maths & Science College"
+        if page_name and not page_dict.get("meta_description"):
+            page_dict["meta_description"] = (
+                f"Learn more about {page_name} at London Maths & Science College."
+            )
         template_name = page_dict["template_name"]
 
         return render_template(

@@ -1,0 +1,25 @@
+# robots.txt for London Maths & Science College
+# Keep this file on the canonical host that serves the production site.
+
+User-agent: *
+Disallow: /admin/
+Disallow: /admin
+Disallow: /admin/login
+Disallow: /admin/leads
+Disallow: /admin/pages
+Disallow: /admin/policies
+Disallow: /admin/analytics
+Disallow: /static/uploads/policies/documents/
+Disallow: /static/uploads/policies/thumbnails/
+Disallow: /static/uploads/social/
+Allow: /static/
+Allow: /
+
+Sitemap: https://www.lmsc.ac.uk/sitemap.xml
+Sitemap: https://www.lmsc.ac.uk/sitemap_index.xml
+Sitemap: https://www.lmsc.org.uk/sitemap.xml
+Sitemap: https://www.lmsc.org.uk/sitemap_index.xml
+
+# LLM discovery file
+# See also: https://www.lmsc.ac.uk/llms.txt
+# See also: https://www.lmsc.org.uk/llms.txt

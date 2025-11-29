@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% if page_meta and page_meta.get('seo_title') %}
     <title>{{ page_meta.get('seo_title') }}</title>
+    {% elif page_meta and page_meta.get('page_name') %}
+    <title>
+      {{ page_meta.get('page_name') }} | London Maths &amp; Science College
+    </title>
     {% else %}
     <title>
       {% block title %}London Maths &amp; Science College{% endblock %}
@@ -13,6 +17,11 @@
     <meta
       name="description"
       content="{{ page_meta.get('meta_description') }}"
+    />
+    {% elif page_meta and page_meta.get('page_name') %}
+    <meta
+      name="description"
+      content="Learn more about {{ page_meta.get('page_name') }} at London Maths &amp; Science College."
     />
     {% else %}
     <meta
@@ -116,7 +125,16 @@
     {% block extra_head %}{% endblock %}
   </head>
 
-  <body class="font-body">
+  {% set body_slug = page_meta.get('slug') if page_meta and
+  page_meta.get('slug') else request.path.strip('/') %} {% if not body_slug %}{%
+  set body_slug = 'home' %}{% endif %} {% set body_title =
+  page_meta.get('page_name') if page_meta and page_meta.get('page_name') else ''
+  %}
+  <body
+    class="font-body"
+    data-page-slug="{{ body_slug }}"
+    data-page-name="{{ body_title }}"
+  >
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -156,6 +174,145 @@
         />
       </svg>
     </button>
+    <script>
+      (function () {
+        try {
+          if (window.__lmscAnalyticsInit) {
+            return;
+          }
+          window.__lmscAnalyticsInit = true;
+          const path = window.location.pathname || "";
+          if (path.startsWith("/admin")) {
+            return;
+          }
+          if (navigator.doNotTrack === "1" || window.doNotTrack === "1") {
+            return;
+          }
+
+          const trackUrl = "{{ url_for('analytics_track') }}";
+          if (!trackUrl) {
+            return;
+          }
+
+          const bodyEl = document.body;
+          const generateId = () =>
+            window.crypto && window.crypto.randomUUID
+              ? window.crypto.randomUUID()
+              : `${Date.now().toString(36)}-${Math.random()
+                  .toString(16)
+                  .slice(2, 10)}`;
+
+          const visitorKey = "lmscVisitorId";
+          let visitorId = null;
+          try {
+            visitorId = window.localStorage.getItem(visitorKey);
+          } catch (err) {
+            visitorId = null;
+          }
+          if (!visitorId) {
+            visitorId = generateId();
+            try {
+              window.localStorage.setItem(visitorKey, visitorId);
+            } catch (err) {
+              /* unable to persist visitor id */
+            }
+          }
+
+          const sessionKey = "lmscSessionInfo";
+          const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+          let sessionInfo = null;
+          const now = Date.now();
+          try {
+            const stored = window.sessionStorage.getItem(sessionKey);
+            if (stored) {
+              sessionInfo = JSON.parse(stored);
+            }
+          } catch (err) {
+            sessionInfo = null;
+          }
+
+          let isSessionStart = false;
+          if (
+            !sessionInfo ||
+            !sessionInfo.id ||
+            now - sessionInfo.started > SESSION_TIMEOUT
+          ) {
+            sessionInfo = { id: generateId(), started: now };
+            isSessionStart = true;
+          }
+          sessionInfo.last = now;
+          try {
+            window.sessionStorage.setItem(
+              sessionKey,
+              JSON.stringify(sessionInfo)
+            );
+          } catch (err) {
+            /* ignore */
+          }
+
+          const normalizedPath = path.replace(/^\/+/g, "").replace(/\/+$/g, "");
+          const fallbackSlug = normalizedPath
+            ? normalizedPath.split("/").pop()
+            : "home";
+          const pageSlug =
+            (bodyEl && bodyEl.dataset && bodyEl.dataset.pageSlug) ||
+            fallbackSlug;
+          const pageTitle =
+            (bodyEl && bodyEl.dataset && bodyEl.dataset.pageName) ||
+            document.title ||
+            "";
+
+          const payload = {
+            visitor_id: visitorId,
+            session_id: sessionInfo.id,
+            page_slug: pageSlug || null,
+            page_title: pageTitle,
+            path,
+            url: window.location.href,
+            referrer: document.referrer || null,
+            language: navigator.language || navigator.userLanguage || null,
+            timezone:
+              (Intl &&
+                Intl.DateTimeFormat &&
+                Intl.DateTimeFormat().resolvedOptions().timeZone) ||
+              null,
+            screen_width:
+              window.screen && window.screen.width ? window.screen.width : null,
+            screen_height:
+              window.screen && window.screen.height
+                ? window.screen.height
+                : null,
+            is_session_start: isSessionStart,
+          };
+
+          const sendPayload = (data) => {
+            const json = JSON.stringify(data);
+            if (navigator.sendBeacon) {
+              const blob = new Blob([json], { type: "application/json" });
+              navigator.sendBeacon(trackUrl, blob);
+            } else if (window.fetch) {
+              window
+                .fetch(trackUrl, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: json,
+                  keepalive: true,
+                  credentials: "same-origin",
+                })
+                .catch(() => {
+                  /* swallow network errors */
+                });
+            }
+          };
+
+          window.addEventListener("load", () => sendPayload(payload), {
+            once: true,
+          });
+        } catch (err) {
+          /* analytics bootstrap failure should never break the page */
+        }
+      })();
+    </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     {% block extra_scripts %}{% endblock %}
   </body>

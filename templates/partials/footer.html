@@ -44,6 +44,19 @@
       </div>
       <div>
         <h4 class="font-bold mb-4">Pages</h4>
+        {% if nav_pages_footer %}
+        <ul class="space-y-2 text-sm text-gray-600">
+          {% for page in nav_pages_footer %} {% set page_url =
+          nav_managed_page_urls.get(page['id']) or
+          url_for('render_dynamic_page', slug=page['slug']) %}
+          <li>
+            <a href="{{ page_url }}" class="hover:text-primary"
+              >{{ page['page_name'] }}</a
+            >
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
         <ul class="space-y-2 text-sm text-gray-600">
           <li>
             <a href="{{ url_for('about') }}" class="hover:text-primary"
@@ -71,6 +84,7 @@
             >
           </li>
         </ul>
+        {% endif %}
       </div>
       <div>
         <h4 class="font-bold mb-4">CMS</h4>
