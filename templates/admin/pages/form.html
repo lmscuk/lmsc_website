@@ -1,0 +1,282 @@
+{% extends 'admin/base_admin.html' %}
+
+{% set data = form_data or {} %}
+{% set nav_value = data.get('nav_display') if data.get('nav_display') is not none else (page['nav_display'] if page else 'hidden') %}
+{% set selected_parent = data.get('nav_parent_id') if data.get('nav_parent_id') is not none else (page['nav_parent_id'] if page else None) %}
+{% set nav_order_value = data.get('nav_order') if data.get('nav_order') is not none else (page['nav_order'] if page else 0) %}
+
+{% block nav_title %}{% if mode == 'edit' %}Edit Page{% else %}Create Page{% endif %}{% endblock %}
+{% block title %}{% if mode == 'edit' %}Edit Page · LMSC Admin{% else %}Create Page · LMSC Admin{% endif %}{% endblock %}
+
+{% block extra_head %}
+  <style>
+    .field-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <header class="mb-8">
+    <p class="text-sm text-slate-500">Page management</p>
+    <h1 class="text-3xl font-bold text-slate-900">
+      {% if mode == 'edit' %}
+        Update Page
+      {% else %}
+        Create New Page
+      {% endif %}
+    </h1>
+    <p class="text-sm text-slate-500 mt-2 max-w-2xl">
+      Configure navigation placement, SEO metadata, and template selection. Templates are auto-generated when you choose to create a new one.
+    </p>
+  </header>
+
+  <section class="grid gap-8 lg:grid-cols-3">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      class="lg:col-span-2 space-y-6"
+    >
+      <div class="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+        <h2 class="text-lg font-semibold text-slate-900">General</h2>
+        <div class="mt-6 space-y-4">
+          <div>
+            <label for="page_name" class="field-label">Page Name</label>
+            <input
+              type="text"
+              id="page_name"
+              name="page_name"
+              required
+              value="{{ data.get('page_name', page['page_name'] if page else '') }}"
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+            />
+            <p class="mt-1 text-xs text-slate-400">Shown in the navigation and inside the page template.</p>
+          </div>
+          {% if mode == 'edit' and page %}
+          <div>
+            <span class="field-label">Slug</span>
+            <div class="mt-2 flex items-center justify-between rounded-xl border border-dashed border-slate-300 px-4 py-2 text-sm text-slate-600">
+              <code class="text-xs text-slate-500">{{ page['slug'] }}</code>
+              <a
+                href="{{ url_for('render_dynamic_page', slug=page['slug']) }}"
+                target="_blank"
+                rel="noopener"
+                class="text-xs font-semibold text-primary hover:underline"
+              >
+                View live
+              </a>
+            </div>
+            <p class="mt-1 text-xs text-slate-400">Accessible at <span class="font-semibold">{{ request.url_root.rstrip('/') }}/pages/{{ page['slug'] }}</span>.</p>
+          </div>
+          {% endif %}
+          <div>
+            <label for="seo_title" class="field-label">SEO Title</label>
+            <input
+              type="text"
+              id="seo_title"
+              name="seo_title"
+              value="{{ data.get('seo_title', page['seo_title'] if page else '') }}"
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+              placeholder="Optional override for the <title> tag"
+            />
+          </div>
+          <div>
+            <label for="meta_description" class="field-label">Meta Description</label>
+            <textarea
+              id="meta_description"
+              name="meta_description"
+              rows="4"
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+              placeholder="Short summary that appears in search and social cards"
+            >{{ data.get('meta_description', page['meta_description'] if page else '') }}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+        <h2 class="text-lg font-semibold text-slate-900">Navigation</h2>
+        <div class="mt-6 space-y-4">
+          <fieldset>
+            <legend class="field-label">Placement</legend>
+            <div class="mt-3 space-y-2">
+              <label class="flex items-center gap-3 text-sm text-slate-600">
+                <input type="radio" name="nav_display" value="main" {% if nav_value == 'main' %}checked{% endif %} />
+                <span>
+                  <span class="font-semibold text-slate-800">Include in main navbar</span>
+                  <span class="block text-xs text-slate-500">Shows as a top-level link.</span>
+                </span>
+              </label>
+              <label class="flex items-center gap-3 text-sm text-slate-600">
+                <input type="radio" name="nav_display" value="dropdown" {% if nav_value == 'dropdown' %}checked{% endif %} />
+                <span>
+                  <span class="font-semibold text-slate-800">Place inside dropdown</span>
+                  <span class="block text-xs text-slate-500">Select the parent page to nest under.</span>
+                </span>
+              </label>
+              <label class="flex items-center gap-3 text-sm text-slate-600">
+                <input type="radio" name="nav_display" value="hidden" {% if nav_value not in ['main','dropdown'] %}checked{% endif %} />
+                <span>
+                  <span class="font-semibold text-slate-800">Hide from navigation</span>
+                  <span class="block text-xs text-slate-500">Page remains accessible via direct link.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+          <div id="dropdownParentPanel" class="{% if nav_value != 'dropdown' %}hidden{% endif %}">
+            <label for="nav_parent_id" class="field-label">Dropdown parent</label>
+            <select
+              id="nav_parent_id"
+              name="nav_parent_id"
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+            >
+              <option value="">Select parent page</option>
+              {% for option in parent_choices %}
+                <option value="{{ option['id'] }}" {% if selected_parent and selected_parent|string == option['id']|string %}selected{% endif %}>{{ option['page_name'] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="nav_order" class="field-label">Navigation order</label>
+            <input
+              type="number"
+              id="nav_order"
+              name="nav_order"
+              value="{{ nav_order_value }}"
+              class="mt-2 w-40 rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+            />
+            <p class="mt-1 text-xs text-slate-400">Lower numbers appear first.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+        <h2 class="text-lg font-semibold text-slate-900">Template &amp; Social Image</h2>
+        <div class="mt-6 space-y-4">
+          <div>
+            <label for="template_name" class="field-label">Template</label>
+            <select
+              id="template_name"
+              name="template_name"
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
+            >
+              <option value="__auto__">Auto-generate new template</option>
+              {% for template in template_options %}
+                <option value="{{ template }}" {% if data.get('template_name', page['template_name'] if page else '') == template %}selected{% endif %}>{{ template }}</option>
+              {% endfor %}
+            </select>
+            <p class="mt-1 text-xs text-slate-400">Pick an existing template or let the system create a blank one.</p>
+          </div>
+          <div class="space-y-3">
+            <label class="field-label">Social image</label>
+            <div class="flex items-center gap-4">
+              <div class="h-24 w-40 overflow-hidden rounded-xl border border-dashed border-slate-300 bg-slate-50 flex items-center justify-center">
+                {% set preview = data.get('social_image', page['social_image'] if page else '') %}
+                {% if preview %}
+                  <img
+                    id="socialPreview"
+                    src="{{ url_for('static', filename=preview) }}"
+                    alt="Social preview"
+                    class="h-full w-full object-cover"
+                  />
+                {% else %}
+                  <span id="socialPlaceholder" class="text-xs text-slate-400">No image</span>
+                {% endif %}
+              </div>
+              <div class="space-y-2 text-sm text-slate-600">
+                <input type="file" name="social_image" accept="image/*" class="block w-full text-sm" />
+                <label class="inline-flex items-center gap-2 text-xs text-slate-500">
+                  <input type="checkbox" name="remove_social_image" /> Remove current image
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3">
+        <a href="{{ url_for('admin_pages') }}" class="inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+          Cancel
+        </a>
+        <button
+          type="submit"
+          class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+        >
+          {% if mode == 'edit' %}Save changes{% else %}Create page{% endif %}
+        </button>
+      </div>
+    </form>
+
+    <aside class="space-y-6">
+      {% if mode == 'edit' %}
+        <div class="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+          <h2 class="text-lg font-semibold text-slate-900">Page URL</h2>
+          <p class="mt-3 text-sm text-slate-600">Public link generated for this page.</p>
+          <a
+            href="{{ url_for('render_dynamic_page', slug=page['slug']) }}"
+            target="_blank"
+            rel="noopener"
+            class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+          >
+            {{ request.url_root.rstrip('/') }}{{ url_for('render_dynamic_page', slug=page['slug']) }}
+          </a>
+          <p class="mt-3 text-xs text-slate-400">Pages are accessible under /pages/&lt;slug&gt;.</p>
+        </div>
+      {% endif %}
+      <div class="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+        <h2 class="text-lg font-semibold text-slate-900">Template Tips</h2>
+        <ul class="mt-4 space-y-3 text-sm text-slate-600">
+          <li>Auto-generated templates extend <code class="rounded bg-slate-100 px-2">base.html</code>.</li>
+          <li>Use the <code>{{ '{{ page }}' }}</code> variable inside templates for SEO metadata and page fields.</li>
+          <li>Update navigation ordering to control placement within dropdowns.</li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const radios = document.querySelectorAll('input[name="nav_display"]');
+      const dropdownPanel = document.getElementById('dropdownParentPanel');
+      const socialInput = document.querySelector('input[name="social_image"]');
+      const previewImg = document.getElementById('socialPreview');
+      const placeholder = document.getElementById('socialPlaceholder');
+
+      radios.forEach((radio) => {
+        radio.addEventListener('change', () => {
+          if (radio.value === 'dropdown' && radio.checked) {
+            dropdownPanel.classList.remove('hidden');
+          } else if (radio.checked) {
+            dropdownPanel.classList.add('hidden');
+          }
+        });
+      });
+
+      if (socialInput) {
+        socialInput.addEventListener('change', (event) => {
+          const file = event.target.files && event.target.files[0];
+          if (!file) {
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (loadEvent) => {
+            if (previewImg) {
+              previewImg.src = loadEvent.target.result;
+              previewImg.classList.remove('hidden');
+            }
+            if (placeholder) {
+              placeholder.classList.add('hidden');
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+  </script>
+{% endblock %}

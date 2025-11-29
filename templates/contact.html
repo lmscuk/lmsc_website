@@ -1,0 +1,476 @@
+{% extends 'base.html' %} {% block title %}Contact Us - Get in Touch with Finora
+| Finney{% endblock %} {% block extra_head %}
+<style>
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+  }
+
+  .mapboxgl-marker {
+    height: 50px !important;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1.2rem;
+    background: #c5f3c5;
+    color: #3f6212;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transform: rotate(-6deg);
+    box-shadow: 0 8px 18px rgba(63, 98, 18, 0.12);
+    align-self: flex-start;
+  }
+
+  .mapboxgl-ctrl-bottom-left,
+  .mapboxgl-ctrl-bottom-right {
+    display: none !important;
+  }
+
+  .mapboxgl-canvas,
+  .mapboxgl-canvas-container {
+    margin: 0 !important;
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Navigation -->
+
+<section class="w-full py-20">
+  <div class="container mx-auto px-6 fade-in stagger-4">
+    <div class="grid md:grid-cols-2 gap-10 items-stretch">
+      <!-- Left Card - Text Content -->
+      <div class="bg-white shadow-xl rounded-3xl p-10 shadow-sm flex flex-col">
+        <span class="contact-pill">Visit us</span>
+        <h2 class="mt-5 text-4xl font-bold text-primary leading-tight">
+          Find us in<br />
+          Central London
+        </h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Located in the heart of London, our campus is easily accessible by
+          public transport and offers a vibrant learning environment.
+        </p>
+        <div class="mt-8 space-y-4">
+          <div class="flex items-start gap-3">
+            <div
+              class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+            >
+              <i class="fas fa-map-marker-alt text-primary"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">Address</p>
+              <p class="text-gray-600">
+                167 Commercial Road<br />London, E1 2DA
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div
+              class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+            >
+              <i class="fas fa-phone text-primary"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">Phone</p>
+              <p class="text-gray-600">+44 20 1234 5678</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div
+              class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+            >
+              <i class="fas fa-envelope text-primary"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">Email</p>
+              <p class="text-gray-600">info@lmsc.ac.uk</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div
+              class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+            >
+              <i class="fas fa-clock text-primary"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">Opening Hours</p>
+              <p class="text-gray-600">
+                Monday - Friday: 9:00 AM - 6:00 PM<br />Saturday: 10:00 AM -
+                4:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=167+Commercial+Road%2C+London%2C+E1+2DA"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-8 w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full transition text-center font-semibold"
+        >
+          Get Directions
+        </a>
+      </div>
+      <!-- Right Card - Map -->
+      <div
+        class="bg-white shadow-xl rounded-3xl overflow-hidden shadow-sm h-full"
+      >
+        <div id="map" class="w-full h-full"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w-full py-20">
+  <div class="container mx-auto px-6 scale-in stagger-4">
+    <div class="grid md:grid-cols-2 gap-10">
+      <!-- Left Card -->
+      <div class="bg-white shadow-xl rounded-3xl p-10 shadow-sm">
+        <span class="contact-pill">Contact us</span>
+        <h2 class="mt-5 text-4xl font-bold text-primary leading-tight">
+          Get in touch with LMSC<br />
+          now today
+        </h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          We'd love to hear from you! Whether you have questions, feedback, or
+          need support, our team is here to help.
+        </p>
+        <div class="mt-6">
+          <p class="text-gray-700 font-medium mb-3">Follow us on:</p>
+          <ul class="grid grid-cols-2 gap-10 text-gray-600">
+            <li>
+              <a
+                href="https://www.facebook.com/profile.php?id=61583837041356#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 text-gray-600 hover:text-primary focus-visible:text-primary"
+              >
+                <span
+                  class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+                >
+                  <i class="fab fa-facebook-f text-gray-600"></i>
+                </span>
+                <span>Facebook</span>
+              </a>
+            </li>
+            <li class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                <i class="fab fa-twitter text-gray-600"></i>
+              </div>
+              <span>Twitter</span>
+            </li>
+            <li>
+              <a
+                href="https://instagram.com/lmscuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 text-gray-600 hover:text-primary focus-visible:text-primary"
+              >
+                <span
+                  class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+                >
+                  <i class="fab fa-instagram text-gray-600"></i>
+                </span>
+                <span>Instagram</span>
+              </a>
+            </li>
+            <li class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                <i class="fab fa-pinterest-p text-gray-600"></i>
+              </div>
+              <span>Pinterest</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Right Form Card -->
+      <div class="bg-white shadow-xl rounded-3xl p-10 shadow-sm">
+        <form class="space-y-5" method="post" action="{{ url_for('contact') }}">
+          <input type="hidden" name="source" value="{{ request.path }}" />
+          <div>
+            <label class="text-sm text-gray-600" for="full_name"
+              >Full Name</label
+            >
+            <input
+              class="mt-1 w-full px-4 py-3 bg-gray-100 rounded-full outline-none"
+              id="full_name"
+              name="full_name"
+              placeholder="Full Name"
+              type="text"
+              value="{{ form_data.get('full_name', '') }}"
+              required
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-600" for="email">Email</label>
+            <input
+              class="mt-1 w-full px-4 py-3 bg-gray-100 rounded-full outline-none"
+              id="email"
+              name="email"
+              placeholder="your@mail.com"
+              type="email"
+              value="{{ form_data.get('email', '') }}"
+              required
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-600" for="phone">Number</label>
+            <input
+              class="mt-1 w-full px-4 py-3 bg-gray-100 rounded-full outline-none"
+              id="phone"
+              name="phone"
+              placeholder="+44 1234 56784"
+              type="text"
+              value="{{ form_data.get('phone', '') }}"
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-600" for="message"
+              >Additional Info</label
+            >
+            <textarea
+              class="mt-1 w-full px-4 py-3 bg-gray-100 rounded-2xl outline-none h-24"
+              id="message"
+              name="message"
+              placeholder="Additional info that you may want to add..."
+            >
+{{ form_data.get('message', '') }}</textarea
+            >
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+          >
+            Submit enquiry
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="w-full py-24 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <div class="text-center fade-in">
+      <span
+        class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg]"
+      >
+        Contact us
+      </span>
+      <h2 class="mt-4 text-4xl md:text-5xl font-bold text-primary">
+        For Other Dedicated Support
+      </h2>
+      <!-- Card -->
+      <div
+        class="mt-12 bg-white rounded-3xl shadow-md p-10 flex flex-col md:flex-row items-center gap-10 scale-in stagger-4"
+      >
+        <div class="grid md:grid-cols-2 gap-16 md:gap-20 items-center w-full">
+          <div>
+            <div class="flex-1 text-left">
+              <h3 class="text-2xl font-bold text-primary">
+                Schedule a Meeting Today
+              </h3>
+              <p class="mt-3 text-gray-600">
+                Schedule a meeting with financial experts today.
+              </p>
+              <button
+                class="mt-6 bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full"
+              >
+                Schedule a meeting
+              </button>
+            </div>
+          </div>
+          <!-- Right Side - Image with Chat Bubbles -->
+          <div class="relative flex items-center justify-center">
+            <!-- Main Image Container -->
+            <div class="main-image relative w-full max-w-sm">
+              <!-- Background placeholder for the person image -->
+              <div
+                class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+              >
+                <img
+                  alt="Person with phone"
+                  class="w-full h-full object-cover object-center"
+                  src="{{ url_for('static', filename='Images/contact-img.png') }}"
+                />
+              </div>
+              <!-- Chat Bubbles Overlay -->
+              <div class="chat-block">
+                <!-- User Message -->
+                <div class="user-message chat-bubble-user">
+                  <div class="user-avatar"></div>
+                  <div class="user-message-bubble">
+                    <div class="name">Oliver Moy</div>
+                    <div class="text">I need help with my budget.</div>
+                  </div>
+                </div>
+                <!-- AI Response -->
+                <div class="ai-message chat-bubble-ai">
+                  <div class="ai-avatar-bubble">
+                    <svg fill="currentColor" viewbox="0 0 24 24">
+                      <path
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="ai-message-bubble">
+                    <div class="name">AI Assistant</div>
+                    <div class="text">
+                      Sure! Let's carefully review your income and expenses.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+
+<!-- Mapbox GL JS -->
+{% endblock %} {% block extra_scripts %}
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+<script>
+  // Set your access token
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoibG1zYzIwMjUiLCJhIjoiY21pZndsMXJhMDB1MzNkc2htN2QzdmV4bCJ9.aP05w_lPVxWwuemAmW_Q2A";
+
+  // Initialize the map with 3D settings
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v12",
+    center: [-0.06412, 51.51484], // 167 Commercial Road, London, E1 2DA
+    zoom: 16,
+    attributionControl: false,
+    pitch: 60, // Tilt the map for 3D effect (0-85)
+    bearing: -17.6, // Rotate the map
+    antialias: true, // Smooth 3D buildings
+  });
+
+  // Add navigation controls
+  map.addControl(new mapboxgl.NavigationControl());
+
+  // Add fullscreen control
+  map.addControl(new mapboxgl.FullscreenControl());
+
+  // Add 3D buildings and terrain when the map loads
+  map.on("load", () => {
+    // Add 3D terrain
+    map.addSource("mapbox-dem", {
+      type: "raster-dem",
+      url: "mapbox://mapbox.mapbox-terrain-dem-v1",
+      tileSize: 512,
+      maxzoom: 14,
+    });
+    map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
+
+    // Add 3D buildings layer
+    const layers = map.getStyle().layers;
+    const labelLayerId = layers.find(
+      (layer) => layer.type === "symbol" && layer.layout["text-field"]
+    ).id;
+
+    map.addLayer(
+      {
+        id: "3d-buildings",
+        source: "composite",
+        "source-layer": "building",
+        filter: ["==", "extrude", "true"],
+        type: "fill-extrusion",
+        minzoom: 15,
+        paint: {
+          "fill-extrusion-color": "#aaa",
+          "fill-extrusion-height": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            15,
+            0,
+            15.05,
+            ["get", "height"],
+          ],
+          "fill-extrusion-base": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            15,
+            0,
+            15.05,
+            ["get", "min_height"],
+          ],
+          "fill-extrusion-opacity": 0.6,
+        },
+      },
+      labelLayerId
+    );
+  });
+
+  // Add a marker at the LMSC campus location
+  new mapboxgl.Marker({ color: "#166534" })
+    .setLngLat([-0.0647, 51.5145])
+    .setPopup(
+      new mapboxgl.Popup({ offset: 25 }).setHTML(
+        '<h3 style="margin: 0 0 10px 0;">167 Commercial Road</h3><p style="margin: 0;">London, E1 2DA</p>'
+      )
+    )
+    .addTo(map);
+
+  // Optional: Rotate camera around the point
+  function rotateCamera(timestamp) {
+    map.rotateTo((timestamp / 100) % 360, { duration: 0 });
+    requestAnimationFrame(rotateCamera);
+  }
+  // Uncomment below to enable auto-rotation
+  // rotateCamera(0);
+</script>
+{% endblock %}

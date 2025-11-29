@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% set meta = page_meta or {} %}
+{% block title %}{{ meta.get('seo_title') or 'Under Development | LMSC' }}{% endblock %}
+
+{% block content %}
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid items-center gap-16 md:grid-cols-2 lg:gap-20">
+      <div class="space-y-6">
+        <span
+          class="inline-block rotate-[-6deg] rounded-full bg-[#C5F3C5] px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-lime-700"
+        >
+          Coming soon
+        </span>
+        <h1 class="text-4xl font-bold text-primary md:text-5xl">
+          We are polishing this experience
+        </h1>
+        <p class="text-base leading-relaxed text-gray-700 md:text-lg">
+          Our team is finalising this page to align with the latest updates at
+          London Maths &amp; Science College. In the meantime, explore other
+          areas of the site or reach out and we will share what you need.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="{{ url_for('index') }}"
+            class="inline-flex items-center gap-3 rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            Return to homepage
+            <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <a
+            href="{{ url_for('contact') }}"
+            class="inline-flex items-center gap-3 rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+          >
+            Contact our team
+            <i class="fas fa-headset text-xs"></i>
+          </a>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="flex items-start gap-3 rounded-2xl bg-white/60 p-5">
+            <span class="text-primary"><i class="fas fa-clock"></i></span>
+            <div>
+              <p class="text-sm font-semibold text-primary">Estimated launch</p>
+              <p class="text-sm text-gray-600">
+                New content goes live shortly. Check back for fresh guidance.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 rounded-2xl bg-white/60 p-5">
+            <span class="text-primary"><i class="fas fa-envelope-open-text"></i></span>
+            <div>
+              <p class="text-sm font-semibold text-primary">Need details now?</p>
+              <p class="text-sm text-gray-600">
+                Email us at
+                <a
+                  href="mailto:info@lmsc.ac.uk"
+                  class="font-medium text-primary underline-offset-2 hover:underline"
+                >
+                  info@lmsc.ac.uk
+                </a>
+                and we will respond within one working day.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relative flex justify-center md:justify-end">
+        <div class="relative w-full max-w-md">
+          <div
+            class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-emerald-200/60 via-white to-sky-100 blur-2xl"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-xl"
+          >
+            <div class="h-64 w-full bg-gradient-to-br from-primary/10 to-sky-100">
+              <img
+                src="{{ url_for('static', filename='Images/Image 7.jpg') }}"
+                alt="Team collaborating on new content"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="space-y-4 p-6">
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                Behind the scenes
+              </p>
+              <h2 class="text-xl font-semibold text-slate-900">
+                Building a better resource for our students and families
+              </h2>
+              <p class="text-sm text-gray-600">
+                Our academic and admissions teams are curating guidance, media
+                and downloads to support your next steps with confidence.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid items-center gap-20 md:grid-cols-2">
+      <div class="space-y-6">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg]"
+        >
+          Stay informed
+        </span>
+        <h2 class="text-primary font-bold text-3xl md:text-4xl">
+          Be first to hear when this page goes live
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Add your email and we will let you know the moment the new resources
+          are ready, along with any interim guidance you might need.
+        </p>
+        <ul class="space-y-3 text-sm text-gray-700">
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span>Early notice of launch dates and preview content</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span>Links to related information while the page is in progress</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span>Direct access to our team if you need answers sooner</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative">
+        <div
+          class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-emerald-200/60 via-white to-sky-100 blur-2xl"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="relative rounded-3xl border border-emerald-100 bg-white/80 p-8 shadow-xl"
+        >
+          <div class="space-y-4">
+            <span
+              class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary"
+            >
+              Stay in the loop
+            </span>
+            <h3 class="text-xl font-semibold text-primary">
+              Tell us where to send the update
+            </h3>
+            <p class="text-sm text-gray-600">
+              We will send one concise email when the page is ready, plus any
+              essential notices in the meantime.
+            </p>
+            <form
+              class="flex flex-col gap-3 sm:flex-row"
+              method="post"
+              action="{{ url_for('subscribe') }}"
+            >
+              <input type="hidden" name="source" value="Development Page" />
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="you@example.com"
+                class="w-full flex-1 rounded-full border border-gray-200 px-5 py-3 text-sm focus:border-primary focus:outline-none"
+                aria-label="Email address"
+              />
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+              >
+                Notify me
+                <i class="fas fa-paper-plane text-xs"></i>
+              </button>
+            </form>
+            <div class="grid gap-4 text-sm text-gray-600 sm:grid-cols-2">
+              <div class="flex items-start gap-3">
+                <span class="text-primary">
+                  <i class="fas fa-bolt"></i>
+                </span>
+                <div>
+                  <p class="font-semibold text-primary">Quick responses</p>
+                  <p>We acknowledge every enquiry within one working day.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-primary">
+                  <i class="fas fa-shield-alt"></i>
+                </span>
+                <div>
+                  <p class="font-semibold text-primary">Privacy first</p>
+                  <p>We only use your details for essential LMSC updates.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,244 @@
+{% extends 'admin/base_admin.html' %} {% block nav_title %}Dashboard{% endblock
+%} {% block title %}Leads Dashboard · LMSC Admin{% endblock %} {% block
+extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const trendData = {{ trend_chart | tojson }};
+    const statusData = {{ status_chart | tojson }};
+    const typeData = {{ type_chart | tojson }};
+
+    const trendCtx = document.getElementById('leadTrendChart');
+    if (trendCtx) {
+      new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels: trendData.labels,
+          datasets: [{
+            label: 'Leads per day',
+            data: trendData.values,
+            fill: false,
+            borderColor: '#16A7A0',
+            tension: 0.35,
+            borderWidth: 3,
+            pointBackgroundColor: '#387951',
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
+    }
+
+    const statusCtx = document.getElementById('leadStatusChart');
+    if (statusCtx) {
+      new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: statusData.labels,
+          datasets: [{
+            data: statusData.values,
+            backgroundColor: ['#387951', '#16A7A0', '#FB923C', '#0EA5E9', '#9333EA'],
+            borderWidth: 0,
+          }],
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 12 },
+            },
+          },
+        },
+      });
+    }
+
+    const typeCtx = document.getElementById('leadTypeChart');
+    if (typeCtx) {
+      new Chart(typeCtx, {
+        type: 'bar',
+        data: {
+          labels: typeData.labels,
+          datasets: [{
+            label: 'Leads',
+            data: typeData.values,
+            backgroundColor: '#387951',
+            borderRadius: 12,
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
+    }
+  });
+</script>
+{% endblock %} {% block content %}
+<header class="mb-8">
+  <h1 class="text-3xl font-bold text-slate-900">Leads Dashboard</h1>
+  <p class="text-sm text-slate-500 mt-1">
+    Monitor enquiries, subscriptions and track progression across the admissions
+    pipeline.
+  </p>
+</header>
+
+<section class="grid gap-6 md:grid-cols-2 xl:grid-cols-5 mb-10">
+  <article
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 xl:col-span-1"
+  >
+    <p class="text-xs uppercase tracking-widest text-slate-400">Total Leads</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">{{ kpis.total_leads }}</p>
+    <p class="text-xs text-slate-500 mt-2">Across all channels</p>
+  </article>
+  <article
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 xl:col-span-1"
+  >
+    <p class="text-xs uppercase tracking-widest text-slate-400">New (7 days)</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">
+      {{ kpis.weekly_leads }}
+    </p>
+    <p class="text-xs text-slate-500 mt-2">Fresh enquiries this week</p>
+  </article>
+  <article
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 xl:col-span-1"
+  >
+    <p class="text-xs uppercase tracking-widest text-slate-400">
+      Subscriptions
+    </p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">
+      {{ kpis.subscription_count }}
+    </p>
+    <p class="text-xs text-slate-500 mt-2">Newsletter opt-ins</p>
+  </article>
+  <article
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 xl:col-span-1"
+  >
+    <p class="text-xs uppercase tracking-widest text-slate-400">
+      Contact Enquiries
+    </p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">
+      {{ kpis.contact_count }}
+    </p>
+    <p class="text-xs text-slate-500 mt-2">Submitted via forms</p>
+  </article>
+  <article
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 xl:col-span-1"
+  >
+    <p class="text-xs uppercase tracking-widest text-slate-400">
+      Conversion Rate
+    </p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">
+      {{ kpis.conversion_rate }}%
+    </p>
+    <p class="text-xs text-slate-500 mt-2">Qualified &amp; Closed</p>
+  </article>
+</section>
+
+<section class="grid gap-6 lg:grid-cols-3 mb-10">
+  <div
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 lg:col-span-2"
+  >
+    <h2 class="text-xl font-semibold text-slate-900 mb-2">
+      7-Day Lead Velocity
+    </h2>
+    <p class="text-sm text-slate-500 mb-6">
+      Track how many enquiries are landing each day.
+    </p>
+    <canvas id="leadTrendChart" height="160"></canvas>
+  </div>
+  <div class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <h2 class="text-xl font-semibold text-slate-900 mb-2">
+      Pipeline Distribution
+    </h2>
+    <p class="text-sm text-slate-500 mb-6">
+      Understand where leads sit in the pipeline.
+    </p>
+    <canvas id="leadStatusChart" height="160"></canvas>
+  </div>
+</section>
+
+<section class="grid gap-6 lg:grid-cols-3 mb-10">
+  <div class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <h2 class="text-xl font-semibold text-slate-900 mb-2">Lead Type Mix</h2>
+    <p class="text-sm text-slate-500 mb-6">
+      Compare marketing vs admissions touchpoints.
+    </p>
+    <canvas id="leadTypeChart" height="180"></canvas>
+  </div>
+  <div
+    class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 lg:col-span-2"
+  >
+    <h2 class="text-xl font-semibold text-slate-900">Status Overview</h2>
+    <p class="text-sm text-slate-500 mb-4">
+      Quick snapshot of each stage to help balance workload.
+    </p>
+    <ul class="space-y-3">
+      {% for status in statuses %}
+      <li
+        class="flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-3"
+      >
+        <span class="font-medium text-slate-600">{{ status }}</span>
+        <span class="text-slate-900 font-semibold"
+          >{{ status_counts.get(status, 0) }}</span
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+  <h2 class="text-xl font-semibold text-slate-900 mb-4">Recent Leads</h2>
+  <p class="text-sm text-slate-500 mb-4">
+    Latest ten submissions from any channel.
+  </p>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-slate-200 text-sm">
+      <thead
+        class="bg-slate-50 text-xs uppercase tracking-widest text-slate-500"
+      >
+        <tr>
+          <th scope="col" class="px-4 py-3 text-left">Name</th>
+          <th scope="col" class="px-4 py-3 text-left">Email</th>
+          <th scope="col" class="px-4 py-3 text-left">Type</th>
+          <th scope="col" class="px-4 py-3 text-left">Status</th>
+          <th scope="col" class="px-4 py-3 text-left">Created</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 bg-white">
+        {% for lead in recent_leads %}
+        <tr>
+          <td class="px-4 py-3">{{ lead['full_name'] or '—' }}</td>
+          <td class="px-4 py-3">{{ lead['email'] or '—' }}</td>
+          <td class="px-4 py-3 capitalize">{{ lead['lead_type'] }}</td>
+          <td class="px-4 py-3">{{ lead['status'] }}</td>
+          <td class="px-4 py-3 text-slate-500">{{ lead['created_at'] }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+            No data yet.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

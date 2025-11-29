@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% if page_meta and page_meta.get('seo_title') %}
+    <title>{{ page_meta.get('seo_title') }}</title>
+    {% else %}
+    <title>
+      {% block title %}London Maths &amp; Science College{% endblock %}
+    </title>
+    {% endif %} {% if page_meta and page_meta.get('meta_description') %}
+    <meta
+      name="description"
+      content="{{ page_meta.get('meta_description') }}"
+    />
+    {% else %}
+    <meta
+      name="description"
+      content="London Maths &amp; Science College is a British 16–19 STEM college in London delivering the full British curriculum with clear pathways to universities and careers."
+    />
+    {% endif %} {% if page_meta and page_meta.get('social_image') %}
+    <meta
+      property="og:image"
+      content="{{ url_for('static', filename=page_meta.get('social_image'), _external=True) }}"
+    />
+    <meta
+      property="twitter:image"
+      content="{{ url_for('static', filename=page_meta.get('social_image'), _external=True) }}"
+    />
+    {% endif %}
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='Favicon/09.jpg') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='Favicon/09.jpg') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='Favicon/05.jpg') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='Favicon/09.jpg') }}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="{{ url_for('static', filename='Favicon/09.jpg') }}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-MMW9GQHV");
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QSRDSP5GKP"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-QSRDSP5GKP");
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script
+      src="https://kit.fontawesome.com/b4796c35bf.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#387951",
+              secondary: "#16A7A0",
+              accent: "#C5F3C5",
+            },
+            fontFamily: {
+              body: ["Montserrat", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body class="font-body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-MMW9GQHV"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {% include 'partials/navbar.html' %} {% with messages =
+    get_flashed_messages(with_categories=true) %} {% if messages %}
+    <div class="container mx-auto px-6 mt-6 space-y-3">
+      {% for category, message in messages %}
+      <div
+        class="rounded-xl px-4 py-3 text-sm font-medium shadow-sm {% if category == 'error' %}bg-red-50 text-red-700 border border-red-200{% elif category == 'warning' %}bg-amber-50 text-amber-700 border border-amber-200{% elif category == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200{% elif category == 'info' %}bg-blue-50 text-blue-700 border border-blue-200{% else %}bg-slate-100 text-slate-700 border border-slate-200{% endif %}"
+      >
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+    <main>{% block content %}{% endblock %}</main>
+    {% include 'partials/footer.html' %}
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        />
+      </svg>
+    </button>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% block title %}Reviews - LMSC{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+
+<!-- Hero Section -->
+<section class="py-20">
+<div class="container mx-auto px-6 text-center fade-in">
+<span class="inline-block rotate-[-8deg] bg-accent text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                Testimonial
+            </span>
+<h1 class="text-primary font-bold text-gray-900 mb-6 max-w-3xl mx-auto">
+                What are people saying about us right now?
+            </h1>
+<p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Real users. Real impact. Smarter finances for a better future, powered by AI-driven insights and
+                innovation!
+            </p>
+</div>
+</section>
+<!-- Reviews Grid -->
+<section class="py-12">
+<div class="container mx-auto px-6">
+<!-- Testimonials Grid -->
+<div class="grid md:grid-cols-3 gap-8 scale-in">
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover center" src="{{ url_for('static', filename='Images/user-2.jpg') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Rayan Kay</h3>
+<p class="text-sm text-gray-500">Fintech</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora simplifies financial planning effortlessly! With AI budgeting, I save 20% more
+                        monthly,
+                        and the expense tracking keeps my spending in check effectively.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user-2.jpg') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Ralph Edwards</h3>
+<p class="text-sm text-gray-500">Horizon</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora takes the stress out of budgeting fast! With smart insights, I manage goals
+                        better,
+                        and the intuitive layout helps me control my savings without any hassle.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user.png') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Darlene Robertson</h3>
+<p class="text-sm text-gray-500">Naxus</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora turns money management into a breeze! With custom reports, I hit my budget goals,
+                        and the daily tips keep my spending in a healthy range each month.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user-2.jpg') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Cameron Williamson</h3>
+<p class="text-sm text-gray-500">Fintech</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora helps you master your finances with ease! With tracking tools, I’ve built better
+                        habits,
+                        and the auto-categorization makes things super clear and stress-free.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user.png') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Albert Flores</h3>
+<p class="text-sm text-gray-500">Lumina</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora handles your financial goals with ease! With budget planning, I avoid impulse
+                        buys,
+                        and the monthly breakdown gives me clarity like never before!
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user-2.jpg') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Cody Fisher</h3>
+<p class="text-sm text-gray-500">Biffco Enterprises Ltd.</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora makes your budgeting journey smoother! With spending limits, I stay disciplined,
+                        and the reminders help me avoid overspending without needing to stress.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user.png') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Rayan Kay</h3>
+<p class="text-sm text-gray-500">Fintech</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora simplifies financial planning effortlessly! With AI budgeting, I save 20% more
+                        monthly,
+                        and the expense tracking keeps my spending in check effectively.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Ralph Edwards</h3>
+<p class="text-sm text-gray-500">Horizon</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora takes the stress out of budgeting fast! With smart insights, I manage goals
+                        better,
+                        and the intuitive layout helps me control my savings without any hassle.
+                    </p>
+</div>
+<div class="bg-white rounded-2xl shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<img alt="" class="w-12 h-12 rounded-full object-cover" src="{{ url_for('static', filename='Images/user-2.jpg') }}"/>
+<div>
+<h3 class="font-semibold text-gray-900">Darlene Robertson</h3>
+<p class="text-sm text-gray-500">Naxus</p>
+</div>
+</div>
+<p class="text-gray-700 text-sm leading-relaxed">
+                        Finora turns money management into a breeze! With custom reports, I hit my budget goals,
+                        and the daily tips keep my spending in a healthy range each month.
+                    </p>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="text-center mt-12 fade-in">
+<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold gap-2">
+                    Load More
+                </button>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-20 items-center scale-in">
+<div>
+<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
+                        Next steps
+                    </span>
+<h2 class="font-bold text-primary mb-4">
+                        Secure, reliable, and trusted by thousands
+                    </h2>
+<p class="text-opacity-90 mb-8 leading-relaxed">
+                        Join thousands who trust us for secure financial management. Your data is protected with
+                        top-level encryption and security protocols.
+                    </p>
+<!-- BTN 1 -->
+<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
+<div class="btn-content">
+<span class="text-part">Book a Consultation</span>
+<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
+<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</span>
+</div>
+</button>
+</div>
+<!-- Right Side - Image with Chat Bubbles -->
+<div class="relative flex items-center justify-end">
+<!-- Main Image Container -->
+<div class="main-image relative w-full max-w-sm">
+<!-- Background placeholder for the person image -->
+<div class="absolute inset-0 flex items-center justify-center">
+<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
+</div>
+<!-- Chat Bubbles Overlay -->
+<div class="chat-block">
+<!-- User Message -->
+<div class="user-message chat-bubble-user">
+<div class="user-avatar"></div>
+<div class="user-message-bubble">
+<div class="name">Oliver Moy</div>
+<div class="text">I need help with my budget.</div>
+</div>
+</div>
+<!-- AI Response -->
+<div class="ai-message chat-bubble-ai">
+<div class="ai-avatar-bubble">
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+<div class="ai-message-bubble">
+<div class="name">AI Assistant</div>
+<div class="text">Sure! Let's carefully review your income and expenses.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.fade-in, .scale-in');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+{% endblock %}

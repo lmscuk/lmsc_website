@@ -1,0 +1,201 @@
+{% extends 'base.html' %} {% block title %}School Policies | LMSC{% endblock %}
+{% block content %}
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid items-center gap-16 md:grid-cols-2 lg:gap-20">
+      <div class="space-y-6">
+        <span
+          class="inline-block rotate-[-6deg] rounded-full bg-[#C5F3C5] px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-lime-700"
+        >
+          Policy hub
+        </span>
+        <h1 class="text-4xl font-bold text-primary md:text-5xl">
+          School Policies and Procedures
+        </h1>
+        <p class="text-base leading-relaxed text-gray-700 md:text-lg">
+          Access the full library of policy documents that guide how London
+          Maths &amp; Science College operates. Each document is reviewed on a
+          regular cycle so you can rely on the information being current and
+          compliant.
+        </p>
+        <p class="text-sm text-gray-500">
+          Need a document in an alternative format or have a question? Contact
+          our safeguarding and compliance team via the enquiry form.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="#policy-grid"
+            class="inline-flex items-center gap-3 rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            Browse policies
+            <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <a
+            href="{{ url_for('contact') }}"
+            class="inline-flex items-center gap-3 rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+          >
+            Contact safeguarding
+            <i class="fas fa-headset text-xs"></i>
+          </a>
+        </div>
+      </div>
+      <div class="relative flex justify-center md:justify-end">
+        <div class="relative w-full max-w-md">
+          <div
+            class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-emerald-200/60 via-white to-sky-100 blur-2xl"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-xl"
+          >
+            <div
+              class="h-64 w-full bg-gradient-to-br from-primary/10 to-sky-100"
+            >
+              <img
+                src="{{ url_for('static', filename='Images/Image 11.jpg') }}"
+                alt="Students reviewing policy documents"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16">
+  <div class="container mx-auto px-6">
+    <div
+      class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
+    >
+      <div>
+        <h2 class="text-2xl font-semibold text-primary md:text-3xl">
+          Policy library
+        </h2>
+        <p class="mt-2 text-sm text-gray-600">
+          Browse the complete set of LMSC policies. Use the search box to filter
+          by title.
+        </p>
+      </div>
+      <div class="relative w-full max-w-sm">
+        <label for="policy-search" class="sr-only">Search policies</label>
+        <input
+          id="policy-search"
+          type="search"
+          placeholder="Search policies..."
+          class="w-full rounded-full border border-gray-200 px-5 py-3 text-sm focus:border-primary focus:outline-none"
+        />
+        <span
+          class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+        >
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <div
+      id="policy-grid"
+      class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      {% if policies %} {% for policy in policies %}
+      <article
+        class="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+        data-policy-card
+        data-policy-title="{{ policy['title']|lower }}"
+      >
+        <div class="relative h-44 w-full overflow-hidden bg-slate-900/5">
+          {% if policy['thumbnail_path'] %}
+          <img
+            src="{{ url_for('static', filename=policy['thumbnail_path']) }}"
+            alt="{{ policy['title'] }} thumbnail"
+            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          />
+          {% else %}
+          <div
+            class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-sky-100 text-primary"
+          >
+            <i class="fas fa-file-pdf text-4xl"></i>
+          </div>
+          {% endif %}
+        </div>
+        <div class="flex flex-1 flex-col gap-4 p-6">
+          <div>
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+            >
+              Policy
+            </p>
+            <h3 class="mt-2 text-lg font-semibold text-slate-900">
+              {{ policy['title'] }}
+            </h3>
+          </div>
+          <div class="mt-auto flex flex-wrap gap-3">
+            <a
+              href="{{ url_for('static', filename=policy['document_path']) }}"
+              download
+              class="inline-flex items-center gap-2 rounded-full border border-primary/30 px-4 py-2 text-xs font-semibold text-primary transition hover:bg-primary/5"
+            >
+              <i class="fas fa-download text-xs"></i>
+              Download
+            </a>
+            <a
+              href="{{ url_for('static', filename=policy['document_path']) }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-primary/90"
+            >
+              <i class="fas fa-eye text-xs"></i>
+              Preview
+            </a>
+          </div>
+        </div>
+      </article>
+      {% endfor %} {% else %}
+      <div
+        class="col-span-full rounded-3xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center text-gray-500"
+      >
+        No policies are currently available. Please check back soon.
+      </div>
+      {% endif %}
+    </div>
+
+    <div
+      id="policy-empty"
+      class="col-span-full mt-10 hidden rounded-3xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center text-gray-500"
+    >
+      No policies match your search.
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_scripts %} {{ super() }}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("policy-search");
+    const cards = Array.from(document.querySelectorAll("[data-policy-card]"));
+    const emptyState = document.getElementById("policy-empty");
+
+    if (!searchInput || cards.length === 0) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const term = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = card.dataset.policyTitle || "";
+        const isVisible = !term || title.includes(term);
+        card.classList.toggle("hidden", !isVisible);
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      emptyState?.classList.toggle("hidden", visibleCount !== 0);
+    };
+
+    searchInput.addEventListener("input", updateVisibility);
+  });
+</script>
+{% endblock %}

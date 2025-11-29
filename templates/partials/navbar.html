@@ -1,0 +1,1717 @@
+<header class="md:px-8 px-4 py-4 max-w-[1920px] mx-auto sticky top-0 z-[60]">
+  <nav
+    class="bg-white/85 px-6 mx-auto rounded-2xl w-full py-3 shadow-lg border border-white/60 backdrop-blur-xl transition-all duration-300 z-[60]"
+  >
+    <div>
+      <div class="flex items-center justify-between py-2">
+        <div class="flex items-center gap-3">
+          <a href="{{ url_for('index') }}"
+            ><img
+              src="{{ url_for('static', filename='Logo/Logo_1.png') }}"
+              class="header-logo"
+              alt="London Maths &amp; Science College logo"
+          /></a>
+        </div>
+        <div class="hidden xl:flex items-center gap-1">
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              Study at LMSC
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute left-0 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="grid grid-cols-3 gap-6">
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('about') }}"
+                    onmouseenter="setImage('why-lmsc')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-user px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Why LMSC?</h4>
+                      <p class="text-xs text-gray-500">About our college</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('stem_pathways') }}"
+                    onmouseenter="setImage('stem-pathways')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-graduation-cap px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">STEM Pathways</h4>
+                      <p class="text-xs text-gray-500">
+                        A Level &amp; GCSE courses
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('study_options') }}"
+                    onmouseenter="setImage('study-options')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Study Options</h4>
+                      <p class="text-xs text-gray-500">
+                        Online &amp; in-person
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('fees') }}"
+                    onmouseenter="setImage('fees-finance')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-pound-sign px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Fees &amp; Finance
+                      </h4>
+                      <p class="text-xs text-gray-500">Transparent pricing</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='open-events') }}"
+                    onmouseenter="setImage('open-events')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-calendar-alt px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Open Events</h4>
+                      <p class="text-xs text-gray-500">Visit our college</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='prospectus') }}"
+                    onmouseenter="setImage('prospectus')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-file-pdf px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Prospectus</h4>
+                      <p class="text-xs text-gray-500">Download our guide</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-span-2">
+                  <div
+                    id="previewBox"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&amp;h=400&amp;fit=crop"
+                      alt="Study"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              Teaching &amp; Learning
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute left-0 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="grid grid-cols-3 gap-6">
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('how_we_teach') }}"
+                    onmouseenter="setImage('teach-stem')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-chalkboard-teacher px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        How We Teach STEM
+                      </h4>
+                      <p class="text-xs text-gray-500">Our methodology</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('our_teacher_expert') }}"
+                    onmouseenter="setImage('teachers')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-user-graduate px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Our Teachers &amp; Expert Tutors
+                      </h4>
+                      <p class="text-xs text-gray-500">Meet our team</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('informed_teaching') }}"
+                    onmouseenter="setImage('evidence-teaching')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Evidence-Informed Teaching
+                      </h4>
+                      <p class="text-xs text-gray-500">
+                        Research-based approach
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('courses') }}"
+                    onmouseenter="setImage('learning-support')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-hands-helping px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Learning Support
+                      </h4>
+                      <p class="text-xs text-gray-500">Extra help available</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='support-send-learners') }}"
+                    onmouseenter="setImage('send-support')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-heart px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Support for SEND Learners
+                      </h4>
+                      <p class="text-xs text-gray-500">Inclusive education</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='digital-learning-devices') }}"
+                    onmouseenter="setImage('digital-learning')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-laptop px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Digital Learning &amp; Devices
+                      </h4>
+                      <p class="text-xs text-gray-500">Tech-enabled learning</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='academic-facilities-labs') }}"
+                    onmouseenter="setImage('facilities')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-flask px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Academic Facilities &amp; Labs
+                      </h4>
+                      <p class="text-xs text-gray-500">
+                        State-of-the-art spaces
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='research-innovation-centre') }}"
+                    onmouseenter="setImage('research')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-microscope px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Research &amp; Innovation Centre
+                      </h4>
+                      <p class="text-xs text-gray-500">Cutting-edge research</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='exam-information-results') }}"
+                    onmouseenter="setImage('exam-info')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-certificate px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Exam Information &amp; Results
+                      </h4>
+                      <p class="text-xs text-gray-500">Academic outcomes</p>
+                    </div>
+                  </a>
+                </div>
+                <div>
+                  <div
+                    id="previewBoxTeaching"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&amp;h=400&amp;fit=crop"
+                      alt="Teaching"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              College Life
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute left-0 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="grid grid-cols-3 gap-6">
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='life-at-lmsc') }}"
+                    onmouseenter="setImage('life-lmsc')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-home px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Life at LMSC</h4>
+                      <p class="text-xs text-gray-500">Daily experience</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='student-community') }}"
+                    onmouseenter="setImage('student-community')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-users px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Our Student Community
+                      </h4>
+                      <p class="text-xs text-gray-500">
+                        Diverse &amp; inclusive
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='pastoral-care-wellbeing') }}"
+                    onmouseenter="setImage('pastoral-care')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-heartbeat px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Pastoral Care &amp; Wellbeing
+                      </h4>
+                      <p class="text-xs text-gray-500">Student support</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='tutor-system-mentoring') }}"
+                    onmouseenter="setImage('tutor-system')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-user-friends px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Tutor System &amp; Mentoring
+                      </h4>
+                      <p class="text-xs text-gray-500">Personal guidance</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='inclusion-student-voice') }}"
+                    onmouseenter="setImage('inclusion')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-bullhorn px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Inclusion &amp; Student Voice
+                      </h4>
+                      <p class="text-xs text-gray-500">Have your say</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='sphere-programme') }}"
+                    onmouseenter="setImage('sphere')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-star px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        SPHERE Programme
+                      </h4>
+                      <p class="text-xs text-gray-500">Personal development</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='faith-religious-provision') }}"
+                    onmouseenter="setImage('faith')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-praying-hands px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Faith &amp; Religious Provision
+                      </h4>
+                      <p class="text-xs text-gray-500">Spiritual support</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='assemblies-events') }}"
+                    onmouseenter="setImage('assemblies')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-calendar px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Assemblies &amp; Events
+                      </h4>
+                      <p class="text-xs text-gray-500">Community gatherings</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='summer-camps-enrichment') }}"
+                    onmouseenter="setImage('summer-camps')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-sun px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Summer Camps &amp; Enrichment
+                      </h4>
+                      <p class="text-xs text-gray-500">Extra activities</p>
+                    </div>
+                  </a>
+                </div>
+                <div>
+                  <div
+                    id="previewBoxCollege"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      alt="College life"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              Online &amp; Homeschooling
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute right-0 lg:-right-16 xl:-right-24 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="grid grid-cols-3 gap-6">
+                <div class="space-y-2">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='online-homeschooling-programmes') }}"
+                    onmouseenter="setImage('online-programmes')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-desktop px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Online Homeschooling Programmes
+                      </h4>
+                      <p class="text-xs text-gray-500">Study from home</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='homeschooling-advice-support') }}"
+                    onmouseenter="setImage('homeschool-advice')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-info-circle px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Homeschooling Advice &amp; Support
+                      </h4>
+                      <p class="text-xs text-gray-500">Expert guidance</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='computer-requirements') }}"
+                    onmouseenter="setImage('computer-req')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-laptop-code px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Computer Requirements
+                      </h4>
+                      <p class="text-xs text-gray-500">Technical specs</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='it-helpdesk-support') }}"
+                    onmouseenter="setImage('it-support')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-headset px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        IT Helpdesk &amp; Technical Support
+                      </h4>
+                      <p class="text-xs text-gray-500">Get help fast</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-span-2">
+                  <div
+                    id="previewBoxOnline"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      alt="Online learning"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              Support &amp; Guidance
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+              style="right: -30%"
+            >
+              <div class="grid grid-cols-3 gap-5 items-stretch">
+                <div class="space-y-2 flex flex-col h-full">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='student-parent-faqs') }}"
+                    onmouseenter="setImage('faqs')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-question-circle px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Student &amp; Parent FAQs
+                      </h4>
+                      <p class="text-xs text-gray-500">Common questions</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='university-careers-guidance') }}"
+                    onmouseenter="setImage('careers')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-briefcase px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        University &amp; Careers Guidance
+                      </h4>
+                      <p class="text-xs text-gray-500">Plan your future</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='study-guidance') }}"
+                    onmouseenter="setImage('study-guidance')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-compass px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        A Level &amp; GCSE Study Guidance
+                      </h4>
+                      <p class="text-xs text-gray-500">
+                        Study tips &amp; advice
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='exam-information-policies') }}"
+                    onmouseenter="setImage('exam-policies')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-clipboard-list px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Exam Information &amp; Policies
+                      </h4>
+                      <p class="text-xs text-gray-500">Exam guidelines</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('pricing') }}"
+                    onmouseenter="setImage('payment-plans')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-credit-card px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Finance &amp; Payment Plans
+                      </h4>
+                      <p class="text-xs text-gray-500">Flexible options</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('blogs') }}"
+                    onmouseenter="setImage('blog')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-blog px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Blog &amp; Insights
+                      </h4>
+                      <p class="text-xs text-gray-500">Latest updates</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-span-2">
+                  <div
+                    id="previewBoxSupport"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      alt="Support"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown relative group order-first">
+            <button
+              class="px-2 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              About Us
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute right-0 lg:right-auto lg:left-[30%] mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="grid grid-cols-3 gap-5 items-stretch">
+                <div class="space-y-2 flex flex-col h-full">
+                  <a
+                    href="{{ url_for('our_mission') }}"
+                    onmouseenter="setImage('mission')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-bullseye px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Our Mission &amp; Values
+                      </h4>
+                      <p class="text-xs text-gray-500">What we stand for</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='strategy-vision') }}"
+                    onmouseenter="setImage('vision')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-lightbulb px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Our Strategy &amp; Vision
+                      </h4>
+                      <p class="text-xs text-gray-500">Future goals</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='meet-the-principal') }}"
+                    onmouseenter="setImage('principal')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-user-tie px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Meet the Principal
+                      </h4>
+                      <p class="text-xs text-gray-500">Leadership welcome</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='leadership-governance') }}"
+                    onmouseenter="setImage('governance')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-users px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Leadership &amp; Governance
+                      </h4>
+                      <p class="text-xs text-gray-500">Management structure</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='partnerships-outreach') }}"
+                    onmouseenter="setImage('partnerships')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-handshake px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Partnerships &amp; Outreach
+                      </h4>
+                      <p class="text-xs text-gray-500">Collaborations</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='history-of-lmsc') }}"
+                    onmouseenter="setImage('history')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-history px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        History of LMSC
+                      </h4>
+                      <p class="text-xs text-gray-500">Our journey</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="space-y-2 flex flex-col h-full">
+                  <a
+                    href="{{ url_for('placeholder_page', slug='facilities-learning-spaces') }}"
+                    onmouseenter="setImage('learning-space')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-school px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Facilities &amp; Learning Spaces
+                      </h4>
+                      <p class="text-xs text-gray-500">Campus life</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='alumni-network') }}"
+                    onmouseenter="setImage('alumni')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-graduation-cap px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Alumni Network
+                      </h4>
+                      <p class="text-xs text-gray-500">Our success stories</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='policies-reports') }}"
+                    onmouseenter="setImage('reports')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-file-alt px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Policies &amp; Reports
+                      </h4>
+                      <p class="text-xs text-gray-500">Official documents</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='work-with-us') }}"
+                    onmouseenter="setImage('careers-lmsc')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-briefcase px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Work With Us</h4>
+                      <p class="text-xs text-gray-500">Career opportunities</p>
+                    </div>
+                  </a>
+                  <a
+                    href="{{ url_for('placeholder_page', slug='lmsc-glossary') }}"
+                    onmouseenter="setImage('glossary')"
+                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                  >
+                    <div>
+                      <i
+                        class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
+                      ></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">LMSC Glossary</h4>
+                      <p class="text-xs text-gray-500">Useful terms</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="h-full">
+                  <div
+                    id="previewBoxAbout"
+                    class="w-full h-full rounded-2xl overflow-hidden transition-all"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1454165205744-3b78555e5572"
+                      alt="About LMSC"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% for parent in nav_pages_main %} {% set children =
+          nav_pages_dropdown_lookup.get(parent['id']) %} {% if children %}
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              {{ parent['page_name'] }}
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute right-0 mt-0 w-[380px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="space-y-2">
+                {% for child in children %}
+                <a
+                  href="{{ url_for('render_dynamic_page', slug=child['slug']) }}"
+                  class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                >
+                  <div
+                    class="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-200 text-slate-600 font-semibold"
+                  >
+                    {{ child['page_name'][0:2]|upper }}
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800">
+                      {{ child['page_name'] }}
+                    </h4>
+                    {% if child['meta_description'] %}
+                    <p class="text-xs text-gray-500 line-clamp-2">
+                      {{ child['meta_description'] }}
+                    </p>
+                    {% endif %}
+                  </div>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <a
+            href="{{ url_for('render_dynamic_page', slug=parent['slug']) }}"
+            class="px-4 py-2 text-gray-700 hover:text-primary font-bold"
+          >
+            {{ parent['page_name'] }}
+          </a>
+          {% endif %} {% endfor %} {% for group in nav_pages_dropdown_standalone
+          %}
+          <div class="dropdown relative group">
+            <button
+              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              {{ group.parent['page_name'] }}
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-content absolute right-0 mt-0 w-[380px] bg-white rounded-3xl shadow-2xl p-6"
+            >
+              <div class="space-y-2">
+                {% for child in group.children %}
+                <a
+                  href="{{ url_for('render_dynamic_page', slug=child['slug']) }}"
+                  class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                >
+                  <div
+                    class="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-200 text-slate-600 font-semibold"
+                  >
+                    {{ child['page_name'][0:2]|upper }}
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800">
+                      {{ child['page_name'] }}
+                    </h4>
+                    {% if child['meta_description'] %}
+                    <p class="text-xs text-gray-500 line-clamp-2">
+                      {{ child['meta_description'] }}
+                    </p>
+                    {% endif %}
+                  </div>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <a
+            href="{{ url_for('contact') }}"
+            class="px-2 py-2 text-gray-700 hover:text-primary font-bold"
+            >Contact</a
+          >
+        </div>
+        <button id="menuToggle" class="xl:hidden p-2 hamburger">
+          <div class="w-6 flex flex-col gap-1.5">
+            <span
+              class="hamburger-line line1 block h-0.5 w-full bg-gray-700"
+            ></span>
+            <span
+              class="hamburger-line line2 block h-0.5 w-full bg-gray-700"
+            ></span>
+            <span
+              class="hamburger-line line3 block h-0.5 w-full bg-gray-700"
+            ></span>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div id="offcanvasOverlay" class="offcanvas-overlay"></div>
+    <div id="offcanvasMenu" class="offcanvas">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-6">
+          <img
+            src="{{ url_for('static', filename='Logo/Logo_1.png') }}"
+            width="180"
+            alt="LMSC Logo"
+          />
+          <button id="closeMenu" class="p-2 hover:bg-gray-100 rounded-full">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="space-y-2 flex flex-col">
+          <div class="border-b border-gray-200 pb-2">
+            <button
+              onclick="toggleSubmenu('study')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>Study at LMSC</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="study-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="study-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('about') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-user w-4"></i>
+                <span class="text-sm"
+                  >Why London Maths &amp; Science College?</span
+                >
+              </a>
+              <a
+                href="{{ url_for('stem_pathways') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-graduation-cap w-4"></i>
+                <span class="text-sm">STEM A Level &amp; GCSE Pathways</span>
+              </a>
+              <a
+                href="{{ url_for('study_options') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-book w-4"></i>
+                <span class="text-sm"
+                  >Online &amp; In-Person Study Options</span
+                >
+              </a>
+              <a
+                href="{{ url_for('fees') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-pound-sign w-4"></i>
+                <span class="text-sm">Fees &amp; Finance</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='open-events') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-calendar-alt w-4"></i>
+                <span class="text-sm">Open Events &amp; Taster Days</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='prospectus') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-file-pdf w-4"></i>
+                <span class="text-sm">Download a Prospectus</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 pb-2">
+            <button
+              onclick="toggleSubmenu('teaching')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>Teaching &amp; Learning</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="teaching-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="teaching-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('how_we_teach') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-chalkboard-teacher w-4"></i>
+                <span class="text-sm">How We Teach STEM</span>
+              </a>
+              <a
+                href="{{ url_for('our_teacher_expert') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-user-graduate w-4"></i>
+                <span class="text-sm">Our Teachers &amp; Expert Tutors</span>
+              </a>
+              <a
+                href="{{ url_for('informed_teaching') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-lightbulb w-4"></i>
+                <span class="text-sm">Evidence-Informed Teaching</span>
+              </a>
+              <a
+                href="{{ url_for('courses') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-hands-helping w-4"></i>
+                <span class="text-sm">Learning Support</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='support-send-learners') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-heart w-4"></i>
+                <span class="text-sm">Support for SEND Learners</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='digital-learning-devices') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-laptop w-4"></i>
+                <span class="text-sm">Digital Learning &amp; Devices</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='academic-facilities-labs') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-flask w-4"></i>
+                <span class="text-sm">Academic Facilities &amp; Labs</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='research-innovation-centre') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-microscope w-4"></i>
+                <span class="text-sm">Research &amp; Innovation Centre</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='exam-information-results') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-certificate w-4"></i>
+                <span class="text-sm">Exam Information &amp; Results</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 pb-2">
+            <button
+              onclick="toggleSubmenu('college')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>College Life</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="college-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="college-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('placeholder_page', slug='life-at-lmsc') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-home w-4"></i>
+                <span class="text-sm">Life at LMSC</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='student-community') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-users w-4"></i>
+                <span class="text-sm">Our Student Community</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='pastoral-care-wellbeing') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-heartbeat w-4"></i>
+                <span class="text-sm">Pastoral Care &amp; Wellbeing</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='tutor-system-mentoring') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-user-friends w-4"></i>
+                <span class="text-sm">Tutor System &amp; Mentoring</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='inclusion-student-voice') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-bullhorn w-4"></i>
+                <span class="text-sm">Inclusion &amp; Student Voice</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='sphere-programme') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-star w-4"></i>
+                <span class="text-sm"
+                  >SPHERE Personal Development Programme</span
+                >
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='faith-religious-provision') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-praying-hands w-4"></i>
+                <span class="text-sm">Faith &amp; Religious Provision</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='assemblies-events') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-calendar-day w-4"></i>
+                <span class="text-sm"
+                  >Assemblies &amp; Whole-College Events</span
+                >
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='summer-camps-enrichment') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-sun w-4"></i>
+                <span class="text-sm">Summer Camps &amp; Enrichment</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 pb-2">
+            <button
+              onclick="toggleSubmenu('online')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>Online &amp; Homeschooling</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="online-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="online-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('placeholder_page', slug='online-homeschooling-programmes') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-desktop w-4"></i>
+                <span class="text-sm">Online Homeschooling Programmes</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='homeschooling-advice-support') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-info-circle w-4"></i>
+                <span class="text-sm">Homeschooling Advice &amp; Support</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='computer-requirements') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-laptop-code w-4"></i>
+                <span class="text-sm">Computer Requirements</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='it-helpdesk-support') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-headset w-4"></i>
+                <span class="text-sm">IT Helpdesk &amp; Technical Support</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 pb-2">
+            <button
+              onclick="toggleSubmenu('support')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>Support &amp; Guidance</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="support-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="support-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('placeholder_page', slug='student-parent-faqs') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-question-circle w-4"></i>
+                <span class="text-sm">Student &amp; Parent FAQs</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='university-careers-guidance') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-briefcase w-4"></i>
+                <span class="text-sm">University &amp; Careers Guidance</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='study-guidance') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-compass w-4"></i>
+                <span class="text-sm">A Level &amp; GCSE Study Guidance</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='exam-information-policies') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-clipboard-list w-4"></i>
+                <span class="text-sm">Exam Information &amp; Policies</span>
+              </a>
+              <a
+                href="{{ url_for('pricing') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-credit-card w-4"></i>
+                <span class="text-sm">Finance &amp; Payment Plans</span>
+              </a>
+              <a
+                href="{{ url_for('blogs') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-blog w-4"></i>
+                <span class="text-sm">Blog &amp; Insights</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 pb-2 order-first">
+            <button
+              onclick="toggleSubmenu('about')"
+              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+            >
+              <span>About Us</span>
+              <svg
+                class="w-5 h-5 transform transition-transform submenu-icon"
+                id="about-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div id="about-submenu" class="mobile-submenu pl-4 space-y-1">
+              <a
+                href="{{ url_for('our_mission') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-bullseye w-4"></i>
+                <span class="text-sm">Our Mission &amp; Values</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='strategy-vision') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-flag w-4"></i>
+                <span class="text-sm">Our Strategy &amp; Vision</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='meet-the-principal') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-user-tie w-4"></i>
+                <span class="text-sm">Meet the Principal</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='leadership-governance') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-users-cog w-4"></i>
+                <span class="text-sm">Leadership &amp; Governance</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='partnerships-outreach') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-handshake w-4"></i>
+                <span class="text-sm">Partnerships &amp; Outreach</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='history-of-lmsc') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-history w-4"></i>
+                <span class="text-sm"
+                  >History of London Maths &amp; Science College</span
+                >
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='facilities-learning-spaces') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-school w-4"></i>
+                <span class="text-sm">Facilities &amp; Learning Spaces</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='alumni-network') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-user-graduate w-4"></i>
+                <span class="text-sm">Alumni Network</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='policies-reports') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-file-alt w-4"></i>
+                <span class="text-sm">Policies &amp; Reports</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='work-with-us') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-briefcase w-4"></i>
+                <span class="text-sm">Work With Us</span>
+              </a>
+              <a
+                href="{{ url_for('placeholder_page', slug='lmsc-glossary') }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
+              >
+                <i class="fa fa-book-open w-4"></i>
+                <span class="text-sm">LMSC Glossary</span>
+              </a>
+            </div>
+          </div>
+          {% if nav_pages_main or nav_pages_dropdown_standalone %}
+          <div class="border-b border-gray-200 pb-2">
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500"
+            >
+              Managed Pages
+            </p>
+            <div class="mt-3 space-y-1">
+              {% for parent in nav_pages_main %}
+              <a
+                href="{{ url_for('render_dynamic_page', slug=parent['slug']) }}"
+                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary font-medium"
+              >
+                <i class="fa fa-file-alt w-4"></i>
+                <span class="text-sm">{{ parent['page_name'] }}</span>
+              </a>
+              {% set mobile_children =
+              nav_pages_dropdown_lookup.get(parent['id']) %} {% if
+              mobile_children %}
+              <div class="pl-6 space-y-1">
+                {% for child in mobile_children %}
+                <a
+                  href="{{ url_for('render_dynamic_page', slug=child['slug']) }}"
+                  class="flex items-center gap-3 py-2 text-gray-500 hover:text-primary text-sm"
+                >
+                  <i class="fa fa-angle-right w-4"></i>
+                  <span>{{ child['page_name'] }}</span>
+                </a>
+                {% endfor %}
+              </div>
+              {% endif %} {% endfor %} {% for group in
+              nav_pages_dropdown_standalone %}
+              <p
+                class="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400"
+              >
+                {{ group.parent['page_name'] }}
+              </p>
+              <div class="pl-6 space-y-1">
+                {% for child in group.children %}
+                <a
+                  href="{{ url_for('render_dynamic_page', slug=child['slug']) }}"
+                  class="flex items-center gap-3 py-2 text-gray-500 hover:text-primary text-sm"
+                >
+                  <i class="fa fa-angle-right w-4"></i>
+                  <span>{{ child['page_name'] }}</span>
+                </a>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <a
+            href="{{ url_for('contact') }}"
+            class="block py-3 text-gray-700 font-medium border-b border-gray-200"
+            >Contact</a
+          >
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-200">
+          <button
+            class="w-full bg-primary text-white py-3 rounded-full font-medium hover:opacity-90"
+          >
+            Book Consultation
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

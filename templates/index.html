@@ -1,0 +1,1399 @@
+{% extends 'base.html' %} {% block title %}London Maths & Science College |
+British 16–19 STEM College in London{% endblock %} {% block extra_head %}
+<style>
+  /* Slider Container */
+  .hero-slider {
+    position: relative;
+    overflow: hidden;
+    max-width: min(100vw - 1rem, 1680px);
+    margin: 0 auto;
+    padding-inline: clamp(0.75rem, 4.5vw, 3.5rem);
+  }
+
+  .hero-panel {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Crect fill='%232F5F41' width='1600' height='800'/%3E%3Cg fill-opacity='1'%3E%3Cpath fill='%233d7652' d='M486 705.8c-109.3-21.8-223.4-32.2-335.3-19.4C99.5 692.1 49 703 0 719.8V800h843.8c-115.9-33.2-230.8-68.1-347.6-92.2C492.8 707.1 489.4 706.5 486 705.8z'/%3E%3Cpath fill='%23498a5e' d='M1600 0H0v719.8c49-16.8 99.5-27.8 150.7-33.5c111.9-12.7 226-2.4 335.3 19.4c3.4 0.7 6.8 1.4 10.2 2c116.8 24 231.7 59 347.6 92.2H1600V0z'/%3E%3Cpath fill='%23559f6b' d='M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z'/%3E%3Cpath fill='%2361b478' d='M0 0v429.4c55.6-18.4 113.5-27.3 171.4-27.7c102.8-0.8 203.2 22.7 299.3 54.5c3 1 5.9 2 8.9 3c183.6 62 365.7 146.1 562.4 192.1c186.7 43.7 376.3 34.4 557.9-12.6V0H0z'/%3E%3Cpath fill='%236dca85' d='M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z'/%3E%3Cpath fill='%2378d894' d='M1600 0H0v136.3c62.3-20.9 127.7-27.5 192.2-19.2c93.6 12.1 180.5 47.7 263.3 89.6c2.6 1.3 5.1 2.6 7.7 3.9c158.4 81.1 319.7 170.9 500.3 223.2c210.5 61 430.8 49 636.6-16.6V0z'/%3E%3Cpath fill='%2384e3a2' d='M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z'/%3E%3Cpath fill='%2390edb0' d='M1600 0H498c118.1 85.8 243.5 164.5 386.8 216.2c191.8 69.2 400 74.7 595 21.1c40.8-11.2 81.1-25.2 120.3-41.7V0z'/%3E%3Cpath fill='%239cf8be' d='M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z'/%3E%3Cpath fill='%23a9ffcc' d='M1315.3 72.4c75.3-12.6 148.9-37.1 216.8-72.4h-723C966.8 71 1144.7 101 1315.3 72.4z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Crect fill='transparent' width='1600' height='800'/%3E%3Cg fill-opacity='0.7'%3E%3Cpath fill='%23d5f7e5' d='M486 705.8c-109.3-21.8-223.4-32.2-335.3-19.4C99.5 692.1 49 703 0 719.8V800h843.8c-115.9-33.2-230.8-68.1-347.6-92.2C492.8 707.1 489.4 706.5 486 705.8z'/%3E%3Cpath fill='%23c4f0d9' d='M1600 0H0v719.8c49-16.8 99.5-27.8 150.7-33.5c111.9-12.7 226-2.4 335.3 19.4c3.4 0.7 6.8 1.4 10.2 2c116.8 24 231.7 59 347.6 92.2H1600V0z'/%3E%3Cpath fill='%23b2e9cd' d='M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z'/%3E%3Cpath fill='%23a1e2c1' d='M0 0v429.4c55.6-18.4 113.5-27.3 171.4-27.7c102.8-0.8 203.2 22.7 299.3 54.5c3 1 5.9 2 8.9 3c183.6 62 365.7 146.1 562.4 192.1c186.7 43.7 376.3 34.4 557.9-12.6V0H0z'/%3E%3Cpath fill='%238fdbb4' d='M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z'/%3E%3Cpath fill='%237ed4a8' d='M1600 0H0v136.3c62.3-20.9 127.7-27.5 192.2-19.2c93.6 12.1 180.5 47.7 263.3 89.6c2.6 1.3 5.1 2.6 7.7 3.9c158.4 81.1 319.7 170.9 500.3 223.2c210.5 61 430.8 49 636.6-16.6V0z'/%3E%3Cpath fill='%236ccc9b' d='M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z'/%3E%3Cpath fill='%235bc58f' d='M1600 0H498c118.1 85.8 243.5 164.5 386.8 216.2c191.8 69.2 400 74.7 595 21.1c40.8-11.2 81.1-25.2 120.3-41.7V0z'/%3E%3Cpath fill='%2349bd82' d='M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z'/%3E%3Cpath fill='%2338b676' d='M1315.3 72.4c75.3-12.6 148.9-37.1 216.8-72.4h-723C966.8 71 1144.7 101 1315.3 72.4z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.35;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-underline {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    padding-inline: 0.2rem;
+  }
+
+  .hero-underline::after {
+    content: "";
+    position: absolute;
+    left: -0.15rem;
+    bottom: -1.8rem;
+    width: calc(100% + 0.3rem);
+    height: 0.7em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1418 125'%3E%3Cpath d='M1412.29 72.17c-11.04-5.78-20.07-14.33-85.46-25.24-22.37-3.63-44.69-7.56-67.07-11.04-167.11-22.06-181.65-21.24-304.94-30.56C888.78 1.39 822.57 1.1 756.44 0c-46.63-.11-93.27 1.56-139.89 2.5C365.5 13.55 452.86 7.68 277.94 23.15 202.57 33.32 127.38 45.01 52.07 55.69c-11.23 2.41-22.63 4.17-33.71 7.22C6.1 66.33 5.64 66.19 3.89 67.79c-7.99 5.78-2.98 20.14 8.72 17.5 33.99-9.47 32.28-8.57 178.06-29.66 4.26 4.48 7.29 3.38 18.42 3.11 13.19-.32 26.38-.53 39.56-1.12 53.51-3.81 106.88-9.62 160.36-13.95 18.41-1.3 36.8-3.12 55.21-4.7 23.21-1.16 46.43-2.29 69.65-3.4 120.28-2.16 85.46-3.13 234.65-1.52 23.42.99 1.57-.18 125.72 6.9 96.61 8.88 200.92 27.94 295.42 46.12 40.87 7.91 116.67 23.2 156.31 36.78 3.81 1.05 8.28-.27 10.51-3.58 3.17-3.72 2.66-9.7-.78-13.13-3.25-3.12-8.14-3.44-12.18-5.08-17.89-5.85-44.19-12.09-63.67-16.56l26.16 3.28c23.02 3.13 46.28 3.92 69.34 6.75 10.8.96 25.43 1.81 34.34-4.39 2.26-1.54 4.86-2.75 6.21-5.27 2.76-4.59 1.13-11.06-3.59-13.68ZM925.4 23.77c37.64 1.4 153.99 10.85 196.64 14.94 45.95 5.51 91.89 11.03 137.76 17.19 24.25 4.77 74.13 11.21 101.72 18.14-11.87-1.15-23.77-1.97-35.65-3.06-133.46-15.9-266.8-33.02-400.47-47.21Z' fill='%23C59D6F'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.85;
+    z-index: -1;
+  }
+
+  .slide {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    position: absolute;
+    inset: 0;
+    transform: translateX(20px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+  }
+
+  /* Navigation Arrows */
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    color: rgb(56 121 81 / var(--tw-text-opacity, 1));
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 20;
+  }
+
+  .slider-nav:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  /* .slider-nav.prev {
+        left: 15px;
+    }
+
+    .slider-nav.next {
+        right: 15px;
+    } */
+
+  /* Dots */
+  .slider-dots {
+    position: absolute;
+    bottom: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 20;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .dot.active {
+    background: #fff;
+    transform: scale(1.3);
+  }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    .slide {
+      min-height: 400px;
+    }
+
+    .slider-nav {
+      width: 40px;
+      height: 40px;
+    }
+
+    .slider-nav.prev {
+      left: 10px;
+    }
+
+    .slider-nav.next {
+      right: 10px;
+    }
+
+    .slider-dots {
+      bottom: 20px;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem !important;
+      font-size: 1rem !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .slide img {
+      min-height: 250px !important;
+    }
+
+    .hero-slider {
+      padding-inline: 1rem;
+    }
+
+    .hero-panel::before,
+    .hero-panel::after {
+      opacity: 0.35;
+    }
+
+    .hero-underline::after {
+      bottom: -1.2rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Navigation -->
+
+<!-- Hero Slider -->
+<div class="hero-slider mx-auto">
+  <!-- Slide 1: British STEM College in London -->
+  <div class="slide active">
+    <div class="slide-content">
+      <section class="py-8 md:py-20">
+        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
+          <div
+            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
+          >
+            <div
+              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
+            >
+              <div
+                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
+              >
+                <h1
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
+                >
+                  British 16–19
+                  <span class="hero-underline">STEM College</span> in
+                  <span class="hero-underline">London</span>
+                </h1>
+                <p
+                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
+                >
+                  London Maths &amp; Science College (LMSC) is a British sixth
+                  form college based in London, specialising in A Levels and
+                  BTECs in Maths, Sciences, Computing and Business. Ambitious
+                  students from the UK and overseas study in small classes with
+                  rigorous teaching and clear expectations.
+                </p>
+                <button
+                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                >
+                  Explore our courses
+                  <svg
+                    class="w-4 h-4 md:w-5 md:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewbox="0 0 24 24"
+                  >
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="p-2 relative z-10">
+                <div class="flex justify-center md:justify-end">
+                  <img
+                    alt="Students"
+                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&amp;h=600&amp;fit=crop"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- Slide 2: British Curriculum for International Families -->
+  <div class="slide">
+    <div class="slide-content">
+      <section class="py-12 md:py-20">
+        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
+          <div
+            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
+          >
+            <div
+              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
+            >
+              <div
+                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
+              >
+                <h1
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
+                >
+                  Study the Full
+                  <span class="hero-underline">British Curriculum</span> from
+                  <span class="hero-underline">Anywhere</span>
+                </h1>
+                <p
+                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
+                >
+                  Follow the same British curriculum studied in leading UK
+                  schools, taught from London by specialist teachers. LMSC
+                  prepares students worldwide for British A Levels and BTEC
+                  qualifications recognised by universities across the UK and
+                  beyond.
+                </p>
+                <button
+                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                >
+                  Learn about the British curriculum
+                  <svg
+                    class="w-4 h-4 md:w-5 md:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewbox="0 0 24 24"
+                  >
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="p-2 relative z-10">
+                <div class="flex justify-center md:justify-end">
+                  <img
+                    alt="British Curriculum"
+                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
+                    src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&amp;h=800&amp;fit=crop"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- Slide 3: Study Modes -->
+  <div class="slide">
+    <div class="slide-content">
+      <section class="py-12 md:py-20">
+        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
+          <div
+            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
+          >
+            <div
+              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
+            >
+              <div
+                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
+              >
+                <h1
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
+                >
+                  In-Person,
+                  <span class="hero-underline">Online or Hybrid</span> – You
+                  Choose
+                </h1>
+                <p
+                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
+                >
+                  Study on campus in London, fully online, or through a flexible
+                  hybrid route. Whichever study mode you choose, you follow the
+                  same British curriculum, timetable structure and assessment,
+                  with live lessons and full lesson recordings.
+                </p>
+                <button
+                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                >
+                  Compare study modes
+                  <svg
+                    class="w-4 h-4 md:w-5 md:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewbox="0 0 24 24"
+                  >
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="p-2 relative z-10">
+                <div class="flex justify-center md:justify-end">
+                  <img
+                    alt="Study Modes"
+                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
+                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&amp;h=600&amp;fit=crop"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- Slide 4: Pathways to Universities -->
+  <div class="slide">
+    <div class="slide-content">
+      <section class="py-12 md:py-20">
+        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
+          <div
+            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
+          >
+            <div
+              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
+            >
+              <div
+                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
+              >
+                <h1
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
+                >
+                  Pathways to
+                  <span class="hero-underline">Top UK Universities</span> and
+                  Careers
+                </h1>
+                <p
+                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
+                >
+                  From subject choices to UCAS applications, LMSC helps you
+                  build the grades, skills and profile needed for competitive
+                  courses such as Medicine, Engineering, Computer Science and
+                  Business at leading universities.
+                </p>
+                <button
+                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                >
+                  Plan your progression
+                  <svg
+                    class="w-4 h-4 md:w-5 md:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewbox="0 0 24 24"
+                  >
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="p-2 relative z-10">
+                <div class="flex justify-center md:justify-end">
+                  <img
+                    alt="University Pathways"
+                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
+                    src="https://images.unsplash.com/photo-1577985043696-8bd54d9f093f?w=800&amp;h=600&amp;fit=crop"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- Navigation Arrows -->
+  <div class="slider-nav prev" onclick="changeSlide(-1)">
+    <i class="fas fa-chevron-left"></i>
+  </div>
+  <div class="slider-nav next" onclick="changeSlide(1)">
+    <i class="fas fa-chevron-right"></i>
+  </div>
+  <!-- Dots Navigation -->
+  <div class="slider-dots">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
+    <div class="dot" onclick="goToSlide(3)"></div>
+  </div>
+</div>
+<!-- Section 1: British School in London -->
+<section class="py-20 px-6 bg-white">
+  <div class="container mx-auto">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="scale-in stagger-2">
+        <h2 class="font-bold text-primary mb-6">
+          A British School in London for Students Worldwide
+        </h2>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          London Maths &amp; Science College is a British 16–19 STEM college
+          based in London, welcoming students from the UK and overseas. We
+          deliver the full British curriculum at sixth form level, with A Level
+          and Level 3 BTEC pathways that are recognised by universities and
+          employers around the world.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          Whether you study on campus in London, fully online, or in a hybrid
+          model, you follow the same high standards, rigorous programmes of
+          study and clear progression routes that define a high-quality British
+          education.
+        </p>
+      </div>
+      <div class="space-y-4 scale-in stagger-2">
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <div class="font-semibold text-primary">
+            <i class="fas text-2xl me-2 fa-flag"></i> Full British curriculum
+          </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <div class="font-semibold text-primary">
+            <i class="fas text-2xl me-2 fa-location-dot"></i> Based in London
+          </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <div class="font-semibold text-primary">
+            <i class="fas text-2xl me-2 fa-graduation-cap"></i> A Level &amp;
+            BTEC pathways
+          </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <div class="font-semibold text-primary">
+            <i class="fas text-2xl me-2 fa-flask"></i> STEM and business
+            specialists
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 2: Study the Full British Curriculum -->
+<section class="py-20 px-6 bg-gray-50">
+  <div class="container mx-auto">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="fade-in stagger-1">
+        <h2 class="font-bold text-primary mb-6">
+          Study the Full British Curriculum
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          At LMSC, students follow a structured British curriculum designed to
+          build strong subject knowledge, exam skills and independent study
+          habits. Our programmes prepare you for UK-recognised qualifications,
+          including A Levels and Level 3 BTECs, providing a robust foundation
+          for university entry and professional training.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          We focus on subjects that open doors to high-value, future-focused
+          pathways: Mathematics, Further Mathematics, Sciences, Computing,
+          Economics, Business and related disciplines.
+        </p>
+      </div>
+      <div class="space-y-4 fade-in stagger-3">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
+          <h3 class="font-bold text-primary mb-3">A Levels</h3>
+          <p class="text-gray-600 text-sm">
+            Maths · Further Maths · Physics · Chemistry · Biology · Computer
+            Science · Economics · Business
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
+          <h3 class="font-bold text-primary mb-3">
+            BTEC &amp; Vocational Pathways
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Computing · Business · Health &amp; Social Care
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
+          <h3 class="font-bold text-primary mb-3">
+            Professional &amp; Exam Services
+          </h3>
+          <p class="text-gray-600 text-sm">
+            If you want to mention AAT / Pearson VUE here later
+          </p>
+        </div>
+        <button
+          class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+        >
+          View all A Level &amp; BTEC courses
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 3: Study Modes -->
+<section class="py-20 px-6 bg-white">
+  <div class="container mx-auto fade-in-up">
+    <h2 class="font-bold text-primary mb-4 text-center">
+      Choose How You Study
+    </h2>
+    <p class="text-gray-700 text-center mb-12 max-w-2xl mx-auto">
+      Every student's situation is different. LMSC offers three study modes, all
+      aligned to the same British curriculum and high expectations.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <div class="bg-blue-50 p-6 shadow rounded-xl fade-in stagger-1">
+        <div class="mb-4">
+          <img
+            alt=""
+            class="rounded"
+            src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-4">
+          In-person study at our London campus
+        </h3>
+        <p class="text-gray-700 mb-6">
+          Learn in a calm, structured classroom environment with face-to-face
+          teaching, supervised study spaces and support clinics.
+        </p>
+        <ul class="space-y-2 text-gray-700 text-sm">
+          <li>✓ Daily lessons in small classes</li>
+          <li>✓ Quiet study spaces for independent work</li>
+          <li>✓ In-person mocks, revision sessions and mentoring</li>
+        </ul>
+      </div>
+      <div class="bg-indigo-50 p-6 shadow rounded-xl fade-in stagger-2">
+        <div class="mb-4">
+          <img
+            alt=""
+            class="rounded"
+            src="{{ url_for('static', filename='Images/Image 3.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-4">
+          Fully online, with live lessons and recordings
+        </h3>
+        <p class="text-gray-700 mb-6">
+          Join live British-curriculum lessons from home and watch lesson
+          recordings any time to review explanations or catch up.
+        </p>
+        <ul class="space-y-2 text-gray-700 text-sm">
+          <li>✓ Live, timetabled online classes</li>
+          <li>✓ Full lesson recordings available 24/7</li>
+          <li>✓ Homework, assessments and feedback via online platform</li>
+        </ul>
+      </div>
+      <div class="bg-blue-100 p-6 shadow rounded-xl fade-in stagger-3">
+        <div class="mb-4">
+          <img
+            alt=""
+            class="rounded"
+            src="{{ url_for('static', filename='Images/Image 5.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-4">
+          Hybrid: a flexible blend of campus and online
+        </h3>
+        <p class="text-gray-700 mb-6">
+          Combine days on campus with online learning to balance structure,
+          flexibility and family circumstances.
+        </p>
+        <ul class="space-y-2 text-gray-700 text-sm">
+          <li>✓ Personalised mix of on-site and online lessons</li>
+          <li>✓ Option to attend key subjects in person</li>
+          <li>✓ Same curriculum, assessment and support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center">
+      <button
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+      >
+        Compare study modes
+      </button>
+    </div>
+  </div>
+</section>
+<!-- Section 4: Why Choose LMSC -->
+<section class="py-20 px-6 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <h2 class="font-bold text-primary mb-6 text-center">
+      Why Choose London Maths &amp; Science College?
+    </h2>
+    <p class="text-gray-700 text-center mb-12 max-w-3xl mx-auto">
+      LMSC is built for students who want the challenge and prestige of a
+      British sixth form education, with the support and structure to succeed.
+      We combine rigorous teaching, small classes and a clear focus on
+      progression to top universities and future-ready careers.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 10.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">Specialist 16–19 STEM focus</h3>
+        <p class="text-gray-700 text-sm">
+          Our teaching, timetable and enrichment are centred on Maths, Sciences,
+          Computing and Business — subjects that underpin modern, high-value
+          careers.
+        </p>
+      </div>
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 11.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">
+          Small classes and individual attention
+        </h3>
+        <p class="text-gray-700 text-sm">
+          We keep class sizes deliberately small so teachers can check
+          understanding, give detailed feedback and quickly address any gaps.
+        </p>
+      </div>
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 10.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">
+          Structured assessment and feedback
+        </h3>
+        <p class="text-gray-700 text-sm">
+          Regular quizzes, topic tests and mock exams give students a clear
+          picture of their progress long before final exams.
+        </p>
+      </div>
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 12.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">
+          Clear progression to UK universities
+        </h3>
+        <p class="text-gray-700 text-sm">
+          Our programmes are designed around typical entry requirements for
+          British universities, including competitive courses in Medicine,
+          Engineering, Computer Science and Business.
+        </p>
+      </div>
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">
+          British curriculum, global pathways
+        </h3>
+        <p class="text-gray-700 text-sm">
+          Studying the British curriculum in London (or online with a
+          London-based college) helps students open doors in the UK and at
+          universities worldwide.
+        </p>
+      </div>
+      <div
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+      >
+        <div class="mb-4">
+          <img
+            alt=""
+            src="{{ url_for('static', filename='Images/Image 2.jpg') }}"
+          />
+        </div>
+        <h3 class="font-bold text-primary mb-3">
+          Calm, supportive learning environment
+        </h3>
+        <p class="text-gray-700 text-sm">
+          High expectations are balanced with pastoral care, study skills
+          support and honest communication with families.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 5: Pathway Timeline -->
+<section class="py-20 px-6 bg-white">
+  <div class="container mx-auto px-6">
+    <h2 class="font-bold text-primary mb-6 text-center">
+      From LMSC to University and Beyond
+    </h2>
+    <p class="text-gray-700 text-center mb-12 max-w-3xl mx-auto">
+      We keep your next steps in focus from the moment you join us, helping you
+      build a coherent profile, not just a set of grades.
+    </p>
+    <div class="space-y-12">
+      <!-- Step 1 -->
+      <div class="pathway-step fade-in stagger-1">
+        <div class="pathway-number">1</div>
+        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+          <h3 class="font-bold text-primary mb-3">Academic foundations</h3>
+          <p class="text-gray-700">
+            Secure strong grades in Maths, Sciences and English, with targeted
+            support or retakes if needed.Strong teaching, careful sequencing and
+            regular practice build confidence in the core British curriculum.
+          </p>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="pathway-step fade-in stagger-2">
+        <div class="pathway-number">2</div>
+        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+          <h3 class="font-bold text-primary mb-3">Stretch and challenge</h3>
+          <p class="text-gray-700">
+            Extension tasks, problem-solving and exam-style questions prepare
+            students for the demands of high-level courses.
+          </p>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="pathway-step fade-in stagger-3">
+        <div class="pathway-number">3</div>
+        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+          <h3 class="font-bold text-primary mb-3">Guidance and applications</h3>
+          <p class="text-gray-700">
+            Support with subject choices, UCAS applications, personal statements
+            and references, tailored to each student's ambitions.
+          </p>
+        </div>
+      </div>
+      <!-- Step 4 -->
+      <div class="pathway-step fade-in stagger-4">
+        <div class="pathway-number">4</div>
+        <div
+          class="bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 shadow-md"
+        >
+          <h3 class="font-bold mb-3">
+            Progression to university or professional routes
+          </h3>
+          <p>
+            Students leave LMSC with recognised British qualifications and a
+            clear plan for their next stage — whether that's a UK university, an
+            international university or a professional programme.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-12">
+      <button
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+      >
+        Talk to us about your progression plan
+      </button>
+    </div>
+  </div>
+</section>
+<!-- Section 6: International Students -->
+<section class="py-20 px-6 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="scale-in stagger-1">
+        <h2 class="font-bold text-primary mb-6">
+          For International Students and Families
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Many of our students and families are based outside the UK but want
+          the structure, depth and recognition of a British education. Studying
+          with LMSC allows international learners to follow a full British
+          curriculum led by teachers based in London, with clear expectations
+          and regular communication.
+        </p>
+        <ul class="space-y-3 mb-6 text-gray-700">
+          <li>
+            ✓ Follow British A Level and BTEC programmes recognised worldwide
+          </li>
+          <li>
+            ✓ Study fully online or in a hybrid pattern that fits your time zone
+            and family life
+          </li>
+          <li>
+            ✓ Receive guidance on applying to UK universities and understanding
+            entry requirements
+          </li>
+        </ul>
+        <p class="text-gray-700">
+          We work closely with families to ensure students understand how
+          British exams, grading and university applications work, so there are
+          no surprises later.
+        </p>
+      </div>
+      <div class="space-y-4 scale-in stagger-3">
+        <div>
+          <img
+            alt=""
+            class="img-fluid rounded-lg"
+            src="{{ url_for('static', filename='Images/Image 10.jpg') }}"
+          />
+        </div>
+        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
+          <p class="font-semibold text-primary">
+            British curriculum, taught from London
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
+          <p class="font-semibold text-primary">
+            Flexible study for international time zones
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
+          <p class="font-semibold text-primary">
+            Advice on UK applications and entry routes
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 7: How We Teach -->
+<section class="py-20 px-6 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="fade-in-up">
+      <h2 class="font-bold text-primary mb-6 text-center">
+        How We Teach at LMSC
+      </h2>
+      <p class="text-gray-700 text-center mb-12 max-w-3xl mx-auto">
+        Our teaching approach blends traditional academic rigour with modern
+        tools and clear routines, so students know what to expect and how to
+        succeed.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto scale-in stagger-2">
+      <div class="flex gap-4">
+        <div class="text-3xl flex-shrink-0 text-primary">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            Expert subject specialists
+          </h3>
+          <p class="text-gray-700 text-sm">
+            Teachers who know their British exam specifications and how to
+            explain complex ideas clearly.
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="text-3xl flex-shrink-0 text-primary">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary mb-2">Live, interactive lessons</h3>
+          <p class="text-gray-700 text-sm">
+            Space for questions, worked examples and guided practice in every
+            session.
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="text-3xl flex-shrink-0 text-primary">
+          <i class="fas fa-video"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            Lesson recordings and resources
+          </h3>
+          <p class="text-gray-700 text-sm">
+            Students can revisit key explanations and build their own revision
+            library.
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="text-3xl flex-shrink-0 text-primary">
+          <i class="fas fa-book"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary mb-2">Regular independent work</h3>
+          <p class="text-gray-700 text-sm">
+            Structured homework and guided self-study build habits that
+            universities expect.
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="text-3xl flex-shrink-0 text-primary">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary mb-2">Targeted intervention</h3>
+          <p class="text-gray-700 text-sm">
+            Extra help sessions, small-group support and individual
+            conversations when students need more input.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 8: Student Support -->
+<section class="py-20 px-6 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="scale-in stagger-2">
+        <h2 class="font-bold text-primary mb-6">
+          Supportive, Structured and Student-Centred
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Academic excellence only works when students feel safe, supported and
+          understood. At LMSC, our pastoral and academic teams work together to
+          support the whole student.
+        </p>
+        <ul class="space-y-4 text-gray-700">
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span>Regular check-ins on progress and wellbeing</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span
+              >Clear expectations around attendance, punctuality and
+              effort</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span>Study skills support and guidance on managing workload</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span>Honest communication with parents and guardians</span>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="bg-white p-8 rounded-xl border border-gray-200 scale-in stagger-2"
+      >
+        <blockquote class="text-lg text-gray-700 italic mb-4">
+          "LMSC gave our child the structure of a British sixth form with the
+          flexibility our family needed."
+        </blockquote>
+        <p class="font-semibold text-primary">Parent testimonial</p>
+        <p class="text-sm text-gray-600">London, UK</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 9: Admissions CTA -->
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="scale-in stagger-2">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          Ready to Explore LMSC?
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          If you're considering a British sixth form education in London or from
+          overseas, our admissions team can help you understand your options and
+          plan the right pathway.
+        </p>
+        <!-- BTN 1 -->
+        <button
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-end scale-in stagger-2">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section 10: FAQs -->
+<section class="py-20 px-6 bg-white">
+  <div class="container mx-auto">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-bold text-primary mb-12 text-center">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Is this the same A Level as in a school or college?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
+                qualification and certificate are identical to those awarded in
+                any other UK school or college.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do I have to sit exams in London?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                For this hybrid one-year route, yes. All exams are taken at the
+                LMSC JCQ-approved centre in London.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I study from outside the UK?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You can join all online teaching from overseas, but you
+                must travel to London for the in-person blocks in Mar–Apr and
+                for the May–Jun exams. We can signpost accommodation options and
+                safeguarding support for under-18s.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Why choose hybrid instead of fully online?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                You get online flexibility while learning new content, then
+                in-person exam training and intensive practice in London when it
+                matters most.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>How many hours a week should I plan?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Expect around 14–18 hours per week in total: 6–8 hours live
+                teaching plus 8–10 hours guided independent study.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do you record lessons?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. All online sessions are recorded for your cohort so you can
+                revisit explanations and catch up after unavoidable absences.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What calculator do I need?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                An exam-compliant scientific or graphing calculator acceptable
+                under Edexcel rules. You must still show full methods, not just
+                calculator output.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I pay in monthly instalments?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                No. For this accelerated Hybrid course, we offer Full Advance
+                payment (discounted) or Per Term; we do not offer monthly
+                instalments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What if I still have questions?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Contact our team to arrange a call, a taster lesson or a parent
+                webinar. We’ll walk you through timetables, assessments and exam
+                logistics in detail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a class="text-primary font-semibold hover:underline" href="#"
+          >View all FAQs →</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+{% endblock %} {% block extra_scripts %}
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  let autoplayInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove("active");
+      dots[i].classList.remove("active");
+    });
+
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+  }
+
+  function changeSlide(direction) {
+    currentSlide += direction;
+
+    if (currentSlide < 0) currentSlide = slides.length - 1;
+    if (currentSlide >= slides.length) currentSlide = 0;
+
+    showSlide(currentSlide);
+    resetAutoplay();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+    resetAutoplay();
+  }
+
+  // AUTO PLAY FUNCTION
+  function startAutoplay() {
+    autoplayInterval = setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000); // Change slide every 5 seconds
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayInterval);
+    startAutoplay();
+  }
+
+  // Initialize slider
+  showSlide(currentSlide);
+  startAutoplay();
+</script>
+<script>
+  function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const sign = button.querySelector("span:last-child");
+
+    // Close all other accordion items
+    document.querySelectorAll(".accordion-content").forEach((c) => {
+      if (c !== content) {
+        c.classList.remove("open");
+      }
+    });
+
+    document.querySelectorAll(".faq-button span:last-child").forEach((s) => {
+      if (s !== sign) {
+        s.textContent = "+";
+      }
+    });
+
+    // Toggle current item
+    content.classList.toggle("open");
+    sign.textContent = content.classList.contains("open") ? "−" : "+";
+  }
+  // Scroll Animation Observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(
+      ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
+{% endblock %}

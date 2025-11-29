@@ -1,0 +1,851 @@
+{% extends 'base.html' %}
+
+{% block title %}Evidence-Informed Teaching | London Maths & Science College{% endblock %}
+
+{% block extra_head %}
+<style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-1 {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            transition-delay: 0.4s;
+        }
+
+        .stagger-5 {
+            transition-delay: 0.5s;
+        }
+
+        .stagger-6 {
+            transition-delay: 0.6s;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+
+<!-- Hero Section -->
+<section class="relative py-20">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="fade-in">
+<h1 class="text-primary font-bold mb-6 leading-tight">
+                        Evidence-Informed Teaching
+                    </h1>
+<p class="mb-8 leading-relaxed">
+                        At London Maths &amp; Science College (LMSC), we don't rely on trends or guesswork. Our teaching is
+                        shaped by research on how students learn best -- especially in demanding STEM subjects. We use
+                        approaches grounded in evidence, then check impact in our own classrooms.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold">
+                            Explore how we teach STEM
+                        </button>
+<button class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold">
+                            Meet our teachers
+                        </button>
+</div>
+</div>
+<div class="relative fade-in">
+<img alt="Teacher at whiteboard" class="rounded-2xl shadow-2xl" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&amp;h=600&amp;fit=crop"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 1 - What We Mean -->
+<section class="py-20 px-6 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-start">
+<div class="scale-in">
+<h2 class="font-bold text-primary mb-6">
+                        What do we mean by evidence-informed teaching?
+                    </h2>
+<div class="space-y-4 text-gray-700 leading-relaxed">
+<p>
+                            "Evidence-informed" doesn't mean chasing every new idea from education blogs. It means:
+                        </p>
+<ul class="space-y-3 ml-6">
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Taking reliable findings from <strong>research on learning</strong>, especially in
+                                    Maths, Science and related disciplines.</span>
+</li>
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Combining that with <strong>professional judgement and experience</strong>.</span>
+</li>
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Checking what actually works for <strong>our students, in our
+                                        context</strong>.</span>
+</li>
+</ul>
+<p class="pt-4">
+                            At LMSC, evidence-informed teaching is about using approaches that are more likely to help
+                            students remember, understand and apply what they learn -- and dropping strategies that
+                            don't make a real difference.
+                        </p>
+</div>
+</div>
+<div class="fade-in space-y-4">
+<div class="bg-accent border-2 border-primary rounded-xl p-6">
+<h3 class="font-bold text-primary mb-2">Research</h3>
+<p class="text-gray-700 text-sm">Evidence from educational research and cognitive science</p>
+</div>
+<div class="bg-white border-2 border-secondary rounded-xl p-6">
+<h3 class="font-bold text-secondary mb-2">Professional Judgement</h3>
+<p class="text-gray-700 text-sm">Expertise and experience of our teaching team</p>
+</div>
+<div class="bg-accent border-2 border-primary rounded-xl p-6">
+<h3 class="font-bold text-primary mb-2">Local Impact</h3>
+<p class="text-gray-700 text-sm">What works for our students in our context</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2 - Core Principles -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in">
+<h2 class="font-bold text-primary mb-6">
+                    Our core evidence-informed principles
+                </h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+                    Across subjects, you'll see the same set of principles in action:
+                </p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-1">
+<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">Clear, explicit instruction</h3>
+<p class="text-gray-600 text-sm">Teachers explain new ideas in small steps, model worked examples
+                        and check understanding frequently, instead of leaving students to guess.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-2">
+<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">Spacing and retrieval practice</h3>
+<p class="text-gray-600 text-sm">We revisit key ideas over time and use short quizzes to bring
+                        knowledge back to mind, strengthening long-term memory.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-3">
+<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">Guided practice before independence</h3>
+<p class="text-gray-600 text-sm">Students practise new skills with scaffolding first, then move
+                        gradually towards independent problem-solving.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-4">
+<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">High-quality feedback</h3>
+<p class="text-gray-600 text-sm">Feedback focuses on specific strengths, misconceptions and next
+                        steps, not just marks and grades.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-5">
+<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">Formative assessment that actually informs teaching</h3>
+<p class="text-gray-600 text-sm">Low-stakes assessments help teachers decide when to move on, when
+                        to slow down and where to re-teach.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow scale-in stagger-6">
+<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold mb-3">Metacognition and self-regulation</h3>
+<p class="text-gray-600 text-sm">We teach students how to plan, monitor and evaluate their own
+                        learning, not just what to remember.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3 - Real Lesson -->
+<section class="py-20 px-6 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in max-w-4xl mx-auto">
+<h2 class="font-bold text-primary mb-6">
+                    What evidence-informed teaching looks like in the classroom
+                </h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+                    In practice, evidence-informed teaching at LMSC means lessons with a clear, purposeful structure.
+                </p>
+</div>
+<div class="max-w-4xl mx-auto">
+<div class="space-y-8">
+<div class="flex gap-6 items-start scale-in">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                1
+                            </div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-3">Activate prior knowledge</h3>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1">•</span>
+<span>A short retrieval quiz or "Do Now" question.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1">•</span>
+<span>Connecting today's topic to what students have already studied.</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="flex gap-6 items-start fade-in">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                2
+                            </div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-3">Explicit teaching and modelling</h3>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start gap-2">
+<span class="text-secondary mt-1">•</span>
+<span>Teacher explains the new concept in clear language.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-secondary mt-1">•</span>
+<span>Worked examples are written out step by step, with thinking made
+                                        visible.</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="flex gap-6 items-start scale-in">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                3
+                            </div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-3">Guided practice</h3>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1">•</span>
+<span>Students attempt questions with support -- prompts, part-completed examples,
+                                        or teacher checking in live.</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="flex gap-6 items-start fade-in">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                4
+                            </div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-3">Independent practice</h3>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start gap-2">
+<span class="text-secondary mt-1">•</span>
+<span>Students tackle exam-style or applied questions on their own.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-secondary mt-1">•</span>
+<span>Teacher circulates (in person) or monitors responses (online) and gives quick
+                                        feedback.</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="flex gap-6 items-start scale-in">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                5
+                            </div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-3">Check for understanding and close</h3>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1">•</span>
+<span>Key questions to ensure core ideas have landed.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1">•</span>
+<span>A quick summary of what was learned and what comes next.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4 - STEM Strategies -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-start">
+<div class="scale-in">
+<h2 class="font-bold text-primary mb-6">
+                        Evidence-informed strategies in STEM subjects
+                    </h2>
+<p class="text-gray-700 leading-relaxed mb-6">
+                        STEM subjects benefit especially from approaches that reduce cognitive load and build durable
+                        understanding.
+                    </p>
+<img alt="STEM Teaching" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&amp;h=600&amp;fit=crop"/>
+</div>
+<div class="fade-in space-y-6">
+<div class="bg-white rounded-xl p-6 shadow">
+<h3 class="text-lg font-bold mb-3">Dual coding and clear representations</h3>
+<p class="text-gray-600 text-sm">Using diagrams, graphs and visual models alongside verbal
+                            explanation -- not decorative pictures, but representations that genuinely support
+                            understanding.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow">
+<h3 class="text-lg font-bold mb-3">Worked example → completion → independent questions</h3>
+<p class="text-gray-600 text-sm">Teachers model a full example, then ask students to complete
+                            part-worked examples before moving to independent problems.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow">
+<h3 class="text-lg font-bold mb-3">Deliberate practice, not mindless repetition</h3>
+<p class="text-gray-600 text-sm">Question sets are chosen to highlight patterns, contrasts and
+                            common misconceptions, not just to fill time.</p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow">
+<h3 class="text-lg font-bold mb-3">Interleaving topics</h3>
+<p class="text-gray-600 text-sm">Where appropriate, we mix questions from different areas (e.g.
+                            algebra and graphs) so students learn to choose methods, not just repeat the last example.
+                        </p>
+</div>
+<div class="bg-white rounded-xl p-6 shadow">
+<h3 class="text-lg font-bold mb-3">Exam technique embedded early</h3>
+<p class="text-gray-600 text-sm">We don't leave exam practice to the final term; students see
+                            exam-style questions early and often, within a supportive environment.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5 - Assessment & Data -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in">
+<h2 class="font-bold text-primary mb-6">
+                    Using assessment and data to refine teaching
+                </h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+                    Evidence-informed teaching is not just about what we do, but how we check whether it works.
+                </p>
+</div>
+<div class="grid md:grid-cols-4 gap-6 mb-12">
+<div class="bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 text-center scale-in stagger-1">
+<div class="font-bold mb-2">1</div>
+<h3 class="font-bold mb-2">Teach</h3>
+<p class="text-sm text-green-50">Deliver evidence-informed lessons</p>
+</div>
+<div class="bg-gradient-to-br from-secondary to-primary text-white rounded-xl p-6 text-center scale-in stagger-2">
+<div class="font-bold mb-2">2</div>
+<h3 class="font-bold mb-2">Assess</h3>
+<p class="text-sm text-green-50">Regular low-stakes assessments</p>
+</div>
+<div class="bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 text-center scale-in stagger-3">
+<div class="font-bold mb-2">3</div>
+<h3 class="font-bold mb-2">Analyse</h3>
+<p class="text-sm text-green-50">Identify patterns and gaps</p>
+</div>
+<div class="bg-gradient-to-br from-secondary to-primary text-white rounded-xl p-6 text-center scale-in stagger-4">
+<div class="font-bold mb-2">4</div>
+<h3 class="font-bold mb-2">Adjust</h3>
+<p class="text-sm text-green-50">Refine teaching strategies</p>
+</div>
+</div>
+<div class="bg-gray-50 rounded-2xl p-8 fade-in">
+<h3 class="text-2xl font-bold mb-4">At LMSC, we:</h3>
+<div class="grid md:grid-cols-2 gap-6">
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Run regular <strong>low-stakes assessments</strong> (quizzes,
+                                exit tickets, mini tests).</span>
+</li>
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Use <strong>mock exams</strong> and larger assessments to spot
+                                trends over time.</span>
+</li>
+</ul>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Analyse results to identify <strong>common
+                                    misconceptions</strong> across a class or year group.</span>
+</li>
+<li class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Adjust teaching sequences, revision plans and interventions
+                                based on what we find.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6 - Professional Development -->
+<section class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="scale-in">
+<img alt="Professional Development" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&amp;h=600&amp;fit=crop"/>
+</div>
+<div class="fade-in">
+<h2 class="font-bold text-primary mb-6">
+                        How our staff stay evidence-informed
+                    </h2>
+<p class="text-gray-700 mb-6 leading-relaxed">
+                        We support teachers to stay up-to-date with developments in educational research -- and to
+                        reflect critically on which approaches make sense at LMSC.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Regular <strong>CPD sessions</strong> on topics such as
+                                retrieval practice, questioning, feedback and cognitive load.</span>
+</div>
+<div class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Opportunities to <strong>share practice</strong> across
+                                departments, especially around Maths and Sciences.</span>
+</div>
+<div class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Encouragement to engage with <strong>examiner reports, subject
+                                    associations and research summaries</strong>.</span>
+</div>
+<div class="flex items-start gap-3">
+<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-gray-700">Time to trial approaches in a structured way, evaluate impact
+                                and share what is learned.</span>
+</div>
+</div>
+<p class="mt-6 text-gray-700 italic">
+                        The aim is not to follow every trend, but to build a professional culture where teachers ask,
+                        <strong>"Does this help our students learn better?"</strong>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7 - For Students & Families -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in">
+<h2 class="font-bold text-primary mb-6">
+                    What evidence-informed teaching means for you
+                </h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+                    For students and families, an evidence-informed approach means:
+                </p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-accent rounded-xl p-8 shadow-lg scale-in stagger-1">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="font-bold text-center mb-4">For Students</h3>
+<p class="text-gray-700 text-center text-sm">Lessons that feel <strong>clear, purposeful and
+                            structured</strong>, rather than confusing or improvised.</p>
+</div>
+<div class="bg-white border-2 border-primary rounded-xl p-8 shadow-lg scale-in stagger-2">
+<div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="font-bold text-center mb-4">For Parents</h3>
+<p class="text-gray-700 text-center text-sm">Regular, predictable <strong>checks on
+                            understanding</strong>, so gaps are spotted early.</p>
+</div>
+<div class="bg-accent rounded-xl p-8 shadow-lg scale-in stagger-3">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="font-bold text-center mb-4">For Long-Term Progression</h3>
+<p class="text-gray-700 text-center text-sm">Homework and revision that are <strong>designed to help
+                            remembering</strong>, not just to keep students busy.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 8 - All Study Modes -->
+<section class="py-20 bg-gradient-to-br from-primary to-secondary text-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in">
+<h2 class="font-bold mb-6">
+                    Evidence-informed teaching across all study modes
+                </h2>
+<p class="text-green-50 max-w-3xl mx-auto">
+                    Our principles apply whether teaching is in person, online or hybrid. The tools may change, but the
+                    core ideas remain.
+                </p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-white text-gray-800 rounded-xl p-8 scale-in stagger-1">
+<div class="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-center mb-4">In-Person</h3>
+<p class="text-gray-600 text-center">Retrieval might be a mini whiteboard quiz; guided practice
+                        includes circulating around the room.</p>
+</div>
+<div class="bg-white text-gray-800 rounded-xl p-8 scale-in stagger-2">
+<div class="w-16 h-16 bg-secondary rounded-xl flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-center mb-4">Online</h3>
+<p class="text-gray-600 text-center">Retrieval might be a quick poll or chat response; practice
+                        includes checking digital responses in real time.</p>
+</div>
+<div class="bg-white text-gray-800 rounded-xl p-8 scale-in stagger-3">
+<div class="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-6 mx-auto">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-center mb-4">Hybrid</h3>
+<p class="text-gray-600 text-center">Clear explanations, structured practice and timely feedback
+                        apply across both in-person and online sessions.</p>
+</div>
+</div>
+<p class="text-center text-green-50 mt-8 fade-in">
+                Students in every mode are held to the same high standards and supported by the same evidence-informed
+                approaches.
+            </p>
+</div>
+</section>
+<!-- Section 10: FAQs -->
+<section class="py-20 px-6 bg-white">
+<div class="container mx-auto">
+<div class="max-w-4xl mx-auto">
+<h2 class="font-bold text-primary mb-12 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<!-- FAQ 1 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Is this the same A Level as in a school or college?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The qualification and certificate are
+                  identical to those awarded in any other UK school or college.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Do I have to sit exams in London?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>For this hybrid one-year route, yes. All exams are taken at the LMSC JCQ-approved centre in London.
+                </p>
+</div>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Can I study from outside the UK?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>Yes. You can join all online teaching from overseas, but you must travel to London for the in-person
+                  blocks in Mar–Apr and for the May–Jun exams. We can signpost accommodation options and safeguarding
+                  support for under-18s.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 4 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Why choose hybrid instead of fully online?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>You get online flexibility while learning new content, then in-person exam training and intensive
+                  practice in London when it matters most.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 5 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>How many hours a week should I plan?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>Expect around 14–18 hours per week in total: 6–8 hours live teaching plus 8–10 hours guided
+                  independent
+                  study.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 6 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Do you record lessons?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>Yes. All online sessions are recorded for your cohort so you can revisit explanations and catch up
+                  after unavoidable absences.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 7 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>What calculator do I need?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>An exam-compliant scientific or graphing calculator acceptable under Edexcel rules. You must still
+                  show
+                  full methods, not just calculator output.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 8 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>Can I pay in monthly instalments?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>No. For this accelerated Hybrid course, we offer Full Advance payment (discounted) or Per Term; we do
+                  not offer monthly instalments.</p>
+</div>
+</div>
+</div>
+<!-- FAQ 9 -->
+<div class="accordion-item border-bottom-2 overflow-hidden">
+<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
+<span>What if I still have questions?</span>
+<span class="text-2xl">+</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-gray-700">
+<p>Contact our team to arrange a call, a taster lesson or a parent webinar. We’ll walk you through
+                  timetables, assessments and exam logistics in detail.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a class="text-primary font-semibold hover:underline" href="#">View all FAQs →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 10 - CTA -->
+<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="scale-in">
+<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
+                        Next steps
+                    </span>
+<h2 class="text-primary font-bold text-primary mb-4">
+                        See our approach in action
+                    </h2>
+<p class="text-opacity-90 mb-8 leading-relaxed">
+                        If you'd like to understand more about how we teach and whether our approach is right for you,
+                        we'd be happy to talk.
+
+                    </p>
+<!-- BTN 1 -->
+<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
+<div class="btn-content">
+<span class="text-part">Book a Consultation</span>
+<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
+<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</span>
+</div>
+</button>
+</div>
+<!-- Right Side - Image with Chat Bubbles -->
+<div class="relative flex items-center justify-end scale-in">
+<!-- Main Image Container -->
+<div class="main-image relative w-full max-w-sm">
+<!-- Background placeholder for the person image -->
+<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
+<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
+</div>
+<!-- Chat Bubbles Overlay -->
+<div class="chat-block">
+<!-- User Message -->
+<div class="user-message chat-bubble-user">
+<div class="user-avatar"></div>
+<div class="user-message-bubble">
+<div class="name">Oliver Moy</div>
+<div class="text">I need help with my budget.</div>
+</div>
+</div>
+<!-- AI Response -->
+<div class="ai-message chat-bubble-ai">
+<div class="ai-avatar-bubble">
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+<div class="ai-message-bubble">
+<div class="name">AI Assistant</div>
+<div class="text">Sure! Let's carefully review your income and expenses.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.fade-in, .scale-in, .fade-in, .scale-in');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+{% endblock %}

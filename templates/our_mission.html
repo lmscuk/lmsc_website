@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Mission & Values | London Maths & Science College{% endblock %}
+
+{% block extra_head %}
+<style>
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+
+<!-- Hero Section -->
+<section class="py-20">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="fade-in">
+<h1 class="text-primary font-bold mb-6">Our Mission &amp; Values</h1>
+<p class="mb-8 leading-relaxed">London Maths &amp; Science College (LMSC) is a
+                        British 16–19 STEM college based in London. Our mission is to provide a focused, supportive
+                        education in Maths, Sciences, Computing and related disciplines, helping students build strong
+                        academic foundations, grow in confidence and progress to meaningful futures.</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:opacity-90">Why
+                            choose LMSC?</button>
+<button class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-primary">How
+                            we teach STEM</button>
+</div>
+</div>
+<div class="fade-in scale-in">
+<img alt="" class="rounded-lg" src="{{ url_for('static', filename='Images/Image 8.jpg') }}"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 1: Our Mission -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="fade-in fade-in">
+<h2 class="text-primary font-bold mb-6">Our mission</h2>
+<p class="text-gray-700 mb-6 leading-relaxed">Our mission is to offer a <strong>high-quality British
+                            sixth form education</strong> that combines academic rigour with clear structure and
+                        personalised support.</p>
+<p class="text-gray-700 mb-6 leading-relaxed">Whether students study on campus in London, fully
+                        online or through a hybrid route, our mission remains the same: <strong>real learning, real
+                            progress, real options for the future</strong>.</p>
+<img alt="" class="rounded h-[300px] w-full object-cover" src="{{ url_for('static', filename='Images/Image 9.jpg') }}"/>
+</div>
+<div class="fade-in scale-in space-y-4">
+<div class="flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+<i class="fa fa-book text-2xl text-blue-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Master demanding STEM subjects</p>
+<p class="text-sm text-gray-600">Help 16–19 year olds build expertise in their chosen
+                                disciplines</p>
+</div>
+</div>
+<div class="flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+<i class="fas fa-hammer text-2xl text-orange-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Build secure foundations</p>
+<p class="text-sm text-gray-600">Develop knowledge, skills and study habits for university
+                                success</p>
+</div>
+</div>
+<div class="flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+<i class="fas fa-dumbbell text-2xl text-green-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Develop confidence and resilience</p>
+<p class="text-sm text-gray-600">Support growth in independence and ability to overcome
+                                challenges</p>
+</div>
+</div>
+<div class="flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+<i class="fas fa-bullseye text-2xl text-red-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Clear pathways to the future</p>
+<p class="text-sm text-gray-600">Guide students towards university, training and meaningful
+                                careers</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Our Vision -->
+<section class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="fade-in mb-12">
+<h2 class="text-primary font-bold mb-6">Our vision</h2>
+<p class="text-gray-700 leading-relaxed">Our vision is to be recognised as a leading British
+                    STEM-focused college for 16–19 year olds — a place where ambitious students from the UK and around
+                    the world can access a rigorous British curriculum, taught from London, with expert teachers using
+                    evidence-informed practice.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="fade-in scale-in stagger-1 bg-white p-8 rounded-xl border-l-4 border-primary">
+<h3 class="font-bold text-gray-900 mb-3">Rigorous curriculum</h3>
+<p class="text-gray-700">Ambitious students from the UK and around the world can access a rigorous
+                        British curriculum taught from London.</p>
+</div>
+<div class="fade-in scale-in stagger-2 bg-white p-8 rounded-xl border-l-4 border-primary">
+<h3 class="font-bold text-gray-900 mb-3">Expert teachers</h3>
+<p class="text-gray-700">Teachers are experts in their subjects, using evidence-informed practice to
+                        support sustained progress.</p>
+</div>
+<div class="fade-in scale-in stagger-3 bg-white p-8 rounded-xl border-l-4 border-primary">
+<h3 class="font-bold text-gray-900 mb-3">University preparation</h3>
+<p class="text-gray-700">Families trust that students are being prepared not only for exams, but for
+                        university-level study and life beyond.</p>
+</div>
+<div class="fade-in scale-in stagger-4 bg-white p-8 rounded-xl border-l-4 border-primary">
+<h3 class="font-bold text-gray-900 mb-3">Safe environment</h3>
+<p class="text-gray-700">A calm, respectful environment allows every learner to feel known, safe and
+                        able to contribute.</p>
+</div>
+</div>
+<div class="fade-in mt-12 bg-primary text-white p-8 rounded-xl text-center">
+<p class="font-semibold">We want LMSC alumni to leave with strong qualifications, a clear sense
+                    of direction and the confidence to play an active role in a changing, global society.</p>
+</div>
+</div>
+</section>
+<!-- Section 3: Core Values -->
+<section class="py-20">
+<div class="container mx-auto px-6">
+<div class="fade-in mb-12 text-center">
+<h2 class="text-primary font-bold mb-6">Our core values</h2>
+<p class="text-gray-700 max-w-2xl mx-auto">Our daily decisions — in the classroom, in support, and in
+                    communication with families — are guided by six core values.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="fade-in scale-in stagger-1 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Excellence</h3>
+<p class="text-gray-700">We set high expectations for teaching, learning and conduct. Students are
+                        supported and challenged to achieve their best, not just to "get by".</p>
+</div>
+<div class="fade-in scale-in stagger-2 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 2.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Integrity</h3>
+<p class="text-gray-700">We act honestly and professionally, even when it is difficult. Feedback and
+                        advice to families are transparent and grounded in what is best for the student.</p>
+</div>
+<div class="fade-in scale-in stagger-3 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 3.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Innovation</h3>
+<p class="text-gray-700">We embrace tools and approaches that genuinely improve learning —
+                        especially in STEM — while keeping our focus on what works.</p>
+</div>
+<div class="fade-in scale-in stagger-4 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 4.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Respect</h3>
+<p class="text-gray-700">We treat every member of the LMSC community with courtesy and fairness.
+                        Classrooms are calm, purposeful places where learners and staff listen.</p>
+</div>
+<div class="fade-in scale-in stagger-5 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 5.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Inclusion</h3>
+<p class="text-gray-700">We welcome students from a wide range of backgrounds and locations. We work
+                        to remove barriers so each learner can access the curriculum.</p>
+</div>
+<div class="fade-in scale-in stagger-6 value-card shadow-lg bg-white p-4 rounded-lg">
+<div class="text-4xl mb-4">
+<img alt="" class="rounded" src="{{ url_for('static', filename='Images/Image 6.jpg') }}"/>
+</div>
+<h3 class="font-bold text-gray-900 mb-3">Resilience</h3>
+<p class="text-gray-700">We help students understand that challenge and setbacks are part of serious
+                        learning. Through support, they learn to persist, adapt and grow.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: In the Classroom -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="fade-in fade-in">
+<h2 class="text-primary font-bold mb-6">What our mission &amp; values look like in the
+                        classroom</h2>
+<p class="text-gray-700 mb-6 leading-relaxed">Our mission and values are not just words on a page;
+                        they shape how lessons work day to day. In practice, this means creating environments where
+                        students thrive and learning is the priority.</p>
+<img alt="" class="rounded-lg h-[300px] w-full object-cover" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
+</div>
+<div class="fade-in scale-in space-y-4">
+<div class="flex gap-4 p-4 bg-white rounded-lg">
+<i class="fas fa-clipboard-list text-2xl text-blue-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Well-planned lessons</p>
+<p class="text-sm text-gray-600">Evidence-informed approaches that respect students' time
+                            </p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-white rounded-lg">
+<i class="fas fa-users text-2xl text-purple-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Small classes</p>
+<p class="text-sm text-gray-600">Teachers notice who needs help and adjust accordingly</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-white rounded-lg">
+<i class="fas fa-clock text-2xl text-green-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Clear structure</p>
+<p class="text-sm text-gray-600">Consistent expectations around attendance and deadlines</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-white rounded-lg">
+<i class="fas fa-comments text-2xl text-orange-600"></i>
+<div>
+<p class="font-semibold text-gray-900">Constructive feedback</p>
+<p class="text-sm text-gray-600">Students know where they stand and what to do next</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-white rounded-lg">
+<i class="fas fa-heart text-2xl text-red-600"></i>
+<div>
+<p class="font-semibold text-gray-900">High but humane expectations</p>
+<p class="text-sm text-gray-600">We recognise each student's unique circumstances</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Working with Students & Families -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="fade-in mb-12 text-center">
+<h2 class="text-primary font-bold mb-6">How we work with students and families</h2>
+<p class="text-gray-700 max-w-2xl mx-auto">Our mission and values guide how we support students outside
+                    the classroom and how we communicate with families.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="shadow-lg scale-in stagger-1 bg-primary/5 p-8 rounded-lg">
+<h3 class="font-bold text-gray-900 mb-3">
+<i class="fas fa-search text-blue-600"></i> Reporting &amp; Progress
+                    </h3>
+<p class="text-gray-700">We share honest, detailed information about progress, including where there
+                        are concerns, and we focus on solutions.</p>
+</div>
+<div class="shadow-lg scale-in stagger-2 bg-primary/5 p-8 rounded-lg">
+<h3 class="font-bold text-gray-900 mb-3">
+<i class="fas fa-ear-listen text-green-600"></i> Listening &amp; Understanding
+                    </h3>
+<p class="text-gray-700">We listen carefully to students and families, especially when balancing
+                        education with health, family or international circumstances.</p>
+</div>
+<div class="shadow-lg scale-in stagger-3 bg-primary/5 p-8 rounded-lg">
+<h3 class="font-bold text-gray-900 mb-3">
+<i class="fas fa-chart-line text-purple-600"></i> Response to Setbacks
+                    </h3>
+<p class="text-gray-700">We help students respond to setbacks with a clear plan, not panic.
+                        Difficult exams become opportunities to learn.</p>
+</div>
+<div class="shadow-lg scale-in stagger-4 bg-primary/5 p-8 rounded-lg">
+<h3 class="font-bold text-gray-900 mb-3">
+<i class="fas fa-link text-orange-600"></i> Digital Communication
+                    </h3>
+<p class="text-gray-700">We use technology to keep families informed and to make it easier for
+                        students to access resources and support.</p>
+</div>
+</div>
+<div class="fade-in mt-12 bg-accent p-8 rounded-xl text-center">
+<p class="text-lg font-semibold text-primary">We want every family to feel that LMSC is on their side,
+                    working with them to achieve the best outcomes possible.</p>
+</div>
+</div>
+</section>
+<!-- Section 6: International Students -->
+<section class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-12">
+<div class="fade-in fade-in">
+<h2 class="text-primary font-bold mb-6">For international students and families</h2>
+<p class="text-gray-700 mb-6 leading-relaxed">For families based outside the UK, our mission and
+                        values translate into concrete commitments to your success.</p>
+<ul class="space-y-4 text-gray-700">
+<li class="flex gap-3">
+<span class="text-primary font-bold">✓</span>
+<span>A <strong>British curriculum</strong> taught with clarity, patience and high
+                                expectations</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary font-bold">✓</span>
+<span>An admissions process that explains <strong>British grades, exams and university
+                                    applications</strong></span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary font-bold">✓</span>
+<span>Flexibility in study mode without lowering academic standards</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary font-bold">✓</span>
+<span>Inclusion and respect for students from different educational backgrounds</span>
+</li>
+</ul>
+</div>
+<div class="fade-in scale-in bg-white p-8 rounded-xl shadow border-l-4 border-secondary">
+<h3 class="font-bold text-gray-900 mb-4 text-lg">British Curriculum from London</h3>
+<p class="text-gray-700 mb-6">We see international students not as an add-on, but as an integral
+                        part of our community. Your perspective, background and ambitions matter to us.</p>
+<p class="text-gray-700 font-semibold text-primary">Ready to explore our international pathways?</p>
+<button class="mt-4 w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:opacity-90">Learn
+                        more about international study</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7: Holding Ourselves Accountable -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="fade-in mb-12 text-center">
+<h2 class="text-primary font-bold mb-6">Holding ourselves to our mission &amp; values</h2>
+<p class="text-gray-700 max-w-2xl mx-auto">We expect to be judged — by students, families, staff and
+                    partners — on how well we live up to what we say.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 mb-12">
+<div class="fade-in scale-in stagger-1 bg-gray-50 p-6 rounded-xl shadow">
+<h3 class="font-bold text-gray-900 mb-3">📊 Regular Review</h3>
+<p class="text-gray-700">We regularly review how our policies and practices reflect our values,
+                        making adjustments when needed.</p>
+</div>
+<div class="fade-in scale-in stagger-2 bg-gray-50 p-6 rounded-xl shadow">
+<h3 class="font-bold text-gray-900 mb-3">📈 Data-Driven</h3>
+<p class="text-gray-700">We use student and parent feedback, exam results and progression outcomes
+                        to check we are on track.</p>
+</div>
+<div class="fade-in scale-in stagger-3 bg-gray-50 p-6 rounded-xl shadow">
+<h3 class="font-bold text-gray-900 mb-3">🔄 Continuous Improvement</h3>
+<p class="text-gray-700">We are willing to adjust when something is not working as intended. Our
+                        values guide all decisions.</p>
+</div>
+</div>
+<div class="fade-in bg-primary text-white p-6 rounded-xl shadow text-center">
+<p class="text-lg font-semibold mb-4">Our mission and values are a <strong>working framework</strong>,
+                    not a marketing slogan. They guide decisions about curriculum, teaching, admissions, support and the
+                    way we grow.</p>
+</div>
+</div>
+</section>
+<!-- Section 8: Next Steps -->
+<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="scale-in">
+<div>
+<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
+                            Next steps
+                        </span>
+</div>
+<h2 class="font-bold text-primary mb-4">
+                        See if our mission &amp; values align with your goals
+                    </h2>
+<p class="text-opacity-90 mb-8 leading-relaxed">
+                        Choosing a college is about more than courses and timetables — it's about finding a place whose
+                        values match your own. If LMSC's mission and values resonate with you, we'd be happy to discuss
+                        whether our programmes are a good fit for your situation.
+                    </p>
+<!-- BTN 1 -->
+<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
+<div class="btn-content">
+<span class="text-part">Book a Consultation</span>
+<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
+<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</span>
+</div>
+</button>
+</div>
+<!-- Right Side - Image with Chat Bubbles -->
+<div class="relative flex items-center justify-end scale-in">
+<!-- Main Image Container -->
+<div class="main-image relative w-full max-w-sm">
+<!-- Background placeholder for the person image -->
+<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
+<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
+</div>
+<!-- Chat Bubbles Overlay -->
+<div class="chat-block">
+<!-- User Message -->
+<div class="user-message chat-bubble-user">
+<div class="user-avatar"></div>
+<div class="user-message-bubble">
+<div class="name">Oliver Moy</div>
+<div class="text">I need help with my budget.</div>
+</div>
+</div>
+<!-- AI Response -->
+<div class="ai-message chat-bubble-ai">
+<div class="ai-avatar-bubble">
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+<div class="ai-message-bubble">
+<div class="name">AI Assistant</div>
+<div class="text">Sure! Let's carefully review your income and expenses.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.fade-in, .fade-in, .scale-in, .scale-in');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore Courses - London Maths & Science College{% endblock %}
+
+{% block extra_head %}
+<style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            aspect-ratio: 16 / 9;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+
+<!-- Hero Section -->
+<section class="py-20 px-6">
+<div class="container mx-auto px-6 text-center">
+<div class="max-w-5xl mx-auto">
+<h1 class="text-primary font-bold text-gray-900 mb-6">
+                    Creative Web Design: Crafting Visually Stunning Websites
+                </h1>
+</div>
+</div>
+</section>
+<!-- Featured Image -->
+<section class="py-12 px-6">
+<div class="container mx-auto px-6">
+<div class="rounded-3xl overflow-hidden h-96 md:h-[500px] bg-gray-300 flex items-center justify-center fade-in">
+<img alt="" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
+</div>
+</div>
+</section>
+<!-- Main Content -->
+<section class="py-16">
+<div class="container mx-auto px-6 scale-in">
+<div class="">
+<div class="grid md:grid-cols-3 gap-16">
+<!-- Left Content -->
+<div class="md:col-span-2">
+<!-- About Section -->
+<div class="mb-16">
+<h2 class="font-bold text-primary mb-6">About the courses.</h2>
+<p class="text-gray-600 leading-relaxed">
+                                "Creative Web Design: Crafting Visually Stunning Digital Experiences" is a meticulously
+                                crafted course that provides an in-depth look at the UX/UI design field. This course is
+                                designed to cater to both beginners and experienced designers, guiding learners through
+                                the
+                                entire design process, from the basics to advanced design strategies.
+                            </p>
+</div>
+<!-- What You Will Learn -->
+<div class="mb-16">
+<h2 class="font-bold text-primary mb-8">What you will learn.</h2>
+<div class="space-y-6">
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Web Design Principles:</h3>
+<p class="text-gray-600">Understand the core concepts and distinctions between Web
+                                        Design, and how they interact to create cohesive digital products.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">User Research:</h3>
+<p class="text-gray-600">Learn to conduct user research, create personas, and map
+                                        user
+                                        journeys to inform design decisions.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Prototyping:</h3>
+<p class="text-gray-600">Develop skills in creating wireframes, low and
+                                        high-fidelity
+                                        prototypes, and conduct usability testing to refine designs.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Advanced Design Techniques:</h3>
+<p class="text-gray-600">Dive into complex design challenges, such as mobile and
+                                        responsive design, accessibility, and interaction design.</p>
+</div>
+</div>
+</div>
+<!-- Who Should Take -->
+<div class="mb-16">
+<h2 class="font-bold text-primary mb-8">Who should take this course?</h2>
+<div class="space-y-6">
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Aspiring Web Designers:</h3>
+<p class="text-gray-600">Individuals who are new to the field and want to build a
+                                        strong
+                                        foundation in UX/UI design.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Graphic Designers:</h3>
+<p class="text-gray-600">Professionals looking to expand their skill set and
+                                        transition
+                                        into the Web Design industry.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Developers and Product Managers:
+                                    </h3>
+<p class="text-gray-600">Those who want to better understand the design process and
+                                        collaborate more effectively with design teams.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 mb-2">Experienced Designers:</h3>
+<p class="text-gray-600">Professionals seeking to deepen their knowledge and stay
+                                        updated with the latest design trends and tools.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar -->
+<div class="md:col-span-1">
+<div class="bg-white shadow rounded-2xl p-8 sticky top-8">
+<!-- Price -->
+<div class="mb-8">
+<p class="text-5xl font-bold text-primary">$48</p>
+<p class="text-gray-600 text-sm mt-2">We offer a variety of pricing plans to make this
+                                    comprehensive UX/UI design course accessible to everyone.</p>
+</div>
+<!-- CTA Button -->
+<button class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full mb-6 hover:opacity-90 transition">
+                                Buy Now
+                            </button>
+<!-- Course Includes -->
+<div>
+<p class="font-bold text-gray-900 mb-4">This courses includes</p>
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-gray-600 text-sm">
+<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+<span>Pay for &amp; access individual modules</span>
+</li>
+<li class="flex items-start gap-3 text-gray-600 text-sm">
+<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+<span>Access corresponding assignments</span>
+</li>
+<li class="flex items-start gap-3 text-gray-600 text-sm">
+<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+<span>Option to upgrade to full course</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Related Courses -->
+<section class="py-20">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16 fade-in">
+<h2 class="text-primary font-bold text-gray-900 mb-4">Related Courses</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">
+                    Stay informed and inspired with the latest news and articles from Edu. Our dedicated team of experts
+                    and industry leaders regularly curate insightful content.
+                </p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 scale-in">
+<!-- Course Card 1 -->
+<a href="{{ url_for('course_details') }}">
+<article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow scale-in stagger-1">
+<div class="p-4">
+<span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium mb-3">
+                                UI/UX Design
+                            </span>
+<h3 class="font-bold mb-3 text-gray-900">
+                                Mastering UI/UX design from fundamentals to advanced
+                            </h3>
+<div class="aspect-video bg-gray-200 rounded-xl overflow-hidden mb-4">
+<img alt="UI/UX Design Course" class="w-full h-full object-cover" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
+</div>
+<p class="text-gray-600 text-sm mb-4">
+                                Starting with the core principles of design the course delves into research.
+                            </p>
+<div class="flex items-center gap-2 text-gray-700">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-sm font-medium">12 Lessons</span>
+</div>
+</div>
+</article>
+</a>
+<!-- Course Card 2 -->
+<a href="{{ url_for('course_details') }}">
+<article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow scale-in stagger-2">
+<div class="p-4">
+<span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium mb-3">
+                                Web Design
+                            </span>
+<h3 class="font-bold mb-3 text-gray-900">
+                                Creative Web Design: Crafting Visually Stunning Websites
+                            </h3>
+<div class="aspect-video bg-gray-200 rounded-xl overflow-hidden mb-4">
+<img alt="Web Design Course" class="w-full h-full object-cover" src="{{ url_for('static', filename='Images/Image 2.jpg') }}"/>
+</div>
+<p class="text-gray-600 text-sm mb-4">
+                                Design Beautiful, User-Friendly Websites with Projects and Expert-Led Lessons
+                            </p>
+<div class="flex items-center gap-2 text-gray-700">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-sm font-medium">12 Lessons</span>
+</div>
+</div>
+</article>
+</a>
+<!-- Course Card 3 -->
+<a href="{{ url_for('course_details') }}">
+<article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow scale-in stagger-3">
+<div class="p-4">
+<span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium mb-3">
+                                Web Development
+                            </span>
+<h3 class="font-bold mb-3 text-gray-900">
+                                Mastering Web Development: From Fundamentals to Advanced Feature
+                            </h3>
+<div class="aspect-video bg-gray-200 rounded-xl overflow-hidden mb-4">
+<img alt="Web Development Course" class="w-full h-full object-cover" src="{{ url_for('static', filename='Images/Image 3.jpg') }}"/>
+</div>
+<p class="text-gray-600 text-sm mb-4">
+                                Build Responsive Websites Applications with HandsOn Projects and Expertise
+                            </p>
+<div class="flex items-center gap-2 text-gray-700">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-sm font-medium">12 Lessons</span>
+</div>
+</div>
+</article>
+</a>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="scale-in stagger-3">
+<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
+                        Next steps
+                    </span>
+<h2 class="font-bold text-primary mb-4">
+                        Secure, reliable, and trusted by thousands
+                    </h2>
+<p class="text-opacity-90 mb-8 leading-relaxed">
+                        Join thousands who trust us for secure financial management. Your data is protected with
+                        top-level encryption and security protocols.
+                    </p>
+<!-- BTN 1 -->
+<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
+<div class="btn-content">
+<span class="text-part">Book a Consultation</span>
+<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
+<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</span>
+</div>
+</button>
+</div>
+<!-- Right Side - Image with Chat Bubbles -->
+<div class="relative flex items-center justify-end fade-in">
+<!-- Main Image Container -->
+<div class="main-image relative w-full max-w-sm">
+<!-- Background placeholder for the person image -->
+<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
+<img alt="Person with phone" class="w-full h-full object-cover object-center" src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"/>
+</div>
+<!-- Chat Bubbles Overlay -->
+<div class="chat-block">
+<!-- User Message -->
+<div class="user-message chat-bubble-user">
+<div class="user-avatar"></div>
+<div class="user-message-bubble">
+<div class="name">Oliver Moy</div>
+<div class="text">I need help with my budget.</div>
+</div>
+</div>
+<!-- AI Response -->
+<div class="ai-message chat-bubble-ai">
+<div class="ai-avatar-bubble">
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+<div class="ai-message-bubble">
+<div class="name">AI Assistant</div>
+<div class="text">Sure! Let's carefully review your income and expenses.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+
+<!-- Scroll to Top Button -->
+{% endblock %}
