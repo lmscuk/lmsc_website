@@ -1,9 +1,12 @@
 <header class="md:px-8 px-4 py-4 max-w-[1920px] mx-auto sticky top-0 z-[60]">
   <style>
     .nav-item-text {
-      font-size: 0.75rem;
+      font-size: 0.703125rem;
     }
   </style>
+  {% set hidden_nav_slugs = [ 'courses', 'course-details', 'course_details',
+  'course-overview', 'co', 'a-level-math', 'a_level_math', 'pricing',
+  'book-a-consultation', 'book_consultation', 'book-consultation' ] %}
   <nav
     class="bg-white/85 px-6 mx-auto rounded-2xl w-full py-3 shadow-lg border border-white/60 backdrop-blur-xl transition-all duration-300 z-[60]"
   >
@@ -229,23 +232,6 @@
                       <p class="text-xs text-gray-500">
                         Research-based approach
                       </p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('courses') }}"
-                    onmouseenter="setImage('learning-support')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-hands-helping px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Learning Support
-                      </h4>
-                      <p class="text-xs text-gray-500">Extra help available</p>
                     </div>
                   </a>
                   <a
@@ -752,23 +738,6 @@
                     </div>
                   </a>
                   <a
-                    href="{{ url_for('pricing') }}"
-                    onmouseenter="setImage('payment-plans')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-credit-card px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Finance &amp; Payment Plans
-                      </h4>
-                      <p class="text-xs text-gray-500">Flexible options</p>
-                    </div>
-                  </a>
-                  <a
                     href="{{ url_for('blogs') }}"
                     onmouseenter="setImage('blog')"
                     class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
@@ -1026,8 +995,14 @@
               </div>
             </div>
           </div>
-          {% for parent in nav_pages_main %} {% set children =
-          nav_pages_dropdown_lookup.get(parent['id']) %} {% if children %}
+          {% for parent in nav_pages_main %} {% set parent_slug = parent['slug']
+          %} {% if parent_slug not in hidden_nav_slugs %} {% set children =
+          nav_pages_dropdown_lookup.get(parent['id']) or [] %} {% set
+          visible_children = namespace(items=[]) %} {% for child in children %}
+          {% set child_slug = child['slug'] %} {% if child_slug not in
+          hidden_nav_slugs %} {% set visible_children.items =
+          visible_children.items + [child] %} {% endif %} {% endfor %} {% if
+          visible_children.items %}
           <div class="dropdown relative group">
             <button
               class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
@@ -1051,7 +1026,7 @@
               class="dropdown-content absolute right-0 mt-0 w-[380px] bg-white rounded-3xl shadow-2xl p-6"
             >
               <div class="space-y-2">
-                {% for child in children %} {% set child_url =
+                {% for child in visible_children.items %} {% set child_url =
                 nav_managed_page_urls.get(child['id']) or
                 url_for('render_dynamic_page', slug=child['slug']) %}
                 <a
@@ -1086,8 +1061,14 @@
           >
             {{ parent['page_name'] }}
           </a>
-          {% endif %} {% endfor %} {% for group in nav_pages_dropdown_standalone
-          %}
+          {% endif %} {% endif %} {% endfor %} {% for group in
+          nav_pages_dropdown_standalone %} {% set group_parent_slug =
+          group.parent['slug'] %} {% if group_parent_slug not in
+          hidden_nav_slugs %} {% set group_children = namespace(items=[]) %} {%
+          for child in group.children %} {% set child_slug = child['slug'] %} {%
+          if child_slug not in hidden_nav_slugs %} {% set group_children.items =
+          group_children.items + [child] %} {% endif %} {% endfor %} {% if
+          group_children.items %}
           <div class="dropdown relative group">
             <button
               class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
@@ -1111,7 +1092,7 @@
               class="dropdown-content absolute right-0 mt-0 w-[380px] bg-white rounded-3xl shadow-2xl p-6"
             >
               <div class="space-y-2">
-                {% for child in group.children %} {% set child_url =
+                {% for child in group_children.items %} {% set child_url =
                 nav_managed_page_urls.get(child['id']) or
                 url_for('render_dynamic_page', slug=child['slug']) %}
                 <a
@@ -1138,12 +1119,38 @@
               </div>
             </div>
           </div>
-          {% endfor %}
+          {% endif %} {% endif %} {% endfor %}
           <a
             href="{{ url_for('contact') }}"
             class="nav-item-text px-2 py-2 text-gray-700 hover:text-primary font-bold"
             >Contact</a
           >
+          <a
+            href="{{ url_for('book_consultation') }}"
+            class="switch-btn ml-3 bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+          >
+            <div class="btn-content flex items-center gap-3">
+              <span class="text-part">Book Consultation</span>
+              <span
+                class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+              >
+                <svg
+                  class="h-5 w-5 text-emerald-900"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+          </a>
         </div>
         <button id="menuToggle" class="xl:hidden p-2 hamburger">
           <div class="w-6 flex flex-col gap-1.5">
@@ -1298,13 +1305,6 @@
               >
                 <i class="fa fa-lightbulb w-4"></i>
                 <span class="text-sm">Evidence-Informed Teaching</span>
-              </a>
-              <a
-                href="{{ url_for('courses') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-hands-helping w-4"></i>
-                <span class="text-sm">Learning Support</span>
               </a>
               <a
                 href="{{ url_for('placeholder_page', slug='support-send-learners') }}"
@@ -1537,13 +1537,6 @@
                 <span class="text-sm">Exam Information &amp; Policies</span>
               </a>
               <a
-                href="{{ url_for('pricing') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-credit-card w-4"></i>
-                <span class="text-sm">Finance &amp; Payment Plans</span>
-              </a>
-              <a
                 href="{{ url_for('blogs') }}"
                 class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
               >
@@ -1663,41 +1656,32 @@
               Managed Pages
             </p>
             <div class="mt-3 space-y-1">
-              {% for parent in nav_pages_main %} {% set parent_url =
-              nav_managed_page_urls.get(parent['id']) or
+              {% for parent in nav_pages_main %} {% set parent_slug =
+              parent['slug'] %} {% if parent_slug not in hidden_nav_slugs %} {%
+              set parent_url = nav_managed_page_urls.get(parent['id']) or
               url_for('render_dynamic_page', slug=parent['slug']) %}
               <a
                 href="{{ parent_url }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary font-medium"
+                class="flex items-center gap-3 py-2 text-gray-500 hover:text-primary text-sm"
               >
-                <i class="fa fa-file-alt w-4"></i>
-                <span class="text-sm">{{ parent['page_name'] }}</span>
+                <i class="fa fa-angle-right w-4"></i>
+                <span>{{ parent['page_name'] }}</span>
               </a>
-              {% set mobile_children =
-              nav_pages_dropdown_lookup.get(parent['id']) %} {% if
-              mobile_children %}
-              <div class="pl-6 space-y-1">
-                {% for child in mobile_children %} {% set child_url =
-                nav_managed_page_urls.get(child['id']) or
-                url_for('render_dynamic_page', slug=child['slug']) %}
-                <a
-                  href="{{ child_url }}"
-                  class="flex items-center gap-3 py-2 text-gray-500 hover:text-primary text-sm"
-                >
-                  <i class="fa fa-angle-right w-4"></i>
-                  <span>{{ child['page_name'] }}</span>
-                </a>
-                {% endfor %}
-              </div>
               {% endif %} {% endfor %} {% for group in
-              nav_pages_dropdown_standalone %}
+              nav_pages_dropdown_standalone %} {% set group_parent_slug =
+              group.parent['slug'] %} {% if group_parent_slug not in
+              hidden_nav_slugs %} {% set managed_children = namespace(items=[])
+              %} {% for child in group.children %} {% set child_slug =
+              child['slug'] %} {% if child_slug not in hidden_nav_slugs %} {%
+              set managed_children.items = managed_children.items + [child] %}
+              {% endif %} {% endfor %} {% if managed_children.items %}
               <p
                 class="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400"
               >
                 {{ group.parent['page_name'] }}
               </p>
               <div class="pl-6 space-y-1">
-                {% for child in group.children %} {% set child_url =
+                {% for child in managed_children.items %} {% set child_url =
                 nav_managed_page_urls.get(child['id']) or
                 url_for('render_dynamic_page', slug=child['slug']) %}
                 <a
@@ -1709,7 +1693,7 @@
                 </a>
                 {% endfor %}
               </div>
-              {% endfor %}
+              {% endif %} {% endif %} {% endfor %}
             </div>
           </div>
           {% endif %}
@@ -1719,13 +1703,31 @@
             class="nav-item-text block py-3 text-gray-700 font-medium border-b border-gray-200"
             >Contact</a
           >
-        </div>
-        <div class="mt-6 pt-6 border-t border-gray-200">
           <a
             href="{{ url_for('book_consultation') }}"
-            class="w-full inline-flex justify-center bg-primary text-white py-3 rounded-full font-medium hover:opacity-90"
+            class="switch-btn mt-4 inline-flex w-full justify-center bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
           >
-            Book Consultation
+            <div class="btn-content flex items-center gap-3">
+              <span class="text-part">Book Consultation</span>
+              <span
+                class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+              >
+                <svg
+                  class="h-5 w-5 text-emerald-900"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                  ></path>
+                </svg>
+              </span>
+            </div>
           </a>
         </div>
       </div>
