@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>New Consultation Booking</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background: #f2f6f4;
+      font-family: 'Montserrat', Arial, sans-serif;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="padding: 32px 0"
+    >
+      <tr>
+        <td align="center">
+          <table
+            role="presentation"
+            cellpadding="0"
+            cellspacing="0"
+            width="600"
+            style="
+              background: #ffffff;
+              border-radius: 20px;
+              overflow: hidden;
+              box-shadow: 0 20px 45px rgba(56, 121, 81, 0.15);
+            "
+          >
+            <tr>
+              <td
+                style="background: #387951; color: #ffffff; padding: 28px 36px"
+              >
+                <h1 style="margin: 0; font-size: 22px; font-weight: 700">
+                  New consultation booked
+                </h1>
+                <p style="margin: 8px 0 0; font-size: 14px; opacity: 0.85">
+                  {{ booking['full_name'] }} has requested a consultation.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 32px 36px; color: #1f2933">
+                <h2 style="margin: 0 0 16px; font-size: 18px; font-weight: 600">
+                  Contact details
+                </h2>
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="font-size: 14px"
+                >
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b; width: 160px">
+                      Name
+                    </td>
+                    <td
+                      style="padding: 6px 0; color: #0f172a; font-weight: 600"
+                    >
+                      {{ booking['full_name'] }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Email</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['email'] }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Phone</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['phone'] or '—' }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Student</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['student_name'] or '—' }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Study level</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['study_level'] or '—' }}
+                    </td>
+                  </tr>
+                </table>
+
+                <h2
+                  style="margin: 28px 0 16px; font-size: 18px; font-weight: 600"
+                >
+                  Session details
+                </h2>
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="font-size: 14px"
+                >
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b; width: 160px">
+                      Scheduled
+                    </td>
+                    <td
+                      style="padding: 6px 0; color: #0f172a; font-weight: 600"
+                    >
+                      {% if booking['scheduled_date'] %} {{
+                      booking['scheduled_date']|format_date('%A %d %B %Y') }} ·
+                      {{ booking['scheduled_time'] }} {{ booking['timezone'] or
+                      'GMT' }} {% else %} Not selected {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Meeting mode</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['meeting_mode'] or 'Online' }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Status</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['status'] }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #64748b">Submitted</td>
+                    <td style="padding: 6px 0; color: #0f172a">
+                      {{ booking['created_at'] }}
+                    </td>
+                  </tr>
+                </table>
+
+                <h2
+                  style="margin: 28px 0 16px; font-size: 18px; font-weight: 600"
+                >
+                  Notes
+                </h2>
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    color: #334155;
+                  "
+                >
+                  {{ booking['notes'] or 'No additional notes supplied.' }}
+                </p>
+
+                {% if admin_url %}
+                <table
+                  role="presentation"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="margin: 32px 0 0"
+                >
+                  <tr>
+                    <td>
+                      <a
+                        href="{{ admin_url }}"
+                        style="
+                          display: inline-block;
+                          background: #387951;
+                          color: #ffffff;
+                          font-weight: 600;
+                          font-size: 14px;
+                          text-decoration: none;
+                          padding: 12px 24px;
+                          border-radius: 999px;
+                        "
+                        >Open in admin</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="
+                  background: #f8faf9;
+                  padding: 24px 36px;
+                  text-align: center;
+                  color: #94a3b8;
+                  font-size: 12px;
+                "
+              >
+                London Maths &amp; Science College · Automated notification
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+{% block title %}Book a Consultation | London Maths & Science College{% endblock %}
+
+{% block extra_head %}
+<style>
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .calendar-day {
+    border-radius: 18px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #ffffff;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .calendar-day:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(56, 121, 81, 0.12);
+  }
+
+  .calendar-day.is-active {
+    border-color: #387951;
+    background: rgba(56, 121, 81, 0.1);
+    color: #0f172a;
+  }
+
+  .slot-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1f2937;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #ffffff;
+  }
+
+  .slot-button:hover {
+    border-color: #387951;
+    color: #387951;
+  }
+
+  .slot-button.is-active {
+    background: #387951;
+    border-color: #387951;
+    color: #ffffff;
+    box-shadow: 0 10px 20px rgba(56, 121, 81, 0.2);
+  }
+
+  .step-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #387951;
+    color: #ffffff;
+    font-weight: 700;
+    margin-right: 12px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="bg-gradient-to-b from-white to-slate-50 py-20">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-[#C5F3C5] px-4 py-2 text-sm font-bold text-lime-700">
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 2a1 1 0 0 1 .894.553l.382.764 1.011.147a1 1 0 0 1 .554 1.705l-.732.713.173 1.02a1 1 0 0 1-1.451 1.054L10 7.848l-.931.482a1 1 0 0 1-1.451-1.054l.173-1.02-.732-.713a1 1 0 0 1 .554-1.705l1.011-.147.382-.764A1 1 0 0 1 10 2Z" />
+        </svg>
+        Admissions consultation
+      </span>
+      <h1 class="mt-6 text-4xl md:text-5xl font-bold text-primary">Book a time with our admissions mentors</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Select a date and time that works for you. We’ll confirm the consultation by email and tailor the conversation to your chosen STEM goals, study format and timelines.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="py-10">
+  <div class="container mx-auto px-6">
+    <div class="grid gap-10 lg:grid-cols-[420px_1fr]">
+      <aside class="space-y-6">
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6">
+          <div class="flex items-center mb-4">
+            <div class="step-indicator">1</div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">Choose your slot</h3>
+              <p class="text-sm text-slate-500">Pick a date and time that suits you.</p>
+            </div>
+          </div>
+          <div id="dateGrid" class="calendar-grid"></div>
+          <p class="mt-4 text-sm text-slate-500" id="selectedDateLabel">No date selected yet.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6">
+          <div class="flex items-center mb-4">
+            <div class="step-indicator">2</div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">Choose a time</h3>
+              <p class="text-sm text-slate-500">All times show in your selected timezone.</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3" id="slotContainer">
+            {% for slot in time_slots %}
+            <button
+              type="button"
+              class="slot-button"
+              data-slot-value="{{ slot }}"
+            >
+              {{ slot }}
+            </button>
+            {% endfor %}
+          </div>
+          <p class="mt-4 text-sm text-slate-500" id="selectedTimeLabel">Choose a time slot to continue.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6">
+          <div class="flex items-center mb-4">
+            <div class="step-indicator">3</div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">What happens next?</h3>
+            </div>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex gap-3">
+              <span class="mt-1 text-primary">•</span>
+              Our admissions mentor confirms the consultation time by email.
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1 text-primary">•</span>
+              We tailor the agenda around your chosen STEM pathways and study format.
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1 text-primary">•</span>
+              Receive joining instructions (Zoom link or campus directions) and supporting resources.
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+        <form method="post" class="space-y-6">
+          <input type="hidden" name="source" value="{{ request.path }}" />
+          <input type="hidden" name="selected_date" id="selected_date" value="{{ form_data.get('selected_date', '') }}" />
+          <input type="hidden" name="selected_time" id="selected_time" value="{{ form_data.get('selected_time', '') }}" />
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="full_name" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Full name *</label>
+              <input
+                id="full_name"
+                name="full_name"
+                type="text"
+                required
+                value="{{ form_data.get('full_name', '') }}"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label for="email" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Email *</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value="{{ form_data.get('email', '') }}"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label for="phone" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Phone</label>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                value="{{ form_data.get('phone', '') }}"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label for="student_name" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Student name</label>
+              <input
+                id="student_name"
+                name="student_name"
+                type="text"
+                value="{{ form_data.get('student_name', '') }}"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="study_level" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Study level</label>
+              <select
+                id="study_level"
+                name="study_level"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="">Select</option>
+                {% set current_level = form_data.get('study_level', '') %}
+                <option value="GCSE" {% if current_level == 'GCSE' %}selected{% endif %}>GCSE / IGCSE</option>
+                <option value="A Level" {% if current_level == 'A Level' %}selected{% endif %}>A Level</option>
+                <option value="Retake" {% if current_level == 'Retake' %}selected{% endif %}>GCSE / A Level retake</option>
+                <option value="International" {% if current_level == 'International' %}selected{% endif %}>International student enquiry</option>
+                <option value="Other" {% if current_level == 'Other' %}selected{% endif %}>Other / not sure</option>
+              </select>
+            </div>
+            <div>
+              <label for="interest_area" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Primary interest</label>
+              <input
+                id="interest_area"
+                name="interest_area"
+                type="text"
+                placeholder="STEM subjects, scholarships, online study..."
+                value="{{ form_data.get('interest_area', '') }}"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Preferred format</span>
+              {% set meeting_mode = form_data.get('meeting_mode', 'Online') %}
+              <div class="mt-3 space-y-2">
+                <label class="flex items-center gap-3 text-sm text-slate-700">
+                  <input type="radio" name="meeting_mode" value="Online" {% if meeting_mode == 'Online' %}checked{% endif %} />
+                  <span>Online (Zoom)</span>
+                </label>
+                <label class="flex items-center gap-3 text-sm text-slate-700">
+                  <input type="radio" name="meeting_mode" value="On campus" {% if meeting_mode == 'On campus' %}checked{% endif %} />
+                  <span>On campus at Commercial Road</span>
+                </label>
+                <label class="flex items-center gap-3 text-sm text-slate-700">
+                  <input type="radio" name="meeting_mode" value="Phone call" {% if meeting_mode == 'Phone call' %}checked{% endif %} />
+                  <span>Phone call</span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <label for="timezone" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Timezone</label>
+              <select
+                id="timezone"
+                name="timezone"
+                class="mt-2 w-full rounded-full bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                {% set current_tz = form_data.get('timezone', 'Europe/London') %}
+                {% for value, label in timezone_options %}
+                <option value="{{ value }}" {% if current_tz == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="notes" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Anything else?</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="4"
+              placeholder="Tell us about goals, deadlines or questions you would like us to cover."
+              class="mt-2 w-full rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+            >{{ form_data.get('notes', '') }}</textarea>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-200 rounded-3xl px-5 py-4">
+            <p class="text-sm text-slate-600">
+              <strong>Summary:</strong>
+              <span id="summaryText">Select a date and time to generate your consultation summary.</span>
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-full bg-emerald-900 px-8 py-4 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            Request consultation
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const dateGrid = document.getElementById('dateGrid');
+    const slotButtons = Array.from(document.querySelectorAll('.slot-button'));
+    const hiddenDateInput = document.getElementById('selected_date');
+    const hiddenTimeInput = document.getElementById('selected_time');
+    const dateLabel = document.getElementById('selectedDateLabel');
+    const timeLabel = document.getElementById('selectedTimeLabel');
+    const summaryText = document.getElementById('summaryText');
+    const timezoneSelect = document.getElementById('timezone');
+
+    const existingDate = hiddenDateInput.value;
+    const existingTime = hiddenTimeInput.value;
+
+    const formatDate = (date) => {
+      const options = { weekday: 'short', day: 'numeric', month: 'short' };
+      return date.toLocaleDateString(undefined, options);
+    };
+
+    const buildCalendar = (days = 21) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      for (let i = 0; i < days; i += 1) {
+        const date = new Date();
+        date.setDate(today.getDate() + i);
+        const value = date.toISOString().split('T')[0];
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'calendar-day';
+        button.dataset.dateValue = value;
+        button.innerHTML = `
+          <span class="block text-xs uppercase tracking-wide text-slate-400">${date.toLocaleDateString(undefined, { weekday: 'short' })}</span>
+          <span class="block text-lg font-bold text-slate-900">${date.getDate()}</span>
+          <span class="block text-xs text-slate-500">${date.toLocaleDateString(undefined, { month: 'short' })}</span>
+        `;
+
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.calendar-day').forEach((el) => el.classList.remove('is-active'));
+          button.classList.add('is-active');
+          hiddenDateInput.value = value;
+          dateLabel.textContent = `Selected date: ${formatDate(date)}`;
+          updateSummary();
+        });
+
+        if (existingDate && existingDate === value) {
+          button.classList.add('is-active');
+          dateLabel.textContent = `Selected date: ${formatDate(date)}`;
+        }
+
+        dateGrid.appendChild(button);
+      }
+    };
+
+    const updateSummary = () => {
+      const dateValue = hiddenDateInput.value;
+      const timeValue = hiddenTimeInput.value;
+      if (!dateValue && !timeValue) {
+        summaryText.textContent = 'Select a date and time to generate your consultation summary.';
+        return;
+      }
+      const readableDate = dateValue ? new Date(dateValue).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'TBC';
+      const label = [readableDate, timeValue ? `${timeValue} ${timezoneSelect.value || 'GMT'}` : 'time TBC']
+        .filter(Boolean)
+        .join(' · ');
+      summaryText.textContent = `Consultation pencilled for ${label}.`;
+    };
+
+    slotButtons.forEach((button) => {
+      const value = button.dataset.slotValue;
+      if (existingTime && existingTime === value) {
+        button.classList.add('is-active');
+        timeLabel.textContent = `Selected time: ${value}`;
+      }
+      button.addEventListener('click', () => {
+        slotButtons.forEach((btn) => btn.classList.remove('is-active'));
+        button.classList.add('is-active');
+        hiddenTimeInput.value = value;
+        timeLabel.textContent = `Selected time: ${value}`;
+        updateSummary();
+      });
+    });
+
+    timezoneSelect.addEventListener('change', updateSummary);
+
+    buildCalendar();
+    updateSummary();
+  });
+</script>
+{% endblock %}

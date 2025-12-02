@@ -9,6 +9,8 @@ Disallow: /admin/leads
 Disallow: /admin/pages
 Disallow: /admin/policies
 Disallow: /admin/analytics
+Disallow: /admin/consultations
+Disallow: /admin/consultations/
 Disallow: /static/uploads/policies/documents/
 Disallow: /static/uploads/policies/thumbnails/
 Disallow: /static/uploads/social/

@@ -1,0 +1,184 @@
+{% extends 'admin/base_admin.html' %}
+{% block nav_title %}Consultation Detail{% endblock %}
+{% block title %}Consultation Detail · LMSC Admin{% endblock %}
+
+{% block content %}
+<header class="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+  <div>
+    <h1 class="text-3xl font-bold text-slate-900">{{ booking['full_name'] }}</h1>
+    <p class="text-sm text-slate-500 mt-1">Consultation request submitted on {{ booking['created_at'] }}.</p>
+  </div>
+  <span class="inline-flex items-center justify-center rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+    Current status: {{ booking['status'] }}
+  </span>
+</header>
+
+<section class="grid gap-6 lg:grid-cols-3 mb-10">
+  <div class="lg:col-span-2 space-y-6">
+    <article class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+      <h2 class="text-xl font-semibold text-slate-900 mb-4">Booking overview</h2>
+      <dl class="grid gap-4 md:grid-cols-2">
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Scheduled</dt>
+          <dd class="text-sm font-semibold text-slate-900 mt-1">
+            {% if booking['scheduled_date'] %}
+              {{ booking['scheduled_date']|format_date('%A %d %B %Y') }}<br />
+              <span class="text-slate-500 text-xs">{{ booking['scheduled_time'] }} · {{ booking['timezone'] or 'GMT' }}</span>
+            {% else %}
+              <span class="text-slate-500">Not scheduled yet</span>
+            {% endif %}
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Meeting mode</dt>
+          <dd class="text-sm font-semibold text-slate-900 mt-1">{{ booking['meeting_mode'] or 'Online' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Email</dt>
+          <dd class="text-sm text-slate-700 mt-1">{{ booking['email'] }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Phone</dt>
+          <dd class="text-sm text-slate-700 mt-1">{{ booking['phone'] or '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Student name</dt>
+          <dd class="text-sm text-slate-700 mt-1">{{ booking['student_name'] or '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Study level</dt>
+          <dd class="text-sm text-slate-700 mt-1">{{ booking['study_level'] or '—' }}</dd>
+        </div>
+        <div class="md:col-span-2">
+          <dt class="text-xs uppercase tracking-widest text-slate-400">Interests</dt>
+          <dd class="text-sm text-slate-700 mt-1">{{ booking['interest_area'] or '—' }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+      <h2 class="text-xl font-semibold text-slate-900 mb-4">Update consultation</h2>
+      <form method="post" class="space-y-5">
+        <div class="grid gap-4 md:grid-cols-2">
+          <div>
+            <label for="status" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Status</label>
+            <select
+              id="status"
+              name="status"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+            >
+              {% for status in statuses %}
+              <option value="{{ status }}" {% if booking['status'] == status %}selected{% endif %}>{{ status }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="meeting_mode" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Meeting mode</label>
+            <select
+              id="meeting_mode"
+              name="meeting_mode"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+            >
+              <option value="Online" {% if booking['meeting_mode'] == 'Online' %}selected{% endif %}>Online</option>
+              <option value="On campus" {% if booking['meeting_mode'] == 'On campus' %}selected{% endif %}>On campus</option>
+              <option value="Phone call" {% if booking['meeting_mode'] == 'Phone call' %}selected{% endif %}>Phone call</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+          <div>
+            <label for="scheduled_date" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Date</label>
+            <input
+              id="scheduled_date"
+              name="scheduled_date"
+              type="date"
+              value="{{ booking['scheduled_date'] }}"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+            />
+          </div>
+          <div>
+            <label for="scheduled_time" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Time</label>
+            <select
+              id="scheduled_time"
+              name="scheduled_time"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+            >
+              <option value="">Select time</option>
+              {% for slot in time_slots %}
+              <option value="{{ slot }}" {% if booking['scheduled_time'] == slot %}selected{% endif %}>{{ slot }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="timezone" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Timezone</label>
+            <select
+              id="timezone"
+              name="timezone"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+            >
+              <option value="">Default (GMT)</option>
+              {% for tz_value, tz_label in timezone_options %}
+              <option value="{{ tz_value }}" {% if booking['timezone'] == tz_value %}selected{% endif %}>{{ tz_label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="notes" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Notes</label>
+          <textarea
+            id="notes"
+            name="notes"
+            rows="4"
+            class="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+          >{{ booking['notes'] or '' }}</textarea>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
+          >
+            Save changes
+          </button>
+          <a
+            href="{{ url_for('admin_consultations') }}"
+            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+          >
+            Back to list
+          </a>
+        </div>
+      </form>
+    </article>
+  </div>
+
+  <aside class="space-y-6">
+    <article class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+      <h2 class="text-xl font-semibold text-slate-900 mb-3">Submission details</h2>
+      <dl class="space-y-3 text-sm text-slate-700">
+        <div class="flex justify-between">
+          <dt class="text-slate-500">Source</dt>
+          <dd class="font-semibold text-slate-900">{{ booking['source'] or 'Website' }}</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500">Created</dt>
+          <dd>{{ booking['created_at'] }}</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500">Last updated</dt>
+          <dd>{{ booking['updated_at'] }}</dd>
+        </div>
+      </dl>
+    </article>
+    <article class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+      <h2 class="text-xl font-semibold text-slate-900 mb-3">Latest notes</h2>
+      {% if booking['notes'] %}
+      <p class="text-sm text-slate-700">{{ booking['notes'] }}</p>
+      {% else %}
+      <p class="text-sm text-slate-500">No notes added yet.</p>
+      {% endif %}
+    </article>
+  </aside>
+</section>
+{% endblock %}

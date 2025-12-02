@@ -1,0 +1,180 @@
+{% extends 'admin/base_admin.html' %}
+{% block nav_title %}Consultations{% endblock %}
+{% block title %}Consultation Bookings · LMSC Admin{% endblock %}
+
+{% block content %}
+<header class="mb-8">
+  <h1 class="text-3xl font-bold text-slate-900">Consultation Bookings</h1>
+  <p class="text-sm text-slate-500 mt-1">
+    Monitor upcoming consultation slots, update statuses and keep the admissions team aligned.
+  </p>
+</header>
+
+<section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-10">
+  <article class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <p class="text-xs uppercase tracking-widest text-slate-400">Total Bookings</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">{{ totals.total }}</p>
+    <p class="text-xs text-slate-500 mt-2">All consultation submissions</p>
+  </article>
+  <article class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <p class="text-xs uppercase tracking-widest text-slate-400">Upcoming</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">{{ totals.upcoming }}</p>
+    <p class="text-xs text-slate-500 mt-2">Future-dated appointments</p>
+  </article>
+  <article class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <p class="text-xs uppercase tracking-widest text-slate-400">Pending</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">{{ status_counts.get('Pending', 0) }}</p>
+    <p class="text-xs text-slate-500 mt-2">Awaiting confirmation</p>
+  </article>
+  <article class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100">
+    <p class="text-xs uppercase tracking-widest text-slate-400">Confirmed</p>
+    <p class="text-3xl font-bold text-slate-900 mt-3">{{ status_counts.get('Confirmed', 0) }}</p>
+    <p class="text-xs text-slate-500 mt-2">Ready to host</p>
+  </article>
+</section>
+
+<section class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 mb-10">
+  <form method="get" class="grid gap-4 md:grid-cols-[1fr_1fr_auto_auto] items-end">
+    <div>
+      <label for="status" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Status</label>
+      <select
+        id="status"
+        name="status"
+        class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+      >
+        <option value="">All statuses</option>
+        {% for status in statuses %}
+        <option value="{{ status }}" {% if selected_status == status %}selected{% endif %}>{{ status }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="view" class="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">View</label>
+      <select
+        id="view"
+        name="view"
+        class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none"
+      >
+        <option value="all" {% if view_filter != 'upcoming' %}selected{% endif %}>All bookings</option>
+        <option value="upcoming" {% if view_filter == 'upcoming' %}selected{% endif %}>Upcoming only</option>
+      </select>
+    </div>
+    <button
+      type="submit"
+      class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      Apply filters
+    </button>
+    <a
+      href="{{ url_for('admin_consultations') }}"
+      class="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+    >
+      Reset
+    </a>
+  </form>
+</section>
+
+<section class="grid gap-6 lg:grid-cols-3 mb-10">
+  <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 lg:col-span-2">
+    <h2 class="text-xl font-semibold text-slate-900 mb-2">All consultations</h2>
+    <p class="text-sm text-slate-500 mb-4">Update statuses inline and jump into booking detail for full history.</p>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 text-sm">
+        <thead class="bg-slate-50 text-xs uppercase tracking-widest text-slate-500">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-left">Name</th>
+            <th scope="col" class="px-4 py-3 text-left">Contact</th>
+            <th scope="col" class="px-4 py-3 text-left">Scheduled</th>
+            <th scope="col" class="px-4 py-3 text-left">Mode</th>
+            <th scope="col" class="px-4 py-3 text-left">Status</th>
+            <th scope="col" class="px-4 py-3 text-left">Updated</th>
+            <th scope="col" class="px-4 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+          {% for booking in consultations %}
+          <tr>
+            <td class="px-4 py-4">
+              <p class="font-semibold text-slate-900">{{ booking['full_name'] }}</p>
+              {% if booking['student_name'] %}
+              <p class="text-xs text-slate-500">Student: {{ booking['student_name'] }}</p>
+              {% endif %}
+            </td>
+            <td class="px-4 py-4 space-y-1">
+              <p class="text-sm text-slate-700">{{ booking['email'] }}</p>
+              {% if booking['phone'] %}
+              <p class="text-xs text-slate-500">{{ booking['phone'] }}</p>
+              {% endif %}
+            </td>
+            <td class="px-4 py-4">
+              {% if booking['scheduled_date'] %}
+              <p class="font-semibold text-slate-900">{{ booking['scheduled_date']|format_date('%a %d %b %Y') }}</p>
+              <p class="text-xs text-slate-500">{{ booking['scheduled_time'] }} · {{ booking['timezone'] or 'GMT' }}</p>
+              {% else %}
+              <span class="text-xs text-slate-400">Not scheduled</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-4">
+              <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                {{ booking['meeting_mode'] or 'Online' }}
+              </span>
+            </td>
+            <td class="px-4 py-4">
+              <form method="post" action="{{ url_for('admin_consultation_update_status', consultation_id=booking['id']) }}" class="flex items-center gap-2">
+                <select
+                  name="status"
+                  class="rounded-xl border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 focus:border-primary focus:outline-none"
+                >
+                  {% for status in statuses %}
+                  <option value="{{ status }}" {% if booking['status'] == status %}selected{% endif %}>{{ status }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="inline-flex items-center rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white hover:bg-primary/90">
+                  Save
+                </button>
+              </form>
+            </td>
+            <td class="px-4 py-4 text-xs text-slate-500">{{ booking['updated_at'] }}</td>
+            <td class="px-4 py-4">
+              <a
+                href="{{ url_for('admin_consultation_detail', consultation_id=booking['id']) }}"
+                class="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 hover:border-primary hover:text-primary"
+              >
+                View details
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" class="px-4 py-6 text-center text-slate-500">
+              {% if selected_status or view_filter == 'upcoming' %}
+              No consultations match your current filters.
+              {% else %}
+              No consultation bookings yet.
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <aside class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
+    <h2 class="text-xl font-semibold text-slate-900 mb-2">Upcoming slots</h2>
+    <p class="text-sm text-slate-500 mb-4">Soonest appointments in the pipeline.</p>
+    <ul class="space-y-3">
+      {% for booking in upcoming_preview %}
+      <li class="rounded-2xl border border-slate-200 px-4 py-3">
+        <p class="text-sm font-semibold text-slate-900">{{ booking['full_name'] }}</p>
+        <p class="text-xs text-slate-500 mb-1">{{ booking['scheduled_date']|format_date('%a %d %b') }} · {{ booking['scheduled_time'] }}</p>
+        <p class="text-xs font-semibold text-primary">{{ booking['status'] }}</p>
+      </li>
+      {% else %}
+      <li class="rounded-2xl border border-dashed border-slate-200 px-4 py-6 text-center text-sm text-slate-500">
+        No upcoming consultations scheduled.
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+</section>
+{% endblock %}

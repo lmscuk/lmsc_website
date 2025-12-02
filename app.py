@@ -23,6 +23,37 @@ LEAD_STATUSES = [
     "Closed",
 ]
 
+CONSULTATION_STATUSES = [
+    "Pending",
+    "Awaiting Confirmation",
+    "Confirmed",
+    "Rescheduled",
+    "Completed",
+    "Cancelled",
+    "No Show",
+]
+
+CONSULTATION_TIME_SLOTS = (
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:30",
+    "14:00",
+    "15:30",
+    "17:00",
+)
+
+CONSULTATION_TIMEZONES: tuple[tuple[str, str], ...] = (
+    ("Europe/London", "GMT/BST (London)"),
+    ("Europe/Paris", "Central European Time"),
+    ("Asia/Dubai", "Gulf Standard Time"),
+    ("Asia/Singapore", "Singapore Standard Time"),
+    ("Asia/Kuala_Lumpur", "Malaysia Time"),
+    ("Asia/Hong_Kong", "Hong Kong Time"),
+    ("America/New_York", "Eastern Time"),
+    ("America/Los_Angeles", "Pacific Time"),
+)
+
 DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
     {
         "slug": "home",
@@ -158,6 +189,18 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         ),
     },
     {
+        "slug": "book-a-consultation",
+        "page_name": "Book a Consultation",
+        "template_name": "book_consultation.html",
+        "nav_order": 115,
+        "nav_display": "main",
+        "seo_title": "Book a Consultation | London Maths & Science College",
+        "meta_description": (
+            "Choose a time to speak with the London Maths & Science College admissions team about A Level "
+            "and GCSE STEM pathways, scholarships and study formats."
+        ),
+    },
+    {
         "slug": "blogs",
         "page_name": "Blogs",
         "template_name": "blogs.html",
@@ -270,6 +313,7 @@ PAGE_ENDPOINT_OVERRIDES: dict[str, str] = {
     "courses": "courses",
     "course-details": "course_details",
     "pricing": "pricing",
+    "book-a-consultation": "book_consultation",
     "blogs": "blogs",
     "blog-details": "blog_details",
     "reviews": "reviews",
@@ -737,6 +781,35 @@ def create_app() -> Flask:
                 updated_at TEXT NOT NULL
             )
             """
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS consultations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                full_name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                phone TEXT,
+                student_name TEXT,
+                study_level TEXT,
+                interest_area TEXT,
+                meeting_mode TEXT,
+                timezone TEXT,
+                scheduled_date TEXT NOT NULL,
+                scheduled_time TEXT NOT NULL,
+                scheduled_at TEXT,
+                notes TEXT,
+                status TEXT NOT NULL DEFAULT 'Pending',
+                source TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_consultations_date ON consultations(scheduled_date)"
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_consultations_status ON consultations(status)"
         )
         db.execute(
             """
@@ -1545,6 +1618,189 @@ def create_app() -> Flask:
         )
         db.commit()
 
+    def ensure_consultation_page_seed() -> None:
+        db = get_db()
+        existing = db.execute(
+            "SELECT id FROM pages WHERE slug = ?",
+            ("book-a-consultation",),
+        ).fetchone()
+        if existing is not None:
+            return
+
+        seed = next(
+            (item for item in DEFAULT_PAGE_SEEDS if item.get("slug") == "book-a-consultation"),
+            None,
+        )
+        if seed is None:
+            return
+
+        now = current_timestamp()
+        db.execute(
+            """
+            INSERT INTO pages (
+                slug,
+                page_name,
+                seo_title,
+                meta_description,
+                nav_display,
+                nav_parent_id,
+                nav_order,
+                social_image,
+                template_name,
+                created_at,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, NULL, ?, NULL, ?, ?, ?)
+            """,
+            (
+                seed["slug"],
+                seed["page_name"],
+                seed.get("seo_title"),
+                seed.get("meta_description"),
+                seed.get("nav_display", "hidden"),
+                int(seed.get("nav_order", 0)),
+                seed["template_name"],
+                now,
+                now,
+            ),
+        )
+        db.commit()
+
+    def create_consultation_booking(data: dict[str, Any]) -> int:
+        db = get_db()
+        now = current_timestamp()
+        cursor = db.execute(
+            """
+            INSERT INTO consultations (
+                full_name,
+                email,
+                phone,
+                student_name,
+                study_level,
+                interest_area,
+                meeting_mode,
+                timezone,
+                scheduled_date,
+                scheduled_time,
+                scheduled_at,
+                notes,
+                status,
+                source,
+                created_at,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                data.get("full_name"),
+                data.get("email"),
+                data.get("phone"),
+                data.get("student_name"),
+                data.get("study_level"),
+                data.get("interest_area"),
+                data.get("meeting_mode"),
+                data.get("timezone"),
+                data.get("scheduled_date"),
+                data.get("scheduled_time"),
+                data.get("scheduled_at"),
+                data.get("notes"),
+                data.get("status", "Pending"),
+                data.get("source"),
+                now,
+                now,
+            ),
+        )
+        db.commit()
+        return int(cursor.lastrowid)
+
+    def get_consultation(consultation_id: int) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM consultations WHERE id = ?",
+            (consultation_id,),
+        ).fetchone()
+
+    def fetch_consultations(
+        *,
+        status: str | None = None,
+        upcoming_only: bool = False,
+        limit: int | None = None,
+    ) -> list[sqlite3.Row]:
+        db = get_db()
+        query = "SELECT * FROM consultations"
+        conditions: list[str] = []
+        params: list[Any] = []
+
+        if status:
+            conditions.append("status = ?")
+            params.append(status)
+
+        if upcoming_only:
+            conditions.append(
+                "(scheduled_at IS NOT NULL AND datetime(scheduled_at) >= datetime('now'))"
+            )
+
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+
+        order_direction = "ASC" if upcoming_only else "DESC"
+        query += (
+            f" ORDER BY CASE WHEN scheduled_at IS NULL THEN 1 ELSE 0 END, "
+            f"datetime(scheduled_at) {order_direction}, datetime(created_at) DESC"
+        )
+
+        if limit:
+            query += " LIMIT ?"
+            params.append(limit)
+
+        return db.execute(query, params).fetchall()
+
+    def fetch_recent_consultations(limit: int = 10) -> list[sqlite3.Row]:
+        return fetch_consultations(limit=limit)
+
+    def fetch_upcoming_consultations(limit: int = 5) -> list[sqlite3.Row]:
+        return fetch_consultations(upcoming_only=True, limit=limit)
+
+    def update_consultation_status_db(consultation_id: int, status: str) -> None:
+        db = get_db()
+        db.execute(
+            "UPDATE consultations SET status = ?, updated_at = ? WHERE id = ?",
+            (status, current_timestamp(), consultation_id),
+        )
+        db.commit()
+
+    def update_consultation_fields(consultation_id: int, **fields: Any) -> None:
+        allowed_columns = {
+            "full_name",
+            "email",
+            "phone",
+            "student_name",
+            "study_level",
+            "interest_area",
+            "meeting_mode",
+            "timezone",
+            "scheduled_date",
+            "scheduled_time",
+            "scheduled_at",
+            "notes",
+            "status",
+            "source",
+        }
+        updates = {key: value for key, value in fields.items() if key in allowed_columns}
+        if not updates:
+            return
+
+        assignments = ", ".join(f"{column} = ?" for column in updates.keys())
+        params = list(updates.values())
+        params.extend([current_timestamp(), consultation_id])
+
+        db = get_db()
+        db.execute(
+            f"UPDATE consultations SET {assignments}, updated_at = ? WHERE id = ?",
+            params,
+        )
+        db.commit()
+
     def login_required(view):
         @wraps(view)
         def wrapped_view(*args, **kwargs):
@@ -1564,6 +1820,7 @@ def create_app() -> Flask:
         init_db()
         ensure_default_admin()
         seed_existing_pages()
+        ensure_consultation_page_seed()
 
     @app.route("/robots.txt")
     def robots_txt():
@@ -1624,6 +1881,136 @@ def create_app() -> Flask:
     @app.route("/pricing")
     def pricing() -> str:
         return render_site_page("pricing.html", "pricing")
+
+    @app.route("/book-a-consultation", methods=["GET", "POST"])
+    def book_consultation() -> str:
+        form_data: dict[str, str] = {}
+        timezone_default = "Europe/London"
+
+        if request.method == "POST":
+            form_data = request.form.to_dict()
+            full_name = request.form.get("full_name", "").strip()
+            email = request.form.get("email", "").strip()
+            phone = request.form.get("phone", "").strip()
+            student_name = request.form.get("student_name", "").strip()
+            study_level = request.form.get("study_level", "").strip()
+            interest_area = request.form.get("interest_area", "").strip()
+            meeting_mode = request.form.get("meeting_mode", "").strip() or "Online"
+            timezone_value = request.form.get("timezone", "").strip() or timezone_default
+            selected_date = request.form.get("selected_date", "").strip()
+            selected_time = request.form.get("selected_time", "").strip()
+            notes = request.form.get("notes", "").strip()
+            source = request.form.get("source") or request.path
+
+            errors: list[str] = []
+            if not full_name:
+                errors.append("Please enter your full name so our team knows who to contact.")
+            if not email:
+                errors.append("Please add an email address so we can send a confirmation.")
+            if not selected_date:
+                errors.append("Pick a date for your consultation from the calendar.")
+            if not selected_time:
+                errors.append("Choose a time slot that works for you.")
+
+            scheduled_at = None
+            if selected_date and selected_time:
+                try:
+                    scheduled_dt = datetime.strptime(f"{selected_date} {selected_time}", "%Y-%m-%d %H:%M")
+                    scheduled_at = scheduled_dt.strftime("%Y-%m-%d %H:%M:00")
+                    if scheduled_dt < datetime.utcnow() - timedelta(minutes=30):
+                        errors.append("That time has already passed. Please choose a future slot.")
+                except ValueError:
+                    errors.append("The selected date or time is invalid. Please pick another slot.")
+
+            if errors:
+                for message in errors:
+                    flash(message, "error")
+                return render_site_page(
+                    "book_consultation.html",
+                    "book-a-consultation",
+                    form_data=form_data,
+                    time_slots=CONSULTATION_TIME_SLOTS,
+                    timezone_options=CONSULTATION_TIMEZONES,
+                )
+
+            booking_payload = {
+                "full_name": full_name,
+                "email": email,
+                "phone": phone or None,
+                "student_name": student_name or None,
+                "study_level": study_level or None,
+                "interest_area": interest_area or None,
+                "meeting_mode": meeting_mode,
+                "timezone": timezone_value,
+                "scheduled_date": selected_date,
+                "scheduled_time": selected_time,
+                "scheduled_at": scheduled_at,
+                "notes": notes or None,
+                "status": "Pending",
+                "source": source,
+            }
+
+            booking_id = create_consultation_booking(booking_payload)
+            create_lead(
+                "consultation",
+                full_name=full_name,
+                email=email,
+                phone=phone or None,
+                message=f"Consultation booked for {selected_date} at {selected_time}" if selected_date and selected_time else notes,
+                source=source,
+            )
+
+            booking_row = get_consultation(booking_id)
+            booking_dict = dict(booking_row) if booking_row is not None else booking_payload
+            booking_dict.setdefault("id", booking_id)
+            booking_dict.setdefault("status", "Pending")
+
+            try:
+                admin_url = url_for("admin_consultation_detail", consultation_id=booking_dict["id"], _external=True)
+            except Exception:
+                admin_url = None
+
+            try:
+                html_admin = render_template(
+                    "emails/consultation_notification.html",
+                    booking=booking_dict,
+                    admin_url=admin_url,
+                )
+                app.send_email(
+                    subject="New consultation booked",
+                    recipients=[DEFAULT_ADMIN_USERNAME],
+                    html=html_admin,
+                )
+            except Exception:
+                pass
+
+            try:
+                html_client = render_template(
+                    "emails/consultation_confirmation.html",
+                    booking=booking_dict,
+                    admin_email=DEFAULT_ADMIN_USERNAME,
+                )
+                app.send_email(
+                    subject="Your LMSC consultation is booked",
+                    recipients=[email],
+                    html=html_client,
+                )
+            except Exception:
+                pass
+
+            flash("Thank you – your consultation request has been received. We will confirm shortly.", "success")
+            return redirect(url_for("book_consultation"))
+
+        if not form_data:
+            form_data = {"timezone": timezone_default, "meeting_mode": "Online"}
+
+        return render_site_page(
+            "book_consultation.html",
+            "book-a-consultation",
+            form_data=form_data,
+            time_slots=CONSULTATION_TIME_SLOTS,
+            timezone_options=CONSULTATION_TIMEZONES,
+        )
 
     @app.route("/blogs")
     def blogs() -> str:
@@ -1945,12 +2332,49 @@ def create_app() -> Flask:
             "values": list(type_counts.values()),
         }
 
+        total_consultations = db.execute(
+            "SELECT COUNT(*) AS total FROM consultations"
+        ).fetchone()["total"]
+        upcoming_consultations_total = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM consultations
+            WHERE scheduled_at IS NOT NULL
+              AND datetime(scheduled_at) >= datetime('now')
+            """
+        ).fetchone()["total"]
+        consultations_next_seven = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM consultations
+            WHERE scheduled_at IS NOT NULL
+              AND datetime(scheduled_at) BETWEEN datetime('now') AND datetime('now', '+7 day')
+            """
+        ).fetchone()["total"]
+        consultations_today = db.execute(
+            "SELECT COUNT(*) AS total FROM consultations WHERE scheduled_date = DATE('now', 'localtime')"
+        ).fetchone()["total"]
+
+        consultation_status_rows = db.execute(
+            "SELECT status, COUNT(*) AS total FROM consultations GROUP BY status"
+        ).fetchall()
+        consultation_status_counts = {
+            row["status"]: row["total"] for row in consultation_status_rows
+        }
+
+        upcoming_consultations = [dict(row) for row in fetch_upcoming_consultations(limit=6)]
+        recent_consultations = [dict(row) for row in fetch_recent_consultations(limit=6)]
+
         kpis = {
             "total_leads": total_leads,
             "weekly_leads": weekly_leads,
             "subscription_count": subscription_count,
             "contact_count": contact_count,
             "conversion_rate": conversion_rate,
+            "consultation_total": total_consultations,
+            "consultations_upcoming": upcoming_consultations_total,
+            "consultations_week": consultations_next_seven,
+            "consultations_today": consultations_today,
         }
 
         recent_leads = leads[:10]
@@ -1964,6 +2388,10 @@ def create_app() -> Flask:
             status_chart=status_chart,
             type_chart=type_chart,
             recent_leads=recent_leads,
+            consultation_statuses=CONSULTATION_STATUSES,
+            consultation_status_counts=consultation_status_counts,
+            upcoming_consultations=upcoming_consultations,
+            recent_consultations=recent_consultations,
         )
 
     @app.route("/admin/leads")
@@ -1982,6 +2410,135 @@ def create_app() -> Flask:
             statuses=LEAD_STATUSES,
             status_counts=status_counts,
         )
+
+    @app.route("/admin/consultations")
+    @login_required
+    def admin_consultations() -> str:
+        db = get_db()
+        status_filter = request.args.get("status", "").strip()
+        view_filter = request.args.get("view", "all").strip().lower()
+        valid_status = status_filter if status_filter in CONSULTATION_STATUSES else None
+        upcoming_only = view_filter == "upcoming"
+
+        consultation_rows = fetch_consultations(
+            status=valid_status,
+            upcoming_only=upcoming_only,
+        )
+        consultations = [dict(row) for row in consultation_rows]
+
+        status_rows = db.execute(
+            "SELECT status, COUNT(*) AS total FROM consultations GROUP BY status"
+        ).fetchall()
+        status_counts = {row["status"]: row["total"] for row in status_rows}
+
+        total_consultations = db.execute(
+            "SELECT COUNT(*) AS total FROM consultations"
+        ).fetchone()["total"]
+        upcoming_total = db.execute(
+            """
+            SELECT COUNT(*) AS total
+            FROM consultations
+            WHERE scheduled_at IS NOT NULL
+              AND datetime(scheduled_at) >= datetime('now')
+            """
+        ).fetchone()["total"]
+
+        upcoming_preview = [dict(row) for row in fetch_upcoming_consultations(limit=5)]
+
+        return render_template(
+            "admin/consultations/index.html",
+            consultations=consultations,
+            statuses=CONSULTATION_STATUSES,
+            status_counts=status_counts,
+            selected_status=valid_status,
+            view_filter=view_filter,
+            totals={
+                "total": total_consultations,
+                "upcoming": upcoming_total,
+            },
+            upcoming_preview=upcoming_preview,
+        )
+
+    @app.route("/admin/consultations/<int:consultation_id>", methods=["GET", "POST"])
+    @login_required
+    def admin_consultation_detail(consultation_id: int) -> str:
+        booking_row = get_consultation(consultation_id)
+        if booking_row is None:
+            flash("That consultation booking could not be found.", "error")
+            return redirect(url_for("admin_consultations"))
+
+        booking = dict(booking_row)
+
+        if request.method == "POST":
+            updates: dict[str, Any] = {}
+            errors: list[str] = []
+
+            new_status = request.form.get("status", "").strip()
+            if new_status:
+                if new_status in CONSULTATION_STATUSES:
+                    if new_status != booking.get("status"):
+                        updates["status"] = new_status
+                else:
+                    errors.append("Select a valid consultation status.")
+
+            new_date = request.form.get("scheduled_date", "").strip()
+            new_time = request.form.get("scheduled_time", "").strip()
+            if new_date or new_time:
+                if not new_date or not new_time:
+                    errors.append("Provide both a date and time to reschedule the meeting.")
+                else:
+                    try:
+                        scheduled_dt = datetime.strptime(f"{new_date} {new_time}", "%Y-%m-%d %H:%M")
+                        updates["scheduled_date"] = new_date
+                        updates["scheduled_time"] = new_time
+                        updates["scheduled_at"] = scheduled_dt.strftime("%Y-%m-%d %H:%M:00")
+                    except ValueError:
+                        errors.append("The rescheduled date or time is invalid.")
+
+            meeting_mode = request.form.get("meeting_mode", "").strip()
+            if meeting_mode and meeting_mode != booking.get("meeting_mode"):
+                updates["meeting_mode"] = meeting_mode
+
+            timezone_value = request.form.get("timezone", "").strip()
+            if timezone_value and timezone_value != booking.get("timezone"):
+                updates["timezone"] = timezone_value
+
+            notes = request.form.get("notes", "").strip()
+            if notes != (booking.get("notes") or ""):
+                updates["notes"] = notes or None
+
+            if errors:
+                for message in errors:
+                    flash(message, "error")
+            else:
+                if updates:
+                    update_consultation_fields(consultation_id, **updates)
+                    flash("Consultation updated successfully.", "success")
+                else:
+                    flash("No changes were made to this consultation.", "info")
+                return redirect(url_for("admin_consultation_detail", consultation_id=consultation_id))
+
+        booking_row = get_consultation(consultation_id)
+        booking = dict(booking_row) if booking_row is not None else booking
+
+        return render_template(
+            "admin/consultations/detail.html",
+            booking=booking,
+            statuses=CONSULTATION_STATUSES,
+            timezone_options=CONSULTATION_TIMEZONES,
+            time_slots=CONSULTATION_TIME_SLOTS,
+        )
+
+    @app.post("/admin/consultations/<int:consultation_id>/status")
+    @login_required
+    def admin_consultation_update_status(consultation_id: int):
+        status_value = request.form.get("status", "").strip()
+        if status_value not in CONSULTATION_STATUSES:
+            flash("Please choose a valid status.", "error")
+        else:
+            update_consultation_status_db(consultation_id, status_value)
+            flash("Consultation status updated.", "success")
+        return redirect(request.referrer or url_for("admin_consultations"))
 
     @app.route("/admin/analytics")
     @login_required

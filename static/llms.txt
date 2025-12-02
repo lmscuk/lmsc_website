@@ -8,6 +8,7 @@ This llms.txt file highlights the pages that provide the clearest, most up-to-da
 - [Home](/): Overview of LMSC, key messages and primary calls to action.
 - [About LMSC](/about): Mission, values, leadership context and organisational overview.
 - [Courses](/courses): Canonical summary of STEM pathways and programme structure.
+- [Book a Consultation](/book-a-consultation): Live calendar with consultation slots, intake questionnaire and automatic confirmation workflows.
 - [Policies](/policies): Statutory policies, safeguarding information and compliance documents.
 - [Contact](/contact): Admissions, enquiries and support channels for students and families.
 
@@ -27,6 +28,7 @@ This llms.txt file highlights the pages that provide the clearest, most up-to-da
 ## Admissions, Finance and Practicalities
 - [Pricing and Payment Plans](/pricing): Tuition package comparisons and finance options.
 - [Fees and Finance](/fees): Comprehensive fee tables, scholarship notes and payment schedules.
+- [Book a Consultation](/book-a-consultation): Schedule-led intake route that feeds admissions CRM and consultation dashboards.
 - [Development Updates](/development): Temporary holding page for sections under active development (flag when context is incomplete).
 
 ## Insights and Ongoing Updates

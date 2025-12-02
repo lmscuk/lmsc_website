@@ -19,7 +19,7 @@
           universities and STEM-related degrees.
         </p>
 <div class="flex flex-wrap justify-center gap-4">
-<a href="{{ url_for('contact') }}" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90">
+<a href="{{ url_for('book_consultation') }}" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90">
             Book a consultation
           </a>
 <a href="{{ url_for('courses') }}" class="bg-secondary border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-primary">
@@ -61,7 +61,7 @@
 <p class="text-sm text-gray-600 mb-3">Review tuition, instalment choices and scholarships so budgeting never slows your application.</p>
 <span class="text-sm font-medium text-primary group-hover:underline">Review fees →</span>
 </a>
-<a href="{{ url_for('contact') }}" class="group bg-white border border-accent/50 hover:border-primary rounded-2xl p-6 shadow-sm transition">
+<a href="{{ url_for('book_consultation') }}" class="group bg-white border border-accent/50 hover:border-primary rounded-2xl p-6 shadow-sm transition">
 <h3 class="font-semibold text-primary mb-2">Talk to our admissions team</h3>
 <p class="text-sm text-gray-600 mb-3">Book a consultation to discuss adding Further Maths, arranging medical preparation or tailoring a hybrid timetable.</p>
 <span class="text-sm font-medium text-primary group-hover:underline">Book a call →</span>
@@ -618,9 +618,9 @@
 <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90">
             Apply now
           </button>
-<button class="bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-white">
+<a href="{{ url_for('book_consultation') }}" class="bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-white">
             Book a consultation
-          </button>
+          </a>
 </div>
 </div>
 </div>
@@ -774,7 +774,7 @@
             expert teaching and structured support.
           </p>
 <!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
+<a href="{{ url_for('book_consultation') }}" class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
 <div class="btn-content">
 <span class="text-part">Book a Consultation</span>
 <span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
@@ -783,7 +783,7 @@
 </svg>
 </span>
 </div>
-</button>
+</a>
 </div>
 <!-- Right Side - Image with Chat Bubbles -->
 <div class="relative flex items-center justify-end scale-in stagger-2">

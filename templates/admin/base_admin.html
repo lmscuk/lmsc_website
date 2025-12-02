@@ -149,6 +149,32 @@
                           All Leads
                         </a>
                       </li>
+                      <li>
+                        <a
+                          href="{{ url_for('admin_consultations') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_consultation') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M8 7h8M6 11h12m-9 4h6m-9 4h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Consultations
+                        </a>
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -418,6 +444,32 @@
                       </svg>
                     </span>
                     All Leads
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ url_for('admin_consultations') }}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_consultation') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          d="M8 7h8M6 11h12m-9 4h6m-9 4h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    Consultations
                   </a>
                 </li>
               </ul>

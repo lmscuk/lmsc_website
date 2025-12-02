@@ -1,4 +1,9 @@
 <header class="md:px-8 px-4 py-4 max-w-[1920px] mx-auto sticky top-0 z-[60]">
+  <style>
+    .nav-item-text {
+      font-size: 0.75rem;
+    }
+  </style>
   <nav
     class="bg-white/85 px-6 mx-auto rounded-2xl w-full py-3 shadow-lg border border-white/60 backdrop-blur-xl transition-all duration-300 z-[60]"
   >
@@ -15,7 +20,7 @@
         <div class="hidden xl:flex items-center gap-1">
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               Study at LMSC
               <svg
@@ -151,7 +156,7 @@
           </div>
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               Teaching &amp; Learning
               <svg
@@ -350,7 +355,7 @@
           </div>
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               College Life
               <svg
@@ -545,7 +550,7 @@
           </div>
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               Online &amp; Homeschooling
               <svg
@@ -653,7 +658,7 @@
           </div>
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               Support &amp; Guidance
               <svg
@@ -798,7 +803,7 @@
           </div>
           <div class="dropdown relative group order-first">
             <button
-              class="px-2 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-2 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               About Us
               <svg
@@ -959,7 +964,7 @@
                     </div>
                   </a>
                   <a
-                    href="{{ url_for('placeholder_page', slug='policies-reports') }}"
+                    href="{{ url_for('policies_page') }}"
                     onmouseenter="setImage('reports')"
                     class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
                   >
@@ -1025,7 +1030,7 @@
           nav_pages_dropdown_lookup.get(parent['id']) %} {% if children %}
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               {{ parent['page_name'] }}
               <svg
@@ -1077,7 +1082,7 @@
           or url_for('render_dynamic_page', slug=parent['slug']) %}
           <a
             href="{{ parent_url }}"
-            class="px-4 py-2 text-gray-700 hover:text-primary font-bold"
+            class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold"
           >
             {{ parent['page_name'] }}
           </a>
@@ -1085,7 +1090,7 @@
           %}
           <div class="dropdown relative group">
             <button
-              class="px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
             >
               {{ group.parent['page_name'] }}
               <svg
@@ -1136,7 +1141,7 @@
           {% endfor %}
           <a
             href="{{ url_for('contact') }}"
-            class="px-2 py-2 text-gray-700 hover:text-primary font-bold"
+            class="nav-item-text px-2 py-2 text-gray-700 hover:text-primary font-bold"
             >Contact</a
           >
         </div>
@@ -1184,7 +1189,7 @@
           <div class="border-b border-gray-200 pb-2">
             <button
               onclick="toggleSubmenu('study')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>Study at LMSC</span>
               <svg
@@ -1254,7 +1259,7 @@
           <div class="border-b border-gray-200 pb-2">
             <button
               onclick="toggleSubmenu('teaching')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>Teaching &amp; Learning</span>
               <svg
@@ -1341,7 +1346,7 @@
           <div class="border-b border-gray-200 pb-2">
             <button
               onclick="toggleSubmenu('college')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>College Life</span>
               <svg
@@ -1432,7 +1437,7 @@
           <div class="border-b border-gray-200 pb-2">
             <button
               onclick="toggleSubmenu('online')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>Online &amp; Homeschooling</span>
               <svg
@@ -1484,7 +1489,7 @@
           <div class="border-b border-gray-200 pb-2">
             <button
               onclick="toggleSubmenu('support')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>Support &amp; Guidance</span>
               <svg
@@ -1550,7 +1555,7 @@
           <div class="border-b border-gray-200 pb-2 order-first">
             <button
               onclick="toggleSubmenu('about')"
-              class="w-full flex items-center justify-between py-3 text-gray-700 font-medium"
+              class="nav-item-text w-full flex items-center justify-between py-3 text-gray-700 font-medium"
             >
               <span>About Us</span>
               <svg
@@ -1628,7 +1633,7 @@
                 <span class="text-sm">Alumni Network</span>
               </a>
               <a
-                href="{{ url_for('placeholder_page', slug='policies-reports') }}"
+                href="{{ url_for('policies_page') }}"
                 class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
               >
                 <i class="fa fa-file-alt w-4"></i>
@@ -1711,16 +1716,17 @@
 
           <a
             href="{{ url_for('contact') }}"
-            class="block py-3 text-gray-700 font-medium border-b border-gray-200"
+            class="nav-item-text block py-3 text-gray-700 font-medium border-b border-gray-200"
             >Contact</a
           >
         </div>
         <div class="mt-6 pt-6 border-t border-gray-200">
-          <button
-            class="w-full bg-primary text-white py-3 rounded-full font-medium hover:opacity-90"
+          <a
+            href="{{ url_for('book_consultation') }}"
+            class="w-full inline-flex justify-center bg-primary text-white py-3 rounded-full font-medium hover:opacity-90"
           >
             Book Consultation
-          </button>
+          </a>
         </div>
       </div>
     </div>
