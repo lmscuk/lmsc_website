@@ -1,0 +1,137 @@
+{% extends 'admin/base_admin.html' %} {% block title %}Blog Studio | LMSC
+Admin{% endblock %} {% block nav_title %}Blog Studio{% endblock %} {% block
+content %}
+<div class="flex flex-col gap-6">
+  <div
+    class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+  >
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Blog Studio</h1>
+      <p class="text-sm text-slate-500">
+        Curate long-form stories for the LMSC community.
+      </p>
+    </div>
+    <a
+      href="{{ url_for('admin_blogs_new') }}"
+      class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      + New Article
+    </a>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">
+        Published articles
+      </p>
+      <p class="mt-2 text-3xl font-semibold text-primary">{{ stats.total }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">
+        Latest publish
+      </p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.latest_publish|format_date if stats.latest_publish else "–" }}
+      </p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">Last updated</p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.last_updated|format_date("%b %d, %Y") if stats.last_updated
+        else "–" }}
+      </p>
+    </div>
+  </div>
+
+  {% if posts %}
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead
+        class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Title</th>
+          <th scope="col" class="px-6 py-3">Publish Date</th>
+          <th scope="col" class="px-6 py-3">Slug</th>
+          <th scope="col" class="px-6 py-3">Updated</th>
+          <th scope="col" class="px-6 py-3">Related Links</th>
+          <th scope="col" class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
+        {% for post in posts %}
+        <tr class="hover:bg-slate-50">
+          <td class="px-6 py-4">
+            <p class="font-semibold text-slate-900">{{ post.title }}</p>
+            <p class="text-xs text-slate-500">
+              {{ post.summary or "No summary provided." }}
+            </p>
+          </td>
+          <td class="px-6 py-4">{{ post.publish_date|format_date }}</td>
+          <td class="px-6 py-4">
+            <code class="rounded bg-slate-100 px-2 py-1 text-xs text-slate-600"
+              >{{ post.slug }}</code
+            >
+          </td>
+          <td class="px-6 py-4">
+            {{ post.updated_at|format_date("%b %d, %Y") }}
+          </td>
+          <td class="px-6 py-4">
+            {% set related = [post.related_article_1_slug,
+            post.related_article_2_slug, post.related_article_3_slug] %} {% set
+            related_count = related | select | list | length %} {{ related_count
+            }} linked
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center justify-end gap-2">
+              <a
+                href="{{ url_for('blog_post_detail', slug=post.slug) }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              >
+                View
+              </a>
+              <a
+                href="{{ url_for('admin_blogs_edit', post_id=post.id) }}"
+                class="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/15"
+              >
+                Edit
+              </a>
+              <form
+                method="post"
+                action="{{ url_for('admin_blogs_delete', post_id=post.id) }}"
+                onsubmit="return confirm('Delete this article? This action cannot be undone.');"
+              >
+                <button
+                  type="submit"
+                  class="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div
+    class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center"
+  >
+    <h2 class="text-lg font-semibold text-slate-800">No articles yet</h2>
+    <p class="mt-2 text-sm text-slate-500">
+      Create your first story to populate the blog experience.
+    </p>
+    <a
+      href="{{ url_for('admin_blogs_new') }}"
+      class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      Write an Article
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

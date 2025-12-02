@@ -87,24 +87,36 @@
         {% endif %}
       </div>
       <div>
-        <h4 class="font-bold mb-4">CMS</h4>
+        <h4 class="font-bold mb-4">Key hubs</h4>
         <ul class="space-y-2 text-sm text-gray-600">
           <li>
-            <a href="{{ url_for('blogs') }}" class="hover:text-primary">Blog</a>
-          </li>
-          <li>
-            <a href="{{ url_for('blog_details') }}" class="hover:text-primary"
-              >Blog Details</a
+            <a href="{{ url_for('courses') }}" class="hover:text-primary"
+              >Courses overview</a
             >
           </li>
           <li>
-            <a href="{{ url_for('reviews') }}" class="hover:text-primary"
-              >Testimonial</a
+            <a href="{{ url_for('stem_pathways') }}" class="hover:text-primary"
+              >STEM pathways</a
             >
           </li>
           <li>
             <a href="{{ url_for('a_level_math') }}" class="hover:text-primary"
-              >A Level Math</a
+              >A Level Maths</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('study_options') }}" class="hover:text-primary"
+              >International &amp; study options</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('how_we_teach') }}" class="hover:text-primary"
+              >How we teach</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('contact') }}" class="hover:text-primary"
+              >Apply &amp; contact</a
             >
           </li>
         </ul>
@@ -112,15 +124,25 @@
       <div>
         <h4 class="font-bold mb-4">Utility Pages</h4>
         <ul class="space-y-2 text-sm text-gray-600">
-          <li><a href="#" class="hover:text-primary">404 Error Page</a></li>
           <li>
-            <a href="{{ url_for('policies_page') }}" class="hover:text-primary"
-              >School Policies</a
+            <a href="{{ url_for('fees') }}" class="hover:text-primary"
+              >Fees &amp; finance</a
             >
           </li>
-          <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
           <li>
-            <a href="#" class="hover:text-primary">Terms &amp; Conditions</a>
+            <a href="{{ url_for('pricing') }}" class="hover:text-primary"
+              >Pricing options</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('policies_page') }}" class="hover:text-primary"
+              >Policies &amp; safeguarding</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('blogs') }}" class="hover:text-primary"
+              >Insights blog</a
+            >
           </li>
         </ul>
       </div>
@@ -134,7 +156,7 @@
       </p>
       <div class="flex gap-4">
         <a
-          href="https://www.facebook.com/profile.php?id=61583837041356#"
+          href="https://www.facebook.com/profile.php?id=61583837041356"
           class="text-gray-600 hover:text-primary"
           aria-label="Follow on Facebook"
           target="_blank"
@@ -160,13 +182,41 @@
           </svg>
         </a>
         <a
-          href="#"
+          href="https://x.com/wearelmsc"
           class="text-gray-600 hover:text-primary"
-          aria-label="Follow on Twitter"
+          aria-label="Follow on X (Twitter)"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path
-              d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+              d="M18.244 3h3.437l-7.51 8.574L23 21h-6.694l-4.46-5.234L6.6 21H3.162l7.994-9.13L1 3h6.838l4.028 4.73L18.244 3zm-1.178 15.543h1.904L7.05 5.335H5.021l12.045 13.208z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.youtube.com/@lmscuk"
+          class="text-gray-600 hover:text-primary"
+          aria-label="Subscribe on YouTube"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M21.8 8.001a2.75 2.75 0 00-1.94-1.946C18.018 5.625 12 5.625 12 5.625s-6.018 0-7.86.43A2.75 2.75 0 002.2 8.001 27.77 27.77 0 002.2 12a27.77 27.77 0 00.001 3.999 2.75 2.75 0 001.94 1.946c1.842.43 7.859.43 7.859.43s6.018 0 7.86-.43a2.75 2.75 0 001.94-1.946A27.77 27.77 0 0021.8 12a27.77 27.77 0 00-.001-3.999zM10.5 14.625v-5.25l4.5 2.625-4.5 2.625z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.linkedin.com/company/lmscuk"
+          class="text-gray-600 hover:text-primary"
+          aria-label="Connect on LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M4.98 3.5a2.5 2.5 0 11-.001 5.001 2.5 2.5 0 01.001-5.001zM3 9h3.96v12H3zM9.75 9h3.79v1.64h.05c.53-1 1.82-2.05 3.75-2.05 4.01 0 4.75 2.64 4.75 6.07V21H18.1v-5.37c0-1.28-.03-2.93-1.79-2.93-1.79 0-2.07 1.4-2.07 2.84V21H10.5z"
             />
           </svg>
         </a>

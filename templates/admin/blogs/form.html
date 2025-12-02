@@ -1,0 +1,312 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}{{ 'Edit Article' if mode == 'edit' else 'Create Article' }} | Blog Studio{% endblock %}
+{% block nav_title %}Blog Studio{% endblock %}
+
+{% macro resolve_text(name, default='') -%}
+  {%- if form_data and form_data.get(name) is not none -%}
+    {{ form_data.get(name) }}
+  {%- elif draft_data and draft_data.get(name) is not none -%}
+    {{ draft_data.get(name) }}
+  {%- elif post_data and post_data.get(name) is not none -%}
+    {{ post_data.get(name) }}
+  {%- else -%}
+    {{ default }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro resolve_media(name) -%}
+  {%- if draft_data and draft_data.get(name) is not none -%}
+    {{ draft_data.get(name) }}
+  {%- elif post_data and post_data.get(name) is not none -%}
+    {{ post_data.get(name) }}
+  {%- elif form_data and form_data.get(name) is not none -%}
+    {{ form_data.get(name) }}
+  {%- else -%}
+    {{ '' }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% block content %}
+<div class="max-w-5xl">
+  <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">{{ 'Edit Article' if mode == 'edit' else 'Create Article' }}</h1>
+      <p class="text-sm text-slate-500">Capture the full story, imagery, and internal linking for each post.</p>
+    </div>
+    {% if mode == 'edit' and post_data %}
+      <a
+        href="{{ url_for('blog_post_detail', slug=post_data.slug) }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary transition hover:bg-primary/20"
+      >
+        View live article
+      </a>
+    {% endif %}
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-10">
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-slate-900">Article overview</h2>
+      <p class="text-sm text-slate-500">Core metadata used for SEO, listings, and hero sections.</p>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-slate-700" for="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="{{ resolve_text('title')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Example: How STEM mentoring accelerates university offers"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="slug">Slug</label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            value="{{ resolve_text('slug')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="auto-generated if left blank"
+          />
+          <p class="mt-2 text-xs text-slate-500">No spaces. Use hyphens to separate words.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="publish_date">Publish date</label>
+          <input
+            type="date"
+            id="publish_date"
+            name="publish_date"
+            value="{{ resolve_text('publish_date')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-slate-700" for="summary">Summary</label>
+          <textarea
+            id="summary"
+            name="summary"
+            rows="4"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="One or two sentences used in previews and meta descriptions."
+          >{{ resolve_text('summary')|trim }}</textarea>
+        </div>
+      </div>
+    </section>
+
+    {% set image_configs = [
+      {'field': 'thumbnail', 'path': 'thumbnail_path', 'alt': 'thumbnail_alt', 'label': 'Blog thumbnail', 'hint': 'Displayed on listing cards and social previews (min 1200x630).'},
+      {'field': 'cover_image', 'path': 'cover_image_path', 'alt': 'cover_image_alt', 'label': 'Cover image', 'hint': 'Hero image at the top of the article (min 1600px wide).'},
+      {'field': 'picture_one', 'path': 'picture_one_path', 'alt': 'picture_one_alt', 'label': 'Inline image one', 'hint': 'Supports the first content block.'},
+      {'field': 'picture_two', 'path': 'picture_two_path', 'alt': 'picture_two_alt', 'label': 'Inline image two', 'hint': 'Optional mid-article visual.'},
+      {'field': 'picture_three', 'path': 'picture_three_path', 'alt': 'picture_three_alt', 'label': 'Inline image three', 'hint': 'Optional final visual.'}
+    ] %}
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-8">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Imagery &amp; alt text</h2>
+        <p class="text-sm text-slate-500">Each uploaded image requires descriptive alt text for accessibility and SEO.</p>
+      </div>
+
+      {% for config in image_configs %}
+        {% set path_value = resolve_media(config.path)|trim %}
+        {% set alt_value = resolve_text(config.alt)|trim %}
+        <div class="border-t border-slate-200 pt-6 first:border-t-0 first:pt-0">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700" for="{{ config.field }}">{{ config.label }}</label>
+              <p class="text-xs text-slate-500">{{ config.hint }}</p>
+            </div>
+            {% if path_value %}
+              <a
+                href="{{ url_for('static', filename=path_value) }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-semibold text-primary hover:underline"
+              >Preview</a>
+            {% endif %}
+          </div>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <div>
+              <input
+                type="file"
+                id="{{ config.field }}"
+                name="{{ config.field }}"
+                accept="image/*"
+                class="block w-full text-sm text-slate-600 file:mr-4 file:rounded-full file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20"
+              />
+              {% if path_value %}
+                <label class="mt-3 inline-flex items-center gap-2 text-xs text-slate-500">
+                  <input
+                    type="checkbox"
+                    name="remove_{{ config.field }}"
+                    {% if form_data and form_data.get('remove_' ~ config.field) %}checked{% endif %}
+                    class="rounded border-slate-300 text-primary focus:ring-primary"
+                  />
+                  Remove existing image on save
+                </label>
+              {% endif %}
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700" for="{{ config.field }}_alt">Alt text</label>
+              <input
+                type="text"
+                id="{{ config.field }}_alt"
+                name="{{ config.field }}_alt"
+                value="{{ alt_value }}"
+                class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+                placeholder="Describe the image content"
+              />
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Content blocks</h2>
+        <p class="text-sm text-slate-500">Structure long-form copy across headings, paragraphs, and quotations.</p>
+      </div>
+
+      <div class="grid gap-6">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="heading_one">Heading one</label>
+          <input
+            type="text"
+            id="heading_one"
+            name="heading_one"
+            value="{{ resolve_text('heading_one')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="text_content_one">Text content one</label>
+          <textarea
+            id="text_content_one"
+            name="text_content_one"
+            rows="5"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          >{{ resolve_text('text_content_one')|trim }}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="heading_two">Heading two</label>
+          <input
+            type="text"
+            id="heading_two"
+            name="heading_two"
+            value="{{ resolve_text('heading_two')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="text_content_two">Text content two</label>
+          <textarea
+            id="text_content_two"
+            name="text_content_two"
+            rows="5"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          >{{ resolve_text('text_content_two')|trim }}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="quote_block">Quote block</label>
+          <textarea
+            id="quote_block"
+            name="quote_block"
+            rows="3"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Optional pull quote"
+          >{{ resolve_text('quote_block')|trim }}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="heading_three">Heading three</label>
+          <input
+            type="text"
+            id="heading_three"
+            name="heading_three"
+            value="{{ resolve_text('heading_three')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="heading_four">Heading four</label>
+          <input
+            type="text"
+            id="heading_four"
+            name="heading_four"
+            value="{{ resolve_text('heading_four')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="text_content_three">Text content three</label>
+          <textarea
+            id="text_content_three"
+            name="text_content_three"
+            rows="5"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          >{{ resolve_text('text_content_three')|trim }}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="text_content_four">Text content four</label>
+          <textarea
+            id="text_content_four"
+            name="text_content_four"
+            rows="5"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          >{{ resolve_text('text_content_four')|trim }}</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Related articles</h2>
+        <p class="text-sm text-slate-500">Select up to three internal posts to surface at the end of the article.</p>
+      </div>
+
+      {% set related_values = [
+        resolve_text('related_article_1_slug')|trim,
+        resolve_text('related_article_2_slug')|trim,
+        resolve_text('related_article_3_slug')|trim
+      ] %}
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {% for index in range(3) %}
+          <div>
+            <label class="block text-xs font-semibold text-slate-700" for="related_article_{{ index + 1 }}_slug">Related article {{ index + 1 }}</label>
+            <select
+              id="related_article_{{ index + 1 }}_slug"
+              name="related_article_{{ index + 1 }}_slug"
+              class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            >
+              <option value="">-- None --</option>
+              {% set selected = related_values[index] %}
+              {% for option in related_options %}
+                <option value="{{ option.slug }}" {% if selected and selected == option.slug %}selected{% endif %}>{{ option.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+      </div>
+      <p class="text-xs text-slate-500">Articles referencing themselves are ignored automatically.</p>
+    </section>
+
+    <div class="flex items-center justify-between">
+      <a href="{{ url_for('admin_blogs') }}" class="text-sm font-semibold text-slate-500 hover:text-slate-700">Cancel</a>
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
+      >
+        {{ 'Update Article' if mode == 'edit' else 'Publish Article' }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

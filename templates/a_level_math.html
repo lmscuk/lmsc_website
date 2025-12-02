@@ -19,13 +19,53 @@
           universities and STEM-related degrees.
         </p>
 <div class="flex flex-wrap justify-center gap-4">
-<button class="bg-primary text-white px-8 py-3 rounded-full font-medium">
-            Apply now
-          </button>
-<button class="bg-secondary border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-primary">
-            Download course guide
-          </button>
+<a href="{{ url_for('contact') }}" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90">
+            Book a consultation
+          </a>
+<a href="{{ url_for('courses') }}" class="bg-secondary border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-primary">
+            Explore all STEM courses
+          </a>
 </div>
+</div>
+</div>
+</section>
+<!-- Section 6b - Related STEM Links -->
+<section class="py-20 px-6 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12 fade-in">
+<h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Plan your full STEM pathway</h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+          Pair A Level Maths with complementary subjects and guidance so you arrive at medicine, engineering and technology degrees with confidence.
+        </p>
+</div>
+<div class="grid md:grid-cols-3 gap-6">
+<a href="{{ url_for('stem_pathways') }}" class="group bg-gray-50 hover:bg-accent/20 rounded-2xl p-6 shadow-sm transition">
+<h3 class="font-semibold text-primary mb-2">Explore STEM pathways</h3>
+<p class="text-sm text-gray-600 mb-3">See how Maths, Further Maths, Physics, Chemistry and Biology combine for ambitious university routes.</p>
+<span class="text-sm font-medium text-primary group-hover:underline">View combinations →</span>
+</a>
+<a href="{{ url_for('courses') }}" class="group bg-gray-50 hover:bg-accent/20 rounded-2xl p-6 shadow-sm transition">
+<h3 class="font-semibold text-primary mb-2">Compare course options</h3>
+<p class="text-sm text-gray-600 mb-3">Review subject summaries, entry expectations and timetabling across the full LMSC curriculum.</p>
+<span class="text-sm font-medium text-primary group-hover:underline">Browse courses →</span>
+</a>
+<a href="{{ url_for('how_we_teach') }}" class="group bg-gray-50 hover:bg-accent/20 rounded-2xl p-6 shadow-sm transition">
+<h3 class="font-semibold text-primary mb-2">Understand how we teach</h3>
+<p class="text-sm text-gray-600 mb-3">Discover the evidence-led pedagogy, small-class model and mentoring that support high grades.</p>
+<span class="text-sm font-medium text-primary group-hover:underline">See teaching model →</span>
+</a>
+</div>
+<div class="mt-12 grid md:grid-cols-2 gap-6">
+<a href="{{ url_for('fees') }}" class="group bg-white border border-accent/50 hover:border-primary rounded-2xl p-6 shadow-sm transition">
+<h3 class="font-semibold text-primary mb-2">Plan fees and finance</h3>
+<p class="text-sm text-gray-600 mb-3">Review tuition, instalment choices and scholarships so budgeting never slows your application.</p>
+<span class="text-sm font-medium text-primary group-hover:underline">Review fees →</span>
+</a>
+<a href="{{ url_for('contact') }}" class="group bg-white border border-accent/50 hover:border-primary rounded-2xl p-6 shadow-sm transition">
+<h3 class="font-semibold text-primary mb-2">Talk to our admissions team</h3>
+<p class="text-sm text-gray-600 mb-3">Book a consultation to discuss adding Further Maths, arranging medical preparation or tailoring a hybrid timetable.</p>
+<span class="text-sm font-medium text-primary group-hover:underline">Book a call →</span>
+</a>
 </div>
 </div>
 </section>
@@ -113,7 +153,7 @@
 </div>
 </div>
 <div class="slide-in-right">
-<img alt="Mathematics Learning" class="rounded-2xl shadow-lg mb-6" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&amp;h=600&amp;fit=crop">
+<img alt="Mathematics Learning" loading="lazy" class="rounded-2xl shadow-lg mb-6" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&amp;h=600&amp;fit=crop">
 <div class="space-y-3">
 <div class="flex items-start gap-3">
 <svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
@@ -355,7 +395,7 @@
 </div>
 </div>
 <div class="slide-in-right">
-<img alt="Exam Preparation" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&amp;h=600&amp;fit=crop">
+<img alt="Exam Preparation" loading="lazy" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&amp;h=600&amp;fit=crop">
 </img></div>
 </div>
 </div>
@@ -414,7 +454,7 @@
 <h3 class="text-2xl font-bold mb-6 text-primary">
             Example Careers
           </h3>
-<img alt="Career Pathways" class="rounded-2xl shadow-lg mb-6" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&amp;h=500&amp;fit=crop">
+<img alt="Career Pathways" loading="lazy" class="rounded-2xl shadow-lg mb-6" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&amp;h=500&amp;fit=crop">
 <div class="bg-white rounded-xl p-6">
 <ul class="space-y-3">
 <li class="flex items-start gap-3">
@@ -751,7 +791,7 @@
 <div class="main-image relative w-full max-w-sm">
 <!-- Background placeholder for the person image -->
 <div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
+<img alt="Person with phone" loading="lazy" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
 </div>
 <!-- Chat Bubbles Overlay -->
 <div class="chat-block">

@@ -155,6 +155,44 @@
                     <p
                       class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400"
                     >
+                      Content Studio
+                    </p>
+                    <ul
+                      role="list"
+                      class="-mx-2 mt-3 space-y-1 text-sm font-semibold"
+                    >
+                      <li>
+                        <a
+                          href="{{ url_for('admin_blogs') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_blogs') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm3 3h8m-8 4h8m-8 4h5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Blog Articles
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p
+                      class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400"
+                    >
                       Page Management
                     </p>
                     <ul
@@ -380,6 +418,41 @@
                       </svg>
                     </span>
                     All Leads
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p
+                class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400"
+              >
+                Content Studio
+              </p>
+              <ul role="list" class="-mx-2 mt-3 space-y-1">
+                <li>
+                  <a
+                    href="{{ url_for('admin_blogs') }}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_blogs') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm3 3h8m-8 4h8m-8 4h5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    Blog Articles
                   </a>
                 </li>
               </ul>

@@ -28,6 +28,10 @@
       name="description"
       content="London Maths &amp; Science College is a British 16–19 STEM college in London delivering the full British curriculum with clear pathways to universities and careers."
     />
+    {% endif %} {% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+    {% endif %} {% if meta_robots %}
+    <meta name="robots" content="{{ meta_robots }}" />
     {% endif %} {% if page_meta and page_meta.get('social_image') %}
     <meta
       property="og:image"

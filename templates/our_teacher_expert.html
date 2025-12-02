@@ -1,810 +1,1086 @@
-{% extends 'base.html' %}
-
-{% block title %}Our Teachers & Expert Tutors | London Maths & Science College{% endblock %}
-
-{% block extra_head %}
+{% extends 'base.html' %} {% block title %}Our Teachers & Expert Tutors | London
+Maths & Science College{% endblock %} {% block extra_head %}
 <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
 
-        /* Scroll Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
+  /* Scroll Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-        .stagger-1 {
-            transition-delay: 0.1s;
-        }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
 
-        .stagger-2 {
-            transition-delay: 0.2s;
-        }
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
 
-        .stagger-3 {
-            transition-delay: 0.3s;
-        }
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
 
-        .stagger-4 {
-            transition-delay: 0.4s;
-        }
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
 
-        .stagger-5 {
-            transition-delay: 0.5s;
-        }
+  .stagger-5 {
+    transition-delay: 0.5s;
+  }
 
-        .stagger-6 {
-            transition-delay: 0.6s;
-        }
+  .stagger-6 {
+    transition-delay: 0.6s;
+  }
 
-        .teacher-card {
-            transition: all 0.3s ease;
-        }
+  .teacher-card {
+    transition: all 0.3s ease;
+  }
 
-        .teacher-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 32px rgba(56, 121, 81, 0.15);
-        }
+  .teacher-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(56, 121, 81, 0.15);
+  }
 
-        .feature-card {
-            transition: all 0.3s ease;
-        }
+  .feature-card {
+    transition: all 0.3s ease;
+  }
 
-        .feature-card:hover {
-            background: rgba(56, 121, 81, 0.05);
-            transform: translateX(8px);
-        }
+  .feature-card:hover {
+    background: rgba(56, 121, 81, 0.05);
+    transform: translateX(8px);
+  }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
 
-        .accordion-content.open {
-            max-height: 300px;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+  .accordion-content.open {
+    max-height: 300px;
+  }
+</style>
+{% endblock %} {% block content %}
 <!-- Navigation -->
 
 <!-- Hero Section -->
 <section class="py-20">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h1 class="text-primary font-bold mb-6">Our Teachers &amp; Expert Tutors</h1>
-<p class="text-lg text-gray-700 mb-8 leading-relaxed">At London Maths &amp; Science College (LMSC), your
-                        lessons are led by specialist STEM teachers and experienced tutors who know the British
-                        curriculum inside out. They combine subject expertise with clear explanations, structured
-                        practice and individual support.</p>
-<div class="flex flex-col sm:flex-row gap-4">
-<button class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:opacity-90">Meet
-                            our academic team</button>
-<button class="border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary/5">Explore
-                            our courses</button>
-</div>
-</div>
-<div class="fade-in scale-in">
-<img alt="Teacher with students" class="rounded-2xl shadow-lg w-full h-96 object-cover" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&amp;h=400&amp;fit=crop"/>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <h1 class="text-primary font-bold mb-6">
+          Our Teachers &amp; Expert Tutors
+        </h1>
+        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+          At London Maths &amp; Science College (LMSC), your lessons are led by
+          specialist STEM teachers and experienced tutors who know the British
+          curriculum inside out. They combine subject expertise with clear
+          explanations, structured practice and individual support.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="{{ url_for('contact') }}"
+            class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:opacity-90"
+            >Meet our academic team</a
+          >
+          <a
+            href="{{ url_for('courses') }}"
+            class="border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary/5"
+            >Explore our courses</a
+          >
+        </div>
+      </div>
+      <div class="fade-in scale-in">
+        <img
+          alt="Teacher with students"
+          class="rounded-2xl shadow-lg w-full h-96 object-cover"
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&amp;h=400&amp;fit=crop"
+        />
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 1: Who teaches at LMSC -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in scale-in">
-<h2 class="text-primary font-bold mb-6">Who teaches at London Maths &amp; Science College?
-                    </h2>
-<p class="text-gray-700 mb-6 leading-relaxed">LMSC is a specialist 16–19 STEM college. That means
-                        our teachers and tutors are chosen for their <strong>depth of subject knowledge</strong> and
-                        their <strong>experience in the British system</strong>. Many have taught A Levels, GCSEs and
-                        Level 3 BTECs for years, worked as examiners or markers, or supported students into competitive
-                        university courses.</p>
-<p class="text-gray-700 leading-relaxed">Whether you join us on campus in London or online from
-                        overseas, you'll be taught by the same calibre of British STEM educators.</p>
-<div>
-<img alt="" class="rounded-lg mt-5 h-[300px] w-full object-cover" src="{{ url_for('static', filename='Images/Image 12.jpg') }}"/>
-</div>
-</div>
-<div class="fade-in scale-in space-y-4">
-<div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
-<span class="text-3xl text-primary">
-<i class="fas fa-graduation-cap"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Subject specialists</p>
-<p class="text-sm text-gray-600">Maths, Further Maths, Sciences, Computing, Economics &amp;
-                                Business</p>
-</div>
-</div>
-<div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
-<span class="text-3xl text-secondary">
-<i class="fas fa-flag"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">British system expertise</p>
-<p class="text-sm text-gray-600">Experience with British schools, colleges and online
-                                settings</p>
-</div>
-</div>
-<div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
-<span class="text-3xl text-green-500">
-<i class="fas fa-book"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Exam board knowledge</p>
-<p class="text-sm text-gray-600">Understanding of UK exam boards and university requirements
-                            </p>
-</div>
-</div>
-<div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
-<span class="text-3xl text-black">
-<i class="fas fa-laptop-code"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Online &amp; in-person</p>
-<p class="text-sm text-gray-600">Trained in both traditional and digital teaching methods
-                            </p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in scale-in">
+        <h2 class="text-primary font-bold mb-6">
+          Who teaches at London Maths &amp; Science College?
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          LMSC is a specialist 16–19 STEM college. That means our teachers and
+          tutors are chosen for their
+          <strong>depth of subject knowledge</strong> and their
+          <strong>experience in the British system</strong>. Many have taught A
+          Levels, GCSEs and Level 3 BTECs for years, worked as examiners or
+          markers, or supported students into competitive university courses.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          Whether you join us on campus in London or online from overseas,
+          you'll be taught by the same calibre of British STEM educators.
+        </p>
+        <div>
+          <img
+            alt=""
+            loading="lazy"
+            class="rounded-lg mt-5 h-[300px] w-full object-cover"
+            src="{{ url_for('static', filename='Images/Image 12.jpg') }}"
+          />
+        </div>
+      </div>
+      <div class="fade-in scale-in space-y-4">
+        <div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+          <span class="text-3xl text-primary">
+            <i class="fas fa-graduation-cap"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Subject specialists</p>
+            <p class="text-sm text-gray-600">
+              Maths, Further Maths, Sciences, Computing, Economics &amp;
+              Business
+            </p>
+          </div>
+        </div>
+        <div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+          <span class="text-3xl text-secondary">
+            <i class="fas fa-flag"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">British system expertise</p>
+            <p class="text-sm text-gray-600">
+              Experience with British schools, colleges and online settings
+            </p>
+          </div>
+        </div>
+        <div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+          <span class="text-3xl text-green-500">
+            <i class="fas fa-book"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Exam board knowledge</p>
+            <p class="text-sm text-gray-600">
+              Understanding of UK exam boards and university requirements
+            </p>
+          </div>
+        </div>
+        <div class="feature-card flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
+          <span class="text-3xl text-black">
+            <i class="fas fa-laptop-code"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Online &amp; in-person</p>
+            <p class="text-sm text-gray-600">
+              Trained in both traditional and digital teaching methods
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 2: Subject Specialists -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="fade-in h-full mb-12 text-center">
-<h2 class="text-primary font-bold mb-6">Subject specialists, not generalists</h2>
-<p class="text-gray-700 max-w-2xl mx-auto">We believe that students make the best progress when they
-                    learn from teachers who live and breathe their subject.</p>
-</div>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="fade-in h-full scale-in stagger-1 bg-white shadow-lg p-6 rounded-lg">
-<img alt="" class="mb-5 rounded" src="{{ url_for('static', filename='Images/Image 2.jpg') }}"/>
-<h3 class="text-2xl font-bold text-gray-900 mb-3">
-<i class="fas fa-square-root-alt text-primary"></i> Mathematics
-                    </h3>
-<p class="text-gray-700">Taught by mathematicians who are comfortable with everything from algebra
-                        foundations to challenging problem-solving and Further Maths topics.</p>
-</div>
-<div class="fade-in h-full scale-in stagger-2 bg-white shadow-lg p-6 rounded-lg">
-<img alt="" class="mb-5 rounded" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
-<h3 class="text-2xl font-bold text-gray-900 mb-3">
-<i class="fas fa-flask text-primary"></i> Sciences
-                    </h3>
-<p class="text-gray-700">Led by science specialists who understand both theory and required
-                        practicals, and how these are examined at A Level.</p>
-</div>
-<div class="fade-in h-full scale-in stagger-3 bg-white shadow-lg p-6 rounded-lg">
-<img alt="" class="mb-5 rounded" src="{{ url_for('static', filename='Images/Image 3.jpg') }}"/>
-<h3 class="text-2xl font-bold text-gray-900 mb-3">
-<i class="fas fa-laptop-code text-primary"></i> Computing
-                    </h3>
-<p class="text-gray-700">Delivered by people with real technical experience who can talk confidently
-                        about programming, systems and real-world applications.</p>
-</div>
-<div class="fade-in h-full scale-in stagger-4 bg-white shadow-lg p-6 rounded-lg">
-<img alt="" class="mb-5 rounded" src="{{ url_for('static', filename='Images/Image 5.jpg') }}"/>
-<h3 class="text-2xl font-bold text-gray-900 mb-3">
-<i class="fas fa-chart-pie text-primary"></i> Economics &amp; Business
-                    </h3>
-<p class="text-gray-700">Handled by teachers who can link classroom content to current events and
-                        real organisations.</p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="fade-in h-full mb-12 text-center">
+      <h2 class="text-primary font-bold mb-6">
+        Subject specialists, not generalists
+      </h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">
+        We believe that students make the best progress when they learn from
+        teachers who live and breathe their subject.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div
+        class="fade-in h-full scale-in stagger-1 bg-white shadow-lg p-6 rounded-lg"
+      >
+        <img
+          alt=""
+          loading="lazy"
+          class="mb-5 rounded"
+          src="{{ url_for('static', filename='Images/Image 2.jpg') }}"
+        />
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">
+          <i class="fas fa-square-root-alt text-primary"></i> Mathematics
+        </h3>
+        <p class="text-gray-700">
+          Taught by mathematicians who are comfortable with everything from
+          algebra foundations to challenging problem-solving and Further Maths
+          topics.
+        </p>
+      </div>
+      <div
+        class="fade-in h-full scale-in stagger-2 bg-white shadow-lg p-6 rounded-lg"
+      >
+        <img
+          alt=""
+          loading="lazy"
+          class="mb-5 rounded"
+          src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
+        />
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">
+          <i class="fas fa-flask text-primary"></i> Sciences
+        </h3>
+        <p class="text-gray-700">
+          Led by science specialists who understand both theory and required
+          practicals, and how these are examined at A Level.
+        </p>
+      </div>
+      <div
+        class="fade-in h-full scale-in stagger-3 bg-white shadow-lg p-6 rounded-lg"
+      >
+        <img
+          alt=""
+          loading="lazy"
+          class="mb-5 rounded"
+          src="{{ url_for('static', filename='Images/Image 3.jpg') }}"
+        />
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">
+          <i class="fas fa-laptop-code text-primary"></i> Computing
+        </h3>
+        <p class="text-gray-700">
+          Delivered by people with real technical experience who can talk
+          confidently about programming, systems and real-world applications.
+        </p>
+      </div>
+      <div
+        class="fade-in h-full scale-in stagger-4 bg-white shadow-lg p-6 rounded-lg"
+      >
+        <img
+          alt=""
+          loading="lazy"
+          class="mb-5 rounded"
+          src="{{ url_for('static', filename='Images/Image 5.jpg') }}"
+        />
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">
+          <i class="fas fa-chart-pie text-primary"></i> Economics &amp; Business
+        </h3>
+        <p class="text-gray-700">
+          Handled by teachers who can link classroom content to current events
+          and real organisations.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 3: Beyond Lessons -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in scale-in">
-<h2 class="text-primary font-bold mb-6">More than lessons: mentoring, guidance and support
-                    </h2>
-<p class="text-gray-700 mb-6 leading-relaxed">Our teachers' role doesn't end when the lesson
-                        finishes. They are central to the support and guidance that students receive throughout their
-                        time at LMSC.</p>
-<p class="text-gray-700 leading-relaxed">In smaller classes, teachers get to know each student well
-                        — their strengths, their challenges and the most effective way to support them.</p>
-<div>
-<img alt="" class="rounded-lg mt-5 h-[300px] w-full object-cover" src="{{ url_for('static', filename='Images/Image 12.jpg') }}"/>
-</div>
-</div>
-<div class="fade-in scale-in space-y-4">
-<div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
-<span class="text-2xl text-primary">
-<i class="fas fa-clipboard-list"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Revision &amp; Support</p>
-<p class="text-sm text-gray-600">Run revision sessions, support clinics and small-group
-                                interventions</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
-<span class="text-2xl text-primary">
-<i class="fas fa-comments"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Detailed Feedback</p>
-<p class="text-sm text-gray-600">Provide constructive feedback after tests and mock exams
-                            </p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
-<span class="text-2xl text-primary">
-<i class="fas fa-bullseye"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">Goal Setting</p>
-<p class="text-sm text-gray-600">Help students set realistic, stretching targets and review
-                                regularly</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
-<span class="text-2xl text-primary">
-<i class="fas fa-graduation-cap"></i>
-</span>
-<div>
-<p class="font-semibold text-gray-900">University Guidance</p>
-<p class="text-sm text-gray-600">Offer subject-specific guidance on university choices and
-                                STEM routes</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in scale-in">
+        <h2 class="text-primary font-bold mb-6">
+          More than lessons: mentoring, guidance and support
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Our teachers' role doesn't end when the lesson finishes. They are
+          central to the support and guidance that students receive throughout
+          their time at LMSC.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          In smaller classes, teachers get to know each student well — their
+          strengths, their challenges and the most effective way to support
+          them.
+        </p>
+        <div>
+          <img
+            alt=""
+            loading="lazy"
+            class="rounded-lg mt-5 h-[300px] w-full object-cover"
+            src="{{ url_for('static', filename='Images/Image 12.jpg') }}"
+          />
+        </div>
+      </div>
+      <div class="fade-in scale-in space-y-4">
+        <div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
+          <span class="text-2xl text-primary">
+            <i class="fas fa-clipboard-list"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Revision &amp; Support</p>
+            <p class="text-sm text-gray-600">
+              Run revision sessions, support clinics and small-group
+              interventions
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
+          <span class="text-2xl text-primary">
+            <i class="fas fa-comments"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Detailed Feedback</p>
+            <p class="text-sm text-gray-600">
+              Provide constructive feedback after tests and mock exams
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
+          <span class="text-2xl text-primary">
+            <i class="fas fa-bullseye"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">Goal Setting</p>
+            <p class="text-sm text-gray-600">
+              Help students set realistic, stretching targets and review
+              regularly
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-gray-50 rounded-lg shadow">
+          <span class="text-2xl text-primary">
+            <i class="fas fa-graduation-cap"></i>
+          </span>
+          <div>
+            <p class="font-semibold text-gray-900">University Guidance</p>
+            <p class="text-sm text-gray-600">
+              Offer subject-specific guidance on university choices and STEM
+              routes
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 4: Teaching Methods -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="fade-in mb-12 text-center max-w-5xl mx-auto">
-<h2 class="text-primary font-bold mb-6">Teachers trained for both in-person and online
-                    teaching</h2>
-<p class="text-gray-700 max-w-2xl mx-auto">Great online teaching is more than pointing a camera at a
-                    classroom. Our team are trained to deliver engaging, interactive lessons.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="fade-in scale-in stagger-1 bg-white p-8 rounded-xl shadow">
-<h3 class="font-bold text-gray-900 mb-4">
-<i class="fa-solid fa-school mr-2"></i> In Person
-                    </h3>
-<p class="text-gray-700">Use the classroom space, whiteboards and physical resources to model
-                        examples and check understanding with immediate feedback.</p>
-</div>
-<div class="fade-in scale-in stagger-2 bg-white p-8 rounded-xl shadow">
-<h3 class="font-bold text-gray-900 mb-4">
-<i class="fa-solid fa-laptop mr-2"></i> Online
-                    </h3>
-<p class="text-gray-700">Use digital whiteboards, screen sharing and chat tools to keep lessons
-                        interactive with students answering, voting and working live.</p>
-</div>
-<div class="fade-in scale-in stagger-3 bg-white p-8 rounded-xl shadow">
-<h3 class="font-bold text-gray-900 mb-4">
-<i class="fa-solid fa-shuffle mr-2"></i> Hybrid
-                    </h3>
-<p class="text-gray-700">Plan carefully so that remote students feel included and can follow
-                        explanations clearly while maintaining engagement.</p>
-</div>
-</div>
-<div class="fade-in mt-12 bg-primary text-white p-8 rounded-xl text-center">
-<p class="text-lg font-semibold">All modes share the same lesson structure, curriculum, and expectations
-                    for participation and effort.</p>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="fade-in mb-12 text-center max-w-5xl mx-auto">
+      <h2 class="text-primary font-bold mb-6">
+        Teachers trained for both in-person and online teaching
+      </h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">
+        Great online teaching is more than pointing a camera at a classroom. Our
+        team are trained to deliver engaging, interactive lessons.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="fade-in scale-in stagger-1 bg-white p-8 rounded-xl shadow">
+        <h3 class="font-bold text-gray-900 mb-4">
+          <i class="fa-solid fa-school mr-2"></i> In Person
+        </h3>
+        <p class="text-gray-700">
+          Use the classroom space, whiteboards and physical resources to model
+          examples and check understanding with immediate feedback.
+        </p>
+      </div>
+      <div class="fade-in scale-in stagger-2 bg-white p-8 rounded-xl shadow">
+        <h3 class="font-bold text-gray-900 mb-4">
+          <i class="fa-solid fa-laptop mr-2"></i> Online
+        </h3>
+        <p class="text-gray-700">
+          Use digital whiteboards, screen sharing and chat tools to keep lessons
+          interactive with students answering, voting and working live.
+        </p>
+      </div>
+      <div class="fade-in scale-in stagger-3 bg-white p-8 rounded-xl shadow">
+        <h3 class="font-bold text-gray-900 mb-4">
+          <i class="fa-solid fa-shuffle mr-2"></i> Hybrid
+        </h3>
+        <p class="text-gray-700">
+          Plan carefully so that remote students feel included and can follow
+          explanations clearly while maintaining engagement.
+        </p>
+      </div>
+    </div>
+    <div class="fade-in mt-12 bg-primary text-white p-8 rounded-xl text-center">
+      <p class="text-lg font-semibold">
+        All modes share the same lesson structure, curriculum, and expectations
+        for participation and effort.
+      </p>
+    </div>
+  </div>
 </section>
 <!-- Section 5: Safeguarding -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center">
-<div class="fade-in">
-<h2 class="text-primary font-bold mb-6">Recruitment, vetting and safeguarding</h2>
-<p class="text-gray-700 mb-8 leading-relaxed">Because we work with young people, <strong>safety and
-                            integrity</strong> are non-negotiable. Before joining LMSC, teachers and tutors must meet
-                        strict checks, including:</p>
-<div class="space-y-4 mb-8">
-<div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
-<span class="text-2xl">✓</span>
-<div>
-<p class="font-semibold text-gray-900">Relevant qualifications and experience</p>
-<p class="text-sm text-gray-600">In their subject and in education</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
-<span class="text-2xl">✓</span>
-<div>
-<p class="font-semibold text-gray-900">Background checks</p>
-<p class="text-sm text-gray-600">Compliant with UK safeguarding requirements (enhanced
-                                    DBS or equivalent)</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
-<span class="text-2xl">✓</span>
-<div>
-<p class="font-semibold text-gray-900">Professional references</p>
-<p class="text-sm text-gray-600">From trusted educational organisations</p>
-</div>
-</div>
-</div>
-<p class="text-gray-700">We also train staff in safeguarding, child protection and online safety,
-                        and we expect them to uphold the college's values of respect, inclusion and professionalism at
-                        all times.</p>
-</div>
-<div class="fade-in">
-<img alt="" class="rounded-lg" src="{{ url_for('static', filename='Images/Image 1.jpg') }}"/>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="fade-in">
+        <h2 class="text-primary font-bold mb-6">
+          Recruitment, vetting and safeguarding
+        </h2>
+        <p class="text-gray-700 mb-8 leading-relaxed">
+          Because we work with young people,
+          <strong>safety and integrity</strong> are non-negotiable. Before
+          joining LMSC, teachers and tutors must meet strict checks, including:
+        </p>
+        <div class="space-y-4 mb-8">
+          <div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
+            <span class="text-2xl">✓</span>
+            <div>
+              <p class="font-semibold text-gray-900">
+                Relevant qualifications and experience
+              </p>
+              <p class="text-sm text-gray-600">
+                In their subject and in education
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
+            <span class="text-2xl">✓</span>
+            <div>
+              <p class="font-semibold text-gray-900">Background checks</p>
+              <p class="text-sm text-gray-600">
+                Compliant with UK safeguarding requirements (enhanced DBS or
+                equivalent)
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-6 bg-blue-50 rounded-lg">
+            <span class="text-2xl">✓</span>
+            <div>
+              <p class="font-semibold text-gray-900">Professional references</p>
+              <p class="text-sm text-gray-600">
+                From trusted educational organisations
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="text-gray-700">
+          We also train staff in safeguarding, child protection and online
+          safety, and we expect them to uphold the college's values of respect,
+          inclusion and professionalism at all times.
+        </p>
+      </div>
+      <div class="fade-in">
+        <img
+          alt=""
+          loading="lazy"
+          class="rounded-lg"
+          src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
+        />
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 6: Professional Development -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in scale-in">
-<h2 class="text-primary font-bold mb-6">Ongoing training and professional development</h2>
-<p class="text-gray-700 mb-6 leading-relaxed">STEM education and the British curriculum evolve over
-                        time. We support our teachers and tutors to stay current, reflective and improving.</p>
-<p class="text-gray-700 leading-relaxed">Students benefit from teachers who are not only
-                        experienced, but also <strong>actively refining their practice</strong> year after year.</p>
-<img alt="" class="mt-5 rounded-lg" src="{{ url_for('static', filename='Images/Image 7.jpg') }}"/>
-</div>
-<div class="fade-in scale-in space-y-4">
-<div class="flex gap-4 p-6 bg-white shadow rounded-lg">
-<i class="fas fa-graduation-cap text-2xl text-blue-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Regular CPD sessions</p>
-<p class="text-sm text-gray-600">On pedagogy, assessment and curriculum updates</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white shadow rounded-lg">
-<i class="fas fa-handshake text-2xl text-green-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Collaborative practice</p>
-<p class="text-sm text-gray-600">Share best practice across departments</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white shadow rounded-lg">
-<i class="fas fa-chart-line text-2xl text-purple-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Data reflection</p>
-<p class="text-sm text-gray-600">Reflect on student progress data and adjust teaching</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white shadow rounded-lg">
-<i class="fas fa-book-open text-2xl text-orange-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Subject networks</p>
-<p class="text-sm text-gray-600">Engage with examiner reports and new specifications</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in scale-in">
+        <h2 class="text-primary font-bold mb-6">
+          Ongoing training and professional development
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          STEM education and the British curriculum evolve over time. We support
+          our teachers and tutors to stay current, reflective and improving.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          Students benefit from teachers who are not only experienced, but also
+          <strong>actively refining their practice</strong> year after year.
+        </p>
+        <img
+          alt=""
+          loading="lazy"
+          class="mt-5 rounded-lg"
+          src="{{ url_for('static', filename='Images/Image 7.jpg') }}"
+        />
+      </div>
+      <div class="fade-in scale-in space-y-4">
+        <div class="flex gap-4 p-6 bg-white shadow rounded-lg">
+          <i class="fas fa-graduation-cap text-2xl text-blue-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">Regular CPD sessions</p>
+            <p class="text-sm text-gray-600">
+              On pedagogy, assessment and curriculum updates
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white shadow rounded-lg">
+          <i class="fas fa-handshake text-2xl text-green-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">Collaborative practice</p>
+            <p class="text-sm text-gray-600">
+              Share best practice across departments
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white shadow rounded-lg">
+          <i class="fas fa-chart-line text-2xl text-purple-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">Data reflection</p>
+            <p class="text-sm text-gray-600">
+              Reflect on student progress data and adjust teaching
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white shadow rounded-lg">
+          <i class="fas fa-book-open text-2xl text-orange-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">Subject networks</p>
+            <p class="text-sm text-gray-600">
+              Engage with examiner reports and new specifications
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 7: Teacher Profiles -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="fade-in mb-12 text-center">
-<h2 class="text-primary font-bold mb-6">Meet some of our teachers</h2>
-<p class="text-gray-700 max-w-2xl mx-auto">You'll meet many of our staff during open events and
-                    consultations. Below is a snapshot of the kind of experience you can expect.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-8">
-<!-- Teacher 1 -->
-<div class="fade-in scale-in stagger-1 teacher-card bg-white rounded-xl overflow-hidden shadow">
-<img alt="Dr James Harper" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&amp;h=300&amp;fit=crop"/>
-<div class="p-6">
-<h3 class="font-bold text-gray-900 mb-2">Dr James Harper</h3>
-<p class="text-sm text-primary font-semibold mb-4">Head of Mathematics &amp; Further Mathematics</p>
-<p class="text-gray-700 text-sm">"Over 10 years' experience teaching A Level Maths and Further
-                            Maths in British schools. Supported students into Oxbridge and Russell Group universities.
-                            Focus on clear explanations, problem-solving and exam technique."</p>
-</div>
-</div>
-<!-- Teacher 2 -->
-<div class="fade-in scale-in stagger-2 teacher-card bg-white rounded-xl overflow-hidden shadow">
-<img alt="Dr Sarah Chen" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&amp;h=300&amp;fit=crop"/>
-<div class="p-6">
-<h3 class="font-bold text-gray-900 mb-2">Dr Sarah Chen</h3>
-<p class="text-sm text-primary font-semibold mb-4">Physics &amp; Engineering Pathways Lead</p>
-<p class="text-gray-700 text-sm">"Physics specialist with experience in A Level Physics and
-                            Engineering pathways. Passionate about connecting abstract Physics concepts to real
-                            engineering and technology applications."</p>
-</div>
-</div>
-<!-- Teacher 3 -->
-<div class="fade-in scale-in stagger-3 teacher-card bg-white rounded-xl overflow-hidden shadow">
-<img alt="Marcus Williams" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&amp;h=300&amp;fit=crop"/>
-<div class="p-6">
-<h3 class="font-bold text-gray-900 mb-2">Marcus Williams</h3>
-<p class="text-sm text-primary font-semibold mb-4">Computer Science &amp; Computing Tutor</p>
-<p class="text-gray-700 text-sm">"Combines classroom experience with industry background in
-                            software development. Emphasises clean coding habits, computational thinking and
-                            understanding how systems behave in the real world."</p>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="fade-in mb-12 text-center">
+      <h2 class="text-primary font-bold mb-6">Meet some of our teachers</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">
+        You'll meet many of our staff during open events and consultations.
+        Below is a snapshot of the kind of experience you can expect.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Teacher 1 -->
+      <div
+        class="fade-in scale-in stagger-1 teacher-card bg-white rounded-xl overflow-hidden shadow"
+      >
+        <img
+          alt="Dr James Harper"
+          loading="lazy"
+          class="w-full h-64 object-cover"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&amp;h=300&amp;fit=crop"
+        />
+        <div class="p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Dr James Harper</h3>
+          <p class="text-sm text-primary font-semibold mb-4">
+            Head of Mathematics &amp; Further Mathematics
+          </p>
+          <p class="text-gray-700 text-sm">
+            "Over 10 years' experience teaching A Level Maths and Further Maths
+            in British schools. Supported students into Oxbridge and Russell
+            Group universities. Focus on clear explanations, problem-solving and
+            exam technique."
+          </p>
+        </div>
+      </div>
+      <!-- Teacher 2 -->
+      <div
+        class="fade-in scale-in stagger-2 teacher-card bg-white rounded-xl overflow-hidden shadow"
+      >
+        <img
+          alt="Dr Sarah Chen"
+          loading="lazy"
+          class="w-full h-64 object-cover"
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&amp;h=300&amp;fit=crop"
+        />
+        <div class="p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Dr Sarah Chen</h3>
+          <p class="text-sm text-primary font-semibold mb-4">
+            Physics &amp; Engineering Pathways Lead
+          </p>
+          <p class="text-gray-700 text-sm">
+            "Physics specialist with experience in A Level Physics and
+            Engineering pathways. Passionate about connecting abstract Physics
+            concepts to real engineering and technology applications."
+          </p>
+        </div>
+      </div>
+      <!-- Teacher 3 -->
+      <div
+        class="fade-in scale-in stagger-3 teacher-card bg-white rounded-xl overflow-hidden shadow"
+      >
+        <img
+          alt="Marcus Williams"
+          loading="lazy"
+          class="w-full h-64 object-cover"
+          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&amp;h=300&amp;fit=crop"
+        />
+        <div class="p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Marcus Williams</h3>
+          <p class="text-sm text-primary font-semibold mb-4">
+            Computer Science &amp; Computing Tutor
+          </p>
+          <p class="text-gray-700 text-sm">
+            "Combines classroom experience with industry background in software
+            development. Emphasises clean coding habits, computational thinking
+            and understanding how systems behave in the real world."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 8: Supporting Ambitious Pathways -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="fade-in">
-<h2 class="text-primary font-bold mb-6">Supporting ambitious pathways together</h2>
-<p class="text-gray-700 mb-12 leading-relaxed">For students aiming at courses such as Medicine,
-                    Engineering, Computer Science, Mathematics, Economics and other competitive routes, our teachers and
-                    tutors provide:</p>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="flex gap-4 p-6 bg-white rounded-xl shadow">
-<i class="fas fa-clipboard-list text-3xl text-blue-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Subject combinations &amp; entry requirements</p>
-<p class="text-sm text-gray-600">Advice tailored to your aspirations and university targets
-                            </p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white rounded-xl shadow">
-<i class="fas fa-puzzle-piece text-3xl text-purple-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Challenging topics &amp; extension work</p>
-<p class="text-sm text-gray-600">Extra support and enrichment for ambitious learners</p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white rounded-xl shadow">
-<i class="fas fa-book text-3xl text-green-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Super-curricular activities</p>
-<p class="text-sm text-gray-600">Wider reading, online courses, problem-solving competitions
-                            </p>
-</div>
-</div>
-<div class="flex gap-4 p-6 bg-white rounded-xl shadow">
-<i class="fas fa-pen-fancy text-3xl text-red-600"></i>
-<div>
-<p class="font-semibold text-gray-900">Personal statements &amp; references</p>
-<p class="text-sm text-gray-600">Input that accurately reflects your strengths and potential
-                            </p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="fade-in">
+      <h2 class="text-primary font-bold mb-6">
+        Supporting ambitious pathways together
+      </h2>
+      <p class="text-gray-700 mb-12 leading-relaxed">
+        For students aiming at courses such as Medicine, Engineering, Computer
+        Science, Mathematics, Economics and other competitive routes, our
+        teachers and tutors provide:
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="flex gap-4 p-6 bg-white rounded-xl shadow">
+          <i class="fas fa-clipboard-list text-3xl text-blue-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">
+              Subject combinations &amp; entry requirements
+            </p>
+            <p class="text-sm text-gray-600">
+              Advice tailored to your aspirations and university targets
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white rounded-xl shadow">
+          <i class="fas fa-puzzle-piece text-3xl text-purple-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">
+              Challenging topics &amp; extension work
+            </p>
+            <p class="text-sm text-gray-600">
+              Extra support and enrichment for ambitious learners
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white rounded-xl shadow">
+          <i class="fas fa-book text-3xl text-green-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">
+              Super-curricular activities
+            </p>
+            <p class="text-sm text-gray-600">
+              Wider reading, online courses, problem-solving competitions
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-6 bg-white rounded-xl shadow">
+          <i class="fas fa-pen-fancy text-3xl text-red-600"></i>
+          <div>
+            <p class="font-semibold text-gray-900">
+              Personal statements &amp; references
+            </p>
+            <p class="text-sm text-gray-600">
+              Input that accurately reflects your strengths and potential
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 9: Working with Parents -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="fade-in max-w-5xl mx-auto">
-<h2 class="text-primary font-bold mb-6">Teachers as partners with parents and guardians</h2>
-<p class="text-gray-700 mb-8 leading-relaxed">We see parents and guardians as partners in each student's
-                    success. Our teachers and tutors play a central role in this relationship.</p>
-<div class="bg-accent/20 border-l-4 border-primary p-8 rounded shadow">
-<ul class="space-y-4 text-gray-700">
-<li class="flex gap-3">
-<span class="text-primary font-bold">✓</span>
-<span><strong>Regular updates</strong> on progress, strengths and areas for
-                                improvement</span>
-</li>
-<li class="flex gap-3">
-<span class="text-primary font-bold">✓</span>
-<span>Contribution to <strong>written reports</strong> and progress review meetings</span>
-</li>
-<li class="flex gap-3">
-<span class="text-primary font-bold">✓</span>
-<span>Contact when there are concerns about <strong>effort, attendance or
-                                    wellbeing</strong></span>
-</li>
-<li class="flex gap-3">
-<span class="text-primary font-bold">✓</span>
-<span><strong>Practical advice</strong> on how families can support study routines at
-                                home</span>
-</li>
-</ul>
-</div>
-<p class="text-gray-700 mt-8">We aim for communication that is <strong>honest, clear and
-                        respectful</strong>, focused on what will help the student move forward.</p>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="fade-in max-w-5xl mx-auto">
+      <h2 class="text-primary font-bold mb-6">
+        Teachers as partners with parents and guardians
+      </h2>
+      <p class="text-gray-700 mb-8 leading-relaxed">
+        We see parents and guardians as partners in each student's success. Our
+        teachers and tutors play a central role in this relationship.
+      </p>
+      <div class="bg-accent/20 border-l-4 border-primary p-8 rounded shadow">
+        <ul class="space-y-4 text-gray-700">
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span
+              ><strong>Regular updates</strong> on progress, strengths and areas
+              for improvement</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span
+              >Contribution to <strong>written reports</strong> and progress
+              review meetings</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span
+              >Contact when there are concerns about
+              <strong>effort, attendance or wellbeing</strong></span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary font-bold">✓</span>
+            <span
+              ><strong>Practical advice</strong> on how families can support
+              study routines at home</span
+            >
+          </li>
+        </ul>
+      </div>
+      <p class="text-gray-700 mt-8">
+        We aim for communication that is
+        <strong>honest, clear and respectful</strong>, focused on what will help
+        the student move forward.
+      </p>
+    </div>
+  </div>
 </section>
 <!-- Section 10: FAQs -->
 <section class="py-20 px-6 bg-white">
-<div class="container mx-auto">
-<div class="max-w-4xl mx-auto">
-<h2 class="font-bold text-primary mb-12 text-center">Frequently Asked Questions</h2>
-<div class="space-y-4">
-<!-- FAQ 1 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Is this the same A Level as in a school or college?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The qualification and
-                                    certificate are
-                                    identical to those awarded in any other UK school or college.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 2 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do I have to sit exams in London?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>For this hybrid one-year route, yes. All exams are taken at the LMSC JCQ-approved
-                                    centre in London.
-                                </p>
-</div>
-</div>
-</div>
-<!-- FAQ 3 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I study from outside the UK?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You can join all online teaching from overseas, but you must travel to London
-                                    for the in-person
-                                    blocks in Mar–Apr and for the May–Jun exams. We can signpost accommodation options
-                                    and safeguarding
-                                    support for under-18s.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 4 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Why choose hybrid instead of fully online?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>You get online flexibility while learning new content, then in-person exam training
-                                    and intensive
-                                    practice in London when it matters most.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 5 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>How many hours a week should I plan?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Expect around 14–18 hours per week in total: 6–8 hours live teaching plus 8–10 hours
-                                    guided
-                                    independent
-                                    study.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 6 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do you record lessons?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. All online sessions are recorded for your cohort so you can revisit explanations
-                                    and catch up
-                                    after unavoidable absences.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 7 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What calculator do I need?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>An exam-compliant scientific or graphing calculator acceptable under Edexcel rules.
-                                    You must still
-                                    show
-                                    full methods, not just calculator output.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 8 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I pay in monthly instalments?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>No. For this accelerated Hybrid course, we offer Full Advance payment (discounted) or
-                                    Per Term; we do
-                                    not offer monthly instalments.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 9 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What if I still have questions?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Contact our team to arrange a call, a taster lesson or a parent webinar. We’ll walk
-                                    you through
-                                    timetables, assessments and exam logistics in detail.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center mt-12">
-<a class="text-primary font-semibold hover:underline" href="#">View all FAQs →</a>
-</div>
-</div>
-</div>
+  <div class="container mx-auto">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-bold text-primary mb-12 text-center">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Is this the same A Level as in a school or college?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
+                qualification and certificate are identical to those awarded in
+                any other UK school or college.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do I have to sit exams in London?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                For this hybrid one-year route, yes. All exams are taken at the
+                LMSC JCQ-approved centre in London.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I study from outside the UK?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You can join all online teaching from overseas, but you
+                must travel to London for the in-person blocks in Mar–Apr and
+                for the May–Jun exams. We can signpost accommodation options and
+                safeguarding support for under-18s.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Why choose hybrid instead of fully online?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                You get online flexibility while learning new content, then
+                in-person exam training and intensive practice in London when it
+                matters most.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>How many hours a week should I plan?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Expect around 14–18 hours per week in total: 6–8 hours live
+                teaching plus 8–10 hours guided independent study.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do you record lessons?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. All online sessions are recorded for your cohort so you can
+                revisit explanations and catch up after unavoidable absences.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What calculator do I need?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                An exam-compliant scientific or graphing calculator acceptable
+                under Edexcel rules. You must still show full methods, not just
+                calculator output.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I pay in monthly instalments?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                No. For this accelerated Hybrid course, we offer Full Advance
+                payment (discounted) or Per Term; we do not offer monthly
+                instalments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What if I still have questions?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Contact our team to arrange a call, a taster lesson or a parent
+                webinar. We’ll walk you through timetables, assessments and exam
+                logistics in detail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a class="text-primary font-semibold hover:underline" href="#"
+          >View all FAQs →</a
+        >
+      </div>
+    </div>
+  </div>
 </section>
 <!-- CTA Section -->
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center">
-<div>
-<div class="">
-<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
-                            Next steps
-                        </span>
-</div>
-<h2 class="text-primary font-bold mb-4">
-                        Ready to start your A Level Maths journey?
-                    </h2>
-<p class="text-opacity-90 mb-8 leading-relaxed">
-                        Join our next cohort and accelerate your path to STEM success.
-                    </p>
-<!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
-<div class="btn-content">
-<span class="text-part">Book a Consultation</span>
-<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
-<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</span>
-</div>
-</button>
-</div>
-<!-- Right Side - Image with Chat Bubbles -->
-<div class="relative flex items-center justify-center">
-<!-- Main Image Container -->
-<div class="main-image relative w-full max-w-sm">
-<!-- Background placeholder for the person image -->
-<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"/>
-</div>
-<!-- Chat Bubbles Overlay -->
-<div class="chat-block">
-<!-- User Message -->
-<div class="user-message chat-bubble-user">
-<div class="user-avatar"></div>
-<div class="user-message-bubble">
-<div class="name">Oliver Moy</div>
-<div class="text">I need help with my budget.</div>
-</div>
-</div>
-<!-- AI Response -->
-<div class="ai-message chat-bubble-ai">
-<div class="ai-avatar-bubble">
-<svg fill="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-</div>
-<div class="ai-message-bubble">
-<div class="name">AI Assistant</div>
-<div class="text">Sure! Let's carefully review your income and expenses.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div>
+        <div class="">
+          <span
+            class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+          >
+            Next steps
+          </span>
+        </div>
+        <h2 class="text-primary font-bold mb-4">
+          Ready to start your A Level Maths journey?
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          Join our next cohort and accelerate your path to STEM success.
+        </p>
+        <!-- BTN 1 -->
+        <a
+          href="{{ url_for('contact') }}"
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <span class="flex items-center justify-center gap-2">
+            <span>Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </span>
+        </a>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-center">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              loading="lazy"
+              class="w-full h-full object-cover object-center"
+              src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-        function toggleAccordion(button) {
-            const content = button.nextElementSibling;
-            const sign = button.querySelector('span:last-child');
+  function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const sign = button.querySelector("span:last-child");
 
-            // Close all other accordion items
-            document.querySelectorAll('.accordion-content').forEach(c => {
-                if (c !== content) {
-                    c.classList.remove('open');
-                }
-            });
+    // Close all other accordion items
+    document.querySelectorAll(".accordion-content").forEach((c) => {
+      if (c !== content) {
+        c.classList.remove("open");
+      }
+    });
 
-            document.querySelectorAll('.accordion-item button span:last-child').forEach(s => {
-                if (s !== sign) {
-                    s.textContent = '+';
-                }
-            });
-
-            // Toggle current item
-            content.classList.toggle('open');
-            sign.textContent = content.classList.contains('open') ? '−' : '+';
+    document
+      .querySelectorAll(".accordion-item button span:last-child")
+      .forEach((s) => {
+        if (s !== sign) {
+          s.textContent = "+";
         }
+      });
 
-        // Scroll Animation Observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    // Toggle current item
+    content.classList.toggle("open");
+    sign.textContent = content.classList.contains("open") ? "−" : "+";
+  }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  // Scroll Animation Observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
 
-        // Observe all animated elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.fade-in, .scale-in, .scale-in, .scale-in');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(
+      ".fade-in, .scale-in, .scale-in, .scale-in"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
 {% endblock %}

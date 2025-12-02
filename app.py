@@ -6,7 +6,8 @@ from collections.abc import Sequence
 from datetime import datetime, timedelta
 from functools import wraps
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
+from typing import Any
+from urllib.parse import parse_qs, quote_plus, urlparse
 
 from flask import (Flask, flash, g, redirect, render_template, request,
                    send_from_directory, session, url_for)
@@ -279,6 +280,15 @@ PAGE_ENDPOINT_OVERRIDES: dict[str, str] = {
     "policies": "policies_page",
 }
 
+NOINDEX_SLUGS: frozenset[str] = frozenset(
+    {
+        "thank-you",
+        "subscribe-confirmed",
+        "form-success",
+        "development",
+    }
+)
+
 SOCIAL_DOMAINS = (
     "facebook.com",
     "instagram.com",
@@ -303,6 +313,50 @@ SEARCH_DOMAINS = (
 )
 
 
+BLOG_IMAGE_FIELD_MAP: dict[str, tuple[str, str, str]] = {
+    "thumbnail": ("thumbnail_path", "thumbnail_alt", "thumbnail"),
+    "cover_image": ("cover_image_path", "cover_image_alt", "cover"),
+    "picture_one": ("picture_one_path", "picture_one_alt", "picture one"),
+    "picture_two": ("picture_two_path", "picture_two_alt", "picture two"),
+    "picture_three": ("picture_three_path", "picture_three_alt", "picture three"),
+}
+
+BLOG_RELATION_FIELDS: tuple[str, ...] = (
+    "related_article_1_slug",
+    "related_article_2_slug",
+    "related_article_3_slug",
+)
+
+BLOG_DB_COLUMNS: tuple[str, ...] = (
+    "slug",
+    "title",
+    "publish_date",
+    "summary",
+    "thumbnail_path",
+    "thumbnail_alt",
+    "cover_image_path",
+    "cover_image_alt",
+    "heading_one",
+    "text_content_one",
+    "picture_one_path",
+    "picture_one_alt",
+    "heading_two",
+    "text_content_two",
+    "quote_block",
+    "heading_three",
+    "picture_two_path",
+    "picture_two_alt",
+    "heading_four",
+    "text_content_three",
+    "picture_three_path",
+    "picture_three_alt",
+    "text_content_four",
+    "related_article_1_slug",
+    "related_article_2_slug",
+    "related_article_3_slug",
+)
+
+
 mail = Mail()
 
 
@@ -318,6 +372,10 @@ def create_app() -> Flask:
     uploads_dir = Path(app.root_path) / "static" / "uploads" / "social"
     uploads_dir.mkdir(parents=True, exist_ok=True)
     app.config["SOCIAL_IMAGE_UPLOAD_FOLDER"] = str(uploads_dir)
+
+    blog_images_dir = Path(app.root_path) / "static" / "uploads" / "blogs"
+    blog_images_dir.mkdir(parents=True, exist_ok=True)
+    app.config["BLOG_IMAGE_UPLOAD_FOLDER"] = str(blog_images_dir)
 
     policy_docs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "documents"
     policy_thumbs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "thumbnails"
@@ -389,11 +447,38 @@ def create_app() -> Flask:
             suffix += 1
         return slug
 
+    def generate_unique_blog_slug(base_slug: str, *, exclude_id: int | None = None) -> str:
+        cleaned = base_slug or "blog"
+        slug = cleaned
+        suffix = 1
+        db = get_db()
+
+        while True:
+            row = db.execute(
+                "SELECT id FROM blog_posts WHERE slug = ?",
+                (slug,),
+            ).fetchone()
+            if row is None:
+                return slug
+            if exclude_id is not None and int(row["id"]) == exclude_id:
+                return slug
+            slug = f"{cleaned}-{suffix}" if cleaned else f"blog-{suffix}"
+            suffix += 1
+
     def allowed_image_file(filename: str) -> bool:
         if not filename or "." not in filename:
             return False
         ext = filename.rsplit(".", 1)[1].lower()
         return ext in app.config["ALLOWED_IMAGE_EXTENSIONS"]
+
+    def build_canonical_url(slug: str) -> str:
+        endpoint = PAGE_ENDPOINT_OVERRIDES.get(slug)
+        if endpoint:
+            return url_for(endpoint, _external=True)
+        return url_for("render_dynamic_page", slug=slug, _external=True)
+
+    def should_noindex(slug: str) -> bool:
+        return slug in NOINDEX_SLUGS
 
     def save_social_image(file_storage) -> str | None:
         if not file_storage or not file_storage.filename:
@@ -439,6 +524,21 @@ def create_app() -> Flask:
         destination = Path(app.config["POLICY_THUMB_UPLOAD_FOLDER"]) / final_name
         file_storage.save(destination)
         return f"uploads/policies/thumbnails/{final_name}"
+
+    def save_blog_image(file_storage, *, description: str) -> str:
+        if not file_storage or not file_storage.filename:
+            raise ValueError(f"Please choose an image for the {description} field.")
+        if not allowed_image_file(file_storage.filename):
+            raise ValueError(
+                f"{description} images must be supplied as JPG, JPEG, PNG, WEBP, or GIF files."
+            )
+
+        filename = secure_filename(file_storage.filename)
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        final_name = f"{timestamp}_{filename}"
+        destination = Path(app.config["BLOG_IMAGE_UPLOAD_FOLDER"]) / final_name
+        file_storage.save(destination)
+        return f"uploads/blogs/{final_name}"
 
     def remove_static_file(relative_path: str | None) -> None:
         if not relative_path:
@@ -675,6 +775,44 @@ def create_app() -> Flask:
         )
         db.execute(
             """
+            CREATE TABLE IF NOT EXISTS blog_posts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT NOT NULL UNIQUE,
+                title TEXT NOT NULL,
+                publish_date TEXT NOT NULL,
+                summary TEXT,
+                thumbnail_path TEXT,
+                thumbnail_alt TEXT,
+                cover_image_path TEXT,
+                cover_image_alt TEXT,
+                heading_one TEXT,
+                text_content_one TEXT,
+                picture_one_path TEXT,
+                picture_one_alt TEXT,
+                heading_two TEXT,
+                text_content_two TEXT,
+                quote_block TEXT,
+                heading_three TEXT,
+                picture_two_path TEXT,
+                picture_two_alt TEXT,
+                heading_four TEXT,
+                text_content_three TEXT,
+                picture_three_path TEXT,
+                picture_three_alt TEXT,
+                text_content_four TEXT,
+                related_article_1_slug TEXT,
+                related_article_2_slug TEXT,
+                related_article_3_slug TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_blog_posts_publish_date ON blog_posts(publish_date)"
+        )
+        db.execute(
+            """
             CREATE TABLE IF NOT EXISTS policies (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 title TEXT NOT NULL,
@@ -883,6 +1021,279 @@ def create_app() -> Flask:
             "SELECT * FROM pages ORDER BY nav_order ASC, page_name ASC"
         ).fetchall()
 
+    def fetch_blog_posts(*, limit: int | None = None, exclude_id: int | None = None) -> list[sqlite3.Row]:
+        db = get_db()
+        query = "SELECT * FROM blog_posts"
+        params: list[Any] = []
+        if exclude_id is not None:
+            query += " WHERE id != ?"
+            params.append(exclude_id)
+        query += " ORDER BY datetime(publish_date) DESC, datetime(created_at) DESC"
+        if limit is not None:
+            query += " LIMIT ?"
+            params.append(limit)
+        return db.execute(query, params).fetchall()
+
+    def get_blog_post(post_id: int) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM blog_posts WHERE id = ?",
+            (post_id,),
+        ).fetchone()
+
+    def get_blog_post_by_slug(slug: str) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM blog_posts WHERE slug = ?",
+            (slug,),
+        ).fetchone()
+
+    def create_blog_post(data: dict[str, Any]) -> int:
+        db = get_db()
+        now = current_timestamp()
+        columns = ", ".join(BLOG_DB_COLUMNS)
+        placeholders = ", ".join(["?"] * len(BLOG_DB_COLUMNS))
+        values = [data.get(column) for column in BLOG_DB_COLUMNS]
+        cursor = db.execute(
+            f"INSERT INTO blog_posts ({columns}, created_at, updated_at) VALUES ({placeholders}, ?, ?)",
+            values + [now, now],
+        )
+        db.commit()
+        return int(cursor.lastrowid)
+
+    def update_blog_post(post_id: int, data: dict[str, Any]) -> None:
+        db = get_db()
+        now = current_timestamp()
+        set_clause = ", ".join(f"{column} = ?" for column in BLOG_DB_COLUMNS)
+        values = [data.get(column) for column in BLOG_DB_COLUMNS]
+        values.extend([now, post_id])
+        db.execute(
+            f"UPDATE blog_posts SET {set_clause}, updated_at = ? WHERE id = ?",
+            values,
+        )
+        db.commit()
+
+    def delete_blog_post(post_id: int) -> None:
+        db = get_db()
+        db.execute("DELETE FROM blog_posts WHERE id = ?", (post_id,))
+        db.commit()
+
+    def fetch_related_blog_posts(
+        related_slugs: Sequence[str | None], *, exclude_id: int | None = None, limit: int = 3
+    ) -> list[sqlite3.Row]:
+        desired = max(limit, 0)
+        if desired == 0:
+            return []
+
+        seen_ids: set[int] = set()
+        results: list[sqlite3.Row] = []
+        for slug in related_slugs:
+            if not slug:
+                continue
+            candidate = get_blog_post_by_slug(slug)
+            if candidate is None:
+                continue
+            candidate_id = int(candidate["id"])
+            if exclude_id is not None and candidate_id == exclude_id:
+                continue
+            if candidate_id in seen_ids:
+                continue
+            results.append(candidate)
+            seen_ids.add(candidate_id)
+            if len(results) >= desired:
+                return results[:desired]
+
+        if len(results) < desired:
+            fallback_posts = fetch_blog_posts(limit=desired * 2, exclude_id=exclude_id)
+            for row in fallback_posts:
+                row_id = int(row["id"])
+                if row_id in seen_ids:
+                    continue
+                results.append(row)
+                seen_ids.add(row_id)
+                if len(results) >= desired:
+                    break
+
+        return results[:desired]
+
+    def collect_blog_payload(existing: sqlite3.Row | None = None) -> tuple[dict[str, Any], list[str], list[str]]:
+        data: dict[str, Any] = {}
+        errors: list[str] = []
+        notices: list[str] = []
+        existing_dict = dict(existing) if existing is not None else {}
+
+        title = request.form.get("title", "").strip()
+        if not title:
+            errors.append("Please provide a blog title.")
+        data["title"] = title
+
+        slug_input = request.form.get("slug", "").strip()
+        base_slug = slugify(slug_input or title)
+        if not base_slug:
+            base_slug = "blog"
+        exclude_id = int(existing_dict.get("id")) if existing_dict.get("id") else None
+        unique_slug = generate_unique_blog_slug(base_slug, exclude_id=exclude_id)
+        data["slug"] = unique_slug
+        if slug_input and slugify(slug_input) != unique_slug:
+            notices.append("The slug was adjusted to remain unique.")
+        elif not slug_input and unique_slug != base_slug:
+            notices.append("A unique slug was generated for this title.")
+
+        publish_date_raw = request.form.get("publish_date", "").strip()
+        if not publish_date_raw:
+            errors.append("Please choose a publish date.")
+        else:
+            try:
+                datetime.strptime(publish_date_raw, "%Y-%m-%d")
+            except ValueError:
+                errors.append("Publish date must follow the YYYY-MM-DD format.")
+        data["publish_date"] = publish_date_raw
+
+        summary = request.form.get("summary", "").strip()
+        if not summary:
+            errors.append("Please add a short summary for the article.")
+        data["summary"] = summary
+
+        def clean_optional(field_name: str) -> str | None:
+            value = request.form.get(field_name)
+            if value is None:
+                return None
+            cleaned = value.strip()
+            return cleaned or None
+
+        data["heading_one"] = clean_optional("heading_one")
+        data["text_content_one"] = clean_optional("text_content_one")
+        data["heading_two"] = clean_optional("heading_two")
+        data["text_content_two"] = clean_optional("text_content_two")
+        data["quote_block"] = clean_optional("quote_block")
+        data["heading_three"] = clean_optional("heading_three")
+        data["heading_four"] = clean_optional("heading_four")
+        data["text_content_three"] = clean_optional("text_content_three")
+        data["text_content_four"] = clean_optional("text_content_four")
+
+        for field_name, (path_column, alt_column, _) in BLOG_IMAGE_FIELD_MAP.items():
+            data[path_column] = existing_dict.get(path_column)
+            alt_value = request.form.get(f"{field_name}_alt", "")
+            data[alt_column] = alt_value.strip() or None
+
+        for index, relation_column in enumerate(BLOG_RELATION_FIELDS, start=1):
+            raw_relation = request.form.get(relation_column, "").strip()
+            relation_slug = slugify(raw_relation) if raw_relation else None
+            if relation_slug and relation_slug == unique_slug:
+                errors.append(f"Related article {index} cannot reference the same article.")
+            data[relation_column] = relation_slug
+
+        return data, errors, notices
+
+    def process_blog_images(
+        data: dict[str, Any], *, existing: sqlite3.Row | None = None, require_primary: bool = False
+    ) -> list[str]:
+        errors: list[str] = []
+        existing_dict = dict(existing) if existing is not None else {}
+        plans: dict[str, dict[str, Any]] = {}
+
+        for field_name, (path_column, alt_column, label) in BLOG_IMAGE_FIELD_MAP.items():
+            upload = request.files.get(field_name)
+            has_upload = bool(upload and upload.filename)
+            remove_flag = request.form.get(f"remove_{field_name}") == "on"
+            current_path = existing_dict.get(path_column)
+            current_alt = existing_dict.get(alt_column)
+            alt_value = data.get(alt_column)
+            if isinstance(alt_value, str):
+                alt_value = alt_value.strip()
+            action = "keep"
+
+            if has_upload:
+                if not alt_value:
+                    errors.append(f"Please provide alt text for the {label} image.")
+                else:
+                    action = "upload"
+            elif remove_flag:
+                action = "remove"
+                alt_value = None
+            else:
+                if current_path and not alt_value:
+                    if current_alt:
+                        alt_value = current_alt
+                    else:
+                        errors.append(f"Please supply alt text for the existing {label} image.")
+
+            plans[field_name] = {
+                "action": action,
+                "upload": upload if has_upload else None,
+                "current_path": current_path,
+                "alt": alt_value,
+                "label": label,
+                "path_column": path_column,
+                "alt_column": alt_column,
+            }
+
+            data[alt_column] = alt_value
+
+        if require_primary:
+            for required_field in ("thumbnail", "cover_image"):
+                plan = plans.get(required_field, {})
+                will_have = False
+                if plan:
+                    if plan["action"] == "upload":
+                        will_have = True
+                    elif plan["action"] == "keep" and plan.get("current_path"):
+                        will_have = True
+                if not will_have:
+                    label = plans.get(required_field, {}).get("label", required_field.replace("_", " "))
+                    errors.append(f"Please upload a {label} image for the article.")
+
+        if errors:
+            return errors
+
+        for field_name, plan in plans.items():
+            path_column = plan["path_column"]
+            alt_column = plan["alt_column"]
+            label = plan["label"]
+            action = plan["action"]
+            current_path = plan["current_path"]
+
+            if action == "upload":
+                upload = plan["upload"]
+                if upload is None:
+                    errors.append(f"Unable to process the {label} image upload.")
+                    data[path_column] = current_path
+                    data[alt_column] = plan["alt"]
+                    continue
+                try:
+                    new_path = save_blog_image(upload, description=label)
+                except ValueError as exc:
+                    errors.append(str(exc))
+                    data[path_column] = current_path
+                    data[alt_column] = plan["alt"]
+                    continue
+                if current_path and current_path != new_path:
+                    remove_static_file(current_path)
+                data[path_column] = new_path
+                data[alt_column] = plan["alt"]
+            elif action == "remove":
+                if current_path:
+                    remove_static_file(current_path)
+                data[path_column] = None
+                data[alt_column] = None
+            else:
+                data[path_column] = current_path
+                data[alt_column] = plan["alt"]
+
+        return errors
+
+    @app.template_filter("format_date")
+    def format_date_filter(value: str | None, fmt: str = "%b %d, %Y") -> str:
+        if not value:
+            return ""
+        for pattern in ("%Y-%m-%d", "%Y-%m-%d %H:%M:%S"):
+            try:
+                parsed = datetime.strptime(value, pattern)
+                return parsed.strftime(fmt)
+            except ValueError:
+                continue
+        return value
+
     def fetch_all_policies() -> list[sqlite3.Row]:
         db = get_db()
         return db.execute(
@@ -986,6 +1397,7 @@ def create_app() -> Flask:
 
     def render_site_page(template_name: str, slug: str, **context) -> str:
         page_record = get_page_by_slug(slug)
+        page_dict: dict[str, Any] | None = None
         if page_record is not None:
             page_dict = dict(page_record)
             page_name = page_dict.get("page_name")
@@ -999,6 +1411,21 @@ def create_app() -> Flask:
             context.setdefault("page_meta", page_dict)
         else:
             context.setdefault("page_meta", None)
+
+        if not context.get("canonical_url"):
+            try:
+                context["canonical_url"] = build_canonical_url(slug)
+            except Exception:
+                context["canonical_url"] = request.base_url
+
+        robots_meta = context.get("meta_robots")
+        if not robots_meta and page_dict is not None:
+            robots_meta = page_dict.get("meta_robots")
+        if robots_meta:
+            context["meta_robots"] = robots_meta
+        elif robots_meta is None and should_noindex(slug):
+            context["meta_robots"] = "noindex, nofollow"
+
         return render_template(template_name, **context)
 
     def upsert_page(
@@ -1146,6 +1573,14 @@ def create_app() -> Flask:
     def llms_txt():
         return send_from_directory(app.static_folder, "llms.txt", mimetype="text/plain")
 
+    @app.route("/sitemap.xml")
+    def sitemap_xml():
+        return send_from_directory(app.static_folder, "sitemap.xml", mimetype="application/xml")
+
+    @app.route("/sitemap_index.xml")
+    def sitemap_index_xml():
+        return send_from_directory(app.static_folder, "sitemap_index.xml", mimetype="application/xml")
+
     @app.route("/")
     def index() -> str:
         return render_site_page("index.html", "home")
@@ -1192,11 +1627,56 @@ def create_app() -> Flask:
 
     @app.route("/blogs")
     def blogs() -> str:
-        return render_site_page("blogs.html", "blogs")
+        posts = fetch_blog_posts()
+        return render_site_page(
+            "blogs.html",
+            "blogs",
+            blog_posts=[dict(row) for row in posts],
+        )
 
     @app.route("/blog-details")
     def blog_details() -> str:
-        return render_site_page("blog_details.html", "blog-details")
+        flash("Please choose an article from the blog list.", "info")
+        return redirect(url_for("blogs"))
+
+    @app.route("/blog/<slug>")
+    def blog_post_detail(slug: str) -> str:
+        post = get_blog_post_by_slug(slug)
+        if post is None:
+            flash("The requested article could not be found.", "error")
+            return redirect(url_for("blogs"))
+
+        post_dict = dict(post)
+        page_meta = {
+            "seo_title": f"{post_dict['title']} | LMSC Blog",
+            "meta_description": post_dict.get("summary")
+            or f"Read {post_dict['title']} on the LMSC blog.",
+        }
+        canonical_url = url_for("blog_post_detail", slug=slug, _external=True)
+        encoded_url = quote_plus(canonical_url)
+        share_text = post_dict.get("title") or "LMSC Blog"
+        encoded_text = quote_plus(share_text)
+        share_urls = {
+            "facebook": f"https://www.facebook.com/sharer/sharer.php?u={encoded_url}",
+            "x": f"https://twitter.com/intent/tweet?url={encoded_url}&text={encoded_text}",
+            "linkedin": f"https://www.linkedin.com/sharing/share-offsite/?url={encoded_url}",
+            "email": f"mailto:?subject={encoded_text}&body={encoded_url}",
+            "copy": canonical_url,
+        }
+
+        related_slugs = [post_dict.get(field) for field in BLOG_RELATION_FIELDS]
+        related_posts = [
+            dict(row) for row in fetch_related_blog_posts(related_slugs, exclude_id=int(post_dict["id"]))
+        ]
+
+        return render_template(
+            "blog_details.html",
+            post=post_dict,
+            related_posts=related_posts,
+            page_meta=page_meta,
+            canonical_url=canonical_url,
+            share_urls=share_urls,
+        )
 
     @app.route("/reviews")
     def reviews() -> str:
@@ -2046,6 +2526,130 @@ def create_app() -> Flask:
             page_urls=page_urls,
         )
 
+    @app.route("/admin/blogs")
+    @login_required
+    def admin_blogs() -> str:
+        posts = fetch_blog_posts()
+        total_posts = len(posts)
+        latest_publish = posts[0]["publish_date"] if posts else None
+        last_updated = max((row["updated_at"] for row in posts), default=None) if posts else None
+        stats = {
+            "total": total_posts,
+            "latest_publish": latest_publish,
+            "last_updated": last_updated,
+        }
+        return render_template(
+            "admin/blogs/index.html",
+            posts=posts,
+            stats=stats,
+        )
+
+    @app.route("/admin/blogs/new", methods=["GET", "POST"])
+    @login_required
+    def admin_blogs_new() -> str:
+        related_options = fetch_blog_posts()
+        if request.method == "POST":
+            data, errors, notices = collect_blog_payload()
+            if not errors:
+                image_errors = process_blog_images(data, require_primary=True)
+                errors.extend(image_errors)
+
+            if errors:
+                for message in errors:
+                    flash(message, "error")
+                for note in notices:
+                    flash(note, "info")
+                form_snapshot = request.form.to_dict()
+                return render_template(
+                    "admin/blogs/form.html",
+                    mode="create",
+                    form_data=form_snapshot,
+                    draft_data=data,
+                    related_options=related_options,
+                    post_data=None,
+                )
+
+            create_blog_post(data)
+            flash("Blog article created successfully.", "success")
+            for note in notices:
+                flash(note, "info")
+            return redirect(url_for("admin_blogs"))
+
+        default_date = datetime.utcnow().strftime("%Y-%m-%d")
+        form_data = {"publish_date": default_date}
+        return render_template(
+            "admin/blogs/form.html",
+            mode="create",
+            form_data=form_data,
+            draft_data=None,
+            related_options=related_options,
+            post_data=None,
+        )
+
+    @app.route("/admin/blogs/<int:post_id>/edit", methods=["GET", "POST"])
+    @login_required
+    def admin_blogs_edit(post_id: int) -> str:
+        post = get_blog_post(post_id)
+        if post is None:
+            flash("Blog article not found.", "error")
+            return redirect(url_for("admin_blogs"))
+
+        post_dict = dict(post)
+        related_options = [row for row in fetch_blog_posts() if int(row["id"]) != post_id]
+
+        if request.method == "POST":
+            data, errors, notices = collect_blog_payload(post)
+            if not errors:
+                image_errors = process_blog_images(data, existing=post, require_primary=True)
+                errors.extend(image_errors)
+
+            if errors:
+                for message in errors:
+                    flash(message, "error")
+                for note in notices:
+                    flash(note, "info")
+                form_snapshot = request.form.to_dict()
+                return render_template(
+                    "admin/blogs/form.html",
+                    mode="edit",
+                    form_data=form_snapshot,
+                    draft_data=data,
+                    related_options=related_options,
+                    post_data=post_dict,
+                )
+
+            update_blog_post(post_id, data)
+            flash("Blog article updated successfully.", "success")
+            for note in notices:
+                flash(note, "info")
+            return redirect(url_for("admin_blogs"))
+
+        form_data = dict(post)
+        return render_template(
+            "admin/blogs/form.html",
+            mode="edit",
+            form_data=form_data,
+            draft_data=None,
+            related_options=related_options,
+            post_data=post_dict,
+        )
+
+    @app.post("/admin/blogs/<int:post_id>/delete")
+    @login_required
+    def admin_blogs_delete(post_id: int) -> str:
+        post = get_blog_post(post_id)
+        if post is None:
+            flash("Blog article not found.", "error")
+            return redirect(url_for("admin_blogs"))
+
+        post_dict = dict(post)
+        for path_column, _, _ in BLOG_IMAGE_FIELD_MAP.values():
+            remove_static_file(post_dict.get(path_column))
+
+        delete_blog_post(post_id)
+        flash("Blog article removed.", "info")
+        return redirect(url_for("admin_blogs"))
+
     @app.route("/admin/policies", methods=["GET", "POST"])
     @login_required
     def admin_policies() -> str:
@@ -2381,10 +2985,21 @@ def create_app() -> Flask:
             )
         template_name = page_dict["template_name"]
 
+        try:
+            canonical_url = build_canonical_url(slug)
+        except Exception:
+            canonical_url = request.base_url
+
+        robots_meta = page_dict.get("meta_robots")
+        if not robots_meta and should_noindex(slug):
+            robots_meta = "noindex, nofollow"
+
         return render_template(
             template_name,
             page=page_dict,
             page_meta=page_dict,
+            canonical_url=canonical_url,
+            meta_robots=robots_meta,
         )
 
     return app
