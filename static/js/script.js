@@ -40,27 +40,8 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-        }
-    });
-}, observerOptions);
-
-// Observe all animated elements
-document.addEventListener("DOMContentLoaded", () => {
-    const animatedElements = document.querySelectorAll(
-        ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
-    );
-    animatedElements.forEach((el) => observer.observe(el));
-});
+// Intersection Observer for scroll animations (minified)
+const observerOptions={threshold:.1,rootMargin:"0px 0px -50px 0px"},observer=new IntersectionObserver(e=>{e.forEach(t=>{t.isIntersecting&&t.target.classList.add("visible")})},observerOptions);document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".fade-in, .slide-in-left, .slide-in-right, .scale-in").forEach(e=>observer.observe(e));});
 
 // Close menu on window resize to desktop
 window.addEventListener('resize', () => {

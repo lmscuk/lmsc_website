@@ -632,28 +632,4 @@ Science College{% endblock %} {% block meta_description %}
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %} {% block extra_scripts %}
-<script>
-  // Scroll Animation Observer
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  }, observerOptions);
-
-  // Observe all animated elements
-  document.addEventListener("DOMContentLoaded", () => {
-    const animatedElements = document.querySelectorAll(
-      ".fade-in, .fade-in, .scale-in, .scale-in"
-    );
-    animatedElements.forEach((el) => observer.observe(el));
-  });
-</script>
 {% endblock %}

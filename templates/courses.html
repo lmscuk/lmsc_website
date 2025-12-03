@@ -57,34 +57,10 @@ Science College{% endblock %} {% block meta_description %}
   }
 </style>
 {% endblock %} {% block content %}
-<!-- Navigation -->
+<!-- Footer -->
 
-<!-- Hero Section -->
-<section class="py-20 px-6">
-  <div class="container mx-auto text-center max-w-4xl">
-    <h1 class="text-primary font-bold text-gray-900 mb-4 fade-in">
-      Explore Courses
-    </h1>
-    <p class="text-gray-600 max-w-2xl mx-auto fade-in">
-      Stay informed and inspired with the latest news and articles from Edux.
-      Our dedicated team of experts and industry leaders regularly curate
-      insightful content.
-    </p>
-  </div>
-</section>
-<!-- Hub Links -->
-<section class="pb-12 px-6">
-  <div class="container mx-auto px-6">
-    <div
-      class="bg-gray-50 border border-accent/40 rounded-3xl p-8 md:p-12 shadow-sm"
-    >
-      <div class="text-center mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-3">
-          Key routes through LMSC
-        </h2>
-        <p class="text-gray-700 max-w-3xl mx-auto">
-          Choose a pathway hub to see detailed subject information, fees and how
-          to apply.
+<!-- Scroll to Top Button -->
+{% endblock %}
         </p>
       </div>
       <div class="grid md:grid-cols-3 gap-6">
@@ -702,26 +678,4 @@ Science College{% endblock %} {% block meta_description %}
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %} {% block extra_scripts %}
-<script>
-  // Intersection Observer for scroll animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  }, observerOptions);
-
-  // Observe all animated elements
-  document.addEventListener("DOMContentLoaded", () => {
-    const animatedElements = document.querySelectorAll(".fade-in, .scale-in");
-    animatedElements.forEach((el) => observer.observe(el));
-  });
-</script>
 {% endblock %}

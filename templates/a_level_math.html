@@ -11,33 +11,9 @@
 {% endblock %}
 
 {% block content %}
-<!-- Navigation -->
+<!-- Footer -->
 
-<!-- Hero Section -->
-<section class="relative bg-gray-50 py-20 px-6 overflow-hidden">
-<div class="container mx-auto text-center relative z-10">
-<div class="fade-in max-w-4xl mx-auto">
-<h1 class="text-primary font-bold mb-6 leading-tight">
-          A Level Mathematics
-        </h1>
-<p class="mb-8 leading-relaxed">
-          A British A Level in Mathematics for 16-19 year olds who want
-          rigorous preparation, small classes and clear progression to UK
-          universities and STEM-related degrees.
-        </p>
-<div class="flex flex-wrap justify-center gap-4">
-<a href="{{ url_for('book_consultation') }}" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90">
-            Book a consultation
-          </a>
-<a href="{{ url_for('courses') }}" class="bg-secondary border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-primary">
-            Explore all STEM courses
-          </a>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 6b - Related STEM Links -->
-<section class="py-20 px-6 bg-white">
+{% endblock %}
 <div class="container mx-auto px-6">
 <div class="text-center mb-12 fade-in">
 <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Plan your full STEM pathway</h2>
@@ -832,52 +808,3 @@
 <!-- Footer -->
 {% endblock %}
 
-{% block extra_scripts %}
-<script>
-    function toggleAccordion(button) {
-      const content = button.nextElementSibling;
-      const sign = button.querySelector('span:last-child');
-
-      // Close all other accordion items
-      document.querySelectorAll('.accordion-content').forEach(c => {
-        if (c !== content) {
-          c.classList.remove('open');
-        }
-      });
-
-      document.querySelectorAll('.faq-button span:last-child').forEach(s => {
-        if (s !== sign) {
-          s.textContent = '+';
-        }
-      });
-
-      // Toggle current item
-      content.classList.toggle('open');
-      sign.textContent = content.classList.contains('open') ? '−' : '+';
-    }
-  </script>
-<script>
-
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animated elements
-    document.addEventListener("DOMContentLoaded", () => {
-      const animatedElements = document.querySelectorAll(
-        ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
-      );
-      animatedElements.forEach((el) => observer.observe(el));
-    });
-  </script>
-{% endblock %}
