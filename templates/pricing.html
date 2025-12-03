@@ -1,561 +1,783 @@
-{% extends 'base.html' %}
-
-{% block title %}LMSC | Pricing{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}LMSC | Pricing{% endblock %} {% block
+meta_description %}
+<meta
+  name="description"
+  content="Compare pricing and payment options for London Maths & Science College programmes, including flexible plans for A Level, BTEC and hybrid study."
+/>
+{% endblock %} {% block content %}
 <!-- Navigation -->
 
 <!-- Pricing Header -->
 <section class="py-16">
-<div class="container mx-auto px-6 text-center">
-<div class="max-w-4xl mx-auto">
-<div class="badge-featured rotate-[-8deg]" style="justify-content: center; width: fit-content; margin-left: auto; margin-right: auto;">
-                    Our Pricing
-                </div>
-<h1 class="text-primary font-bold text-gray-900 mb-4">
-                    Flexible pricing plans tailored to your needs
-                </h1>
-<p class="text-lg text-gray-600 mb-8">
-                    Choose a plan that perfectly fits your unique goals and budget. Get powerful financial tools without
-                    any hidden fees or surprises.
-                </p>
-<!-- Toggle -->
-<div class="flex justify-center gap-8 items-center mb-12">
-<div class="toggle-switch">
-<button class="monthly-btn active" onclick="togglePricing('monthly')">Monthly</button>
-<button class="annual-btn" onclick="togglePricing('annual')">Annual</button>
-</div>
-<span class="badge-saving">Save 20%</span>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+      <div
+        class="badge-featured rotate-[-8deg]"
+        style="
+          justify-content: center;
+          width: fit-content;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        Our Pricing
+      </div>
+      <h1 class="text-primary font-bold text-gray-900 mb-4">
+        Flexible pricing plans tailored to your needs
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        Choose a plan that perfectly fits your unique goals and budget. Get
+        powerful financial tools without any hidden fees or surprises.
+      </p>
+      <!-- Toggle -->
+      <div class="flex justify-center gap-8 items-center mb-12">
+        <div class="toggle-switch">
+          <button class="monthly-btn active" onclick="togglePricing('monthly')">
+            Monthly
+          </button>
+          <button class="annual-btn" onclick="togglePricing('annual')">
+            Annual
+          </button>
+        </div>
+        <span class="badge-saving">Save 20%</span>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Pricing Cards -->
 <section class="py-16">
-<div class="container mx-auto px-6">
-<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-<!-- Free Plan -->
-<div class="pricing-card bg-white border border-gray-200 rounded-2xl shadow p-8">
-<h3 class="text-2xl font-bold text-primary mb-2">Free plan</h3>
-<p class="text-gray-600 text-sm mb-8">Get started with essential tools to track your potential</p>
-<div class="mb-8">
-<p class="text-5xl font-bold text-gray-900">FREE</p>
-</div>
-<button class="w-full bg-primary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold mb-8">
-                        Get started
-                    </button>
-<div>
-<p class="font-semibold text-gray-900 mb-4">Free plan</p>
-<ul class="space-y-3">
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Basic expense tracking</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Budget planning</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Connect up to 2 bank</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Email support</span>
-</li>
-</ul>
-</div>
-</div>
-<!-- Pro Plan (Featured) -->
-<div class="pricing-card relative featured bg-primary text-white shadow-xl rounded-2xl p-8 md:scale-105">
-<div class="badge-featured absolute top-[-10px] left-[35%]" style="background-color: #C5F3C5; color: #387951; margin-bottom: 16px;">
-                        Our Featured
-                    </div>
-<h3 class="text-2xl font-bold mb-2">Pro plan</h3>
-<p class="text-white text-opacity-90 text-sm mb-8">For individuals who want smarter insights and
-                        personalized automation solutions.</p>
-<div class="mb-8">
-<span class="text-5xl font-bold">$200</span>
-<span class="text-white text-opacity-90">/month</span>
-</div>
-<button class="w-full bg-white text-primary px-8 py-4 rounded-full font-semibold mb-8">
-                        Choose Plan
-                    </button>
-<div>
-<p class="font-semibold mb-4">Free plan features, plus</p>
-<ul class="space-y-3">
-<li class="flex gap-3 items-start">
-<div class="checkmark">✓</div>
-<span class="text-sm">AI-powered categorization</span>
-</li>
-<li class="flex gap-3 items-start">
-<div class="checkmark">✓</div>
-<span class="text-sm">Budget &amp; savings goals</span>
-</li>
-<li class="flex gap-3 items-start">
-<div class="checkmark">✓</div>
-<span class="text-sm">Connect unlimited bank</span>
-</li>
-<li class="flex gap-3 items-start">
-<div class="checkmark">✓</div>
-<span class="text-sm">Real-time spending insights</span>
-</li>
-</ul>
-</div>
-</div>
-<!-- Business Plan -->
-<div class="pricing-card bg-white border border-gray-200 rounded-2xl shadow p-8">
-<h3 class="text-2xl font-bold text-primary mb-2">Business plan</h3>
-<p class="text-gray-600 text-sm mb-8">For teams looking to streamline financial management.</p>
-<div class="mb-8">
-<span class="text-5xl font-bold text-gray-900">$400</span>
-<span class="text-gray-600">/month</span>
-</div>
-<button class="w-full bg-primary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold mb-8">
-                        Choose Plan
-                    </button>
-<div>
-<p class="font-semibold text-gray-900 mb-4">Organization plan features, plus</p>
-<ul class="space-y-3">
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">All Pro features included</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Invoice &amp; billing automation</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Role-based multi user access</span>
-</li>
-<li class="flex gap-3 items-start">
-<svg class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
-<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
-</svg>
-<span class="text-gray-600 text-sm">Dedicated account manager</span>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+      <!-- Free Plan -->
+      <div
+        class="pricing-card bg-white border border-gray-200 rounded-2xl shadow p-8"
+      >
+        <h3 class="text-2xl font-bold text-primary mb-2">Free plan</h3>
+        <p class="text-gray-600 text-sm mb-8">
+          Get started with essential tools to track your potential
+        </p>
+        <div class="mb-8">
+          <p class="text-5xl font-bold text-gray-900">FREE</p>
+        </div>
+        <button
+          class="w-full bg-primary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold mb-8"
+        >
+          Get started
+        </button>
+        <div>
+          <p class="font-semibold text-gray-900 mb-4">Free plan</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm">Basic expense tracking</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm">Budget planning</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm">Connect up to 2 bank</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm">Email support</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Pro Plan (Featured) -->
+      <div
+        class="pricing-card relative featured bg-primary text-white shadow-xl rounded-2xl p-8 md:scale-105"
+      >
+        <div
+          class="badge-featured absolute top-[-10px] left-[35%]"
+          style="background-color: #c5f3c5; color: #387951; margin-bottom: 16px"
+        >
+          Our Featured
+        </div>
+        <h3 class="text-2xl font-bold mb-2">Pro plan</h3>
+        <p class="text-white text-opacity-90 text-sm mb-8">
+          For individuals who want smarter insights and personalized automation
+          solutions.
+        </p>
+        <div class="mb-8">
+          <span class="text-5xl font-bold">$200</span>
+          <span class="text-white text-opacity-90">/month</span>
+        </div>
+        <button
+          class="w-full bg-white text-primary px-8 py-4 rounded-full font-semibold mb-8"
+        >
+          Choose Plan
+        </button>
+        <div>
+          <p class="font-semibold mb-4">Free plan features, plus</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 items-start">
+              <div class="checkmark">✓</div>
+              <span class="text-sm">AI-powered categorization</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <div class="checkmark">✓</div>
+              <span class="text-sm">Budget &amp; savings goals</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <div class="checkmark">✓</div>
+              <span class="text-sm">Connect unlimited bank</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <div class="checkmark">✓</div>
+              <span class="text-sm">Real-time spending insights</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Business Plan -->
+      <div
+        class="pricing-card bg-white border border-gray-200 rounded-2xl shadow p-8"
+      >
+        <h3 class="text-2xl font-bold text-primary mb-2">Business plan</h3>
+        <p class="text-gray-600 text-sm mb-8">
+          For teams looking to streamline financial management.
+        </p>
+        <div class="mb-8">
+          <span class="text-5xl font-bold text-gray-900">$400</span>
+          <span class="text-gray-600">/month</span>
+        </div>
+        <button
+          class="w-full bg-primary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold mb-8"
+        >
+          Choose Plan
+        </button>
+        <div>
+          <p class="font-semibold text-gray-900 mb-4">
+            Organization plan features, plus
+          </p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm"
+                >All Pro features included</span
+              >
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm"
+                >Invoice &amp; billing automation</span
+              >
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm"
+                >Role-based multi user access</span
+              >
+            </li>
+            <li class="flex gap-3 items-start">
+              <svg
+                class="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-600 text-sm"
+                >Dedicated account manager</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Comparison Table -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto max-w-6xl px-6">
-<div class="text-center mb-16">
-<div class="badge-featured rotate-[-8deg]" style="justify-content: center; width: fit-content; margin-left: auto; margin-right: auto;">
-                    Our Pricing
-                </div>
-<h2 class="text-primary font-bold text-gray-900 mt-4">Compare our plans</h2>
-<p class="text-gray-600 mt-2">Choose a plan that perfectly fits your unique goals and budget. Get
-                    powerful financial tools without any hidden fees or surprises.</p>
-</div>
-<div class="bg-white rounded-2xl overflow-x-auto">
-<table>
-<thead>
-<tr>
-<th>Features</th>
-<th>Free Plan</th>
-<th>Pro Plan</th>
-<th>Business Plan</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Basic Expense Tracking</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Budget Planning</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>AI-Driven Expense Categorization</td>
-<td>—</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Custom Budget &amp; Saving Goals</td>
-<td>—</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Connect Bank Accounts</td>
-<td>Up to 2</td>
-<td>Unlimited</td>
-<td>Unlimited</td>
-</tr>
-<tr>
-<td>Real-Time Alerts &amp; Insights</td>
-<td>—</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Business Dashboard</td>
-<td>—</td>
-<td>—</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Multi-User Access</td>
-<td>—</td>
-<td>—</td>
-<td>
-<div class="checkmark">✓</div>
-</td>
-</tr>
-<tr>
-<td>Support Level</td>
-<td>Email Support</td>
-<td>Priority Support</td>
-<td>Dedicated Account Management</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+  <div class="container mx-auto max-w-6xl px-6">
+    <div class="text-center mb-16">
+      <div
+        class="badge-featured rotate-[-8deg]"
+        style="
+          justify-content: center;
+          width: fit-content;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        Our Pricing
+      </div>
+      <h2 class="text-primary font-bold text-gray-900 mt-4">
+        Compare our plans
+      </h2>
+      <p class="text-gray-600 mt-2">
+        Choose a plan that perfectly fits your unique goals and budget. Get
+        powerful financial tools without any hidden fees or surprises.
+      </p>
+    </div>
+    <div class="bg-white rounded-2xl overflow-x-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Features</th>
+            <th>Free Plan</th>
+            <th>Pro Plan</th>
+            <th>Business Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basic Expense Tracking</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Budget Planning</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>AI-Driven Expense Categorization</td>
+            <td>—</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Custom Budget &amp; Saving Goals</td>
+            <td>—</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Connect Bank Accounts</td>
+            <td>Up to 2</td>
+            <td>Unlimited</td>
+            <td>Unlimited</td>
+          </tr>
+          <tr>
+            <td>Real-Time Alerts &amp; Insights</td>
+            <td>—</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Business Dashboard</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Multi-User Access</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <div class="checkmark">✓</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Support Level</td>
+            <td>Email Support</td>
+            <td>Priority Support</td>
+            <td>Dedicated Account Management</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
 <!-- FAQ Section -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="mx-auto max-w-5xl">
-<div class="text-center mb-16">
-<div class="badge-featured rotate-[-8deg]" style="justify-content: center; width: fit-content; margin-left: auto; margin-right: auto;">
-                        FAQ
-                    </div>
-<h2 class="text-primary font-bold mt-4">We're here to answer all your questions</h2>
-</div>
-<!-- Toggle Tabs -->
-<div class="flex justify-center gap-4 mb-12">
-<button class="px-6 py-2 rounded-full bg-primary text-white font-semibold">General</button>
-<button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200">For
-                        Clients</button>
-<button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200">Businesses</button>
-</div>
-<!-- FAQ Items -->
-<div class="space-y-4">
-<!-- FAQ 1 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Is this the same A Level as in a school or college?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The qualification and certificate are
-                  identical to those awarded in any other UK school or college.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 2 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do I have to sit exams in London?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>For this hybrid one-year route, yes. All exams are taken at the LMSC JCQ-approved centre in London.
-                </p>
-</div>
-</div>
-</div>
-<!-- FAQ 3 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I study from outside the UK?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You can join all online teaching from overseas, but you must travel to London for the in-person
-                  blocks in Mar–Apr and for the May–Jun exams. We can signpost accommodation options and safeguarding
-                  support for under-18s.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 4 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Why choose hybrid instead of fully online?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>You get online flexibility while learning new content, then in-person exam training and intensive
-                  practice in London when it matters most.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 5 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>How many hours a week should I plan?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Expect around 14–18 hours per week in total: 6–8 hours live teaching plus 8–10 hours guided
-                  independent
-                  study.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 6 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do you record lessons?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. All online sessions are recorded for your cohort so you can revisit explanations and catch up
-                  after unavoidable absences.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 7 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What calculator do I need?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>An exam-compliant scientific or graphing calculator acceptable under Edexcel rules. You must still
-                  show
-                  full methods, not just calculator output.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 8 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I pay in monthly instalments?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>No. For this accelerated Hybrid course, we offer Full Advance payment (discounted) or Per Term; we do
-                  not offer monthly instalments.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 9 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What if I still have questions?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Contact our team to arrange a call, a taster lesson or a parent webinar. We’ll walk you through
-                  timetables, assessments and exam logistics in detail.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center mt-12">
-<a class="text-primary font-semibold hover:underline" href="#">View all FAQs →</a>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-5xl">
+      <div class="text-center mb-16">
+        <div
+          class="badge-featured rotate-[-8deg]"
+          style="
+            justify-content: center;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          FAQ
+        </div>
+        <h2 class="text-primary font-bold mt-4">
+          We're here to answer all your questions
+        </h2>
+      </div>
+      <!-- Toggle Tabs -->
+      <div class="flex justify-center gap-4 mb-12">
+        <button
+          class="px-6 py-2 rounded-full bg-primary text-white font-semibold"
+        >
+          General
+        </button>
+        <button
+          class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200"
+        >
+          For Clients
+        </button>
+        <button
+          class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200"
+        >
+          Businesses
+        </button>
+      </div>
+      <!-- FAQ Items -->
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Is this the same A Level as in a school or college?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
+                qualification and certificate are identical to those awarded in
+                any other UK school or college.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do I have to sit exams in London?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                For this hybrid one-year route, yes. All exams are taken at the
+                LMSC JCQ-approved centre in London.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I study from outside the UK?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You can join all online teaching from overseas, but you
+                must travel to London for the in-person blocks in Mar–Apr and
+                for the May–Jun exams. We can signpost accommodation options and
+                safeguarding support for under-18s.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Why choose hybrid instead of fully online?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                You get online flexibility while learning new content, then
+                in-person exam training and intensive practice in London when it
+                matters most.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>How many hours a week should I plan?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Expect around 14–18 hours per week in total: 6–8 hours live
+                teaching plus 8–10 hours guided independent study.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do you record lessons?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. All online sessions are recorded for your cohort so you can
+                revisit explanations and catch up after unavoidable absences.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What calculator do I need?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                An exam-compliant scientific or graphing calculator acceptable
+                under Edexcel rules. You must still show full methods, not just
+                calculator output.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I pay in monthly instalments?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                No. For this accelerated Hybrid course, we offer Full Advance
+                payment (discounted) or Per Term; we do not offer monthly
+                instalments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What if I still have questions?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Contact our team to arrange a call, a taster lesson or a parent
+                webinar. We’ll walk you through timetables, assessments and exam
+                logistics in detail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a class="text-primary font-semibold hover:underline" href="#"
+          >View all FAQs →</a
+        >
+      </div>
+    </div>
+  </div>
 </section>
 <!-- CTA Section -->
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center">
-<div class="scale-in">
-<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
-                        Next steps
-                    </span>
-<h2 class="text-primary font-bold text-primary mb-4">
-                        Secure, reliable, and trusted by thousands
-                    </h2>
-<p class="text-opacity-90 mb-8 leading-relaxed">
-                        Join thousands who trust us for secure financial management. Your data is protected with
-                        top-level encryption and security protocols.
-                    </p>
-<!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
-<div class="btn-content">
-<span class="text-part">Book a Consultation</span>
-<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
-<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</span>
-</div>
-</button>
-</div>
-<!-- Right Side - Image with Chat Bubbles -->
-<div class="relative flex items-center justify-end scale-in">
-<!-- Main Image Container -->
-<div class="main-image relative w-full max-w-sm">
-<!-- Background placeholder for the person image -->
-<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"/>
-</div>
-<!-- Chat Bubbles Overlay -->
-<div class="chat-block">
-<!-- User Message -->
-<div class="user-message chat-bubble-user">
-<div class="user-avatar"></div>
-<div class="user-message-bubble">
-<div class="name">Oliver Moy</div>
-<div class="text">I need help with my budget.</div>
-</div>
-</div>
-<!-- AI Response -->
-<div class="ai-message chat-bubble-ai">
-<div class="ai-avatar-bubble">
-<svg fill="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-</div>
-<div class="ai-message-bubble">
-<div class="name">AI Assistant</div>
-<div class="text">Sure! Let's carefully review your income and expenses.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="scale-in">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          Secure, reliable, and trusted by thousands
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          Join thousands who trust us for secure financial management. Your data
+          is protected with top-level encryption and security protocols.
+        </p>
+        <!-- BTN 1 -->
+        <button
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-end scale-in">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-        function toggleAccordion(button) {
-            const content = button.nextElementSibling;
-            const sign = button.querySelector('span:last-child');
+  function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const sign = button.querySelector("span:last-child");
 
-            // Close all other accordion items
-            document.querySelectorAll('.accordion-content').forEach(c => {
-                if (c !== content) {
-                    c.classList.remove('open');
-                }
-            });
+    // Close all other accordion items
+    document.querySelectorAll(".accordion-content").forEach((c) => {
+      if (c !== content) {
+        c.classList.remove("open");
+      }
+    });
 
-            document.querySelectorAll('.accordion-item button span:last-child').forEach(s => {
-                if (s !== sign) {
-                    s.textContent = '+';
-                }
-            });
-
-            // Toggle current item
-            content.classList.toggle('open');
-            sign.textContent = content.classList.contains('open') ? '−' : '+';
+    document
+      .querySelectorAll(".accordion-item button span:last-child")
+      .forEach((s) => {
+        if (s !== sign) {
+          s.textContent = "+";
         }
+      });
 
-        // Scroll Animation Observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    // Toggle current item
+    content.classList.toggle("open");
+    sign.textContent = content.classList.contains("open") ? "−" : "+";
+  }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  // Scroll Animation Observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
 
-        // Observe all animated elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(
+      ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
 <script>
-        function togglePricing(type) {
-            const monthlyBtn = document.querySelector('.monthly-btn');
-            const annualBtn = document.querySelector('.annual-btn');
+  function togglePricing(type) {
+    const monthlyBtn = document.querySelector(".monthly-btn");
+    const annualBtn = document.querySelector(".annual-btn");
 
-            if (type === 'monthly') {
-                monthlyBtn.classList.add('active');
-                annualBtn.classList.remove('active');
-            } else {
-                annualBtn.classList.add('active');
-                monthlyBtn.classList.remove('active');
-            }
-        }
+    if (type === "monthly") {
+      monthlyBtn.classList.add("active");
+      annualBtn.classList.remove("active");
+    } else {
+      annualBtn.classList.add("active");
+      monthlyBtn.classList.remove("active");
+    }
+  }
 
-        function toggleFaq(index) {
-            const faqItems = document.querySelectorAll('.faq-item');
-            const content = faqItems[index].querySelector('.faq-content');
-            const button = faqItems[index].querySelector('.faq-button svg');
+  function toggleFaq(index) {
+    const faqItems = document.querySelectorAll(".faq-item");
+    const content = faqItems[index].querySelector(".faq-content");
+    const button = faqItems[index].querySelector(".faq-button svg");
 
-            // Close all other items
-            faqItems.forEach((item, i) => {
-                if (i !== index) {
-                    item.querySelector('.faq-content').classList.remove('open');
-                    item.querySelector('.faq-button svg').style.transform = 'rotate(0deg)';
-                }
-            });
+    // Close all other items
+    faqItems.forEach((item, i) => {
+      if (i !== index) {
+        item.querySelector(".faq-content").classList.remove("open");
+        item.querySelector(".faq-button svg").style.transform = "rotate(0deg)";
+      }
+    });
 
-            // Toggle current item
-            content.classList.toggle('open');
-            if (content.classList.contains('open')) {
-                button.style.transform = 'rotate(180deg)';
-            } else {
-                button.style.transform = 'rotate(0deg)';
-            }
-        }
-    </script>
+    // Toggle current item
+    content.classList.toggle("open");
+    if (content.classList.contains("open")) {
+      button.style.transform = "rotate(180deg)";
+    } else {
+      button.style.transform = "rotate(0deg)";
+    }
+  }
+</script>
 {% endblock %}

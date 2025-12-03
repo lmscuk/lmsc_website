@@ -1,6 +1,11 @@
 {% extends 'base.html' %} {% set meta = page_meta or {} %} {% block title %}{{
 meta.get('seo_title') or 'Under Development | LMSC' }}{% endblock %} {% block
-content %}
+meta_description %}
+<meta
+  name="description"
+  content="This London Maths & Science College page is being refreshed. Check back soon or contact our team for the latest course and admissions details."
+/>
+{% endblock %} {% block content %}
 <section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
   <div class="container mx-auto px-6">
     <div class="grid items-center gap-16 md:grid-cols-2 lg:gap-20">

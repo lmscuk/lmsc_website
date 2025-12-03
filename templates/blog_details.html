@@ -1,5 +1,10 @@
 {% extends 'base.html' %} {% block title %}British 16–19 STEM College in London
-| LMSC Blog{% endblock %} {% block extra_head %}
+| LMSC Blog{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="{{ post.meta_description or post.summary or 'Read practical STEM study advice and college news from London Maths &amp; Science College.' }}"
+/>
+{% endblock %} {% block extra_head %}
 <style>
   .fade-in {
     opacity: 0;

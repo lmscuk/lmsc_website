@@ -1,502 +1,636 @@
-{% extends 'base.html' %}
-
-{% block title %}How We Teach STEM | London Maths & Science College{% endblock %}
-
-{% block extra_head %}
+{% extends 'base.html' %} {% block title %}How We Teach STEM | London Maths &
+Science College{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="Discover how London Maths & Science College blends evidence-informed teaching, expert tutors and small classes to deliver outstanding STEM outcomes."
+/>
+{% endblock %} {% block extra_head %}
 <style>
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-        .stagger-1 {
-            transition-delay: 0.1s;
-        }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
 
-        .stagger-2 {
-            transition-delay: 0.2s;
-        }
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
 
-        .stagger-3 {
-            transition-delay: 0.3s;
-        }
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
 
-        .stagger-4 {
-            transition-delay: 0.4s;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
+</style>
+{% endblock %} {% block content %}
 <!-- Navigation -->
 
 <!-- Hero Section -->
 <section class="py-20">
-<div class="container mx-auto px-6 text-center">
-<div class="mx-auto max-w-5xl text-center">
-<h1 class="text-primary font-bold mb-6 fade-in">
-                    How We Teach STEM
-                </h1>
-<p class="text-opacity-90 max-w-3xl mx-auto mb-8 fade-in leading-relaxed">
-                    At London Maths &amp; Science College (LMSC), we combine the rigour of the British curriculum with clear
-                    explanations, small classes and modern tools. Our goal is simple: to help 16-19 year olds truly
-                    understand Maths, Sciences, Computing and related subjects — and use that understanding to progress
-                    to
-                    strong universities and future-focused careers.
-                </p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold">
-                        Explore our STEM courses
-                    </button>
-<button class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition">
-                        Book a consultation
-                    </button>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6 text-center">
+    <div class="mx-auto max-w-5xl text-center">
+      <h1 class="text-primary font-bold mb-6 fade-in">How We Teach STEM</h1>
+      <p class="text-opacity-90 max-w-3xl mx-auto mb-8 fade-in leading-relaxed">
+        At London Maths &amp; Science College (LMSC), we combine the rigour of
+        the British curriculum with clear explanations, small classes and modern
+        tools. Our goal is simple: to help 16-19 year olds truly understand
+        Maths, Sciences, Computing and related subjects — and use that
+        understanding to progress to strong universities and future-focused
+        careers.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
+        <button
+          class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+        >
+          Explore our STEM courses
+        </button>
+        <button
+          class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition"
+        >
+          Book a consultation
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Our Approach Section -->
 <section class="py-16">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="text-primary font-bold mb-6">Our approach to teaching STEM</h2>
-<p class="text-gray-600 mb-6 leading-relaxed">
-                        STEM subjects demand more than memorising formulas. Students need secure foundations, time to
-                        practise, and the confidence to tackle unfamiliar problems.
-                    </p>
-<p class="text-gray-600 mb-4 font-semibold">At LMSC, we teach STEM through:</p>
-<ul class="space-y-3 text-gray-600">
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span><strong>Clear, step-by-step explanations</strong> that connect ideas, not just deliver
-                                answers.</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span><strong>Lots of guided practice</strong> with feedback, so methods become
-                                secure.</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span><strong>Real exam-style questions</strong> from early on, so nothing in the final
-                                papers feels "new".</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span><strong>An emphasis on understanding</strong> — why a method works, not only how to
-                                apply it.</span>
-</li>
-</ul>
-</div>
-<div class="fade-in">
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
-<i class="fa fa-graduation-cap text-3xl text-primary mb-3"></i>
-<p class="font-semibold text-gray-800">British A Level &amp; GCSE curriculum</p>
-</div>
-<div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
-<i class="fa fa-users text-3xl text-primary mb-3"></i>
-<p class="font-semibold text-gray-800">Small, focused classes</p>
-</div>
-<div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
-<i class="fa fa-video text-3xl text-primary mb-3"></i>
-<p class="font-semibold text-gray-800">Live teaching in every mode</p>
-</div>
-<div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
-<i class="fa fa-clipboard-check text-3xl text-primary mb-3"></i>
-<p class="font-semibold text-gray-800">Structured practice and assessment</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <h2 class="text-primary font-bold mb-6">
+          Our approach to teaching STEM
+        </h2>
+        <p class="text-gray-600 mb-6 leading-relaxed">
+          STEM subjects demand more than memorising formulas. Students need
+          secure foundations, time to practise, and the confidence to tackle
+          unfamiliar problems.
+        </p>
+        <p class="text-gray-600 mb-4 font-semibold">
+          At LMSC, we teach STEM through:
+        </p>
+        <ul class="space-y-3 text-gray-600">
+          <li class="flex items-start gap-3">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span
+              ><strong>Clear, step-by-step explanations</strong> that connect
+              ideas, not just deliver answers.</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span
+              ><strong>Lots of guided practice</strong> with feedback, so
+              methods become secure.</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span
+              ><strong>Real exam-style questions</strong> from early on, so
+              nothing in the final papers feels "new".</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span
+              ><strong>An emphasis on understanding</strong> — why a method
+              works, not only how to apply it.</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="fade-in">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
+            <i class="fa fa-graduation-cap text-3xl text-primary mb-3"></i>
+            <p class="font-semibold text-gray-800">
+              British A Level &amp; GCSE curriculum
+            </p>
+          </div>
+          <div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
+            <i class="fa fa-users text-3xl text-primary mb-3"></i>
+            <p class="font-semibold text-gray-800">Small, focused classes</p>
+          </div>
+          <div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
+            <i class="fa fa-video text-3xl text-primary mb-3"></i>
+            <p class="font-semibold text-gray-800">
+              Live teaching in every mode
+            </p>
+          </div>
+          <div class="bg-accent p-6 rounded-2xl text-center shadow-lg">
+            <i class="fa fa-clipboard-check text-3xl text-primary mb-3"></i>
+            <p class="font-semibold text-gray-800">
+              Structured practice and assessment
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Four Principles Section -->
 <section class="py-16 bg-gray-50">
-<div class="container mx-auto px-6">
-<h2 class="text-primary font-bold text-center mb-12 fade-in">
-                Four principles that shape every STEM lesson
-            </h2>
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        1</div>
-<h3 class="font-bold text-gray-900 mb-3">Clarity first</h3>
-<p class="text-gray-600">We break complex ideas into manageable steps, using examples, diagrams and
-                        questions to check understanding at each stage.</p>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        2</div>
-<h3 class="font-bold text-gray-900 mb-3">Practice with purpose</h3>
-<p class="text-gray-600">Students practise new skills in a sequence — from straightforward questions
-                        to exam-standard and problem-solving tasks.</p>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        3</div>
-<h3 class="font-bold text-gray-900 mb-3">Feedback you can act on</h3>
-<p class="text-gray-600">We give specific, actionable feedback so students know exactly what went
-                        wrong and how to improve.</p>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-4">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        4</div>
-<h3 class="font-bold text-gray-900 mb-3">Stretch with support</h3>
-<p class="text-gray-600">We offer challenging questions and extension work, but always with support
-                        available, so students grow without feeling lost.</p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <h2 class="text-primary font-bold text-center mb-12 fade-in">
+      Four principles that shape every STEM lesson
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          1
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Clarity first</h3>
+        <p class="text-gray-600">
+          We break complex ideas into manageable steps, using examples, diagrams
+          and questions to check understanding at each stage.
+        </p>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          2
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Practice with purpose</h3>
+        <p class="text-gray-600">
+          Students practise new skills in a sequence — from straightforward
+          questions to exam-standard and problem-solving tasks.
+        </p>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          3
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Feedback you can act on</h3>
+        <p class="text-gray-600">
+          We give specific, actionable feedback so students know exactly what
+          went wrong and how to improve.
+        </p>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-4">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          4
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Stretch with support</h3>
+        <p class="text-gray-600">
+          We offer challenging questions and extension work, but always with
+          support available, so students grow without feeling lost.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- British Curriculum Section -->
 <section class="py-16 bg-white">
-<div class="container mx-auto px-6">
-<div class="max-w-6xl mx-auto">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="text-primary font-bold mb-6">British STEM curriculum, carefully sequenced</h2>
-<p class="text-gray-600 mb-6 leading-relaxed">
-                            Our schemes of work follow the British A Level and GCSE specifications, but they are more
-                            than
-                            checklists of topics. We sequence learning so that each idea prepares the ground for the
-                            next,
-                            and we revisit key skills throughout the year.
-                        </p>
-<ul class="space-y-3 text-gray-600">
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span>Long-term plans for each subject (Maths, Further Maths, Sciences, Computing,
-                                    Economics, Business).</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span>Clear term-by-term and week-by-week objectives.</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fa fa-check-circle text-primary mt-1"></i>
-<span>Built-in time for consolidation, revision and exam preparation.</span>
-</li>
-</ul>
-</div>
-<div class="fade-in">
-<div class="bg-accent p-8 rounded-2xl">
-<h3 class="font-bold text-gray-900 mb-4">Subjects we teach</h3>
-<ul class="space-y-3">
-<li class="flex items-center gap-3 text-gray-700">
-<i class="fa fa-calculator text-primary"></i>
-<span>Mathematics &amp; Further Mathematics</span>
-</li>
-<li class="flex items-center gap-3 text-gray-700">
-<i class="fa fa-atom text-primary"></i>
-<span>Physics, Chemistry, Biology</span>
-</li>
-<li class="flex items-center gap-3 text-gray-700">
-<i class="fa fa-laptop-code text-primary"></i>
-<span>Computer Science &amp; Computing pathways</span>
-</li>
-<li class="flex items-center gap-3 text-gray-700">
-<i class="fa fa-chart-line text-primary"></i>
-<span>Economics &amp; Business</span>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <h2 class="text-primary font-bold mb-6">
+            British STEM curriculum, carefully sequenced
+          </h2>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Our schemes of work follow the British A Level and GCSE
+            specifications, but they are more than checklists of topics. We
+            sequence learning so that each idea prepares the ground for the
+            next, and we revisit key skills throughout the year.
+          </p>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-primary mt-1"></i>
+              <span
+                >Long-term plans for each subject (Maths, Further Maths,
+                Sciences, Computing, Economics, Business).</span
+              >
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-primary mt-1"></i>
+              <span>Clear term-by-term and week-by-week objectives.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-primary mt-1"></i>
+              <span
+                >Built-in time for consolidation, revision and exam
+                preparation.</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="fade-in">
+          <div class="bg-accent p-8 rounded-2xl">
+            <h3 class="font-bold text-gray-900 mb-4">Subjects we teach</h3>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-gray-700">
+                <i class="fa fa-calculator text-primary"></i>
+                <span>Mathematics &amp; Further Mathematics</span>
+              </li>
+              <li class="flex items-center gap-3 text-gray-700">
+                <i class="fa fa-atom text-primary"></i>
+                <span>Physics, Chemistry, Biology</span>
+              </li>
+              <li class="flex items-center gap-3 text-gray-700">
+                <i class="fa fa-laptop-code text-primary"></i>
+                <span>Computer Science &amp; Computing pathways</span>
+              </li>
+              <li class="flex items-center gap-3 text-gray-700">
+                <i class="fa fa-chart-line text-primary"></i>
+                <span>Economics &amp; Business</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Typical Lesson Section -->
 <section class="py-16 bg-gray-50">
-<div class="container mx-auto px-6">
-<h2 class="text-primary font-bold text-center mb-4 fade-in">
-                What a typical STEM lesson looks like
-            </h2>
-<p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto fade-in">
-                While every teacher has their own style, most STEM lessons at LMSC follow a familiar pattern:
-            </p>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        1</div>
-<h3 class="font-bold text-gray-900 mb-3">Review &amp; connect</h3>
-<ul class="space-y-2 text-gray-600">
-<li>• Quick recap of the previous lesson or a short retrieval quiz</li>
-<li>• Linking today's topic to what students already know</li>
-</ul>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        2</div>
-<h3 class="font-bold text-gray-900 mb-3">Explain &amp; model</h3>
-<ul class="space-y-2 text-gray-600">
-<li>• Teacher explains a new idea, modelling worked examples step by step</li>
-<li>• Students ask questions and see common mistakes addressed explicitly</li>
-</ul>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
-<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                        3</div>
-<h3 class="font-bold text-gray-900 mb-3">Practise &amp; check understanding</h3>
-<ul class="space-y-2 text-gray-600">
-<li>• Students attempt questions, from scaffolded tasks to exam-style problems</li>
-<li>• Teacher circulates (in person) or checks responses (online) and gives feedback</li>
-<li>• Misconceptions are tackled immediately, not left to build up</li>
-</ul>
-</div>
-</div>
-<p class="text-center text-gray-600 mt-8 fade-in">
-                Lesson recordings and resources mean students can revisit these stages in their own time.
-            </p>
-</div>
+  <div class="container mx-auto px-6">
+    <h2 class="text-primary font-bold text-center mb-4 fade-in">
+      What a typical STEM lesson looks like
+    </h2>
+    <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto fade-in">
+      While every teacher has their own style, most STEM lessons at LMSC follow
+      a familiar pattern:
+    </p>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          1
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Review &amp; connect</h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>
+            • Quick recap of the previous lesson or a short retrieval quiz
+          </li>
+          <li>• Linking today's topic to what students already know</li>
+        </ul>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          2
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">Explain &amp; model</h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>
+            • Teacher explains a new idea, modelling worked examples step by
+            step
+          </li>
+          <li>
+            • Students ask questions and see common mistakes addressed
+            explicitly
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
+        <div
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4"
+        >
+          3
+        </div>
+        <h3 class="font-bold text-gray-900 mb-3">
+          Practise &amp; check understanding
+        </h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>
+            • Students attempt questions, from scaffolded tasks to exam-style
+            problems
+          </li>
+          <li>
+            • Teacher circulates (in person) or checks responses (online) and
+            gives feedback
+          </li>
+          <li>
+            • Misconceptions are tackled immediately, not left to build up
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-center text-gray-600 mt-8 fade-in">
+      Lesson recordings and resources mean students can revisit these stages in
+      their own time.
+    </p>
+  </div>
 </section>
 <!-- Teaching Modes Section -->
 <section class="py-16 bg-white">
-<div class="container mx-auto px-6">
-<div class="">
-<h2 class="text-primary font-bold text-center mb-12 fade-in">
-                    How we teach in person, online and hybrid
-                </h2>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white shadow-xl scale-in stagger-1">
-<i class="fa fa-school text-4xl mb-4"></i>
-<h3 class="text-2xl font-bold mb-4">In person (London campus)</h3>
-<ul class="space-y-3">
-<li>• Live teaching in small classrooms</li>
-<li>• Whiteboard explanations, physical resources and practical demonstrations</li>
-<li>• Immediate support during independent work and exam practice</li>
-</ul>
-</div>
-<div class="bg-gradient-to-br from-secondary to-primary p-8 rounded-2xl text-white shadow-xl scale-in stagger-2">
-<i class="fa fa-laptop text-4xl mb-4"></i>
-<h3 class="text-2xl font-bold mb-4">Fully online</h3>
-<ul class="space-y-3">
-<li>• Live virtual lessons via our online classroom</li>
-<li>• Digital whiteboard, screen-sharing and interactive tools</li>
-<li>• Full access to lesson recordings and downloadable notes</li>
-</ul>
-</div>
-<div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white shadow-xl scale-in stagger-3">
-<i class="fa fa-sync-alt text-4xl mb-4"></i>
-<h3 class="text-2xl font-bold mb-4">Hybrid</h3>
-<ul class="space-y-3">
-<li>• A planned mix of on-campus and online lessons</li>
-<li>• The same scheme of work and assessments as other modes</li>
-<li>• Flexibility for students balancing travel, health or other commitments</li>
-</ul>
-</div>
-</div>
-<p class="text-center text-gray-600 mt-8 text-lg font-semibold fade-in">
-                    Wherever you join from, you are enrolled in the <span class="text-primary">same British
-                        programme</span>, not a watered-down online version.
-                </p>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="">
+      <h2 class="text-primary font-bold text-center mb-12 fade-in">
+        How we teach in person, online and hybrid
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div
+          class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white shadow-xl scale-in stagger-1"
+        >
+          <i class="fa fa-school text-4xl mb-4"></i>
+          <h3 class="text-2xl font-bold mb-4">In person (London campus)</h3>
+          <ul class="space-y-3">
+            <li>• Live teaching in small classrooms</li>
+            <li>
+              • Whiteboard explanations, physical resources and practical
+              demonstrations
+            </li>
+            <li>
+              • Immediate support during independent work and exam practice
+            </li>
+          </ul>
+        </div>
+        <div
+          class="bg-gradient-to-br from-secondary to-primary p-8 rounded-2xl text-white shadow-xl scale-in stagger-2"
+        >
+          <i class="fa fa-laptop text-4xl mb-4"></i>
+          <h3 class="text-2xl font-bold mb-4">Fully online</h3>
+          <ul class="space-y-3">
+            <li>• Live virtual lessons via our online classroom</li>
+            <li>• Digital whiteboard, screen-sharing and interactive tools</li>
+            <li>• Full access to lesson recordings and downloadable notes</li>
+          </ul>
+        </div>
+        <div
+          class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white shadow-xl scale-in stagger-3"
+        >
+          <i class="fa fa-sync-alt text-4xl mb-4"></i>
+          <h3 class="text-2xl font-bold mb-4">Hybrid</h3>
+          <ul class="space-y-3">
+            <li>• A planned mix of on-campus and online lessons</li>
+            <li>• The same scheme of work and assessments as other modes</li>
+            <li>
+              • Flexibility for students balancing travel, health or other
+              commitments
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-center text-gray-600 mt-8 text-lg font-semibold fade-in">
+        Wherever you join from, you are enrolled in the
+        <span class="text-primary">same British programme</span>, not a
+        watered-down online version.
+      </p>
+    </div>
+  </div>
 </section>
 <!-- Assessment Section -->
 <section class="py-16 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="mx-auto max-w-6xl">
-<h2 class="text-primary font-bold text-center mb-6 fade-in">
-                    Assessment, feedback and keeping progress on track
-                </h2>
-<p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto fade-in">
-                    Good teaching depends on knowing where students really are. We build regular assessment into every
-                    programme, so no one reaches the exam season with hidden gaps.
-                </p>
-<div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm fade-in">
-<h3 class="font-bold text-gray-900 mb-6">We use:</h3>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="flex gap-4">
-<i class="fa fa-question-circle text-2xl text-primary mt-1"></i>
-<div>
-<h4 class="font-bold text-gray-900 mb-2">Low-stakes quizzes and retrieval tasks</h4>
-<p class="text-gray-600">to keep core knowledge alive.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<i class="fa fa-file-alt text-2xl text-primary mt-1"></i>
-<div>
-<h4 class="font-bold text-gray-900 mb-2">Topic tests and mini-assessments</h4>
-<p class="text-gray-600">to check deeper understanding.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<i class="fa fa-clock text-2xl text-primary mt-1"></i>
-<div>
-<h4 class="font-bold text-gray-900 mb-2">Mock exams</h4>
-<p class="text-gray-600">under timed conditions to build stamina and exam technique.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<i class="fa fa-bullseye text-2xl text-primary mt-1"></i>
-<div>
-<h4 class="font-bold text-gray-900 mb-2">Clear grade indicators and targets</h4>
-<p class="text-gray-600">so students know what they are working towards.</p>
-</div>
-</div>
-</div>
-<p class="text-gray-600 mt-8">
-                        Teachers review assessment data to plan interventions, extra support sessions and stretch tasks.
-                    </p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-primary font-bold text-center mb-6 fade-in">
+        Assessment, feedback and keeping progress on track
+      </h2>
+      <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto fade-in">
+        Good teaching depends on knowing where students really are. We build
+        regular assessment into every programme, so no one reaches the exam
+        season with hidden gaps.
+      </p>
+      <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm fade-in">
+        <h3 class="font-bold text-gray-900 mb-6">We use:</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex gap-4">
+            <i class="fa fa-question-circle text-2xl text-primary mt-1"></i>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-2">
+                Low-stakes quizzes and retrieval tasks
+              </h4>
+              <p class="text-gray-600">to keep core knowledge alive.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <i class="fa fa-file-alt text-2xl text-primary mt-1"></i>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-2">
+                Topic tests and mini-assessments
+              </h4>
+              <p class="text-gray-600">to check deeper understanding.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <i class="fa fa-clock text-2xl text-primary mt-1"></i>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-2">Mock exams</h4>
+              <p class="text-gray-600">
+                under timed conditions to build stamina and exam technique.
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <i class="fa fa-bullseye text-2xl text-primary mt-1"></i>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-2">
+                Clear grade indicators and targets
+              </h4>
+              <p class="text-gray-600">
+                so students know what they are working towards.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="text-gray-600 mt-8">
+          Teachers review assessment data to plan interventions, extra support
+          sessions and stretch tasks.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Independent Learners Section -->
 <section class="py-16 bg-white">
-<div class="container mx-auto">
-<div class="max-w-6xl mx-auto">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="text-primary font-bold mb-6">Helping students become independent learners</h2>
-<p class="text-gray-600 leading-relaxed">
-                            At 16-19, students are preparing for the demands of university. Alongside teaching content,
-                            we
-                            consciously model and teach the habits that higher education expects.
-                        </p>
-<p class="text-gray-600 mt-4 leading-relaxed">
-                            We don't just tell students to "revise more" — we show them <strong>how</strong>.
-                        </p>
-</div>
-<div class="fade-in">
-<div class="bg-accent p-8 rounded-2xl">
-<h3 class="font-bold text-gray-900 mb-4">Study habits we develop</h3>
-<ul class="space-y-3">
-<li class="flex items-start gap-3 text-gray-700">
-<i class="fa fa-calendar-check text-primary mt-1"></i>
-<span>Planning revision over weeks, not days</span>
-</li>
-<li class="flex items-start gap-3 text-gray-700">
-<i class="fa fa-tasks text-primary mt-1"></i>
-<span>Breaking complex tasks into manageable stages</span>
-</li>
-<li class="flex items-start gap-3 text-gray-700">
-<i class="fa fa-file-contract text-primary mt-1"></i>
-<span>Using mark schemes and examiner reports effectively</span>
-</li>
-<li class="flex items-start gap-3 text-gray-700">
-<i class="fa fa-chart-line text-primary mt-1"></i>
-<span>Reflecting on feedback and setting personal targets</span>
-</li>
-<li class="flex items-start gap-3 text-gray-700">
-<i class="fa fa-hand-paper text-primary mt-1"></i>
-<span>Knowing when and how to ask for help</span>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <h2 class="text-primary font-bold mb-6">
+            Helping students become independent learners
+          </h2>
+          <p class="text-gray-600 leading-relaxed">
+            At 16-19, students are preparing for the demands of university.
+            Alongside teaching content, we consciously model and teach the
+            habits that higher education expects.
+          </p>
+          <p class="text-gray-600 mt-4 leading-relaxed">
+            We don't just tell students to "revise more" — we show them
+            <strong>how</strong>.
+          </p>
+        </div>
+        <div class="fade-in">
+          <div class="bg-accent p-8 rounded-2xl">
+            <h3 class="font-bold text-gray-900 mb-4">
+              Study habits we develop
+            </h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-gray-700">
+                <i class="fa fa-calendar-check text-primary mt-1"></i>
+                <span>Planning revision over weeks, not days</span>
+              </li>
+              <li class="flex items-start gap-3 text-gray-700">
+                <i class="fa fa-tasks text-primary mt-1"></i>
+                <span>Breaking complex tasks into manageable stages</span>
+              </li>
+              <li class="flex items-start gap-3 text-gray-700">
+                <i class="fa fa-file-contract text-primary mt-1"></i>
+                <span>Using mark schemes and examiner reports effectively</span>
+              </li>
+              <li class="flex items-start gap-3 text-gray-700">
+                <i class="fa fa-chart-line text-primary mt-1"></i>
+                <span>Reflecting on feedback and setting personal targets</span>
+              </li>
+              <li class="flex items-start gap-3 text-gray-700">
+                <i class="fa fa-hand-paper text-primary mt-1"></i>
+                <span>Knowing when and how to ask for help</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- CTA Section -->
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center">
-<div class="scale-in">
-<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
-                        Next steps
-                    </span>
-<h2 class="text-primary font-bold text-primary mb-4">
-                        See our teaching in action
-                    </h2>
-<p class="text-opacity-90 mb-8 leading-relaxed">
-                        The best way to understand how we teach STEM is to see it. You can book a short consultation,
-                        arrange to attend a taster lesson (where available), or speak directly with a member of our
-                        academic team.
-                    </p>
-<!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
-<div class="btn-content">
-<span class="text-part">Book a Consultation</span>
-<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
-<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</span>
-</div>
-</button>
-</div>
-<!-- Right Side - Image with Chat Bubbles -->
-<div class="relative flex items-center justify-end scale-in">
-<!-- Main Image Container -->
-<div class="main-image relative w-full max-w-sm">
-<!-- Background placeholder for the person image -->
-<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
-</div>
-<!-- Chat Bubbles Overlay -->
-<div class="chat-block">
-<!-- User Message -->
-<div class="user-message chat-bubble-user">
-<div class="user-avatar"></div>
-<div class="user-message-bubble">
-<div class="name">Oliver Moy</div>
-<div class="text">I need help with my budget.</div>
-</div>
-</div>
-<!-- AI Response -->
-<div class="ai-message chat-bubble-ai">
-<div class="ai-avatar-bubble">
-<svg fill="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-</div>
-<div class="ai-message-bubble">
-<div class="name">AI Assistant</div>
-<div class="text">Sure! Let's carefully review your income and expenses.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="scale-in">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          See our teaching in action
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          The best way to understand how we teach STEM is to see it. You can
+          book a short consultation, arrange to attend a taster lesson (where
+          available), or speak directly with a member of our academic team.
+        </p>
+        <!-- BTN 1 -->
+        <button
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-end scale-in">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
 
-        // Observe all animated elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.fade-in, .scale-in');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(".fade-in, .scale-in");
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
 {% endblock %}

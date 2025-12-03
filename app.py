@@ -12,6 +12,7 @@ from urllib.parse import parse_qs, quote_plus, urlparse
 from flask import (Flask, flash, g, redirect, render_template, request,
                    send_from_directory, session, url_for)
 from flask_mail import Mail, Message
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
@@ -406,7 +407,13 @@ mail = Mail()
 
 def create_app() -> Flask:
     app = Flask(__name__)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)  # type: ignore[assignment]
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "change-this-secret")
+    app.config.setdefault("PREFERRED_URL_SCHEME", "https")
+    app.config.setdefault(
+        "ENABLE_HTTPS_REDIRECT",
+        os.environ.get("ENABLE_HTTPS_REDIRECT", "1") == "1",
+    )
 
     template_root = Path(app.root_path) / "templates"
     pages_template_dir = template_root / "pages"
@@ -478,6 +485,25 @@ def create_app() -> Flask:
         value = re.sub(r"[^A-Za-z0-9]+", "-", value.strip().lower())
         value = re.sub(r"-+", "-", value).strip("-")
         return value or "page"
+
+    @app.before_request
+    def enforce_https_redirect() -> Any:
+        """Force HTTPS in production environments by issuing a 301 redirect."""
+
+        if not app.config.get("ENABLE_HTTPS_REDIRECT", False):
+            return None
+
+        # Skip redirect for local development hosts
+        host = request.host.split(":", 1)[0]
+        if host in {"127.0.0.1", "localhost"}:
+            return None
+
+        proto = request.headers.get("X-Forwarded-Proto") or ("https" if request.is_secure else "http")
+        if proto != "https":
+            target_url = request.url.replace("http://", "https://", 1)
+            return redirect(target_url, code=301)
+
+        return None
 
     def generate_unique_slug(base_slug: str) -> str:
         slug = base_slug

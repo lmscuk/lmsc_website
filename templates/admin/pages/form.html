@@ -7,6 +7,12 @@
 
 {% block nav_title %}{% if mode == 'edit' %}Edit Page{% else %}Create Page{% endif %}{% endblock %}
 {% block title %}{% if mode == 'edit' %}Edit Page · LMSC Admin{% else %}Create Page · LMSC Admin{% endif %}{% endblock %}
+{% block meta_description %}
+<meta
+  name="description"
+  content="Configure navigation, SEO and templates for LMSC pages using the admin page editor."
+/>
+{% endblock %}
 
 {% block extra_head %}
   <style>

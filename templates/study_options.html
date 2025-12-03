@@ -1,758 +1,981 @@
-{% extends 'base.html' %}
-
-{% block title %}Online & In-Person Study Options | London Maths & Science College{% endblock %}
-
-{% block extra_head %}
+{% extends 'base.html' %} {% block title %}Online & In-Person Study Options |
+London Maths & Science College{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="Compare on-campus, online and hybrid study options at London Maths & Science College and choose the British STEM programme that fits your schedule."
+/>
+{% endblock %} {% block extra_head %}
 <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-        .stagger-1 {
-            transition-delay: 0.1s;
-        }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
 
-        .stagger-2 {
-            transition-delay: 0.2s;
-        }
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
 
-        .stagger-3 {
-            transition-delay: 0.3s;
-        }
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
 
-        .stagger-4 {
-            transition-delay: 0.4s;
-        }
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
 
-        .accordion-content.active {
-            max-height: 500px;
-        }
+  .accordion-content.active {
+    max-height: 500px;
+  }
 
-        .accordion-icon {
-            transition: transform 0.3s ease;
-        }
+  .accordion-icon {
+    transition: transform 0.3s ease;
+  }
 
-        .accordion-icon.active {
-            transform: rotate(180deg);
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+  .accordion-icon.active {
+    transform: rotate(180deg);
+  }
+</style>
+{% endblock %} {% block content %}
 <!-- Navigation -->
 
 <!-- Hero Section -->
 <section class="py-20">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="">
-<h1 class="text-primary font-bold mb-6 fade-in">
-                        Online &amp; In-Person Study Options
-                    </h1>
-<p class="text-opacity-90 mb-8 leading-relaxed fade-in">
-                        At London Maths &amp; Science College, you can study the full British 16-19 curriculum in the way
-                        that works best for you—on campus in London, fully online from home, or through a flexible
-                        hybrid route. Whichever option you choose, you follow the same British A Level and BTEC
-                        programmes, taught from London by specialist teachers.
-                    </p>
-<div class="flex flex-wrap gap-4 fade-in">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold">
-                            Explore online programmes
-                        </button>
-<button class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition">
-                            Find out about in-person study
-                        </button>
-</div>
-<p class="mt-4 text-sm text-opacity-80 fade-in">
-<a class="underline hover:text-primary" href="#">Information for home-educating families</a>
-</p>
-</div>
-<div class="fade-in">
-<div class="bg-white rounded-3xl overflow-hidden shadow-2xl">
-<img alt="Students studying" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&amp;h=400&amp;fit=crop"/>
-<img alt="Online learning" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=600&amp;h=400&amp;fit=crop"/>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="">
+        <h1 class="text-primary font-bold mb-6 fade-in">
+          Online &amp; In-Person Study Options
+        </h1>
+        <p class="text-opacity-90 mb-8 leading-relaxed fade-in">
+          At London Maths &amp; Science College, you can study the full British
+          16-19 curriculum in the way that works best for you—on campus in
+          London, fully online from home, or through a flexible hybrid route.
+          Whichever option you choose, you follow the same British A Level and
+          BTEC programmes, taught from London by specialist teachers.
+        </p>
+        <div class="flex flex-wrap gap-4 fade-in">
+          <button
+            class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+          >
+            Explore online programmes
+          </button>
+          <button
+            class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition"
+          >
+            Find out about in-person study
+          </button>
+        </div>
+        <p class="mt-4 text-sm text-opacity-80 fade-in">
+          <a class="underline hover:text-primary" href="#"
+            >Information for home-educating families</a
+          >
+        </p>
+      </div>
+      <div class="fade-in">
+        <div class="bg-white rounded-3xl overflow-hidden shadow-2xl">
+          <img
+            alt="Students studying"
+            class="w-full h-64 object-cover"
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&amp;h=400&amp;fit=crop"
+          />
+          <img
+            alt="Online learning"
+            class="w-full h-64 object-cover"
+            src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=600&amp;h=400&amp;fit=crop"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 1: One British curriculum, three ways to study -->
 <section class="py-20 px-6">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="font-bold text-primary mb-12 fade-in">One British curriculum, three ways to study</h2>
-<p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                        All of our students, wherever they are in the world, follow the same British curriculum, with
-                        aligned schemes of work, assessments and expectations. The difference lies in
-                        <strong>how</strong> you access that learning: in person at our London campus, online from home,
-                        or a blend of the two.
-                    </p>
-<p class="text-lg text-gray-700 leading-relaxed">
-                        For many families—especially internationally or in home-education contexts—this flexibility
-                        makes it possible to access a rigorous British sixth form education without relocating or
-                        compromising on other commitments.
-                    </p>
-</div>
-<div class="space-y-6 fade-in">
-<div class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow">
-<div class="text-4xl">
-<i class="fas fa-school text-blue-600"></i>
-</div>
-<div>
-<h3 class="font-bold text-primary mb-2">In person</h3>
-<p class="text-gray-700">Study on campus in London</p>
-</div>
-</div>
-<div class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow">
-<div class="text-4xl">
-<i class="fas fa-laptop text-green-600"></i>
-</div>
-<div>
-<h3 class="font-bold text-primary mb-2">Fully online</h3>
-<p class="text-gray-700">Live lessons from home</p>
-</div>
-</div>
-<div class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow">
-<div class="text-4xl">
-<i class="fas fa-arrows-rotate text-purple-600"></i>
-</div>
-<div>
-<h3 class="font-bold text-primary mb-2">Hybrid</h3>
-<p class="text-gray-700">Blend online and in-person</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <h2 class="font-bold text-primary mb-12 fade-in">
+          One British curriculum, three ways to study
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          All of our students, wherever they are in the world, follow the same
+          British curriculum, with aligned schemes of work, assessments and
+          expectations. The difference lies in
+          <strong>how</strong> you access that learning: in person at our London
+          campus, online from home, or a blend of the two.
+        </p>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          For many families—especially internationally or in home-education
+          contexts—this flexibility makes it possible to access a rigorous
+          British sixth form education without relocating or compromising on
+          other commitments.
+        </p>
+      </div>
+      <div class="space-y-6 fade-in">
+        <div
+          class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow"
+        >
+          <div class="text-4xl">
+            <i class="fas fa-school text-blue-600"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-primary mb-2">In person</h3>
+            <p class="text-gray-700">Study on campus in London</p>
+          </div>
+        </div>
+        <div
+          class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow"
+        >
+          <div class="text-4xl">
+            <i class="fas fa-laptop text-green-600"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-primary mb-2">Fully online</h3>
+            <p class="text-gray-700">Live lessons from home</p>
+          </div>
+        </div>
+        <div
+          class="flex items-start gap-4 p-6 bg-accent bg-opacity-30 rounded-2xl shadow"
+        >
+          <div class="text-4xl">
+            <i class="fas fa-arrows-rotate text-purple-600"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-primary mb-2">Hybrid</h3>
+            <p class="text-gray-700">Blend online and in-person</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 2: In-person study in London -->
 <section class="py-20 px-6 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="font-bold text-primary mb-8">In-person study at our London campus</h2>
-<p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                        For students who thrive in a structured classroom environment, our London campus provides a
-                        calm, focused setting with clear routines and face-to-face support.
-                    </p>
-<ul class="space-y-4 mb-8">
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Small classes with live teaching every lesson</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Access to study spaces, supervised revision and on-site support
-                                clinics</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">In-person assessments and mock exams under exam-style
-                                conditions</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Daily contact with teachers and peers in a British college
-                                environment</span>
-</li>
-</ul>
-<p class="text-gray-700 mb-8">
-                        In-person study is ideal if you live within reach of London and want the full experience of
-                        attending a British sixth form college day to day.
-                    </p>
-<button class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition">
-                        Learn more about studying on campus
-                    </button>
-</div>
-<div class="fade-in">
-<img alt="London campus" class="rounded-3xl shadow-xl w-full object-cover" src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&amp;h=600&amp;fit=crop"/>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <h2 class="font-bold text-primary mb-8">
+          In-person study at our London campus
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          For students who thrive in a structured classroom environment, our
+          London campus provides a calm, focused setting with clear routines and
+          face-to-face support.
+        </p>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Small classes with live teaching every lesson</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Access to study spaces, supervised revision and on-site support
+              clinics</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >In-person assessments and mock exams under exam-style
+              conditions</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Daily contact with teachers and peers in a British college
+              environment</span
+            >
+          </li>
+        </ul>
+        <p class="text-gray-700 mb-8">
+          In-person study is ideal if you live within reach of London and want
+          the full experience of attending a British sixth form college day to
+          day.
+        </p>
+        <button
+          class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition"
+        >
+          Learn more about studying on campus
+        </button>
+      </div>
+      <div class="fade-in">
+        <img
+          alt="London campus"
+          class="rounded-3xl shadow-xl w-full object-cover"
+          src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&amp;h=600&amp;fit=crop"
+        />
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 3: Fully online study -->
 <section class="py-20 px-6 bg-white">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in order-2 md:order-1">
-<img alt="Online learning" class="rounded-3xl shadow-xl w-full object-cover" src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&amp;h=600&amp;fit=crop"/>
-</div>
-<div class="fade-in order-1 md:order-2">
-<h2 class="font-bold text-primary mb-8">Fully online: British curriculum from home</h2>
-<p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                        Our fully online programmes are designed for students who need flexibility, but still want the
-                        structure and recognition of a British A Level or BTEC programme taught from London.
-                    </p>
-<ul class="space-y-4 mb-8">
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Live, timetabled lessons delivered via our online
-                                classroom</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Lesson recordings available 24/7 so you can revisit explanations
-                                or catch up</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Digital resources, homework and assessments set and submitted
-                                online</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Regular progress checks, feedback and individual guidance</span>
-</li>
-</ul>
-<p class="text-gray-700 mb-8">
-                        Online students follow the same British curriculum as on-campus learners, with teachers based in
-                        London and a clear timetable to keep learning on track.
-                    </p>
-<div class="bg-accent bg-opacity-30 p-8 rounded-2xl">
-<h3 class="font-bold text-2xl text-primary mb-4">Online Programmes at LMSC</h3>
-<p class="text-gray-700 mb-6">
-                            Find out more about our fully online A Level, BTEC and GCSE options, including how exams and
-                            university applications work for online learners.
-                        </p>
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition">
-                            Explore online programmes
-                        </button>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in order-2 md:order-1">
+        <img
+          alt="Online learning"
+          class="rounded-3xl shadow-xl w-full object-cover"
+          src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&amp;h=600&amp;fit=crop"
+        />
+      </div>
+      <div class="fade-in order-1 md:order-2">
+        <h2 class="font-bold text-primary mb-8">
+          Fully online: British curriculum from home
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Our fully online programmes are designed for students who need
+          flexibility, but still want the structure and recognition of a British
+          A Level or BTEC programme taught from London.
+        </p>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Live, timetabled lessons delivered via our online classroom</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Lesson recordings available 24/7 so you can revisit explanations
+              or catch up</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Digital resources, homework and assessments set and submitted
+              online</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Regular progress checks, feedback and individual guidance</span
+            >
+          </li>
+        </ul>
+        <p class="text-gray-700 mb-8">
+          Online students follow the same British curriculum as on-campus
+          learners, with teachers based in London and a clear timetable to keep
+          learning on track.
+        </p>
+        <div class="bg-accent bg-opacity-30 p-8 rounded-2xl">
+          <h3 class="font-bold text-2xl text-primary mb-4">
+            Online Programmes at LMSC
+          </h3>
+          <p class="text-gray-700 mb-6">
+            Find out more about our fully online A Level, BTEC and GCSE options,
+            including how exams and university applications work for online
+            learners.
+          </p>
+          <button
+            class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition"
+          >
+            Explore online programmes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 4: Hybrid study -->
 <section class="py-20 px-6 bg-gray-50">
-<div class="container mx-auto px-6">
-<h2 class="font-bold text-primary mb-8 text-center fade-in">Hybrid study: combining campus and online
-                learning</h2>
-<p class="text-lg text-gray-700 text-center mb-12 max-w-3xl mx-auto fade-in">
-                Hybrid study is ideal for students who want some of the structure and social life of campus, but also
-                need the flexibility of online learning—for example due to travel, health, family or training
-                commitments.
-            </p>
-<div class="grid md:grid-cols-3 gap-8 mb-12">
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
-<div class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-<i class="fas fa-building text-primary text-2xl"></i>
-</div>
-<h3 class="font-bold text-primary mb-4">Mostly on campus</h3>
-<p class="text-gray-700">With some lessons taken online</p>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
-<div class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-<i class="fas fa-calendar-week text-primary text-2xl"></i>
-</div>
-<h3 class="font-bold text-primary mb-4">Mixed weeks</h3>
-<p class="text-gray-700">Where certain days are on site and others are online</p>
-</div>
-<div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
-<div class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-<i class="fas fa-exchange-alt text-primary text-2xl"></i>
-</div>
-<h3 class="font-bold text-primary mb-4">Phased transitions</h3>
-<p class="text-gray-700">From fully online to more on-campus time over the course of a year</p>
-</div>
-</div>
-<p class="text-lg text-gray-700 text-center mb-8 max-w-3xl mx-auto fade-in">
-                We agree each hybrid pattern individually, ensuring that it is <strong>academically coherent</strong>
-                and sustainable while still fitting the realities of family life.
-            </p>
-<div class="text-center fade-in">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition">
-                    Discuss hybrid options with our team
-                </button>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <h2 class="font-bold text-primary mb-8 text-center fade-in">
+      Hybrid study: combining campus and online learning
+    </h2>
+    <p
+      class="text-lg text-gray-700 text-center mb-12 max-w-3xl mx-auto fade-in"
+    >
+      Hybrid study is ideal for students who want some of the structure and
+      social life of campus, but also need the flexibility of online
+      learning—for example due to travel, health, family or training
+      commitments.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-1">
+        <div
+          class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6"
+        >
+          <i class="fas fa-building text-primary text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-primary mb-4">Mostly on campus</h3>
+        <p class="text-gray-700">With some lessons taken online</p>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-2">
+        <div
+          class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6"
+        >
+          <i class="fas fa-calendar-week text-primary text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-primary mb-4">Mixed weeks</h3>
+        <p class="text-gray-700">
+          Where certain days are on site and others are online
+        </p>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg scale-in stagger-3">
+        <div
+          class="bg-accent bg-opacity-30 w-16 h-16 rounded-full flex items-center justify-center mb-6"
+        >
+          <i class="fas fa-exchange-alt text-primary text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-primary mb-4">Phased transitions</h3>
+        <p class="text-gray-700">
+          From fully online to more on-campus time over the course of a year
+        </p>
+      </div>
+    </div>
+    <p class="text-lg text-gray-700 text-center mb-8 max-w-3xl mx-auto fade-in">
+      We agree each hybrid pattern individually, ensuring that it is
+      <strong>academically coherent</strong>
+      and sustainable while still fitting the realities of family life.
+    </p>
+    <div class="text-center fade-in">
+      <button
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition"
+      >
+        Discuss hybrid options with our team
+      </button>
+    </div>
+  </div>
 </section>
 <!-- Section 5: Which route is right for you? -->
 <section class="py-20 px-6 bg-white">
-<div class="container mx-auto px-6">
-<h2 class="font-bold text-primary mb-8 text-center fade-in">Which study option is right for you?</h2>
-<p class="text-lg text-gray-700 text-center mb-12 max-w-3xl mx-auto fade-in">
-                Different families choose different routes. We'll help you decide based on your goals, location and
-                day-to-day reality.
+  <div class="container mx-auto px-6">
+    <h2 class="font-bold text-primary mb-8 text-center fade-in">
+      Which study option is right for you?
+    </h2>
+    <p
+      class="text-lg text-gray-700 text-center mb-12 max-w-3xl mx-auto fade-in"
+    >
+      Different families choose different routes. We'll help you decide based on
+      your goals, location and day-to-day reality.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <!-- In Person Card -->
+      <div
+        class="bg-white shadow-xl p-8 rounded-2xl border-2 border-primary scale-in stagger-1"
+      >
+        <h3 class="font-bold text-2xl text-primary mb-6">In person (London)</h3>
+        <div class="space-y-4 mb-6">
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Best for:</p>
+            <p class="text-gray-700">
+              Students living near London who want daily campus life
             </p>
-<div class="grid md:grid-cols-3 gap-8 mb-12">
-<!-- In Person Card -->
-<div class="bg-white shadow-xl p-8 rounded-2xl border-2 border-primary scale-in stagger-1">
-<h3 class="font-bold text-2xl text-primary mb-6">In person (London)</h3>
-<div class="space-y-4 mb-6">
-<div>
-<p class="font-semibold text-gray-900 mb-2">Best for:</p>
-<p class="text-gray-700">Students living near London who want daily campus life</p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Strengths:</p>
-<p class="text-gray-700">Strong routine, in-room teaching, on-site support and activities
-                            </p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Consider if:</p>
-<p class="text-gray-700">You prefer clear in-person structure and can travel regularly</p>
-</div>
-</div>
-</div>
-<!-- Fully Online Card -->
-<div class="bg-white shadow-xl p-8 rounded-2xl border-2 border-secondary scale-in stagger-2">
-<h3 class="font-bold text-2xl text-secondary mb-6">Fully online</h3>
-<div class="space-y-4 mb-6">
-<div>
-<p class="font-semibold text-gray-900 mb-2">Best for:</p>
-<p class="text-gray-700">UK or international students who need location or timetable
-                                flexibility</p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Strengths:</p>
-<p class="text-gray-700">Study from home, full lesson recordings, access from any time zone
-                            </p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Consider if:</p>
-<p class="text-gray-700">You are self-motivated and want to fit British study around other
-                                commitments</p>
-</div>
-</div>
-</div>
-<!-- Hybrid Card -->
-<div class="bg-white shadow-xl p-8 rounded-2xl border-2 border-accent scale-in stagger-3">
-<h3 class="font-bold text-2xl text-primary mb-6">Hybrid</h3>
-<div class="space-y-4 mb-6">
-<div>
-<p class="font-semibold text-gray-900 mb-2">Best for:</p>
-<p class="text-gray-700">Students who can come to London sometimes but not every day</p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Strengths:</p>
-<p class="text-gray-700">Mix of campus experience and flexibility, tailored to your
-                                situation</p>
-</div>
-<div>
-<p class="font-semibold text-gray-900 mb-2">Consider if:</p>
-<p class="text-gray-700">You are transitioning into the British system or balancing
-                                education with other priorities</p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center fade-in">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition">
-                    Book a study options call
-                </button>
-</div>
-</div>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Strengths:</p>
+            <p class="text-gray-700">
+              Strong routine, in-room teaching, on-site support and activities
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Consider if:</p>
+            <p class="text-gray-700">
+              You prefer clear in-person structure and can travel regularly
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Fully Online Card -->
+      <div
+        class="bg-white shadow-xl p-8 rounded-2xl border-2 border-secondary scale-in stagger-2"
+      >
+        <h3 class="font-bold text-2xl text-secondary mb-6">Fully online</h3>
+        <div class="space-y-4 mb-6">
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Best for:</p>
+            <p class="text-gray-700">
+              UK or international students who need location or timetable
+              flexibility
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Strengths:</p>
+            <p class="text-gray-700">
+              Study from home, full lesson recordings, access from any time zone
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Consider if:</p>
+            <p class="text-gray-700">
+              You are self-motivated and want to fit British study around other
+              commitments
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Hybrid Card -->
+      <div
+        class="bg-white shadow-xl p-8 rounded-2xl border-2 border-accent scale-in stagger-3"
+      >
+        <h3 class="font-bold text-2xl text-primary mb-6">Hybrid</h3>
+        <div class="space-y-4 mb-6">
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Best for:</p>
+            <p class="text-gray-700">
+              Students who can come to London sometimes but not every day
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Strengths:</p>
+            <p class="text-gray-700">
+              Mix of campus experience and flexibility, tailored to your
+              situation
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 mb-2">Consider if:</p>
+            <p class="text-gray-700">
+              You are transitioning into the British system or balancing
+              education with other priorities
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center fade-in">
+      <button
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition"
+      >
+        Book a study options call
+      </button>
+    </div>
+  </div>
 </section>
 <!-- Section 6: Consistent standards -->
 <section class="py-20 px-6 bg-primary text-white">
-<div class="container mx-auto px-6">
-<h2 class="font-bold mb-8 text-center fade-in">Consistent standards across all modes</h2>
-<p class="text-center mb-12 max-w-3xl mx-auto fade-in text-white text-opacity-90">
-                No matter how you study with LMSC, certain things never change:
-            </p>
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-1">
-<i class="fas fa-book text-accent text-3xl mb-4"></i>
-<h3 class="font-bold text-lg mb-2">Same British curriculum</h3>
-<p class="text-white text-opacity-80">And exam specifications</p>
-</div>
-<div class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-2">
-<i class="fas fa-chalkboard-teacher text-accent text-3xl mb-4"></i>
-<h3 class="font-bold text-lg mb-2">Same subject specialists</h3>
-<p class="text-white text-opacity-80">Leading your lessons</p>
-</div>
-<div class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-3">
-<i class="fas fa-clipboard-check text-accent text-3xl mb-4"></i>
-<h3 class="font-bold text-lg mb-2">Same assessment schedule</h3>
-<p class="text-white text-opacity-80">And expectations</p>
-</div>
-<div class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-4">
-<i class="fas fa-graduation-cap text-accent text-3xl mb-4"></i>
-<h3 class="font-bold text-lg mb-2">Same focus on progression</h3>
-<p class="text-white text-opacity-80">To university and careers</p>
-</div>
-</div>
-<p class="text-lg text-center mt-12 max-w-3xl mx-auto fade-in text-white text-opacity-90">
-                We don't run a "light" online version of our programmes—online and hybrid students are enrolled in the
-                same rigorous courses as those on campus.
-            </p>
-</div>
+  <div class="container mx-auto px-6">
+    <h2 class="font-bold mb-8 text-center fade-in">
+      Consistent standards across all modes
+    </h2>
+    <p
+      class="text-center mb-12 max-w-3xl mx-auto fade-in text-white text-opacity-90"
+    >
+      No matter how you study with LMSC, certain things never change:
+    </p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-1"
+      >
+        <i class="fas fa-book text-accent text-3xl mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Same British curriculum</h3>
+        <p class="text-white text-opacity-80">And exam specifications</p>
+      </div>
+      <div
+        class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-2"
+      >
+        <i class="fas fa-chalkboard-teacher text-accent text-3xl mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Same subject specialists</h3>
+        <p class="text-white text-opacity-80">Leading your lessons</p>
+      </div>
+      <div
+        class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-3"
+      >
+        <i class="fas fa-clipboard-check text-accent text-3xl mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Same assessment schedule</h3>
+        <p class="text-white text-opacity-80">And expectations</p>
+      </div>
+      <div
+        class="bg-white bg-opacity-10 shadow-lg p-6 rounded-2xl scale-in stagger-4"
+      >
+        <i class="fas fa-graduation-cap text-accent text-3xl mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Same focus on progression</h3>
+        <p class="text-white text-opacity-80">To university and careers</p>
+      </div>
+    </div>
+    <p
+      class="text-lg text-center mt-12 max-w-3xl mx-auto fade-in text-white text-opacity-90"
+    >
+      We don't run a "light" online version of our programmes—online and hybrid
+      students are enrolled in the same rigorous courses as those on campus.
+    </p>
+  </div>
 </section>
 <!-- Section 7: Home-educating families -->
 <section class="py-20 px-6 bg-accent bg-opacity-20">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="fade-in">
-<h2 class="font-bold text-primary mb-8">Study options for home-educating families</h2>
-<p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                        Many of our online learners are part of home-educating families who want the depth and
-                        recognition of a British curriculum alongside the flexibility of learning at home.
-                    </p>
-<p class="text-lg font-semibold text-gray-900 mb-4">LMSC can support home education by:</p>
-<ul class="space-y-3 mb-8">
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Providing structured <strong>A Level, GCSE and BTEC
-                                    programmes</strong> with clear schemes of work</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Offering live lessons and recorded content to anchor your home
-                                timetable</span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Advising on <strong>exam entries, predicted grades and
-                                    university applications</strong></span>
-</li>
-<li class="flex items-start gap-3">
-<i class="fas fa-check-circle text-primary mt-1"></i>
-<span class="text-gray-700">Ensuring your child's progress is tracked and communicated
-                                clearly</span>
-</li>
-</ul>
-<p class="text-gray-700 mb-8">
-                        You remain fully in control as a home-educating parent, while we provide the academic spine and
-                        expert teaching.
-                    </p>
-</div>
-<div class="fade-in">
-<div class="bg-white p-8 rounded-2xl shadow-xl">
-<h3 class="font-bold text-2xl text-primary mb-4">Information for home-educating families</h3>
-<p class="text-gray-700 mb-6">
-                            Learn how our online programmes fit with home education and how we work with parents and
-                            guardians.
-                        </p>
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition w-full">
-                            View homeschooling &amp; home education guidance
-                        </button>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <h2 class="font-bold text-primary mb-8">
+          Study options for home-educating families
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          Many of our online learners are part of home-educating families who
+          want the depth and recognition of a British curriculum alongside the
+          flexibility of learning at home.
+        </p>
+        <p class="text-lg font-semibold text-gray-900 mb-4">
+          LMSC can support home education by:
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Providing structured
+              <strong>A Level, GCSE and BTEC programmes</strong> with clear
+              schemes of work</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Offering live lessons and recorded content to anchor your home
+              timetable</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Advising on
+              <strong
+                >exam entries, predicted grades and university
+                applications</strong
+              ></span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-primary mt-1"></i>
+            <span class="text-gray-700"
+              >Ensuring your child's progress is tracked and communicated
+              clearly</span
+            >
+          </li>
+        </ul>
+        <p class="text-gray-700 mb-8">
+          You remain fully in control as a home-educating parent, while we
+          provide the academic spine and expert teaching.
+        </p>
+      </div>
+      <div class="fade-in">
+        <div class="bg-white p-8 rounded-2xl shadow-xl">
+          <h3 class="font-bold text-2xl text-primary mb-4">
+            Information for home-educating families
+          </h3>
+          <p class="text-gray-700 mb-6">
+            Learn how our online programmes fit with home education and how we
+            work with parents and guardians.
+          </p>
+          <button
+            class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition w-full"
+          >
+            View homeschooling &amp; home education guidance
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 8: Support and community -->
 <section class="py-20 px-6 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12">
-<div>
-<h2 class="font-bold text-primary mb-6">Support and community, online and on campus</h2>
-<p class="text-gray-700 mb-6 leading-relaxed">Studying online should never feel like studying alone.
-                        Whether you’re on campus, online or hybrid, you are part of the same LMSC community.</p>
-<ul class="space-y-4 text-gray-700">
-<li class="flex gap-3">
-<span class="font-bold">✓</span>
-<span>Regular contact with teachers and support staff</span>
-</li>
-<li class="flex gap-3">
-<span class="font-bold">✓</span>
-<span>Progress reviews and guidance meetings</span>
-</li>
-<li class="flex gap-3">
-<span class="font-bold">✓</span>
-<span>Opportunities for online and in-person events where possible</span>
-</li>
-<li class="flex gap-3">
-<span class="font-bold">✓</span>
-<span>Clear channels of communication for parents and guardians</span>
-</li>
-</ul>
-</div>
-<div class="bg-white p-8 rounded-lg border border-gray-200">
-<blockquote class="text-lg text-gray-700 italic mb-4">
-                        "LMSC gave our child the structure of a British sixth form with the flexibility our family
-                        needed."
-                    </blockquote>
-<p class="font-semibold text-primary">Parent testimonial</p>
-<p class="text-sm text-gray-600">London, UK</p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div>
+        <h2 class="font-bold text-primary mb-6">
+          Support and community, online and on campus
+        </h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Studying online should never feel like studying alone. Whether you’re
+          on campus, online or hybrid, you are part of the same LMSC community.
+        </p>
+        <ul class="space-y-4 text-gray-700">
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span>Regular contact with teachers and support staff</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span>Progress reviews and guidance meetings</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span
+              >Opportunities for online and in-person events where
+              possible</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold">✓</span>
+            <span
+              >Clear channels of communication for parents and guardians</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white p-8 rounded-lg border border-gray-200">
+        <blockquote class="text-lg text-gray-700 italic mb-4">
+          "LMSC gave our child the structure of a British sixth form with the
+          flexibility our family needed."
+        </blockquote>
+        <p class="font-semibold text-primary">Parent testimonial</p>
+        <p class="text-sm text-gray-600">London, UK</p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- CTA Section -->
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center scale-in">
-<div>
-<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
-                        Next steps
-                    </span>
-<h2 class="font-bold text-primary mb-4">
-                        Ready to explore your options?
-                    </h2>
-<p class="text-opacity-90 mb-8 leading-relaxed">
-                        If you’re considering in-person, online or hybrid study with LMSC, the best next step is a short
-                        conversation with our admissions team. We’ll talk through your situation, location and goals,
-                        and recommend a route that makes sense for your family.
-                    </p>
-<!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
-<div class="btn-content">
-<span class="text-part">Book a Consultation</span>
-<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
-<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</span>
-</div>
-</button>
-</div>
-<!-- Right Side - Image with Chat Bubbles -->
-<div class="relative flex items-center justify-end">
-<!-- Main Image Container -->
-<div class="main-image relative w-full max-w-sm">
-<!-- Background placeholder for the person image -->
-<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
-</div>
-<!-- Chat Bubbles Overlay -->
-<div class="chat-block">
-<!-- User Message -->
-<div class="user-message chat-bubble-user">
-<div class="user-avatar"></div>
-<div class="user-message-bubble">
-<div class="name">Oliver Moy</div>
-<div class="text">I need help with my budget.</div>
-</div>
-</div>
-<!-- AI Response -->
-<div class="ai-message chat-bubble-ai">
-<div class="ai-avatar-bubble">
-<svg fill="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-</div>
-<div class="ai-message-bubble">
-<div class="name">AI Assistant</div>
-<div class="text">Sure! Let's carefully review your income and expenses.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center scale-in">
+      <div>
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="font-bold text-primary mb-4">
+          Ready to explore your options?
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          If you’re considering in-person, online or hybrid study with LMSC, the
+          best next step is a short conversation with our admissions team. We’ll
+          talk through your situation, location and goals, and recommend a route
+          that makes sense for your family.
+        </p>
+        <!-- BTN 1 -->
+        <button
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-end">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 10: FAQs -->
 <section class="py-20 px-6 bg-white">
-<div class="container mx-auto">
-<div class="max-w-4xl mx-auto">
-<h2 class="font-bold text-primary mb-12 text-center">Frequently Asked Questions</h2>
-<div class="space-y-4">
-<!-- FAQ 1 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Is this the same A Level as in a school or college?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The qualification and
-                                    certificate are
-                                    identical to those awarded in any other UK school or college.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 2 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do I have to sit exams in London?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>For this hybrid one-year route, yes. All exams are taken at the LMSC JCQ-approved
-                                    centre in London.
-                                </p>
-</div>
-</div>
-</div>
-<!-- FAQ 3 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I study from outside the UK?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You can join all online teaching from overseas, but you must travel to London
-                                    for the in-person
-                                    blocks in Mar–Apr and for the May–Jun exams. We can signpost accommodation options
-                                    and safeguarding
-                                    support for under-18s.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 4 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Why choose hybrid instead of fully online?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>You get online flexibility while learning new content, then in-person exam training
-                                    and intensive
-                                    practice in London when it matters most.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 5 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>How many hours a week should I plan?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Expect around 14–18 hours per week in total: 6–8 hours live teaching plus 8–10 hours
-                                    guided
-                                    independent
-                                    study.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 6 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do you record lessons?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. All online sessions are recorded for your cohort so you can revisit explanations
-                                    and catch up
-                                    after unavoidable absences.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 7 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What calculator do I need?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>An exam-compliant scientific or graphing calculator acceptable under Edexcel rules.
-                                    You must still
-                                    show
-                                    full methods, not just calculator output.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 8 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I pay in monthly instalments?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>No. For this accelerated Hybrid course, we offer Full Advance payment (discounted) or
-                                    Per Term; we do
-                                    not offer monthly instalments.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 9 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What if I still have questions?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Contact our team to arrange a call, a taster lesson or a parent webinar. We’ll walk
-                                    you through
-                                    timetables, assessments and exam logistics in detail.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center mt-12">
-<a class="text-primary font-semibold hover:underline" href="#">View all FAQs →</a>
-</div>
-</div>
-</div>
+  <div class="container mx-auto">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-bold text-primary mb-12 text-center">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Is this the same A Level as in a school or college?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
+                qualification and certificate are identical to those awarded in
+                any other UK school or college.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do I have to sit exams in London?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                For this hybrid one-year route, yes. All exams are taken at the
+                LMSC JCQ-approved centre in London.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I study from outside the UK?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You can join all online teaching from overseas, but you
+                must travel to London for the in-person blocks in Mar–Apr and
+                for the May–Jun exams. We can signpost accommodation options and
+                safeguarding support for under-18s.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Why choose hybrid instead of fully online?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                You get online flexibility while learning new content, then
+                in-person exam training and intensive practice in London when it
+                matters most.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>How many hours a week should I plan?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Expect around 14–18 hours per week in total: 6–8 hours live
+                teaching plus 8–10 hours guided independent study.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do you record lessons?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. All online sessions are recorded for your cohort so you can
+                revisit explanations and catch up after unavoidable absences.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What calculator do I need?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                An exam-compliant scientific or graphing calculator acceptable
+                under Edexcel rules. You must still show full methods, not just
+                calculator output.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I pay in monthly instalments?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                No. For this accelerated Hybrid course, we offer Full Advance
+                payment (discounted) or Per Term; we do not offer monthly
+                instalments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What if I still have questions?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Contact our team to arrange a call, a taster lesson or a parent
+                webinar. We’ll walk you through timetables, assessments and exam
+                logistics in detail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a class="text-primary font-semibold hover:underline" href="#"
+          >View all FAQs →</a
+        >
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-        function toggleAccordion(button) {
-            const content = button.nextElementSibling;
-            const sign = button.querySelector('span:last-child');
+  function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const sign = button.querySelector("span:last-child");
 
-            // Close all other accordion items
-            document.querySelectorAll('.accordion-content').forEach(c => {
-                if (c !== content) {
-                    c.classList.remove('open');
-                }
-            });
+    // Close all other accordion items
+    document.querySelectorAll(".accordion-content").forEach((c) => {
+      if (c !== content) {
+        c.classList.remove("open");
+      }
+    });
 
-            document.querySelectorAll('.faq-button span:last-child').forEach(s => {
-                if (s !== sign) {
-                    s.textContent = '+';
-                }
-            });
+    document.querySelectorAll(".faq-button span:last-child").forEach((s) => {
+      if (s !== sign) {
+        s.textContent = "+";
+      }
+    });
 
-            // Toggle current item
-            content.classList.toggle('open');
-            sign.textContent = content.classList.contains('open') ? '−' : '+';
-        }
-    </script>
+    // Toggle current item
+    content.classList.toggle("open");
+    sign.textContent = content.classList.contains("open") ? "−" : "+";
+  }
+</script>
 <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
 
-        // Observe all animated elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(
+      ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
 {% endblock %}

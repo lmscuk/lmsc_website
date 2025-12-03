@@ -1,780 +1,1181 @@
-{% extends 'base.html' %}
-
-{% block title %}Fees & Finance | London Maths & Science College{% endblock %}
-
-{% block extra_head %}
+{% extends 'base.html' %} {% block title %}Fees & Finance | London Maths &
+Science College{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="Review tuition fees, payment options and scholarships at London Maths & Science College for British A Level, BTEC and hybrid STEM programmes."
+/>
+{% endblock %} {% block extra_head %}
 <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+  .slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
 
-        .slide-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+  .slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+  .slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
 
-        .slide-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+  .slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
 
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-        .stagger-1 {
-            transition-delay: 0.1s;
-        }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
 
-        .stagger-2 {
-            transition-delay: 0.2s;
-        }
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
 
-        .stagger-3 {
-            transition-delay: 0.3s;
-        }
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
 
-        .stagger-4 {
-            transition-delay: 0.4s;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
+</style>
+{% endblock %} {% block content %}
 <!-- Navigation -->
 
 <!-- Hero Section -->
 <section class="relative py-20 px-6 overflow-hidden">
-<div class="container mx-auto max-w-4xl relative z-10">
-<div class="text-center max-w-3xl mx-auto fade-in">
-<h1 class="text-primary font-bold text-gray-900 mb-6">
-                    Fees &amp; Finance
-                </h1>
-<p class="text-gray-600 mb-8 leading-relaxed">
-                    At London Maths &amp; Science College, we aim to be clear and transparent about costs. Here you'll find
-                    an overview of our tuition fees, what they include, payment options and support available for UK and
-                    international families.
-                </p>
-<div class="flex flex-wrap justify-center gap-4">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all inline-flex items-center gap-2">
-                        Download full fee schedule
-                    </button>
-<button class="bg-transparent border-2 border-primary text-primary px-8 py-4 rounded-full font-medium hover:bg-primary hover:text-white">
-                        Talk to our admissions team
-                    </button>
-</div>
-</div>
-</div>
+  <div class="container mx-auto max-w-4xl relative z-10">
+    <div class="text-center max-w-3xl mx-auto fade-in">
+      <h1 class="text-primary font-bold text-gray-900 mb-6">
+        Fees &amp; Finance
+      </h1>
+      <p class="text-gray-600 mb-8 leading-relaxed">
+        At London Maths &amp; Science College, we aim to be clear and
+        transparent about costs. Here you'll find an overview of our tuition
+        fees, what they include, payment options and support available for UK
+        and international families.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <button
+          class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all inline-flex items-center gap-2"
+        >
+          Download full fee schedule
+        </button>
+        <button
+          class="bg-transparent border-2 border-primary text-primary px-8 py-4 rounded-full font-medium hover:bg-primary hover:text-white"
+        >
+          Talk to our admissions team
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 1 - Overview -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-start">
-<div class="slide-in-left">
-<h2 class="font-bold text-primary mb-6">
-                        Clear, transparent fees for a British sixth form education
-                    </h2>
-<div class="space-y-4 text-gray-700 leading-relaxed">
-<p>
-                            Studying at LMSC is an investment in a recognised British qualification and in your child's
-                            future. Our fees reflect small class sizes, specialist teaching and the support needed for
-                            students to succeed in demanding A Level and Level 3 BTEC programmes.
-                        </p>
-<p>
-                            We publish our fees openly and explain what is included, any additional costs, and the
-                            payment options available. If you are based outside the UK, we can also advise on
-                            international payments and typical extra costs (such as exam centre fees in your own
-                            country).
-                        </p>
-</div>
-</div>
-<div class="slide-in-right">
-<img alt="Financial clarity" class="rounded-2xl shadow-lg mb-6" src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&amp;h=600&amp;fit=crop"/>
-<div class="space-y-3">
-<div class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">Tuition fees are set <strong>per academic year</strong></span>
-</div>
-<div class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">Different fee bands for <strong>in-person, online and
-                                    hybrid</strong> study</span>
-</div>
-<div class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">Clear outline of <strong>what is included</strong> and
-                                <strong>any additional charges</strong></span>
-</div>
-<div class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700"><strong>Installment plans</strong> available (subject to
-                                terms)</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div class="slide-in-left">
+        <h2 class="font-bold text-primary mb-6">
+          Clear, transparent fees for a British sixth form education
+        </h2>
+        <div class="space-y-4 text-gray-700 leading-relaxed">
+          <p>
+            Studying at LMSC is an investment in a recognised British
+            qualification and in your child's future. Our fees reflect small
+            class sizes, specialist teaching and the support needed for students
+            to succeed in demanding A Level and Level 3 BTEC programmes.
+          </p>
+          <p>
+            We publish our fees openly and explain what is included, any
+            additional costs, and the payment options available. If you are
+            based outside the UK, we can also advise on international payments
+            and typical extra costs (such as exam centre fees in your own
+            country).
+          </p>
+        </div>
+      </div>
+      <div class="slide-in-right">
+        <img
+          alt="Financial clarity"
+          class="rounded-2xl shadow-lg mb-6"
+          src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&amp;h=600&amp;fit=crop"
+        />
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >Tuition fees are set <strong>per academic year</strong></span
+            >
+          </div>
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >Different fee bands for
+              <strong>in-person, online and hybrid</strong> study</span
+            >
+          </div>
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >Clear outline of <strong>what is included</strong> and
+              <strong>any additional charges</strong></span
+            >
+          </div>
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              ><strong>Installment plans</strong> available (subject to
+              terms)</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 2 - Fee Structure -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="text-center mb-12 fade-in">
-<h2 class="font-bold text-primary mb-6">
-                    Our fee structure
-                </h2>
-<p class="text-gray-700 max-w-3xl mx-auto">
-                    Fees may vary depending on your programme, study mode and number of subjects. The details below give
-                    a typical structure; for exact figures, please refer to our downloadable fee schedule or speak to
-                    admissions.
-                </p>
-</div>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="bg-gradient-to-br from-primary to-secondary text-white rounded-2xl p-8 scale-in stagger-1 hover:shadow-2xl transition-shadow">
-<div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mb-6">
-<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="text-2xl font-bold mb-4">A Level Programmes</h3>
-<ul class="space-y-2 text-green-50">
-<li>• Tuition fee per academic year (per 3 A Level package)</li>
-<li>• Additional fee if adding a 4th subject (e.g. Further Maths)</li>
-<li>• Different rates for: on-campus, online, hybrid</li>
-</ul>
-</div>
-<div class="bg-white border-2 border-primary rounded-2xl p-8 scale-in stagger-2 hover:shadow-2xl transition-shadow">
-<div class="w-16 h-16 bg-accent rounded-xl flex items-center justify-center mb-6">
-<svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="text-2xl font-bold mb-4 text-primary">BTEC &amp; Vocational Pathways</h3>
-<ul class="space-y-2 text-gray-700">
-<li>• Tuition fee per academic year for full-time Level 3 BTEC</li>
-<li>• Options for combined A Level + BTEC programmes</li>
-</ul>
-</div>
-<div class="bg-white border-2 border-secondary rounded-2xl p-8 scale-in stagger-3 hover:shadow-2xl transition-shadow">
-<div class="w-16 h-16 bg-accent rounded-xl flex items-center justify-center mb-6">
-<svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="text-2xl font-bold mb-4 text-secondary">GCSE &amp; Retake Programmes</h3>
-<ul class="space-y-2 text-gray-700">
-<li>• Tuition fee for GCSE packages (full year or intensive)</li>
-<li>• Retake/improvement programmes for key subjects</li>
-</ul>
-</div>
-<div class="bg-gradient-to-br from-secondary to-primary text-white rounded-2xl p-8 scale-in stagger-4 hover:shadow-2xl transition-shadow">
-<div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mb-6">
-<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="text-2xl font-bold mb-4">Additional Services</h3>
-<ul class="space-y-2 text-green-50">
-<li>• Exam entry charges (where not included)</li>
-<li>• One-off enrolment/registration fee</li>
-<li>• Optional extras (e.g. additional tutoring)</li>
-</ul>
-</div>
-</div>
-<div class="text-center mt-12 fade-in">
-<button class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all">
-                    See detailed fee schedule
-                </button>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-12 fade-in">
+      <h2 class="font-bold text-primary mb-6">Our fee structure</h2>
+      <p class="text-gray-700 max-w-3xl mx-auto">
+        Fees may vary depending on your programme, study mode and number of
+        subjects. The details below give a typical structure; for exact figures,
+        please refer to our downloadable fee schedule or speak to admissions.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div
+        class="bg-gradient-to-br from-primary to-secondary text-white rounded-2xl p-8 scale-in stagger-1 hover:shadow-2xl transition-shadow"
+      >
+        <div
+          class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">A Level Programmes</h3>
+        <ul class="space-y-2 text-green-50">
+          <li>• Tuition fee per academic year (per 3 A Level package)</li>
+          <li>• Additional fee if adding a 4th subject (e.g. Further Maths)</li>
+          <li>• Different rates for: on-campus, online, hybrid</li>
+        </ul>
+      </div>
+      <div
+        class="bg-white border-2 border-primary rounded-2xl p-8 scale-in stagger-2 hover:shadow-2xl transition-shadow"
+      >
+        <div
+          class="w-16 h-16 bg-accent rounded-xl flex items-center justify-center mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-primary"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4 text-primary">
+          BTEC &amp; Vocational Pathways
+        </h3>
+        <ul class="space-y-2 text-gray-700">
+          <li>• Tuition fee per academic year for full-time Level 3 BTEC</li>
+          <li>• Options for combined A Level + BTEC programmes</li>
+        </ul>
+      </div>
+      <div
+        class="bg-white border-2 border-secondary rounded-2xl p-8 scale-in stagger-3 hover:shadow-2xl transition-shadow"
+      >
+        <div
+          class="w-16 h-16 bg-accent rounded-xl flex items-center justify-center mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-secondary"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4 text-secondary">
+          GCSE &amp; Retake Programmes
+        </h3>
+        <ul class="space-y-2 text-gray-700">
+          <li>• Tuition fee for GCSE packages (full year or intensive)</li>
+          <li>• Retake/improvement programmes for key subjects</li>
+        </ul>
+      </div>
+      <div
+        class="bg-gradient-to-br from-secondary to-primary text-white rounded-2xl p-8 scale-in stagger-4 hover:shadow-2xl transition-shadow"
+      >
+        <div
+          class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Additional Services</h3>
+        <ul class="space-y-2 text-green-50">
+          <li>• Exam entry charges (where not included)</li>
+          <li>• One-off enrolment/registration fee</li>
+          <li>• Optional extras (e.g. additional tutoring)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-12 fade-in">
+      <button
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all"
+      >
+        See detailed fee schedule
+      </button>
+    </div>
+  </div>
 </section>
 <!-- Section 3 - What's Included -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="text-center mb-12 fade-in">
-<h2 class="font-bold text-primary mb-6">
-                    What your tuition fees include
-                </h2>
-<p class="text-gray-700 max-w-3xl mx-auto">
-                    We want you to be confident about what you are paying for. Unless otherwise stated, tuition fees at
-                    LMSC typically include:
-                </p>
-</div>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-1">
-<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
-<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="font-bold mb-4">Teaching and learning</h3>
-<ul class="space-y-2 text-gray-600 text-sm">
-<li>• Live lessons delivered by specialist teachers</li>
-<li>• Access to lesson recordings (for online/hybrid programmes)</li>
-<li>• Schemes of work, resources and homework setting</li>
-</ul>
-</div>
-<div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-2">
-<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
-<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="font-bold mb-4">Assessment and reporting</h3>
-<ul class="space-y-2 text-gray-600 text-sm">
-<li>• Regular quizzes, topic tests and mock exams</li>
-<li>• Marking and feedback on assessed work</li>
-<li>• Written reports and progress reviews</li>
-</ul>
-</div>
-<div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-3">
-<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
-<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="font-bold mb-4">Pastoral and academic support</h3>
-<ul class="space-y-2 text-gray-600 text-sm">
-<li>• Contact with a named member of staff</li>
-<li>• Study skills and exam preparation guidance</li>
-</ul>
-</div>
-<div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-4">
-<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
-<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h3 class="font-bold mb-4">Guidance and progression support</h3>
-<ul class="space-y-2 text-gray-600 text-sm">
-<li>• Advice on subject choices and pathways</li>
-<li>• Support with UCAS and university applications</li>
-<li>• References provided for further study</li>
-</ul>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-12 fade-in">
+      <h2 class="font-bold text-primary mb-6">
+        What your tuition fees include
+      </h2>
+      <p class="text-gray-700 max-w-3xl mx-auto">
+        We want you to be confident about what you are paying for. Unless
+        otherwise stated, tuition fees at LMSC typically include:
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-1">
+        <div
+          class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="font-bold mb-4">Teaching and learning</h3>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li>• Live lessons delivered by specialist teachers</li>
+          <li>• Access to lesson recordings (for online/hybrid programmes)</li>
+          <li>• Schemes of work, resources and homework setting</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-2">
+        <div
+          class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="font-bold mb-4">Assessment and reporting</h3>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li>• Regular quizzes, topic tests and mock exams</li>
+          <li>• Marking and feedback on assessed work</li>
+          <li>• Written reports and progress reviews</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-3">
+        <div
+          class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="font-bold mb-4">Pastoral and academic support</h3>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li>• Contact with a named member of staff</li>
+          <li>• Study skills and exam preparation guidance</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-8 scale-in stagger-4">
+        <div
+          class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewbox="0 0 24 24"
+          >
+            <path
+              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="font-bold mb-4">Guidance and progression support</h3>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li>• Advice on subject choices and pathways</li>
+          <li>• Support with UCAS and university applications</li>
+          <li>• References provided for further study</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 4 - Additional Costs -->
 <section class="py-20 bg-white">
-<div class="container mx-auto">
-<div class="max-w-5xl mx-auto">
-<div class="text-center mb-12 fade-in">
-<h2 class="font-bold text-primary mb-6">
-                        Additional costs and exam fees
-                    </h2>
-<p class="text-gray-700 max-w-3xl mx-auto">
-                        Some costs sit outside core tuition fees. We will always explain these clearly and in advance.
-                    </p>
-</div>
-<div class="space-y-4">
-<details class="bg-gray-50 rounded-xl p-6 scale-in stagger-1">
-<summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-<span>Examination fees</span>
-<span class="text-2xl">+</span>
-</summary>
-<div class="mt-4 text-gray-700 space-y-2">
-<p>• Charges for A Level, GCSE or BTEC exam entries</p>
-<p>• Additional charges for late entries, resits or private candidate entries at external
-                                centres</p>
-</div>
-</details>
-<details class="bg-gray-50 rounded-xl p-6 scale-in stagger-2">
-<summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-<span>Textbooks and materials</span>
-<span class="text-2xl">+</span>
-</summary>
-<div class="mt-4 text-gray-700 space-y-2">
-<p>• Recommended textbooks or workbooks (where not provided digitally)</p>
-<p>• Stationery and scientific calculators</p>
-</div>
-</details>
-<details class="bg-gray-50 rounded-xl p-6 scale-in stagger-3">
-<summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-<span>Specialist resources</span>
-<span class="text-2xl">+</span>
-</summary>
-<div class="mt-4 text-gray-700">
-<p>For certain subjects, such as lab-based sciences or computing, there may be recommended
-                                equipment or software</p>
-</div>
-</details>
-<details class="bg-gray-50 rounded-xl p-6 scale-in stagger-4">
-<summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
-<span>Optional extras</span>
-<span class="text-2xl">+</span>
-</summary>
-<div class="mt-4 text-gray-700">
-<p>Enrichment activities, trips or additional tutoring (if offered)</p>
-</div>
-</details>
-</div>
-<div class="mt-8 bg-accent border-2 border-primary rounded-xl p-6 fade-in">
-<p class="text-gray-800">
-<strong>Note:</strong> For international students, we will discuss likely <strong>local exam
-                            centre fees</strong> if you sit exams outside the UK.
-                    </p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 fade-in">
+        <h2 class="font-bold text-primary mb-6">
+          Additional costs and exam fees
+        </h2>
+        <p class="text-gray-700 max-w-3xl mx-auto">
+          Some costs sit outside core tuition fees. We will always explain these
+          clearly and in advance.
+        </p>
+      </div>
+      <div class="space-y-4">
+        <details class="bg-gray-50 rounded-xl p-6 scale-in stagger-1">
+          <summary
+            class="font-bold text-lg cursor-pointer flex justify-between items-center"
+          >
+            <span>Examination fees</span>
+            <span class="text-2xl">+</span>
+          </summary>
+          <div class="mt-4 text-gray-700 space-y-2">
+            <p>• Charges for A Level, GCSE or BTEC exam entries</p>
+            <p>
+              • Additional charges for late entries, resits or private candidate
+              entries at external centres
+            </p>
+          </div>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-6 scale-in stagger-2">
+          <summary
+            class="font-bold text-lg cursor-pointer flex justify-between items-center"
+          >
+            <span>Textbooks and materials</span>
+            <span class="text-2xl">+</span>
+          </summary>
+          <div class="mt-4 text-gray-700 space-y-2">
+            <p>
+              • Recommended textbooks or workbooks (where not provided
+              digitally)
+            </p>
+            <p>• Stationery and scientific calculators</p>
+          </div>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-6 scale-in stagger-3">
+          <summary
+            class="font-bold text-lg cursor-pointer flex justify-between items-center"
+          >
+            <span>Specialist resources</span>
+            <span class="text-2xl">+</span>
+          </summary>
+          <div class="mt-4 text-gray-700">
+            <p>
+              For certain subjects, such as lab-based sciences or computing,
+              there may be recommended equipment or software
+            </p>
+          </div>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-6 scale-in stagger-4">
+          <summary
+            class="font-bold text-lg cursor-pointer flex justify-between items-center"
+          >
+            <span>Optional extras</span>
+            <span class="text-2xl">+</span>
+          </summary>
+          <div class="mt-4 text-gray-700">
+            <p>
+              Enrichment activities, trips or additional tutoring (if offered)
+            </p>
+          </div>
+        </details>
+      </div>
+      <div
+        class="mt-8 bg-accent border-2 border-primary rounded-xl p-6 fade-in"
+      >
+        <p class="text-gray-800">
+          <strong>Note:</strong> For international students, we will discuss
+          likely <strong>local exam centre fees</strong> if you sit exams
+          outside the UK.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 5 - Payment Options -->
 <section class="py-20 bg-gray-50">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-start">
-<div class="slide-in-left">
-<h2 class="font-bold text-primary mb-6">
-                        Payment options
-                    </h2>
-<p class="text-gray-700 leading-relaxed mb-8">
-                        We understand that families have different financial circumstances and preferences. Subject to
-                        our terms and conditions, we typically offer a range of payment options.
-                    </p>
-<img alt="Payment options" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&amp;h=600&amp;fit=crop"/>
-</div>
-<div class="slide-in-right space-y-6">
-<div class="bg-white rounded-xl p-6 border-2 border-primary">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<div>
-<h3 class="text-lg font-bold mb-2">Annual payment</h3>
-<p class="text-gray-600 text-sm">Full-fee payment before the start of the academic year.
-                                    May include a small discount if paid by a set date.</p>
-</div>
-</div>
-</div>
-<div class="bg-white rounded-xl p-6 border-2 border-secondary">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
-<svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<div>
-<h3 class="text-lg font-bold mb-2">Termly installments</h3>
-<p class="text-gray-600 text-sm">Fees divided into termly payments due at specified
-                                    points in the year.</p>
-</div>
-</div>
-</div>
-<div class="bg-white rounded-xl p-6 border-2 border-primary">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<div>
-<h3 class="text-lg font-bold mb-2">Monthly installments</h3>
-<p class="text-gray-600 text-sm">Regular monthly payments via direct debit or agreed
-                                    payment plan.</p>
-</div>
-</div>
-</div>
-<p class="text-sm text-gray-600 italic">
-                        You will receive a clear schedule of due dates and amounts when you enrol.
-                    </p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div class="slide-in-left">
+        <h2 class="font-bold text-primary mb-6">Payment options</h2>
+        <p class="text-gray-700 leading-relaxed mb-8">
+          We understand that families have different financial circumstances and
+          preferences. Subject to our terms and conditions, we typically offer a
+          range of payment options.
+        </p>
+        <img
+          alt="Payment options"
+          class="rounded-2xl shadow-lg"
+          src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&amp;h=600&amp;fit=crop"
+        />
+      </div>
+      <div class="slide-in-right space-y-6">
+        <div class="bg-white rounded-xl p-6 border-2 border-primary">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0"
+            >
+              <svg
+                class="w-6 h-6 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+              >
+                <path
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold mb-2">Annual payment</h3>
+              <p class="text-gray-600 text-sm">
+                Full-fee payment before the start of the academic year. May
+                include a small discount if paid by a set date.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-6 border-2 border-secondary">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0"
+            >
+              <svg
+                class="w-6 h-6 text-secondary"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+              >
+                <path
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold mb-2">Termly installments</h3>
+              <p class="text-gray-600 text-sm">
+                Fees divided into termly payments due at specified points in the
+                year.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-6 border-2 border-primary">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0"
+            >
+              <svg
+                class="w-6 h-6 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+              >
+                <path
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold mb-2">Monthly installments</h3>
+              <p class="text-gray-600 text-sm">
+                Regular monthly payments via direct debit or agreed payment
+                plan.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 italic">
+          You will receive a clear schedule of due dates and amounts when you
+          enrol.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 6 - Deposits & Refunds -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="mx-auto max-w-4xl">
-<div class="text-center mb-12 fade-in">
-<h2 class="font-bold text-primary mb-6">
-                        Deposits, refunds and withdrawals
-                    </h2>
-<p class="text-gray-700">
-                        These details will be set out in your enrolment contract, but the key principles should be clear
-                        on
-                        the website.
-                    </p>
-</div>
-<div class="space-y-4">
-<div class="bg-gray-50 rounded-xl p-6 scale-in stagger-1">
-<h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-                            Deposits
-                        </h3>
-<p class="text-gray-700">A non-refundable deposit may be required to secure a place. This
-                            deposit is
-                            typically offset against the first instalment of tuition fees.</p>
-</div>
-<div class="bg-gray-50 rounded-xl p-6 scale-in stagger-2">
-<h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-                            Cancellation before the course starts
-                        </h3>
-<p class="text-gray-700">We outline deadlines by which you can cancel without being liable for
-                            full
-                            fees (apart from any non-refundable deposit).</p>
-</div>
-<div class="bg-gray-50 rounded-xl p-6 scale-in stagger-3">
-<h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-                            Withdrawal during the year
-                        </h3>
-<p class="text-gray-700">Our terms and conditions explain how much notice is required and what
-                            proportion of fees remain payable if a student withdraws mid-year.</p>
-</div>
-<div class="bg-gray-50 rounded-xl p-6 scale-in stagger-4">
-<h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-                            Changes of programme or study mode
-                        </h3>
-<p class="text-gray-700">Changes (e.g. from full-time to reduced load, or in-person to online)
-                            may
-                            affect fees. Any changes will be discussed and confirmed in writing.</p>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-4xl">
+      <div class="text-center mb-12 fade-in">
+        <h2 class="font-bold text-primary mb-6">
+          Deposits, refunds and withdrawals
+        </h2>
+        <p class="text-gray-700">
+          These details will be set out in your enrolment contract, but the key
+          principles should be clear on the website.
+        </p>
+      </div>
+      <div class="space-y-4">
+        <div class="bg-gray-50 rounded-xl p-6 scale-in stagger-1">
+          <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <svg
+              class="w-6 h-6 text-primary"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            Deposits
+          </h3>
+          <p class="text-gray-700">
+            A non-refundable deposit may be required to secure a place. This
+            deposit is typically offset against the first instalment of tuition
+            fees.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-6 scale-in stagger-2">
+          <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <svg
+              class="w-6 h-6 text-primary"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M6 18L18 6M6 6l12 12"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            Cancellation before the course starts
+          </h3>
+          <p class="text-gray-700">
+            We outline deadlines by which you can cancel without being liable
+            for full fees (apart from any non-refundable deposit).
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-6 scale-in stagger-3">
+          <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <svg
+              class="w-6 h-6 text-primary"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            Withdrawal during the year
+          </h3>
+          <p class="text-gray-700">
+            Our terms and conditions explain how much notice is required and
+            what proportion of fees remain payable if a student withdraws
+            mid-year.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-6 scale-in stagger-4">
+          <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <svg
+              class="w-6 h-6 text-primary"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            Changes of programme or study mode
+          </h3>
+          <p class="text-gray-700">
+            Changes (e.g. from full-time to reduced load, or in-person to
+            online) may affect fees. Any changes will be discussed and confirmed
+            in writing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 7 - Scholarships -->
 <section class="py-20 bg-gradient-to-br from-primary to-secondary text-white">
-<div class="container mx-auto px-6">
-<div class="mx-auto max-w-4xl text-center fade-in">
-<h2 class="font-bold mb-6">
-                    Scholarships, bursaries and financial support
-                </h2>
-<p class="text-green-50 mb-8 leading-relaxed">
-                    Where possible, LMSC aims to ensure that financial circumstances are not the only barrier to a
-                    student
-                    accessing our programmes. We may offer a limited number of scholarships or bursaries, usually based
-                    on
-                    academic potential and/or financial need.
-                </p>
-<p class="text-green-50 mb-8">
-                    Availability and criteria vary from year to year. Please speak to our admissions team if you would
-                    like
-                    to discuss possible support or to see the current policy.
-                </p>
-<button class="bg-white text-primary px-8 py-4 rounded-full font-medium hover:bg-gray-100">
-                    Ask about scholarships and bursaries
-                </button>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-4xl text-center fade-in">
+      <h2 class="font-bold mb-6">
+        Scholarships, bursaries and financial support
+      </h2>
+      <p class="text-green-50 mb-8 leading-relaxed">
+        Where possible, LMSC aims to ensure that financial circumstances are not
+        the only barrier to a student accessing our programmes. We may offer a
+        limited number of scholarships or bursaries, usually based on academic
+        potential and/or financial need.
+      </p>
+      <p class="text-green-50 mb-8">
+        Availability and criteria vary from year to year. Please speak to our
+        admissions team if you would like to discuss possible support or to see
+        the current policy.
+      </p>
+      <button
+        class="bg-white text-primary px-8 py-4 rounded-full font-medium hover:bg-gray-100"
+      >
+        Ask about scholarships and bursaries
+      </button>
+    </div>
+  </div>
 </section>
 <!-- Section 8 - International Payments -->
 <section class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-12 items-center">
-<div class="slide-in-left">
-<img alt="International payments" class="rounded-2xl shadow-lg" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&amp;h=600&amp;fit=crop"/>
-</div>
-<div class="slide-in-right">
-<h2 class="font-bold text-primary mb-6">
-                        International payments
-                    </h2>
-<p class="text-gray-700 mb-6 leading-relaxed">
-                        For families based outside the UK, we can accept international payments via bank transfer (and,
-                        if you wish, card payments or third-party platforms).
-                    </p>
-<ul class="space-y-3">
-<li class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">All fees are set and invoiced in <strong>GBP (£)</strong></span>
-</li>
-<li class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">Any bank charges or currency conversion fees are normally the
-                                responsibility of the payer</span>
-</li>
-<li class="flex items-start gap-3">
-<svg class="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-gray-700">We provide clear payment instructions and due dates in your
-                                offer letter</span>
-</li>
-</ul>
-<p class="mt-6 text-gray-600">
-                        If you have questions about international payments, our admissions and finance teams can provide
-                        guidance.
-                    </p>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="slide-in-left">
+        <img
+          alt="International payments"
+          class="rounded-2xl shadow-lg"
+          src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&amp;h=600&amp;fit=crop"
+        />
+      </div>
+      <div class="slide-in-right">
+        <h2 class="font-bold text-primary mb-6">International payments</h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          For families based outside the UK, we can accept international
+          payments via bank transfer (and, if you wish, card payments or
+          third-party platforms).
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >All fees are set and invoiced in <strong>GBP (£)</strong></span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >Any bank charges or currency conversion fees are normally the
+              responsibility of the payer</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+            <span class="text-gray-700"
+              >We provide clear payment instructions and due dates in your offer
+              letter</span
+            >
+          </li>
+        </ul>
+        <p class="mt-6 text-gray-600">
+          If you have questions about international payments, our admissions and
+          finance teams can provide guidance.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- CTA Section -->
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 gap-20 items-center">
-<div>
-<span class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5">
-                            Next steps
-                        </span>
-<h2 class="text-primary font-bold text-primary mb-4">
-                        Want to talk through fees and options?
-                    </h2>
-<p class="text-opacity-90 mb-8 leading-relaxed">
-                        We know that fees and finance are an important part of your decision. Our admissions team can
-                        explain how our fees work in your specific situation, including study mode, subject choices and
-                        any additional costs such as exams.
-
-                    </p>
-<!-- BTN 1 -->
-<button class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden">
-<div class="btn-content">
-<span class="text-part">Book a Consultation</span>
-<span class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full">
-<svg class="h-5 w-5 text-emerald-900" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</span>
-</div>
-</button>
-</div>
-<!-- Right Side - Image with Chat Bubbles -->
-<div class="relative flex items-center justify-center">
-<!-- Main Image Container -->
-<div class="main-image relative w-full max-w-sm">
-<!-- Background placeholder for the person image -->
-<div class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center">
-<img alt="Person with phone" class="w-full h-full object-cover object-center" src="{{ url_for('static', filename='Images/user-image.png') }}"/>
-</div>
-<!-- Chat Bubbles Overlay -->
-<div class="chat-block">
-<!-- User Message -->
-<div class="user-message chat-bubble-user">
-<div class="user-avatar"></div>
-<div class="user-message-bubble">
-<div class="name">Oliver Moy</div>
-<div class="text">I need help with my budget.</div>
-</div>
-</div>
-<!-- AI Response -->
-<div class="ai-message chat-bubble-ai">
-<div class="ai-avatar-bubble">
-<svg fill="currentColor" viewbox="0 0 24 24">
-<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-</div>
-<div class="ai-message-bubble">
-<div class="name">AI Assistant</div>
-<div class="text">Sure! Let's carefully review your income and expenses.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div>
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          Want to talk through fees and options?
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          We know that fees and finance are an important part of your decision.
+          Our admissions team can explain how our fees work in your specific
+          situation, including study mode, subject choices and any additional
+          costs such as exams.
+        </p>
+        <!-- BTN 1 -->
+        <button
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <!-- Right Side - Image with Chat Bubbles -->
+      <div class="relative flex items-center justify-center">
+        <!-- Main Image Container -->
+        <div class="main-image relative w-full max-w-sm">
+          <!-- Background placeholder for the person image -->
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
+            />
+          </div>
+          <!-- Chat Bubbles Overlay -->
+          <div class="chat-block">
+            <!-- User Message -->
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Section 10 - FAQs -->
 <!-- Section 10: FAQs -->
 <section class="py-20 px-6 bg-white">
-<div class="container mx-auto">
-<div class="max-w-4xl mx-auto">
-<h2 class="font-bold text-primary mb-12 text-center">Frequently Asked Questions</h2>
-<div class="space-y-4">
-<!-- FAQ 1 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Is this the same A Level as in a school or college?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The qualification and certificate are
-                  identical to those awarded in any other UK school or college.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 2 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do I have to sit exams in London?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>For this hybrid one-year route, yes. All exams are taken at the LMSC JCQ-approved centre in London.
-                </p>
-</div>
-</div>
-</div>
-<!-- FAQ 3 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I study from outside the UK?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. You can join all online teaching from overseas, but you must travel to London for the in-person
-                  blocks in Mar–Apr and for the May–Jun exams. We can signpost accommodation options and safeguarding
-                  support for under-18s.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 4 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Why choose hybrid instead of fully online?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>You get online flexibility while learning new content, then in-person exam training and intensive
-                  practice in London when it matters most.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 5 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>How many hours a week should I plan?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Expect around 14–18 hours per week in total: 6–8 hours live teaching plus 8–10 hours guided
-                  independent
-                  study.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 6 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Do you record lessons?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Yes. All online sessions are recorded for your cohort so you can revisit explanations and catch up
-                  after unavoidable absences.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 7 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What calculator do I need?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>An exam-compliant scientific or graphing calculator acceptable under Edexcel rules. You must still
-                  show
-                  full methods, not just calculator output.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 8 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>Can I pay in monthly instalments?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>No. For this accelerated Hybrid course, we offer Full Advance payment (discounted) or Per Term; we do
-                  not offer monthly instalments.</p>
-</div>
-</div>
-</div>
-<!-- FAQ 9 -->
-<div class="accordion-item border-bottom-2 overflow-hidden">
-<button class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary" onclick="toggleAccordion(this)">
-<span>What if I still have questions?</span>
-<span class="text-2xl">+</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-gray-700">
-<p>Contact our team to arrange a call, a taster lesson or a parent webinar. We’ll walk you through
-                  timetables, assessments and exam logistics in detail.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center mt-12">
-<a class="text-primary font-semibold hover:underline" href="#">View all FAQs →</a>
-</div>
-</div>
-</div>
+  <div class="container mx-auto">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-bold text-primary mb-12 text-center">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Is this the same A Level as in a school or college?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
+                qualification and certificate are identical to those awarded in
+                any other UK school or college.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do I have to sit exams in London?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                For this hybrid one-year route, yes. All exams are taken at the
+                LMSC JCQ-approved centre in London.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I study from outside the UK?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. You can join all online teaching from overseas, but you
+                must travel to London for the in-person blocks in Mar–Apr and
+                for the May–Jun exams. We can signpost accommodation options and
+                safeguarding support for under-18s.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Why choose hybrid instead of fully online?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                You get online flexibility while learning new content, then
+                in-person exam training and intensive practice in London when it
+                matters most.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>How many hours a week should I plan?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Expect around 14–18 hours per week in total: 6–8 hours live
+                teaching plus 8–10 hours guided independent study.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Do you record lessons?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Yes. All online sessions are recorded for your cohort so you can
+                revisit explanations and catch up after unavoidable absences.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What calculator do I need?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                An exam-compliant scientific or graphing calculator acceptable
+                under Edexcel rules. You must still show full methods, not just
+                calculator output.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>Can I pay in monthly instalments?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                No. For this accelerated Hybrid course, we offer Full Advance
+                payment (discounted) or Per Term; we do not offer monthly
+                instalments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-bottom-2 overflow-hidden">
+          <button
+            class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+            onclick="toggleAccordion(this)"
+          >
+            <span>What if I still have questions?</span>
+            <span class="text-2xl">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="px-6 pb-6 text-gray-700">
+              <p>
+                Contact our team to arrange a call, a taster lesson or a parent
+                webinar. We’ll walk you through timetables, assessments and exam
+                logistics in detail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a class="text-primary font-semibold hover:underline" href="#"
+          >View all FAQs →</a
+        >
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
 
-        // Observe all animated elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+  // Observe all animated elements
+  document.addEventListener("DOMContentLoaded", () => {
+    const animatedElements = document.querySelectorAll(
+      ".fade-in, .slide-in-left, .slide-in-right, .scale-in"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
+  });
+</script>
 {% endblock %}

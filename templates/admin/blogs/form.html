@@ -2,6 +2,12 @@
 
 {% block title %}{{ 'Edit Article' if mode == 'edit' else 'Create Article' }} | Blog Studio{% endblock %}
 {% block nav_title %}Blog Studio{% endblock %}
+{% block meta_description %}
+<meta
+  name="description"
+  content="Create, edit and preview LMSC blog content within the admin blog studio form."
+/>
+{% endblock %}
 
 {% macro resolve_text(name, default='') -%}
   {%- if form_data and form_data.get(name) is not none -%}
