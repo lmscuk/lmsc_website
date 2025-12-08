@@ -1,0 +1,707 @@
+{% extends 'base.html' %} {% block extra_head %} {% if structured_data %}
+<script type="application/ld+json">
+  {{ structured_data | safe }}
+</script>
+{% endif %} {% if prospectus_url %}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"
+  crossorigin="anonymous"
+></script>
+<style>
+  .prospectus-flip-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    transform-origin: center top;
+  }
+
+  .prospectus-flip-wrapper.is-loading {
+    filter: grayscale(0.2);
+  }
+
+  .prospectus-flip-root {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .prospectus-flip-root .page {
+    width: 100%;
+    height: 100%;
+  }
+
+  .prospectus-flip-root .page-content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .prospectus-flip-placeholder {
+    min-height: 520px;
+  }
+
+  @media (max-width: 768px) {
+    .prospectus-flip-placeholder {
+      min-height: 420px;
+    }
+  }
+</style>
+{% endif %} {% endblock %} {% block content %}
+<section
+  class="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-white"
+>
+  <div class="absolute inset-0 -z-10 opacity-40" aria-hidden="true">
+    <div
+      class="absolute left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"
+    ></div>
+  </div>
+  <div class="mx-auto max-w-6xl px-6 py-16 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div>
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.35em] text-primary"
+        >
+          Prospectus
+        </p>
+        <h1 class="mt-4 text-3xl font-bold text-slate-900 md:text-5xl">
+          Explore life at London Maths &amp; Science College
+        </h1>
+        <p class="mt-5 max-w-2xl text-base text-slate-600 md:text-lg">
+          Discover how our specialist sixth form delivers ambitious STEM
+          pathways, expert teaching and personalised guidance into top
+          universities. Download the latest prospectus or browse online in the
+          interactive viewer below.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          {% if prospectus_url %}
+          <a
+            href="{{ prospectus_url }}"
+            download="{{ prospectus_download_name or 'lmsc-prospectus.pdf' }}"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+          >
+            <i class="fas fa-download mr-2 text-xs"></i>
+            Download prospectus
+          </a>
+          <a
+            href="{{ url_for('book_consultation') }}"
+            class="inline-flex items-center justify-center rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+          >
+            Book a consultation
+          </a>
+          {% else %}
+          <span
+            class="inline-flex items-center rounded-full bg-slate-200 px-6 py-3 text-sm font-semibold text-slate-500"
+          >
+            Prospectus available soon
+          </span>
+          <a
+            href="{{ url_for('book_consultation') }}"
+            class="inline-flex items-center justify-center rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+          >
+            Book a consultation
+          </a>
+          {% endif %}
+        </div>
+        {% if prospectus_version %}
+        <p class="mt-4 text-xs text-slate-400">
+          Latest edition: {{ prospectus_version['version_label'] }} {% if
+          prospectus_last_updated %} &middot; Updated {{ prospectus_last_updated
+          | format_date('%d %B %Y') }} {% endif %}
+        </p>
+        {% endif %}
+      </div>
+      <div
+        class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-xl"
+      >
+        <div class="grid gap-4">
+          <div class="flex items-start gap-3">
+            <span
+              class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"
+            >
+              <i class="fas fa-book text-sm"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">
+                Specialist STEM focus
+              </h3>
+              <p class="text-sm text-slate-500">
+                Review A Level, GCSE and pathway options designed around
+                ambitious STEM progression.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span
+              class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"
+            >
+              <i class="fas fa-user-graduate text-sm"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">
+                Student stories
+              </h3>
+              <p class="text-sm text-slate-500">
+                Understand our approach to coaching, enrichment and preparation
+                for competitive university routes.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span
+              class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"
+            >
+              <i class="fas fa-compass text-sm"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">
+                Admissions guidance
+              </h3>
+              <p class="text-sm text-slate-500">
+                Check entry requirements, funding information and the admissions
+                timeline for the upcoming intake.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8">
+    <div
+      class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+    >
+      <div>
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.35em] text-primary"
+        >
+          Interactive preview
+        </p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">
+          Browse the prospectus online
+        </h2>
+        <p class="mt-3 max-w-2xl text-sm text-slate-500">
+          Flip through the pages, zoom into areas of interest and switch to
+          full-screen for a distraction-free read.
+        </p>
+      </div>
+      {% if prospectus_url %}
+      <div
+        class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500"
+      >
+        PDF viewer &middot; Works on desktop, tablet and mobile
+      </div>
+      {% endif %}
+    </div>
+    {% if prospectus_url %}
+    <div
+      id="prospectusViewer"
+      data-pdf="{{ prospectus_url }}"
+      class="rounded-3xl border border-slate-200 bg-slate-50/60 p-6 shadow-inner"
+    >
+      <div
+        class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <div
+          class="flex items-center gap-2 text-sm font-semibold text-slate-600"
+          data-role="page"
+        >
+          Loading prospectus...
+        </div>
+        <div
+          class="flex flex-wrap items-center gap-2"
+          role="toolbar"
+          aria-label="Prospectus controls"
+        >
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="prev"
+            aria-label="Previous pages"
+          >
+            <i class="fas fa-chevron-left text-sm"></i>
+          </button>
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="next"
+            aria-label="Next pages"
+          >
+            <i class="fas fa-chevron-right text-sm"></i>
+          </button>
+          <span class="mx-2 hidden h-6 w-px bg-slate-200 lg:inline"></span>
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="zoom-in"
+            aria-label="Zoom in"
+          >
+            <i class="fas fa-plus text-sm"></i>
+          </button>
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="zoom-out"
+            aria-label="Zoom out"
+          >
+            <i class="fas fa-minus text-sm"></i>
+          </button>
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="zoom-reset"
+            aria-label="Reset zoom"
+          >
+            <i class="fas fa-compress text-sm"></i>
+          </button>
+          <span class="mx-2 hidden h-6 w-px bg-slate-200 lg:inline"></span>
+          <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition hover:text-primary"
+            data-action="fullscreen"
+            aria-label="Enter fullscreen"
+          >
+            <i class="fas fa-expand text-sm"></i>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mt-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow"
+      >
+        <div
+          class="prospectus-flip-wrapper is-loading px-4 py-6 sm:px-8"
+          data-role="flip-wrapper"
+        >
+          <div class="prospectus-flip-root" data-role="flip-root">
+            <div
+              class="prospectus-flip-placeholder flex h-full w-full items-center justify-center rounded-[28px] border border-dashed border-slate-200 bg-slate-50 text-sm font-medium text-slate-500"
+              data-role="placeholder"
+            >
+              Preparing interactive flipbook…
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="mt-4 text-center text-xs text-slate-500" data-role="status"></p>
+    </div>
+    {% else %}
+    <div
+      class="rounded-3xl border border-dashed border-slate-200 bg-slate-50 px-8 py-16 text-center"
+    >
+      <h3 class="text-xl font-semibold text-slate-800">
+        Prospectus coming soon
+      </h3>
+      <p class="mt-3 text-sm text-slate-500">
+        We&#39;re preparing the latest edition right now. Request a consultation
+        and we&#39;ll make sure you receive a copy the moment it goes live.
+      </p>
+      <a
+        href="{{ url_for('book_consultation') }}"
+        class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+      >
+        Request a call back
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="bg-slate-900 py-16 text-white">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.4em] text-primary/60"
+        >
+          What&#39;s inside
+        </p>
+        <h2 class="mt-3 text-3xl font-bold">
+          Plan your path into STEM success
+        </h2>
+        <p class="mt-4 text-sm text-slate-200">
+          The LMSC prospectus distils our approach to STEM excellence. It
+          signposts the pathways, support and expectations that help students
+          accomplish ambitious goals.
+        </p>
+      </div>
+      <div class="grid gap-4 text-sm text-slate-100">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <h3 class="text-base font-semibold text-white">
+            Curriculum breakdowns
+          </h3>
+          <p class="mt-2 text-sm text-slate-200">
+            Term-by-term outlines for Maths, Sciences, Computing and enrichment
+            so you understand exactly how we sequence mastery.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <h3 class="text-base font-semibold text-white">
+            Wellbeing and mentoring
+          </h3>
+          <p class="mt-2 text-sm text-slate-200">
+            Learn how students benefit from one-to-one coaching, pastoral
+            support and university preparation clinics.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <h3 class="text-base font-semibold text-white">
+            Admissions checklist
+          </h3>
+          <p class="mt-2 text-sm text-slate-200">
+            Clear application steps, key dates and entry requirements so you can
+            plan the transition with confidence.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div
+    class="mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 text-center shadow-sm lg:px-12"
+  >
+    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+      Take the next step
+    </p>
+    <h2 class="mt-3 text-3xl font-bold text-slate-900">
+      Let&#39;s map your personalised study plan
+    </h2>
+    <p class="mt-4 text-sm text-slate-500">
+      Share your goals with our admissions team. We&#39;ll review your academic
+      profile, advise on pathways and answer curriculum questions.
+    </p>
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+      <a
+        href="{{ url_for('book_consultation') }}"
+        class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+      >
+        Book your consultation
+      </a>
+      <a
+        href="mailto:info@lmsc.org.uk"
+        class="inline-flex items-center justify-center rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+      >
+        Email the admissions team
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_scripts %} {% if prospectus_url %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const viewer = document.getElementById("prospectusViewer");
+    if (
+      !viewer ||
+      typeof window.pdfjsLib === "undefined" ||
+      typeof window.St === "undefined"
+    ) {
+      return;
+    }
+
+    const pdfUrl = viewer.dataset.pdf;
+    const pageIndicator = viewer.querySelector('[data-role="page"]');
+    const statusText = viewer.querySelector('[data-role="status"]');
+    const flipWrapper = viewer.querySelector('[data-role="flip-wrapper"]');
+    const flipRoot = viewer.querySelector('[data-role="flip-root"]');
+    const placeholder = viewer.querySelector('[data-role="placeholder"]');
+    const prevBtn = viewer.querySelector('[data-action="prev"]');
+    const nextBtn = viewer.querySelector('[data-action="next"]');
+    const zoomInBtn = viewer.querySelector('[data-action="zoom-in"]');
+    const zoomOutBtn = viewer.querySelector('[data-action="zoom-out"]');
+    const zoomResetBtn = viewer.querySelector('[data-action="zoom-reset"]');
+    const fullscreenBtn = viewer.querySelector('[data-action="fullscreen"]');
+
+    const workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
+    if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+    }
+
+    const MIN_ZOOM = 0.8;
+    const MAX_ZOOM = 1.6;
+    const ZOOM_STEP = 0.12;
+
+    let pageFlip = null;
+    let zoomLevel = 1;
+
+    function setButtonState(button, disabled) {
+      if (!button) {
+        return;
+      }
+      button.disabled = disabled;
+      button.classList.toggle("opacity-50", disabled);
+      button.classList.toggle("pointer-events-none", disabled);
+    }
+
+    function setLoadingMessage(message) {
+      if (pageIndicator) {
+        pageIndicator.textContent = message;
+      }
+    }
+
+    function applyZoom(reportStatus = true) {
+      if (!flipWrapper) {
+        return;
+      }
+      flipWrapper.style.transform = `scale(${zoomLevel})`;
+      flipWrapper.style.transformOrigin = "center top";
+      setButtonState(zoomInBtn, zoomLevel >= MAX_ZOOM - 0.01);
+      setButtonState(zoomOutBtn, zoomLevel <= MIN_ZOOM + 0.01);
+      if (statusText && reportStatus) {
+        statusText.textContent = `Zoom ${Math.round(zoomLevel * 100)}%`;
+      }
+    }
+
+    function updateNavigation() {
+      if (!pageFlip || !pageIndicator) {
+        return;
+      }
+      const total = pageFlip.getPageCount();
+      const currentIndex = pageFlip.getCurrentPageIndex() + 1;
+      pageIndicator.textContent =
+        total > 1 ? `Page ${currentIndex} of ${total}` : `Page ${currentIndex}`;
+      setButtonState(prevBtn, currentIndex <= 1);
+      setButtonState(nextBtn, currentIndex >= total);
+      if (statusText && !statusText.textContent) {
+        statusText.textContent =
+          "Tip: drag a corner or use the arrows to turn pages.";
+      }
+    }
+
+    function enableControls() {
+      [
+        prevBtn,
+        nextBtn,
+        zoomInBtn,
+        zoomOutBtn,
+        zoomResetBtn,
+        fullscreenBtn,
+      ].forEach((btn) => setButtonState(btn, false));
+      flipWrapper?.classList.remove("is-loading");
+      applyZoom(false);
+      updateNavigation();
+    }
+
+    function buildFlipbook(pages) {
+      if (!flipRoot || !pages.length) {
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      pages
+        .sort((a, b) => a.number - b.number)
+        .forEach((page, index) => {
+          const pageElement = document.createElement("div");
+          pageElement.className = "page";
+          pageElement.dataset.density =
+            index === 0 || index === pages.length - 1 ? "hard" : "soft";
+
+          const content = document.createElement("div");
+          content.className =
+            "page-content overflow-hidden rounded-[30px] bg-white shadow-md";
+
+          const image = document.createElement("img");
+          image.src = page.dataUrl;
+          image.alt = `Prospectus page ${page.number}`;
+          image.decoding = "async";
+          image.loading = index === 0 ? "eager" : "lazy";
+          image.className = "h-full w-full bg-white object-contain";
+
+          content.appendChild(image);
+          pageElement.appendChild(content);
+          fragment.appendChild(pageElement);
+        });
+
+      flipRoot.innerHTML = "";
+      flipRoot.appendChild(fragment);
+
+      const basePage = pages[0];
+      const aspectRatio =
+        basePage.width && basePage.height
+          ? basePage.width / basePage.height
+          : 0.75;
+      const baseHeight = Math.min(820, basePage.height || 820);
+      const baseWidth = Math.round(baseHeight * aspectRatio);
+
+      pageFlip = new window.St.PageFlip(flipRoot, {
+        width: baseWidth,
+        height: baseHeight,
+        size: "stretch",
+        minWidth: 320,
+        maxWidth: Math.min(1200, baseWidth * 2),
+        minHeight: 420,
+        maxHeight: 1200,
+        maxShadowOpacity: 0.35,
+        showCover: pages.length > 1,
+        usePortrait: true,
+        autoSize: true,
+        mobileScrollSupport: true,
+        clickEventForward: false,
+        drawShadow: true,
+      });
+
+      pageFlip.loadFromHTML(flipRoot.querySelectorAll(".page"));
+      pageFlip.on("flip", () => updateNavigation());
+      pageFlip.on("changeOrientation", () => {
+        zoomLevel = 1;
+        applyZoom(false);
+        updateNavigation();
+      });
+
+      placeholder?.remove();
+      enableControls();
+      if (statusText) {
+        statusText.textContent =
+          "Tip: drag a corner or use the arrows to turn pages.";
+      }
+    }
+
+    function renderPages(doc) {
+      const total = doc.numPages;
+      const pages = [];
+      const queue = Array.from({ length: total }, (_, index) => index + 1);
+      const baseScale = 1.2;
+
+      const renderNext = () => {
+        const pageNumber = queue.shift();
+        if (!pageNumber) {
+          buildFlipbook(pages);
+          return;
+        }
+
+        if (statusText) {
+          statusText.textContent = `Rendering page ${pageNumber} of ${total}…`;
+        }
+
+        doc
+          .getPage(pageNumber)
+          .then((page) => {
+            const viewport = page.getViewport({ scale: baseScale });
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d", {
+              willReadFrequently: true,
+            });
+            const outputScale = window.devicePixelRatio || 1;
+
+            canvas.width = viewport.width * outputScale;
+            canvas.height = viewport.height * outputScale;
+            context.setTransform(outputScale, 0, 0, outputScale, 0, 0);
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            return page
+              .render({ canvasContext: context, viewport })
+              .promise.then(() => {
+                pages.push({
+                  number: pageNumber,
+                  dataUrl: canvas.toDataURL("image/jpeg", 0.92),
+                  width: viewport.width,
+                  height: viewport.height,
+                });
+                canvas.width = canvas.height = 0;
+              });
+          })
+          .then(() => renderNext())
+          .catch(() => {
+            if (statusText) {
+              statusText.textContent =
+                "Unable to display one of the pages. Please download the PDF instead.";
+            }
+            renderNext();
+          });
+      };
+
+      renderNext();
+    }
+
+    [
+      prevBtn,
+      nextBtn,
+      zoomInBtn,
+      zoomOutBtn,
+      zoomResetBtn,
+      fullscreenBtn,
+    ].forEach((btn) => setButtonState(btn, true));
+
+    setLoadingMessage("Preparing flipbook…");
+
+    window.pdfjsLib
+      .getDocument({ url: pdfUrl })
+      .promise.then((doc) => {
+        if (statusText) {
+          statusText.textContent = "Rendering pages…";
+        }
+        renderPages(doc);
+      })
+      .catch(() => {
+        setLoadingMessage("Unable to load this prospectus.");
+        setButtonState(fullscreenBtn, false);
+        if (statusText) {
+          statusText.textContent =
+            "Please try again later or download the PDF using the button above.";
+        }
+      });
+
+    prevBtn?.addEventListener("click", () => {
+      pageFlip?.flipPrev();
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      pageFlip?.flipNext();
+    });
+
+    zoomInBtn?.addEventListener("click", () => {
+      zoomLevel = Math.min(MAX_ZOOM, zoomLevel + ZOOM_STEP);
+      applyZoom();
+    });
+
+    zoomOutBtn?.addEventListener("click", () => {
+      zoomLevel = Math.max(MIN_ZOOM, zoomLevel - ZOOM_STEP);
+      applyZoom();
+    });
+
+    zoomResetBtn?.addEventListener("click", () => {
+      zoomLevel = 1;
+      applyZoom();
+      if (statusText) {
+        statusText.textContent = "Zoom reset.";
+      }
+    });
+
+    fullscreenBtn?.addEventListener("click", () => {
+      const element = viewer;
+      if (!document.fullscreenElement) {
+        element?.requestFullscreen?.();
+        fullscreenBtn?.setAttribute("aria-label", "Exit fullscreen");
+      } else {
+        document.exitFullscreen?.();
+        fullscreenBtn?.setAttribute("aria-label", "Enter fullscreen");
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!fullscreenBtn) {
+        return;
+      }
+      const active = Boolean(document.fullscreenElement);
+      fullscreenBtn.setAttribute(
+        "aria-label",
+        active ? "Exit fullscreen" : "Enter fullscreen"
+      );
+      const icon = fullscreenBtn.querySelector("i");
+      if (icon) {
+        icon.classList.toggle("fa-expand", !active);
+        icon.classList.toggle("fa-compress", active);
+      }
+    });
+  });
+</script>
+{% endif %} {% endblock %}

@@ -23,16 +23,18 @@ Science College{% endblock %} {% block meta_description %}
           in confidence and progress to meaningful futures.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <button
+          <a
             class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:opacity-90"
+            href="{{ url_for('about') }}"
           >
             Why choose LMSC?
-          </button>
-          <button
+          </a>
+          <a
             class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-primary"
+            href="{{ url_for('how_we_teach') }}"
           >
             How we teach STEM
-          </button>
+          </a>
         </div>
       </div>
       <div class="fade-in scale-in">
@@ -480,11 +482,12 @@ Science College{% endblock %} {% block meta_description %}
         <p class="text-gray-700 font-semibold text-primary">
           Ready to explore our international pathways?
         </p>
-        <button
+        <a
           class="mt-4 w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold hover:opacity-90"
+          href="{{ url_for('study_options') }}"
         >
           Learn more about international study
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -557,8 +560,9 @@ Science College{% endblock %} {% block meta_description %}
           programmes are a good fit for your situation.
         </p>
         <!-- BTN 1 -->
-        <button
+        <a
           class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+          href="{{ url_for('book_consultation') }}"
         >
           <div class="btn-content">
             <span class="text-part">Book a Consultation</span>
@@ -581,7 +585,7 @@ Science College{% endblock %} {% block meta_description %}
               </svg>
             </span>
           </div>
-        </button>
+        </a>
       </div>
       <!-- Right Side - Image with Chat Bubbles -->
       <div class="relative flex items-center justify-end scale-in">

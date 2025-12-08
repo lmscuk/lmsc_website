@@ -1,4 +1,5 @@
 import hashlib
+import json
 import os
 import re
 import sqlite3
@@ -9,8 +10,9 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, quote_plus, urlparse
 
-from flask import (Flask, flash, g, redirect, render_template, request,
+from flask import (Flask, abort, flash, g, redirect, render_template, request,
                    send_from_directory, session, url_for)
+from flask.typing import ResponseReturnValue
 from flask_mail import Mail, Message
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -102,6 +104,18 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "meta_description": (
             "See the flexible study options at LMSC, combining online lessons and in-person teaching so "
             "every student can access the STEM programme that fits their life."
+        ),
+    },
+    {
+        "slug": "prospectus",
+        "page_name": "Prospectus",
+        "template_name": "prospectus.html",
+        "nav_order": 45,
+        "nav_display": "footer",
+        "seo_title": "Download the LMSC Prospectus | STEM Sixth Form",
+        "meta_description": (
+            "Browse the London Maths & Science College prospectus, explore specialist STEM pathways and "
+            "download the latest edition for admissions guidance."
         ),
     },
     {
@@ -298,6 +312,265 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
     },
 ]
 
+DEFAULT_COURSE_SEED: list[dict[str, Any]] = [
+    {
+        "slug": "mastering-ui-ux-design",
+        "level": "UI/UX Design",
+        "title": "Mastering UI/UX design from fundamentals to advanced",
+        "image_path": "Images/Image 1.jpg",
+        "image_alt": "Student analysing UI wireframes",
+        "short_description": "Starting with the core principles of design, the course delves into research, prototyping and interaction at scale.",
+        "hours": 120,
+        "display_order": 10,
+        "about_course": (
+            "Creative learners join a structured pathway that explores discovery research, interaction principles and "
+            "production-ready interface systems. Lessons blend case studies with guided briefs so every concept is grounded "
+            "in practice."
+        ),
+        "study_topics": "Research synthesis and persona building\nDesign system foundations\nPrototyping and usability testing",
+        "skills_built": "Advanced Figma workflows\nAccessibility-first design\nStakeholder presentation",
+        "audience_notes": "A Level students targeting design degrees\nSTEM learners adding creative portfolios\nCareer switchers seeking UX credentials",
+        "exam_details": (
+            "Internal studio assessments mirror Edexcel-style coursework with two moderated design sprints each term. "
+            "Learners submit a digital portfolio in May ahead of the viva-style presentation in June."
+        ),
+        "entry_requirements": (
+            "GCSE English Language at grade 5 or above, GCSE Maths at grade 5 or above, and a short creative portfolio "
+            "review completed during consultation."
+        ),
+        "course_outcome": (
+            "Graduates compile a refined UX/UI portfolio with research artefacts, interactive prototypes and reflective case "
+            "studies suitable for university admissions."
+        ),
+        "progression": (
+            "Typical offers include interaction design, human-computer interaction and digital product design degrees at "
+            "Russell Group and art-focused universities."
+        ),
+        "sidebar_fees": "From £4,950 per term",
+        "sidebar_summary": "Hybrid delivery with studio critiques, live briefs and one-to-one portfolio coaching.",
+        "includes_items": "Weekly mentor feedback\nIndustry-standard tooling licenses\nCurated reading lists",
+        "custom_content": (
+            "<h3>Inside the studio</h3>\n"
+            "<p>Weekly labs translate research insights into production-ready interface systems with senior mentor feedback.</p>\n"
+            "<ul>\n"
+            "<li>Design clinics with portfolio critiques</li>\n"
+            "<li>Guided usability testing playbooks</li>\n"
+            "<li>Access to curated case study archive</li>\n"
+            "</ul>"
+        ),
+    },
+    {
+        "slug": "creative-web-design",
+        "level": "Web Design",
+        "title": "Creative Web Design: Crafting visually stunning experiences",
+        "image_path": "Images/Image 2.jpg",
+        "image_alt": "Web designer working across multiple screens",
+        "short_description": "Explore responsive layouts, motion and accessibility as you build a professional portfolio from day one.",
+        "hours": 110,
+        "display_order": 20,
+        "about_course": (
+            "Learners master visual storytelling across responsive screens, combining typography, colour theory and motion "
+            "principles with modern front-end collaboration rituals."
+        ),
+        "study_topics": "Atomic design systems\nAdvanced layout composition\nMicro-interactions and motion",
+        "skills_built": "High-fidelity prototyping\nDesign to developer handoff\nAccessibility auditing",
+        "audience_notes": "Students building creative portfolios\nAspiring product designers\nDevelopers refining visual craft",
+        "exam_details": (
+            "Capstone projects are assessed through annotated prototypes, paired user testing and reflective journals, all "
+            "moderated during the final studio showcase."
+        ),
+        "entry_requirements": (
+            "GCSE English at grade 5, GCSE Art or Design Technology recommended, and completion of a creative task set by "
+            "the admissions tutor."
+        ),
+        "course_outcome": (
+            "Students graduate with a polished responsive design system, interaction guidelines and documented user insights."
+        ),
+        "progression": (
+            "Progress to degrees in digital media, experience design, creative computing and related studio apprenticeships."
+        ),
+        "sidebar_fees": "From £4,650 per term",
+        "sidebar_summary": "Studio-led delivery with critique panels and collaborative sprints held each half term.",
+        "includes_items": "Showcase events with industry guests\nPortfolio-ready component library\n24/7 resource hub access",
+        "custom_content": (
+            "<h3>Project delivery</h3>\n"
+            "<p>Studio briefs balance creative direction with responsive build considerations, so every learner ships polished prototypes.</p>\n"
+            "<ul>\n"
+            "<li>Weekly motion and interaction labs</li>\n"
+            "<li>Crit panels featuring guest designers</li>\n"
+            "<li>Component library handoff templates</li>\n"
+            "</ul>"
+        ),
+    },
+    {
+        "slug": "mastering-web-development",
+        "level": "Web Development",
+        "title": "Mastering web development from fundamentals to advanced builds",
+        "image_path": "Images/Image 3.jpg",
+        "image_alt": "Developer reviewing code snippets on a laptop",
+        "short_description": "Learn to architect full-stack applications with modern tooling, deployment and performance optimisation.",
+        "hours": 140,
+        "display_order": 30,
+        "about_course": (
+            "This intensive pathway covers modern JavaScript frameworks, backend APIs and DevOps pipelines so learners can "
+            "ship production-ready products with confidence."
+        ),
+        "study_topics": "API design and integration\nComponent-driven architectures\nTesting and deployment automation",
+        "skills_built": "Full-stack project delivery\nVersion control collaboration\nPerformance monitoring",
+        "audience_notes": "A Level Computer Science cohort\nSTEM learners targeting software engineering\nEntrepreneurs building MVPs",
+        "exam_details": (
+            "Learners complete three build cycles culminating in an assessed full-stack project with written technical "
+            "documentation and viva demonstration."
+        ),
+        "entry_requirements": (
+            "GCSE Maths at grade 6 or above and evidence of prior programming study, plus a technical challenge completed "
+            "during admissions."
+        ),
+        "course_outcome": (
+            "Graduates submit a Git-based portfolio with automated test suites, deployment workflows and analytics dashboards."
+        ),
+        "progression": (
+            "Alumni progress to computer science, software engineering, data science and degree apprenticeships with tech firms."
+        ),
+        "sidebar_fees": "From £5,200 per term",
+        "sidebar_summary": "Project-based delivery anchored by agile rituals and senior engineer mentorship.",
+        "includes_items": "Cloud sandbox environments\nWeekly code reviews\nInterview preparation labs",
+        "custom_content": (
+            "<h3>Engineering practice</h3>\n"
+            "<p>Sprint-based build cycles reinforce testing, deployment and observability so learners grow production instincts.</p>\n"
+            "<ul>\n"
+            "<li>Live CI/CD demonstrations</li>\n"
+            "<li>Paired architecture whiteboard sessions</li>\n"
+            "<li>Performance tuning clinics</li>\n"
+            "</ul>"
+        ),
+    },
+    {
+        "slug": "digital-marketing-mastery",
+        "level": "Digital Marketing",
+        "title": "Digital marketing mastery: strategies for success online",
+        "image_path": "Images/Image 5.jpg",
+        "image_alt": "Marketing specialist presenting growth charts",
+        "short_description": "Unlock data-driven acquisition, content strategy and paid media tactics with guided mentor support.",
+        "hours": 100,
+        "display_order": 40,
+        "about_course": (
+            "Learners engineer full-funnel marketing campaigns, balancing creative storytelling with rigorous analytics "
+            "and budget optimisation techniques."
+        ),
+        "study_topics": "Audience segmentation\nPaid media optimisation\nLifecycle email automation",
+        "skills_built": "Campaign planning\nData storytelling\nStakeholder reporting",
+        "audience_notes": "Students targeting business and marketing degrees\nFounders scaling start-ups\nCareer changers entering growth roles",
+        "exam_details": (
+            "Assessment blends live campaign audits, scenario-based strategy decks and a final marketing operations playbook."
+        ),
+        "entry_requirements": (
+            "GCSE English at grade 5, GCSE Maths at grade 5 and evidence of interest in marketing or communications."
+        ),
+        "course_outcome": (
+            "Graduates deliver a multi-channel campaign suite with dashboards, creative messaging and optimisation roadmap."
+        ),
+        "progression": (
+            "Students progress to marketing, business management, communications and digital media degree programmes."
+        ),
+        "sidebar_fees": "From £4,300 per term",
+        "sidebar_summary": "Live briefs with real businesses plus analytics labs that simulate agency environments.",
+        "includes_items": "Certifications in Google Analytics\nCopywriting workshops\nAccess to paid media simulators",
+        "custom_content": (
+            "<h3>Campaign labs</h3>\n"
+            "<p>Teams iterate on real client briefs, balancing creative messaging with data-driven optimisation and reporting.</p>\n"
+            "<ul>\n"
+            "<li>Funnel diagnostics with dashboards</li>\n"
+            "<li>Content strategy stand-ups</li>\n"
+            "<li>Measurement frameworks for stakeholders</li>\n"
+            "</ul>"
+        ),
+    },
+    {
+        "slug": "app-development-innovation",
+        "level": "Apps Development",
+        "title": "App development: building innovative mobile solutions",
+        "image_path": "Images/Image 7.jpg",
+        "image_alt": "Mobile developer testing an application prototype",
+        "short_description": "Create high-performance native and cross-platform apps backed by real-world product case studies.",
+        "hours": 130,
+        "display_order": 50,
+        "about_course": (
+            "Combining product strategy with engineering execution, this pathway guides learners through native iOS, Android "
+            "and cross-platform builds with iterative user testing."
+        ),
+        "study_topics": "Mobile UX patterns\nNative and cross-platform stacks\nApp store deployment",
+        "skills_built": "Feature roadmap planning\nMobile performance tuning\nUser analytics instrumentation",
+        "audience_notes": "Developers targeting mobile specialisms\nSTEM learners preparing for software apprenticeships\nFounders validating app concepts",
+        "exam_details": (
+            "Final assessment pairs a technical build review with a product pitch, covering architecture choices, adoption "
+            "metrics and monetisation plans."
+        ),
+        "entry_requirements": (
+            "GCSE Maths at grade 6, evidence of programming experience and portfolio discussion during admissions interview."
+        ),
+        "course_outcome": (
+            "Students release a beta-ready application with analytics instrumentation, backlog management and release notes."
+        ),
+        "progression": (
+            "Common destinations include software engineering, computer science and digital product innovation degrees."
+        ),
+        "sidebar_fees": "From £5,000 per term",
+        "sidebar_summary": "Hands-on labs with device testing, beta programmes and investor pitch rehearsals.",
+        "includes_items": "Device lab access\nProduct coaching clinics\nBeta tester recruitment support",
+        "custom_content": (
+            "<h3>Prototype pipeline</h3>\n"
+            "<p>Learners scale app concepts from discovery to deployment using device labs, instrumentation and user testing.</p>\n"
+            "<ul>\n"
+            "<li>Sprint retros with product mentors</li>\n"
+            "<li>App store readiness reviews</li>\n"
+            "<li>Analytics instrumentation walkthroughs</li>\n"
+            "</ul>"
+        ),
+    },
+    {
+        "slug": "ui-ux-design-experience",
+        "level": "UI/UX Design",
+        "title": "UI/UX design: crafting engaging user experiences",
+        "image_path": "Images/Image 8.jpg",
+        "image_alt": "Student shaping interface flows on a whiteboard",
+        "short_description": "Master interaction design, design systems and analytics to measure how learners engage with your products.",
+        "hours": 115,
+        "display_order": 60,
+        "about_course": (
+            "Learners focus on advanced service design, research operations and experimentation frameworks that underpin "
+            "data-informed customer experiences."
+        ),
+        "study_topics": "Service blueprints\nExperiment design\nDesign analytics dashboards",
+        "skills_built": "Facilitating co-creation workshops\nDesign ops tooling\nConversion rate experimentation",
+        "audience_notes": "Experience designers seeking progression\nProduct strategists broadening skillsets\nAnalytical creatives",
+        "exam_details": (
+            "Assessment includes a service design capstone, experimentation plan and stakeholder playback with cross-functional feedback."
+        ),
+        "entry_requirements": (
+            "Interview portfolio review plus prior study in design, computing or aligned subjects at GCSE or AS Level."
+        ),
+        "course_outcome": (
+            "Participants produce a service blueprint, experimentation roadmap and impact dashboard aligned to university expectations."
+        ),
+        "progression": (
+            "Progress to human-centred design, innovation management and digital product leadership degrees."
+        ),
+        "sidebar_fees": "From £4,950 per term",
+        "sidebar_summary": "Project clinics with senior mentors, experimentation labs and university application coaching.",
+        "includes_items": "University portfolio reviews\nExperimentation toolkit\nAccess to alumni mentoring network",
+        "custom_content": (
+            "<h3>Experience design deep dives</h3>\n"
+            "<p>Workshops apply experimentation frameworks to real service journeys, supported by analytics and storytelling labs.</p>\n"
+            "<ul>\n"
+            "<li>Service blueprint facilitation practice</li>\n"
+            "<li>Experiment design playbooks</li>\n"
+            "<li>Stakeholder storytelling clinics</li>\n"
+            "</ul>"
+        ),
+    },
+]
+
 DEFAULT_ADMIN_USERNAME = "info@lmsc.org.uk"
 DEFAULT_ADMIN_PASSWORD = "LMSC@dmin2025"
 GMAIL_APP_PASSWORD = "xkal uhnp xqto hvyz"
@@ -307,6 +580,7 @@ PAGE_ENDPOINT_OVERRIDES: dict[str, str] = {
     "about": "about",
     "stem-pathways": "stem_pathways",
     "study-options": "study_options",
+    "prospectus": "prospectus",
     "fees": "fees",
     "how-we-teach": "how_we_teach",
     "our-teacher-experts": "our_teacher_expert",
@@ -400,6 +674,60 @@ BLOG_DB_COLUMNS: tuple[str, ...] = (
     "related_article_2_slug",
     "related_article_3_slug",
 )
+COURSE_DB_COLUMNS: tuple[str, ...] = (
+    "slug",
+    "level",
+    "title",
+    "image_path",
+    "image_alt",
+    "short_description",
+    "hours",
+    "display_order",
+    "about_course",
+    "study_topics",
+    "skills_built",
+    "audience_notes",
+    "exam_details",
+    "entry_requirements",
+    "course_outcome",
+    "progression",
+    "sidebar_fees",
+    "sidebar_summary",
+    "includes_items",
+    "custom_content",
+)
+
+COURSE_MULTILINE_FIELDS: tuple[str, ...] = (
+    "study_topics",
+    "skills_built",
+    "audience_notes",
+    "includes_items",
+)
+
+COURSE_TEXT_BLOCK_FIELDS: tuple[str, ...] = (
+    "about_course",
+    "exam_details",
+    "entry_requirements",
+    "course_outcome",
+    "progression",
+    "sidebar_summary",
+)
+
+COURSE_SCHEMA_ADDITIONAL_COLUMNS: dict[str, str] = {
+    "slug": "TEXT",
+    "about_course": "TEXT",
+    "study_topics": "TEXT",
+    "skills_built": "TEXT",
+    "audience_notes": "TEXT",
+    "exam_details": "TEXT",
+    "entry_requirements": "TEXT",
+    "course_outcome": "TEXT",
+    "progression": "TEXT",
+    "sidebar_fees": "TEXT",
+    "sidebar_summary": "TEXT",
+    "includes_items": "TEXT",
+    "custom_content": "TEXT",
+}
 
 
 mail = Mail()
@@ -428,6 +756,10 @@ def create_app() -> Flask:
     blog_images_dir.mkdir(parents=True, exist_ok=True)
     app.config["BLOG_IMAGE_UPLOAD_FOLDER"] = str(blog_images_dir)
 
+    course_images_dir = Path(app.root_path) / "static" / "uploads" / "courses"
+    course_images_dir.mkdir(parents=True, exist_ok=True)
+    app.config["COURSE_IMAGE_UPLOAD_FOLDER"] = str(course_images_dir)
+
     policy_docs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "documents"
     policy_thumbs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "thumbnails"
     policy_docs_dir.mkdir(parents=True, exist_ok=True)
@@ -435,6 +767,10 @@ def create_app() -> Flask:
 
     app.config["POLICY_DOC_UPLOAD_FOLDER"] = str(policy_docs_dir)
     app.config["POLICY_THUMB_UPLOAD_FOLDER"] = str(policy_thumbs_dir)
+
+    prospectus_dir = Path(app.root_path) / "static" / "uploads" / "prospectus"
+    prospectus_dir.mkdir(parents=True, exist_ok=True)
+    app.config["PROSPECTUS_UPLOAD_FOLDER"] = str(prospectus_dir)
 
     app.config["ALLOWED_IMAGE_EXTENSIONS"] = {"jpg", "jpeg", "png", "webp", "gif"}
     app.config["ALLOWED_POLICY_DOC_EXTENSIONS"] = {"pdf"}
@@ -535,6 +871,24 @@ def create_app() -> Flask:
             slug = f"{cleaned}-{suffix}" if cleaned else f"blog-{suffix}"
             suffix += 1
 
+    def generate_unique_course_slug(base_slug: str, *, exclude_id: int | None = None) -> str:
+        cleaned = base_slug or "course"
+        slug = cleaned
+        suffix = 1
+        db = get_db()
+
+        while True:
+            row = db.execute(
+                "SELECT id FROM courses WHERE slug = ?",
+                (slug,),
+            ).fetchone()
+            if row is None:
+                return slug
+            if exclude_id is not None and int(row["id"]) == exclude_id:
+                return slug
+            slug = f"{cleaned}-{suffix}" if cleaned else f"course-{suffix}"
+            suffix += 1
+
     def allowed_image_file(filename: str) -> bool:
         if not filename or "." not in filename:
             return False
@@ -595,6 +949,19 @@ def create_app() -> Flask:
         file_storage.save(destination)
         return f"uploads/policies/thumbnails/{final_name}"
 
+    def save_prospectus_pdf(file_storage):
+        if not file_storage or not file_storage.filename:
+            raise ValueError("Please choose a PDF prospectus to upload.")
+        if not allowed_policy_document(file_storage.filename):
+            raise ValueError("Prospectus files must be supplied as PDF documents.")
+
+        filename = secure_filename(file_storage.filename)
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        final_name = f"{timestamp}_{filename}"
+        destination = Path(app.config["PROSPECTUS_UPLOAD_FOLDER"]) / final_name
+        file_storage.save(destination)
+        return f"uploads/prospectus/{final_name}"
+
     def save_blog_image(file_storage, *, description: str) -> str:
         if not file_storage or not file_storage.filename:
             raise ValueError(f"Please choose an image for the {description} field.")
@@ -610,6 +977,19 @@ def create_app() -> Flask:
         file_storage.save(destination)
         return f"uploads/blogs/{final_name}"
 
+    def save_course_image(file_storage):
+        if not file_storage or not file_storage.filename:
+            raise ValueError("Please choose an image to represent the course card.")
+        if not allowed_image_file(file_storage.filename):
+            raise ValueError("Course images must be JPG, JPEG, PNG, WEBP, or GIF files.")
+
+        filename = secure_filename(file_storage.filename)
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        final_name = f"{timestamp}_{filename}"
+        destination = Path(app.config["COURSE_IMAGE_UPLOAD_FOLDER"]) / final_name
+        file_storage.save(destination)
+        return f"uploads/courses/{final_name}"
+
     def remove_static_file(relative_path: str | None) -> None:
         if not relative_path:
             return
@@ -624,6 +1004,27 @@ def create_app() -> Flask:
             return int(value)
         except (TypeError, ValueError):
             return None
+
+    def normalise_multiline(raw_value: str | None) -> str | None:
+        if raw_value is None:
+            return None
+        lines = [line.strip() for line in raw_value.splitlines() if line.strip()]
+        return "\n".join(lines) if lines else None
+
+    def split_multiline(value: str | None) -> list[str]:
+        if not value:
+            return []
+        return [line.strip() for line in value.splitlines() if line.strip()]
+
+    def split_paragraphs(value: str | None) -> list[str]:
+        if not value:
+            return []
+        chunks = re.split(r"\n{2,}", value)
+        paragraphs = [chunk.strip() for chunk in chunks if chunk.strip()]
+        if not paragraphs:
+            # Fall back to single newlines if double-newline paragraphs absent
+            return split_multiline(value)
+        return paragraphs
 
     def is_probably_bot(user_agent: str) -> bool:
         if not user_agent:
@@ -775,6 +1176,34 @@ def create_app() -> Flask:
         templates.sort()
         return templates
 
+    def ensure_course_schema(db: sqlite3.Connection) -> None:
+        existing_columns = {
+            row["name"] for row in db.execute("PRAGMA table_info(courses)").fetchall()
+        }
+        for column, definition in COURSE_SCHEMA_ADDITIONAL_COLUMNS.items():
+            if column not in existing_columns:
+                db.execute(f"ALTER TABLE courses ADD COLUMN {column} {definition}")
+
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS course_faqs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                course_id INTEGER NOT NULL,
+                question TEXT NOT NULL,
+                answer TEXT NOT NULL,
+                display_order INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_course_faqs_course_order ON course_faqs(course_id, display_order, id)"
+        )
+        db.execute("CREATE INDEX IF NOT EXISTS idx_courses_order ON courses(display_order, title)")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_courses_slug ON courses(slug)")
+
     def get_db() -> sqlite3.Connection:
         if "db" not in g:
             g.db = sqlite3.connect(app.config["DATABASE"])
@@ -924,6 +1353,51 @@ def create_app() -> Flask:
         )
         db.execute(
             "CREATE INDEX IF NOT EXISTS idx_policies_title ON policies(title)"
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS courses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT,
+                level TEXT NOT NULL,
+                title TEXT NOT NULL,
+                image_path TEXT,
+                image_alt TEXT,
+                short_description TEXT NOT NULL,
+                hours INTEGER NOT NULL,
+                display_order INTEGER NOT NULL DEFAULT 0,
+                about_course TEXT,
+                study_topics TEXT,
+                skills_built TEXT,
+                audience_notes TEXT,
+                exam_details TEXT,
+                entry_requirements TEXT,
+                course_outcome TEXT,
+                progression TEXT,
+                sidebar_fees TEXT,
+                sidebar_summary TEXT,
+                includes_items TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        ensure_course_schema(db)
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS prospectus_versions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                version_label TEXT NOT NULL,
+                description TEXT,
+                document_path TEXT NOT NULL,
+                is_active INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_prospectus_active ON prospectus_versions(is_active)"
         )
         db.execute(
             """
@@ -1177,6 +1651,164 @@ def create_app() -> Flask:
         db.execute("DELETE FROM blog_posts WHERE id = ?", (post_id,))
         db.commit()
 
+    def fetch_courses(*, limit: int | None = None) -> list[sqlite3.Row]:
+        db = get_db()
+        query = "SELECT * FROM courses ORDER BY display_order ASC, title ASC, id ASC"
+        params: list[Any] = []
+        if limit is not None:
+            query += " LIMIT ?"
+            params.append(limit)
+        return db.execute(query, params).fetchall()
+
+    def fetch_course_stats() -> dict[str, Any]:
+        db = get_db()
+        row = db.execute(
+            "SELECT COUNT(*) AS total, MAX(updated_at) AS last_updated FROM courses"
+        ).fetchone()
+        total = int(row["total"]) if row and row["total"] is not None else 0
+        with_images = 0
+        if total:
+            with_images = int(
+                db.execute(
+                    "SELECT COUNT(*) FROM courses WHERE image_path IS NOT NULL AND image_path != ''"
+                ).fetchone()[0]
+            )
+        return {
+            "total": total,
+            "with_images": with_images,
+            "last_updated": row["last_updated"],
+        }
+
+    def get_course_by_id(course_id: int) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute("SELECT * FROM courses WHERE id = ?", (course_id,)).fetchone()
+
+    def get_course_by_slug(slug: str) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute("SELECT * FROM courses WHERE slug = ?", (slug,)).fetchone()
+
+    def fetch_course_faqs(course_id: int) -> list[sqlite3.Row]:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM course_faqs WHERE course_id = ? ORDER BY display_order ASC, id ASC",
+            (course_id,),
+        ).fetchall()
+
+    def replace_course_faqs(course_id: int, items: list[dict[str, Any]]) -> None:
+        db = get_db()
+        db.execute("DELETE FROM course_faqs WHERE course_id = ?", (course_id,))
+        if not items:
+            db.commit()
+            return
+        now = current_timestamp()
+        for position, item in enumerate(items):
+            db.execute(
+                """
+                INSERT INTO course_faqs (
+                    course_id,
+                    question,
+                    answer,
+                    display_order,
+                    created_at,
+                    updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    course_id,
+                    item["question"],
+                    item["answer"],
+                    position,
+                    now,
+                    now,
+                ),
+            )
+        db.commit()
+
+    def create_course(data: dict[str, Any]) -> int:
+        db = get_db()
+        now = current_timestamp()
+        columns = ", ".join(COURSE_DB_COLUMNS)
+        placeholders = ", ".join(["?"] * len(COURSE_DB_COLUMNS))
+        values = [data.get(column) for column in COURSE_DB_COLUMNS]
+        cursor = db.execute(
+            f"INSERT INTO courses ({columns}, created_at, updated_at) VALUES ({placeholders}, ?, ?)",
+            values + [now, now],
+        )
+        db.commit()
+        return int(cursor.lastrowid)
+
+    def update_course(course_id: int, data: dict[str, Any]) -> None:
+        db = get_db()
+        now = current_timestamp()
+        set_clause = ", ".join(f"{column} = ?" for column in COURSE_DB_COLUMNS)
+        values = [data.get(column) for column in COURSE_DB_COLUMNS]
+        values.extend([now, course_id])
+        db.execute(
+            f"UPDATE courses SET {set_clause}, updated_at = ? WHERE id = ?",
+            values,
+        )
+        db.commit()
+
+    def delete_course(course_id: int) -> None:
+        existing = get_course_by_id(course_id)
+        if existing is None:
+            return
+        image_path = existing.get("image_path") if isinstance(existing, sqlite3.Row) else None
+        if image_path and isinstance(image_path, str) and image_path.startswith("uploads/"):
+            remove_static_file(image_path)
+        db = get_db()
+        db.execute("DELETE FROM course_faqs WHERE course_id = ?", (course_id,))
+        db.execute("DELETE FROM courses WHERE id = ?", (course_id,))
+        db.commit()
+
+    def ensure_default_courses() -> None:
+        db = get_db()
+        row = db.execute("SELECT COUNT(*) AS total FROM courses").fetchone()
+        if row and int(row["total"] or 0) > 0:
+            ensure_course_slugs()
+            return
+
+        for seed in DEFAULT_COURSE_SEED:
+            payload = {column: seed.get(column) for column in COURSE_DB_COLUMNS}
+            title_value = seed.get("title", "Course")
+            seed_slug_source = seed.get("slug") or title_value
+            slug_base = slugify(seed_slug_source)
+            payload["slug"] = generate_unique_course_slug(slug_base)
+            payload["level"] = seed.get("level")
+            payload["title"] = title_value
+            payload["image_path"] = seed.get("image_path")
+            payload["image_alt"] = seed.get("image_alt")
+            payload["short_description"] = seed.get("short_description")
+            payload["hours"] = int(seed.get("hours", 0) or 0)
+            payload["display_order"] = int(seed.get("display_order", 0) or 0)
+
+            # Provide sane defaults for optional text blocks
+            for column in COURSE_DB_COLUMNS:
+                if payload.get(column) is None:
+                    payload[column] = None
+
+            create_course(payload)
+
+        ensure_course_slugs()
+
+    def ensure_course_slugs() -> None:
+        db = get_db()
+        rows = db.execute(
+            "SELECT id, title FROM courses WHERE slug IS NULL OR slug = ''"
+        ).fetchall()
+        if not rows:
+            return
+        now = current_timestamp()
+        for row in rows:
+            title_value = row["title"] or f"course-{row['id']}"
+            candidate = slugify(title_value)
+            slug_value = generate_unique_course_slug(candidate, exclude_id=int(row["id"]))
+            db.execute(
+                "UPDATE courses SET slug = ?, updated_at = ? WHERE id = ?",
+                (slug_value, now, row["id"]),
+            )
+        db.commit()
+
     def fetch_related_blog_posts(
         related_slugs: Sequence[str | None], *, exclude_id: int | None = None, limit: int = 3
     ) -> list[sqlite3.Row]:
@@ -1283,6 +1915,117 @@ def create_app() -> Flask:
             data[relation_column] = relation_slug
 
         return data, errors, notices
+
+    def collect_course_payload(
+        existing: sqlite3.Row | None = None,
+    ) -> tuple[dict[str, Any], list[str], list[str], list[dict[str, str]], dict[str, list[Any]]]:
+        data: dict[str, Any] = {}
+        errors: list[str] = []
+        notices: list[str] = []
+        list_values: dict[str, list[Any]] = {}
+        faq_items: list[dict[str, str]] = []
+        existing_dict = dict(existing) if existing is not None else {}
+
+        def clean_text(field_name: str) -> str:
+            return request.form.get(field_name, "").strip()
+
+        level = clean_text("level")
+        if not level:
+            errors.append("Please supply a course level label (e.g. A Level, GCSE, Online).")
+        data["level"] = level
+
+        title = clean_text("title")
+        if not title:
+            errors.append("Please add a course title.")
+        data["title"] = title
+
+        description = clean_text("short_description")
+        if not description:
+            errors.append("Please provide a short course description.")
+        data["short_description"] = description
+
+        hours_value = safe_int(request.form.get("hours"))
+        if hours_value is None or hours_value <= 0:
+            errors.append("Number of hours must be a positive number.")
+        data["hours"] = hours_value or 0
+
+        display_order_value = safe_int(request.form.get("display_order"))
+        if display_order_value is None:
+            display_order_value = existing_dict.get("display_order", 0) or 0
+        data["display_order"] = display_order_value
+
+        slug_input = clean_text("slug")
+        title_basis = title or existing_dict.get("title", "")
+        base_slug = slugify(slug_input or title_basis or "course")
+        exclude_id = int(existing_dict.get("id")) if existing_dict.get("id") else None
+        unique_slug = generate_unique_course_slug(base_slug, exclude_id=exclude_id)
+        data["slug"] = unique_slug
+        if slug_input and slugify(slug_input) != unique_slug:
+            notices.append("The course slug was adjusted to remain unique.")
+        elif not slug_input and unique_slug != base_slug:
+            notices.append("A unique slug was generated for this course.")
+
+        for field in COURSE_TEXT_BLOCK_FIELDS:
+            value = request.form.get(field, "")
+            cleaned = value.strip()
+            if not cleaned:
+                readable = field.replace("_", " ")
+                errors.append(f"Please provide content for {readable}.")
+            data[field] = cleaned or None
+
+        sidebar_fees = clean_text("sidebar_fees")
+        if not sidebar_fees:
+            errors.append("Please add fee information for the course sidebar.")
+        data["sidebar_fees"] = sidebar_fees or None
+
+        for field in ("study_topics", "skills_built", "audience_notes"):
+            raw_value = request.form.get(field)
+            normalised = normalise_multiline(raw_value)
+            data[field] = normalised
+            field_items = split_multiline(normalised)
+            list_values[field] = field_items
+            if not field_items:
+                readable = field.replace("_", " ")
+                errors.append(f"Please add at least one entry for {readable}.")
+
+        includes_items = [item.strip() for item in request.form.getlist("includes_items[]") if item.strip()]
+        if not includes_items:
+            includes_text = request.form.get("includes_items", "")
+            includes_items = [line.strip() for line in includes_text.splitlines() if line.strip()]
+        if not includes_items:
+            errors.append('Please add at least one bullet for the "This course includes" section.')
+        list_values["includes_items"] = includes_items
+        data["includes_items"] = "\n".join(includes_items) if includes_items else None
+
+        custom_content_raw = request.form.get("custom_content", "")
+        custom_content_clean = custom_content_raw.strip()
+        data["custom_content"] = custom_content_clean or None
+
+        image_alt = clean_text("image_alt")
+        data["image_alt"] = image_alt or None
+        current_image = existing_dict.get("image_path")
+        data["image_path"] = current_image
+
+        faq_questions = request.form.getlist("faq_questions[]")
+        faq_answers = request.form.getlist("faq_answers[]")
+        max_length = max(len(faq_questions), len(faq_answers))
+        for index in range(max_length):
+            question_raw = faq_questions[index] if index < len(faq_questions) else ""
+            answer_raw = faq_answers[index] if index < len(faq_answers) else ""
+            question = question_raw.strip()
+            answer = answer_raw.strip()
+            if not question and not answer:
+                continue
+            if not question:
+                errors.append(f"FAQ entry {index + 1} is missing a question.")
+                continue
+            if not answer:
+                errors.append(f"FAQ entry {index + 1} is missing an answer.")
+                continue
+            faq_items.append({"question": question, "answer": answer})
+        list_values["faq_items"] = faq_items
+
+        return data, errors, notices, faq_items, list_values
 
     def process_blog_images(
         data: dict[str, Any], *, existing: sqlite3.Row | None = None, require_primary: bool = False
@@ -1418,6 +2161,91 @@ def create_app() -> Flask:
             """,
             (title, document_path, thumbnail_path, now, now),
         )
+        db.commit()
+
+    def fetch_prospectus_versions() -> list[sqlite3.Row]:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM prospectus_versions ORDER BY datetime(created_at) DESC, id DESC"
+        ).fetchall()
+
+    def get_prospectus_version(version_id: int) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM prospectus_versions WHERE id = ?",
+            (version_id,),
+        ).fetchone()
+
+    def get_active_prospectus_version() -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute(
+            """
+            SELECT * FROM prospectus_versions
+            WHERE is_active = 1
+            ORDER BY datetime(updated_at) DESC, datetime(created_at) DESC, id DESC
+            LIMIT 1
+            """
+        ).fetchone()
+
+    def create_prospectus_version(
+        *,
+        version_label: str,
+        description: str | None,
+        document_path: str,
+        activate_now: bool = False,
+    ) -> int:
+        db = get_db()
+        now = current_timestamp()
+        if activate_now:
+            db.execute(
+                "UPDATE prospectus_versions SET is_active = 0, updated_at = ? WHERE is_active = 1",
+                (now,),
+            )
+        cursor = db.execute(
+            """
+            INSERT INTO prospectus_versions (
+                version_label,
+                description,
+                document_path,
+                is_active,
+                created_at,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                version_label,
+                description,
+                document_path,
+                1 if activate_now else 0,
+                now,
+                now,
+            ),
+        )
+        db.commit()
+        return int(cursor.lastrowid)
+
+    def set_active_prospectus_version(version_id: int) -> bool:
+        db = get_db()
+        version = get_prospectus_version(version_id)
+        if version is None:
+            return False
+
+        now = current_timestamp()
+        db.execute(
+            "UPDATE prospectus_versions SET is_active = 0 WHERE is_active = 1 AND id != ?",
+            (version_id,),
+        )
+        db.execute(
+            "UPDATE prospectus_versions SET is_active = 1, updated_at = ? WHERE id = ?",
+            (now, version_id),
+        )
+        db.commit()
+        return True
+
+    def delete_prospectus_version(version_id: int) -> None:
+        db = get_db()
+        db.execute("DELETE FROM prospectus_versions WHERE id = ?", (version_id,))
         db.commit()
 
     @app.context_processor
@@ -1847,6 +2675,7 @@ def create_app() -> Flask:
         ensure_default_admin()
         seed_existing_pages()
         ensure_consultation_page_seed()
+        ensure_default_courses()
 
     @app.route("/robots.txt")
     def robots_txt():
@@ -1898,11 +2727,114 @@ def create_app() -> Flask:
 
     @app.route("/courses")
     def courses() -> str:
-        return render_site_page("courses.html", "courses")
+        course_rows = fetch_courses()
+        return render_site_page("courses.html", "courses", courses=course_rows)
 
-    @app.route("/course-details")
-    def course_details() -> str:
-        return render_site_page("course_details.html", "course-details")
+    @app.route("/course-details", endpoint="course_details_legacy")
+    def course_details_legacy() -> ResponseReturnValue:
+        course_rows = fetch_courses(limit=1)
+        if not course_rows:
+            abort(404)
+        first_course = course_rows[0]
+        return redirect(url_for("course_details", slug=first_course["slug"]))
+
+    @app.route("/courses/<slug>")
+    def course_details(slug: str) -> ResponseReturnValue:
+        course_row = get_course_by_slug(slug)
+        if course_row is None:
+            abort(404)
+
+        course_dict = dict(course_row)
+        course_id = int(course_dict["id"])
+
+        study_topics = split_multiline(course_dict.get("study_topics"))
+        skills_built = split_multiline(course_dict.get("skills_built"))
+        audience_notes = split_multiline(course_dict.get("audience_notes"))
+        includes_items = split_multiline(course_dict.get("includes_items"))
+
+        about_paragraphs = split_paragraphs(course_dict.get("about_course"))
+        exam_paragraphs = split_paragraphs(course_dict.get("exam_details"))
+        entry_paragraphs = split_paragraphs(course_dict.get("entry_requirements"))
+        outcome_paragraphs = split_paragraphs(course_dict.get("course_outcome"))
+        progression_paragraphs = split_paragraphs(course_dict.get("progression"))
+
+        faq_rows = fetch_course_faqs(course_id)
+        faq_items = [dict(row) for row in faq_rows]
+
+        related_candidates = [dict(row) for row in fetch_courses() if int(row["id"]) != course_id]
+        related_courses = related_candidates[:3]
+
+        page_title = f"{course_dict['title']} | London Maths & Science College"
+        meta_description = course_dict.get("short_description") or course_dict.get("sidebar_summary")
+
+        return render_template(
+            "course_details.html",
+            course=course_dict,
+            page_title=page_title,
+            meta_description=meta_description,
+            canonical_url=url_for("course_details", slug=course_dict["slug"], _external=True),
+            about_paragraphs=about_paragraphs,
+            study_topics=study_topics,
+            skills_built=skills_built,
+            audience_notes=audience_notes,
+            exam_paragraphs=exam_paragraphs,
+            entry_paragraphs=entry_paragraphs,
+            outcome_paragraphs=outcome_paragraphs,
+            progression_paragraphs=progression_paragraphs,
+            includes_items=includes_items,
+            faq_items=faq_items,
+            related_courses=related_courses,
+        )
+
+    @app.route("/prospectus")
+    def prospectus() -> str:
+        active_version_row = get_active_prospectus_version()
+        active_version: dict[str, Any] | None = (
+            dict(active_version_row) if active_version_row is not None else None
+        )
+        document_url: str | None = None
+        last_updated: str | None = None
+
+        download_name: str | None = None
+
+        if active_version is not None:
+            document_url = url_for("static", filename=active_version["document_path"])
+            last_updated = active_version.get("updated_at") or active_version.get("created_at")
+            safe_stub = secure_filename(str(active_version.get("version_label", "")).lower())
+            download_name = safe_stub or "lmsc-prospectus"
+            if not download_name.endswith(".pdf"):
+                download_name += ".pdf"
+
+        structured_data_json: str | None = None
+        if active_version is not None and document_url:
+            structured_data = {
+                "@context": "https://schema.org",
+                "@type": "DigitalDocument",
+                "name": active_version.get("version_label"),
+                "description": active_version.get("description")
+                or "London Maths & Science College prospectus",
+                "fileFormat": "application/pdf",
+                "url": document_url,
+                "inLanguage": "en-GB",
+                "publisher": {
+                    "@type": "EducationalOrganization",
+                    "name": "London Maths & Science College",
+                    "url": request.url_root.rstrip("/"),
+                },
+            }
+            if last_updated:
+                structured_data["dateModified"] = last_updated
+            structured_data_json = json.dumps(structured_data, separators=(",", ":"))
+
+        return render_site_page(
+            "prospectus.html",
+            "prospectus",
+            prospectus_version=active_version,
+            prospectus_url=document_url,
+            prospectus_last_updated=last_updated,
+            prospectus_download_name=download_name,
+            structured_data=structured_data_json,
+        )
 
     @app.route("/pricing")
     def pricing() -> str:
@@ -3232,6 +4164,265 @@ def create_app() -> Flask:
         delete_blog_post(post_id)
         flash("Blog article removed.", "info")
         return redirect(url_for("admin_blogs"))
+
+    @app.route("/admin/courses")
+    @login_required
+    def admin_courses() -> str:
+        courses = fetch_courses()
+        stats = fetch_course_stats()
+        return render_template(
+            "admin/courses/index.html",
+            courses=courses,
+            stats=stats,
+        )
+
+    @app.route("/admin/courses/new", methods=["GET", "POST"])
+    @login_required
+    def admin_courses_new() -> str:
+        if request.method == "POST":
+            data, errors, notices, faq_items, list_values = collect_course_payload()
+            upload = request.files.get("image")
+            pending_image_path: str | None = None
+
+            remove_flag = request.form.get("remove_image") == "on"
+            if remove_flag:
+                data["image_path"] = None
+                data["image_alt"] = None
+
+            if upload and upload.filename:
+                if not data.get("image_alt"):
+                    errors.append("Please provide alt text for the course card image.")
+                if not errors:
+                    try:
+                        pending_image_path = save_course_image(upload)
+                        data["image_path"] = pending_image_path
+                    except ValueError as exc:
+                        errors.append(str(exc))
+
+            if data.get("image_path") and not data.get("image_alt"):
+                errors.append("Please provide alt text for the course card image.")
+
+            if errors:
+                if pending_image_path:
+                    remove_static_file(pending_image_path)
+                for message in errors:
+                    flash(message, "error")
+                form_snapshot = request.form.to_dict()
+                return render_template(
+                    "admin/courses/form.html",
+                    mode="create",
+                    form_data=form_snapshot,
+                    course_data=None,
+                    faq_items=faq_items,
+                    list_values=list_values,
+                )
+
+            course_id = create_course(data)
+            replace_course_faqs(course_id, faq_items)
+            flash("Course created successfully.", "success")
+            for note in notices:
+                flash(note, "info")
+            return redirect(url_for("admin_courses"))
+
+        existing_courses = fetch_courses()
+        suggested_order = 1
+        if existing_courses:
+            last_display = existing_courses[-1]["display_order"]
+            try:
+                suggested_order = int(last_display) + 1
+            except (TypeError, ValueError):
+                suggested_order = len(existing_courses) + 1
+
+        form_defaults = {"display_order": suggested_order}
+        list_defaults = {
+            "study_topics": [],
+            "skills_built": [],
+            "audience_notes": [],
+            "includes_items": [],
+            "faq_items": [],
+        }
+        return render_template(
+            "admin/courses/form.html",
+            mode="create",
+            form_data=form_defaults,
+            course_data=None,
+            faq_items=[],
+            list_values=list_defaults,
+        )
+
+    @app.route("/admin/courses/<int:course_id>/edit", methods=["GET", "POST"])
+    @login_required
+    def admin_courses_edit(course_id: int) -> str:
+        course = get_course_by_id(course_id)
+        if course is None:
+            flash("Course not found.", "error")
+            return redirect(url_for("admin_courses"))
+
+        course_dict = dict(course)
+        existing_faqs = [dict(row) for row in fetch_course_faqs(course_id)]
+        existing_lists = {
+            "study_topics": split_multiline(course_dict.get("study_topics")),
+            "skills_built": split_multiline(course_dict.get("skills_built")),
+            "audience_notes": split_multiline(course_dict.get("audience_notes")),
+            "includes_items": split_multiline(course_dict.get("includes_items")),
+            "faq_items": existing_faqs,
+        }
+
+        if request.method == "POST":
+            data, errors, notices, faq_items, list_values = collect_course_payload(course)
+            upload = request.files.get("image")
+            pending_image_path: str | None = None
+            remove_existing_image = False
+
+            if upload and upload.filename:
+                if not data.get("image_alt"):
+                    errors.append("Please provide alt text for the course card image.")
+                if not errors:
+                    try:
+                        pending_image_path = save_course_image(upload)
+                        data["image_path"] = pending_image_path
+                    except ValueError as exc:
+                        errors.append(str(exc))
+            elif request.form.get("remove_image") == "on":
+                data["image_path"] = None
+                data["image_alt"] = None
+                remove_existing_image = bool(course_dict.get("image_path"))
+            else:
+                data["image_path"] = course_dict.get("image_path")
+
+            if data.get("image_path") and not data.get("image_alt"):
+                errors.append("Please provide alt text for the course card image.")
+
+            if errors:
+                if pending_image_path:
+                    remove_static_file(pending_image_path)
+                for message in errors:
+                    flash(message, "error")
+                form_snapshot = request.form.to_dict()
+                return render_template(
+                    "admin/courses/form.html",
+                    mode="edit",
+                    form_data=form_snapshot,
+                    course_data=course_dict,
+                    faq_items=faq_items,
+                    list_values=list_values,
+                )
+
+            update_course(course_id, data)
+            old_path = course_dict.get("image_path")
+            if pending_image_path and old_path and old_path != pending_image_path:
+                remove_static_file(old_path)
+            elif remove_existing_image and old_path:
+                remove_static_file(old_path)
+
+            replace_course_faqs(course_id, faq_items)
+            flash("Course updated successfully.", "success")
+            for note in notices:
+                flash(note, "info")
+            return redirect(url_for("admin_courses"))
+
+        return render_template(
+            "admin/courses/form.html",
+            mode="edit",
+            form_data=course_dict,
+            course_data=course_dict,
+            faq_items=existing_faqs,
+            list_values=existing_lists,
+        )
+
+    @app.post("/admin/courses/<int:course_id>/delete")
+    @login_required
+    def admin_courses_delete(course_id: int) -> str:
+        course = get_course_by_id(course_id)
+        if course is None:
+            flash("Course not found.", "error")
+            return redirect(url_for("admin_courses"))
+
+        delete_course(course_id)
+        flash("Course removed.", "info")
+        return redirect(url_for("admin_courses"))
+
+    @app.route("/admin/prospectus", methods=["GET", "POST"])
+    @login_required
+    def admin_prospectus() -> str:
+        if request.method == "POST":
+            pdf_file = request.files.get("document")
+            version_label = request.form.get("version_label", "").strip()
+            description = request.form.get("description", "").strip()
+            activate_now = request.form.get("activate_now") == "on"
+
+            try:
+                document_path = save_prospectus_pdf(pdf_file)
+            except ValueError as exc:
+                flash(str(exc), "error")
+                return redirect(url_for("admin_prospectus"))
+
+            if not version_label:
+                version_label = f"Prospectus {datetime.utcnow():%Y-%m-%d}"
+
+            create_prospectus_version(
+                version_label=version_label,
+                description=description or None,
+                document_path=document_path,
+                activate_now=activate_now,
+            )
+
+            if activate_now:
+                flash("New prospectus uploaded and set as active.", "success")
+            else:
+                flash("Prospectus version uploaded.", "success")
+
+            return redirect(url_for("admin_prospectus"))
+
+        versions = fetch_prospectus_versions()
+        active_version = get_active_prospectus_version()
+        active_id = int(active_version["id"]) if active_version is not None else None
+        return render_template(
+            "admin/prospectus.html",
+            versions=versions,
+            active_id=active_id,
+        )
+
+    @app.post("/admin/prospectus/<int:version_id>/activate")
+    @login_required
+    def admin_prospectus_activate(version_id: int):
+        if set_active_prospectus_version(version_id):
+            flash("Prospectus version activated.", "success")
+        else:
+            flash("Prospectus version not found.", "error")
+        return redirect(url_for("admin_prospectus"))
+
+    @app.post("/admin/prospectus/<int:version_id>/delete")
+    @login_required
+    def admin_prospectus_delete(version_id: int):
+        version = get_prospectus_version(version_id)
+        if version is None:
+            flash("Prospectus version not found.", "error")
+            return redirect(url_for("admin_prospectus"))
+
+        db = get_db()
+        fallback_id: int | None = None
+        if version["is_active"]:
+            fallback_row = db.execute(
+                """
+                SELECT id FROM prospectus_versions
+                WHERE id != ?
+                ORDER BY datetime(created_at) DESC, id DESC
+                LIMIT 1
+                """,
+                (version_id,)
+            ).fetchone()
+            if fallback_row is not None:
+                fallback_id = int(fallback_row["id"])
+
+        remove_static_file(version["document_path"])
+        delete_prospectus_version(version_id)
+
+        if fallback_id is not None:
+            set_active_prospectus_version(fallback_id)
+
+        flash("Prospectus version deleted.", "info")
+        return redirect(url_for("admin_prospectus"))
 
     @app.route("/admin/policies", methods=["GET", "POST"])
     @login_required

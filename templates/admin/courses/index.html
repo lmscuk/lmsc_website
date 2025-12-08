@@ -1,0 +1,152 @@
+{% extends 'admin/base_admin.html' %} {% block title %}Course Library | LMSC
+Admin{% endblock %} {% block nav_title %}Course Library{% endblock %} {% block
+meta_description %}
+<meta
+  name="description"
+  content="Manage LMSC course cards, update imagery, and keep programme information current from the admin course library."
+/>
+{% endblock %} {% block content %}
+<div class="flex flex-col gap-6">
+  <div
+    class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Course Library</h1>
+      <p class="text-sm text-slate-500">
+        Curate and publish the programmes highlighted on the courses page.
+      </p>
+    </div>
+    <a
+      href="{{ url_for('admin_courses_new') }}"
+      class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      + New Course
+    </a>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">
+        Published courses
+      </p>
+      <p class="mt-2 text-3xl font-semibold text-primary">{{ stats.total }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">With imagery</p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.with_images }}
+      </p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">Last updated</p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.last_updated|format_date("%b %d, %Y") if stats.last_updated
+        else "–" }}
+      </p>
+    </div>
+  </div>
+
+  {% if courses %}
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead
+        class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Level</th>
+          <th scope="col" class="px-6 py-3">Title &amp; summary</th>
+          <th scope="col" class="px-6 py-3">Hours</th>
+          <th scope="col" class="px-6 py-3">Display order</th>
+          <th scope="col" class="px-6 py-3">Imagery</th>
+          <th scope="col" class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
+        {% for course in courses %}
+        <tr class="hover:bg-slate-50">
+          <td class="px-6 py-4">
+            <span
+              class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
+            >
+              {{ course.level }}
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            <p class="font-semibold text-slate-900">{{ course.title }}</p>
+            <p class="text-xs text-slate-500">
+              {{ course.short_description or 'No description provided yet.' }}
+            </p>
+          </td>
+          <td class="px-6 py-4">{{ course.hours }} hrs</td>
+          <td class="px-6 py-4">
+            {{ course.display_order if course.display_order is not none else '–'
+            }}
+          </td>
+          <td class="px-6 py-4">
+            {% if course.image_path %}
+            <a
+              href="{{ url_for('static', filename=course.image_path) }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/20"
+            >
+              Preview
+            </a>
+            {% else %}
+            <span class="text-xs text-slate-400">No image</span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center justify-end gap-2">
+              <a
+                href="{{ url_for('courses') }}#course-{{ course.id }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              >
+                View
+              </a>
+              <a
+                href="{{ url_for('admin_courses_edit', course_id=course.id) }}"
+                class="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/15"
+              >
+                Edit
+              </a>
+              <form
+                method="post"
+                action="{{ url_for('admin_courses_delete', course_id=course.id) }}"
+                onsubmit="return confirm('Delete this course card? This action cannot be undone.');"
+              >
+                <button
+                  type="submit"
+                  class="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div
+    class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center"
+  >
+    <h2 class="text-lg font-semibold text-slate-800">No courses yet</h2>
+    <p class="mt-2 text-sm text-slate-500">
+      Add your first course to populate the programmes showcased on the courses
+      page.
+    </p>
+    <a
+      href="{{ url_for('admin_courses_new') }}"
+      class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      Create a Course
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

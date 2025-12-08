@@ -23,23 +23,6 @@
               class="header-logo"
               alt="London Maths &amp; Science College logo"
           /></a>
-        </div>
-        <div class="hidden xl:flex items-center gap-1">
-          <div class="dropdown relative group">
-            <button
-              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
-            >
-              Study at LMSC
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
@@ -131,7 +114,7 @@
                     </div>
                   </a>
                   <a
-                    href="{{ url_for('placeholder_page', slug='prospectus') }}"
+                    href="{{ url_for('prospectus') }}"
                     onmouseenter="setImage('prospectus')"
                     class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
                   >
@@ -291,40 +274,6 @@
                       <p class="text-xs text-gray-500">
                         State-of-the-art spaces
                       </p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='research-innovation-centre') }}"
-                    onmouseenter="setImage('research')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-microscope px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Research &amp; Innovation Centre
-                      </h4>
-                      <p class="text-xs text-gray-500">Cutting-edge research</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='exam-information-results') }}"
-                    onmouseenter="setImage('exam-info')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-certificate px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Exam Information &amp; Results
-                      </h4>
-                      <p class="text-xs text-gray-500">Academic outcomes</p>
                     </div>
                   </a>
                 </div>
@@ -883,106 +832,6 @@
                       <p class="text-xs text-gray-500">Collaborations</p>
                     </div>
                   </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='history-of-lmsc') }}"
-                    onmouseenter="setImage('history')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-history px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        History of LMSC
-                      </h4>
-                      <p class="text-xs text-gray-500">Our journey</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="space-y-2 flex flex-col h-full">
-                  <a
-                    href="{{ url_for('placeholder_page', slug='facilities-learning-spaces') }}"
-                    onmouseenter="setImage('learning-space')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-school px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Facilities &amp; Learning Spaces
-                      </h4>
-                      <p class="text-xs text-gray-500">Campus life</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='alumni-network') }}"
-                    onmouseenter="setImage('alumni')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-graduation-cap px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Alumni Network
-                      </h4>
-                      <p class="text-xs text-gray-500">Our success stories</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('policies_page') }}"
-                    onmouseenter="setImage('reports')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-file-alt px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Policies &amp; Reports
-                      </h4>
-                      <p class="text-xs text-gray-500">Official documents</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='work-with-us') }}"
-                    onmouseenter="setImage('careers-lmsc')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-briefcase px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">Work With Us</h4>
-                      <p class="text-xs text-gray-500">Career opportunities</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='lmsc-glossary') }}"
-                    onmouseenter="setImage('glossary')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">LMSC Glossary</h4>
-                      <p class="text-xs text-gray-500">Useful terms</p>
-                    </div>
-                  </a>
                 </div>
                 <div class="h-full">
                   <div
@@ -1037,20 +886,18 @@
                   href="{{ child_url }}"
                   class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
                 >
-                  <div
-                    class="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-200 text-slate-600 font-semibold"
-                  >
-                    {{ child['page_name'][0:2]|upper }}
+                  <div>
+                    <i
+                      class="fa fa-arrow-right px-2 py-2 rounded bg-gray-500 text-white"
+                    ></i>
                   </div>
                   <div>
                     <h4 class="font-semibold text-gray-800">
                       {{ child['page_name'] }}
                     </h4>
-                    {% if child['meta_description'] %}
                     <p class="text-xs text-gray-500 line-clamp-2">
-                      {{ child['meta_description'] }}
+                      {{ child['meta_description'] or 'Explore this page' }}
                     </p>
-                    {% endif %}
                   </div>
                 </a>
                 {% endfor %}
@@ -1103,20 +950,18 @@
                   href="{{ child_url }}"
                   class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
                 >
-                  <div
-                    class="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-200 text-slate-600 font-semibold"
-                  >
-                    {{ child['page_name'][0:2]|upper }}
+                  <div>
+                    <i
+                      class="fa fa-arrow-right px-2 py-2 rounded bg-gray-500 text-white"
+                    ></i>
                   </div>
                   <div>
                     <h4 class="font-semibold text-gray-800">
                       {{ child['page_name'] }}
                     </h4>
-                    {% if child['meta_description'] %}
                     <p class="text-xs text-gray-500 line-clamp-2">
-                      {{ child['meta_description'] }}
+                      {{ child['meta_description'] or 'Explore this page' }}
                     </p>
-                    {% endif %}
                   </div>
                 </a>
                 {% endfor %}
@@ -1259,7 +1104,7 @@
                 <span class="text-sm">Open Events &amp; Taster Days</span>
               </a>
               <a
-                href="{{ url_for('placeholder_page', slug='prospectus') }}"
+                href="{{ url_for('prospectus') }}"
                 class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
               >
                 <i class="fa fa-file-pdf w-4"></i>

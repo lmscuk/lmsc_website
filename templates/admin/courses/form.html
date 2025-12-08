@@ -1,0 +1,896 @@
+{% extends 'admin/base_admin.html' %} {% block title %}{{ 'Edit Course' if mode
+== 'edit' else 'Create Course' }} | Course Library{% endblock %} {% block
+nav_title %}Course Library{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="Create and edit LMSC courses, manage detailed curriculum content and FAQs, and control how each programme appears on the public site."
+/>
+{% endblock %} {% macro resolve_value(name, default='') -%} {%- if form_data and
+form_data.get(name) not in (none, '') -%} {{ form_data.get(name) }} {%- elif
+course_data and course_data.get(name) not in (none, '') -%} {{
+course_data.get(name) }} {%- else -%} {{ default }} {%- endif -%} {%- endmacro
+%} {% set list_values = list_values or {} %} {% set includes_items =
+list_values.get('includes_items') or [''] %} {% set faq_seed = faq_items if
+faq_items else [{'question':'', 'answer':''}] %} {% block extra_head %} {{
+super() }}
+<style>
+  .cms-editor-toolbar {
+    align-items: center;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5f5;
+    border-bottom: none;
+    border-radius: 0.75rem 0.75rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .cms-editor-button {
+    background: white;
+    border: 1px solid #cbd5f5;
+    border-radius: 9999px;
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    transition: background-color 0.2s ease, color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .cms-editor-button:hover,
+  .cms-editor-button:focus {
+    border-color: #0f766e;
+    color: #0f766e;
+    outline: none;
+  }
+
+  .cms-editor-area {
+    background: white;
+    border: 1px solid #cbd5f5;
+    border-radius: 0 0 0.75rem 0.75rem;
+    min-height: 18rem;
+    padding: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #1e293b;
+    overflow-y: auto;
+  }
+
+  .cms-editor-area:focus {
+    border-color: #0f766e;
+    box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.15);
+    outline: none;
+  }
+
+  .cms-editor-area.empty::before {
+    color: #94a3b8;
+    content: attr(data-placeholder);
+    pointer-events: none;
+  }
+
+  .cms-editor-area h2,
+  .cms-editor-area h3,
+  .cms-editor-area h4 {
+    color: #0f766e;
+    font-weight: 700;
+    margin-top: 1.75rem;
+  }
+
+  .cms-editor-area ul,
+  .cms-editor-area ol {
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .cms-editor-area blockquote {
+    border-left: 4px solid #0f766e;
+    color: #0f4c45;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="max-w-5xl">
+  <div
+    class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">
+        {{ 'Edit Course' if mode == 'edit' else 'Create Course' }}
+      </h1>
+      <p class="text-sm text-slate-500">
+        Update the information surfaced on the public course details page.
+      </p>
+    </div>
+    <a
+      href="{{ url_for('admin_courses') }}"
+      class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-700"
+      >Back to list</a
+    >
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-10">
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-lg font-semibold text-slate-900">Course overview</h2>
+        <p class="text-sm text-slate-500">
+          Headline details reused across listing cards and the detail hero.
+        </p>
+      </div>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="level"
+            >Level</label
+          >
+          <input
+            type="text"
+            id="level"
+            name="level"
+            value="{{ resolve_value('level')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Example: A Level"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="title"
+            >Title</label
+          >
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="{{ resolve_value('title')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Course headline shown on the detail page"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="slug"
+            >Slug</label
+          >
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            value="{{ resolve_value('slug')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Auto-generated if left blank"
+          />
+          <p class="mt-2 text-xs text-slate-500">
+            Used in the URL. Only lowercase letters, numbers and hyphens are
+            allowed.
+          </p>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700" for="hours"
+            >Learning hours</label
+          >
+          <input
+            type="number"
+            id="hours"
+            name="hours"
+            min="1"
+            value="{{ resolve_value('hours')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="e.g. 120"
+          />
+        </div>
+        <div class="md:col-span-2">
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="short_description"
+            >Short description</label
+          >
+          <textarea
+            id="short_description"
+            name="short_description"
+            rows="3"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="One or two sentences summarising the programme."
+          >
+{{ resolve_value('short_description')|trim }}</textarea
+          >
+        </div>
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="display_order"
+            >Display order</label
+          >
+          <input
+            type="number"
+            id="display_order"
+            name="display_order"
+            value="{{ resolve_value('display_order')|trim }}"
+            min="0"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Controls listing order"
+          />
+        </div>
+      </div>
+    </section>
+
+    {% set existing_image = course_data.image_path if course_data and
+    course_data.image_path else None %}
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Course image</h2>
+        <p class="text-sm text-slate-500">
+          Provide a representative image and descriptive alt text.
+        </p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700" for="image"
+            >Card image</label
+          >
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            class="mt-2 block w-full text-sm text-slate-600 file:mr-4 file:rounded-full file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20"
+          />
+          {% if existing_image %}
+          <a
+            href="{{ url_for('static', filename=existing_image) }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-3 inline-flex items-center text-xs font-semibold text-primary hover:underline"
+            >Preview current image</a
+          >
+          <label class="mt-3 flex items-center gap-2 text-xs text-slate-500">
+            <input type="checkbox" name="remove_image" class="rounded
+            border-slate-300 text-primary focus:ring-primary" {% if form_data
+            and form_data.get('remove_image') %}checked{% endif %} /> Remove
+            image on save
+          </label>
+          {% endif %}
+        </div>
+        <div>
+          <label
+            class="block text-xs font-semibold text-slate-700"
+            for="image_alt"
+            >Alt text</label
+          >
+          <input
+            type="text"
+            id="image_alt"
+            name="image_alt"
+            value="{{ resolve_value('image_alt')|trim }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Describe the visual for accessibility"
+          />
+          <p class="mt-2 text-xs text-slate-500">
+            Alt text is required whenever a course image is present.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">
+          Custom content (CMS)
+        </h2>
+        <p class="text-sm text-slate-500">
+          Use the rich text editor to add bespoke sections, highlights or
+          supporting information. Styling on the public page mirrors what you
+          build here.
+        </p>
+      </div>
+      <div data-editor="custom-content" class="space-y-3">
+        <div class="cms-editor-toolbar">
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="formatBlock"
+            data-editor-value="h2"
+          >
+            H2
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="formatBlock"
+            data-editor-value="h3"
+          >
+            H3
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="bold"
+          >
+            Bold
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="italic"
+          >
+            Italic
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="insertUnorderedList"
+          >
+            Bullets
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="insertOrderedList"
+          >
+            Numbers
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="formatBlock"
+            data-editor-value="blockquote"
+          >
+            Quote
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="createLink"
+          >
+            Link
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="unlink"
+          >
+            Unlink
+          </button>
+          <button
+            type="button"
+            class="cms-editor-button"
+            data-editor-command="removeFormat"
+          >
+            Clear
+          </button>
+        </div>
+        <div
+          class="cms-editor-area empty"
+          contenteditable="true"
+          data-editor-area
+          data-placeholder="Start typing to add custom content..."
+          aria-label="Course custom content editor"
+        ></div>
+        <textarea id="custom_content" name="custom_content" hidden>
+{{- resolve_value('custom_content')|safe -}}</textarea
+        >
+        <p class="text-xs text-slate-500">
+          Tip: paste plain text to avoid unwanted formatting. Links open in a
+          new tab on the public site.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Course narrative</h2>
+        <p class="text-sm text-slate-500">
+          Populate the main content sections on the detail page. Separate bullet
+          points with line breaks where noted.
+        </p>
+      </div>
+      <div class="grid gap-6">
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="about_course"
+            >About the course</label
+          >
+          <textarea
+            id="about_course"
+            name="about_course"
+            rows="5"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Introduce the structure, delivery and experience students can expect."
+          >
+{{ resolve_value('about_course')|trim }}</textarea
+          >
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+          <div class="md:col-span-1">
+            <label
+              class="block text-sm font-semibold text-slate-700"
+              for="study_topics"
+              >What you'll study</label
+            >
+            <textarea
+              id="study_topics"
+              name="study_topics"
+              rows="6"
+              required
+              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+              placeholder="Add one topic per line."
+            >
+{{ resolve_value('study_topics')|trim }}</textarea
+            >
+            <p class="mt-2 text-xs text-slate-500">
+              Each line becomes a bullet point.
+            </p>
+          </div>
+          <div class="md:col-span-1">
+            <label
+              class="block text-sm font-semibold text-slate-700"
+              for="skills_built"
+              >Skills you'll build</label
+            >
+            <textarea
+              id="skills_built"
+              name="skills_built"
+              rows="6"
+              required
+              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+              placeholder="Add one skill per line."
+            >
+{{ resolve_value('skills_built')|trim }}</textarea
+            >
+          </div>
+          <div class="md:col-span-1">
+            <label
+              class="block text-sm font-semibold text-slate-700"
+              for="audience_notes"
+              >Is this course for me?</label
+            >
+            <textarea
+              id="audience_notes"
+              name="audience_notes"
+              rows="6"
+              required
+              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+              placeholder="Describe ideal learners, one per line."
+            >
+{{ resolve_value('audience_notes')|trim }}</textarea
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">
+          Assessment &amp; outcomes
+        </h2>
+        <p class="text-sm text-slate-500">
+          Explain how the programme is assessed, entry requirements, resulting
+          outcomes and university destinations.
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="exam_details"
+            >Exam details</label
+          >
+          <textarea
+            id="exam_details"
+            name="exam_details"
+            rows="4"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Summarise assessment structure, moderation and timeframes."
+          >
+{{ resolve_value('exam_details')|trim }}</textarea
+          >
+        </div>
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="entry_requirements"
+            >Entry requirements</label
+          >
+          <textarea
+            id="entry_requirements"
+            name="entry_requirements"
+            rows="4"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="List academic grades, interview expectations or portfolio submissions."
+          >
+{{ resolve_value('entry_requirements')|trim }}</textarea
+          >
+        </div>
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="course_outcome"
+            >Course outcome</label
+          >
+          <textarea
+            id="course_outcome"
+            name="course_outcome"
+            rows="4"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Describe the tangible outputs or qualifications students leave with."
+          >
+{{ resolve_value('course_outcome')|trim }}</textarea
+          >
+        </div>
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="progression"
+            >Progression to university</label
+          >
+          <textarea
+            id="progression"
+            name="progression"
+            rows="4"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Detail typical university pathways, degree options or apprenticeships."
+          >
+{{ resolve_value('progression')|trim }}</textarea
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">
+          Sidebar information
+        </h2>
+        <p class="text-sm text-slate-500">
+          Configure the right-hand card displayed alongside course content.
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="sidebar_fees"
+            >Fees</label
+          >
+          <input
+            type="text"
+            id="sidebar_fees"
+            name="sidebar_fees"
+            value="{{ resolve_value('sidebar_fees')|trim }}"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Example: From £4,950 per term"
+          />
+        </div>
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="sidebar_summary"
+            >Short sidebar description</label
+          >
+          <textarea
+            id="sidebar_summary"
+            name="sidebar_summary"
+            rows="3"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
+            placeholder="Add a concise summary reinforcing value or delivery format."
+          >
+{{ resolve_value('sidebar_summary')|trim }}</textarea
+          >
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700"
+          >This course includes</label
+        >
+        <p class="mt-2 text-xs text-slate-500">
+          Use the button below to add as many bullet points as needed.
+        </p>
+        <div id="includes-items" class="mt-4 space-y-3">
+          {% for item in includes_items %}
+          <div class="flex gap-3" data-include-item>
+            <input
+              type="text"
+              name="includes_items[]"
+              value="{{ item }}"
+              class="flex-1 rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none"
+              placeholder="Example: Weekly mentor feedback"
+            />
+            <button
+              type="button"
+              class="shrink-0 rounded-full border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-red-200 hover:text-red-600"
+              data-action="remove-include"
+            >
+              Remove
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          type="button"
+          class="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary transition hover:bg-primary/15"
+          data-action="add-include"
+        >
+          + Add item
+        </button>
+      </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div class="flex flex-col gap-1">
+        <h2 class="text-lg font-semibold text-slate-900">FAQs</h2>
+        <p class="text-sm text-slate-500">
+          Build collapsible questions for the detail page. Only filled entries
+          are published.
+        </p>
+      </div>
+      <div id="faq-items" class="space-y-6">
+        {% for faq in faq_seed %}
+        <div
+          class="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+          data-faq-item
+        >
+          <div class="flex items-start gap-4">
+            <div class="flex-1 space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700"
+                  >Question</label
+                >
+                <input
+                  type="text"
+                  name="faq_questions[]"
+                  value="{{ faq.question }}"
+                  class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none"
+                  placeholder="Example: How are exams scheduled?"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700"
+                  >Answer</label
+                >
+                <textarea
+                  name="faq_answers[]"
+                  rows="3"
+                  class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none"
+                  placeholder="Provide a clear, student-friendly response."
+                >
+{{ faq.answer }}</textarea
+                >
+              </div>
+            </div>
+            <button
+              type="button"
+              class="mt-1 shrink-0 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+              data-action="remove-faq"
+              aria-label="Remove FAQ"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary transition hover:bg-primary/15"
+        data-action="add-faq"
+      >
+        + Add FAQ
+      </button>
+    </section>
+
+    <div class="flex items-center justify-between">
+      <a
+        href="{{ url_for('admin_courses') }}"
+        class="text-sm font-semibold text-slate-500 hover:text-slate-700"
+        >Cancel</a
+      >
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
+      >
+        {{ 'Update Course' if mode == 'edit' else 'Create Course' }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block extra_scripts %} {{ super() }}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const escapeHtml = (value = "") =>
+      value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const editorWrapper = document.querySelector(
+      '[data-editor="custom-content"]'
+    );
+    if (editorWrapper) {
+      const editableArea = editorWrapper.querySelector("[data-editor-area]");
+      const hiddenField = editorWrapper.querySelector(
+        'textarea[name="custom_content"]'
+      );
+      const toolbarButtons = editorWrapper.querySelectorAll(
+        "[data-editor-command]"
+      );
+      const form = editorWrapper.closest("form");
+
+      const syncEmptyState = () => {
+        if (!editableArea) {
+          return;
+        }
+        const stripped = editableArea.innerHTML
+          .replace(/<br\s*\/?>(\s|&nbsp;)*/gi, "")
+          .replace(/&nbsp;/gi, " ")
+          .replace(/<[^>]*>/g, "")
+          .trim();
+        if (stripped.length === 0) {
+          editableArea.classList.add("empty");
+        } else {
+          editableArea.classList.remove("empty");
+        }
+      };
+
+      if (editableArea && hiddenField && form) {
+        editableArea.innerHTML = hiddenField.value || "";
+        syncEmptyState();
+
+        toolbarButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.preventDefault();
+            const command = button.dataset.editorCommand;
+            if (!command) {
+              return;
+            }
+
+            editableArea.focus();
+
+            if (command === "createLink") {
+              const url = prompt("Enter URL", "https://");
+              if (url) {
+                document.execCommand("createLink", false, url.trim());
+              }
+              syncEmptyState();
+              return;
+            }
+
+            const value = button.dataset.editorValue || null;
+            const execValue =
+              command === "formatBlock" && value ? `<${value}>` : value;
+            document.execCommand(command, false, execValue);
+            editableArea.focus();
+            syncEmptyState();
+          });
+        });
+
+        editableArea.addEventListener("input", syncEmptyState);
+        editableArea.addEventListener("blur", syncEmptyState);
+
+        form.addEventListener("submit", () => {
+          hiddenField.value = editableArea.innerHTML.trim();
+        });
+      }
+    }
+
+    const includesContainer = document.getElementById("includes-items");
+    const addIncludeButton = document.querySelector(
+      '[data-action="add-include"]'
+    );
+
+    if (includesContainer && addIncludeButton) {
+      const createIncludeRow = (value = "") => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "flex gap-3";
+        wrapper.dataset.includeItem = "";
+        wrapper.innerHTML = `
+          <input type="text" name="includes_items[]" value="${escapeHtml(
+            value
+          )}" class="flex-1 rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none" placeholder="Example: Weekly mentor feedback" />
+          <button type="button" class="shrink-0 rounded-full border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-red-200 hover:text-red-600" data-action="remove-include">Remove</button>
+        `;
+        return wrapper;
+      };
+
+      const ensureIncludePlaceholder = () => {
+        if (
+          includesContainer.querySelectorAll("[data-include-item]").length === 0
+        ) {
+          includesContainer.appendChild(createIncludeRow());
+        }
+      };
+
+      addIncludeButton.addEventListener("click", () => {
+        includesContainer.appendChild(createIncludeRow());
+      });
+
+      includesContainer.addEventListener("click", (event) => {
+        const trigger = event.target.closest('[data-action="remove-include"]');
+        if (!trigger) return;
+        const item = trigger.closest("[data-include-item]");
+        if (item) {
+          item.remove();
+          ensureIncludePlaceholder();
+        }
+      });
+
+      ensureIncludePlaceholder();
+    }
+
+    const faqContainer = document.getElementById("faq-items");
+    const addFaqButton = document.querySelector('[data-action="add-faq"]');
+
+    if (faqContainer && addFaqButton) {
+      const createFaqCard = (question = "", answer = "") => {
+        const wrapper = document.createElement("div");
+        wrapper.className =
+          "rounded-2xl border border-slate-200 bg-slate-50 p-4";
+        wrapper.dataset.faqItem = "";
+        wrapper.innerHTML = `
+          <div class="flex items-start gap-4">
+            <div class="flex-1 space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700">Question</label>
+                <input type="text" name="faq_questions[]" value="${escapeHtml(
+                  question
+                )}" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none" placeholder="Example: How are exams scheduled?" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700">Answer</label>
+                <textarea name="faq_answers[]" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none" placeholder="Provide a clear, student-friendly response.">${escapeHtml(
+                  answer
+                )}</textarea>
+              </div>
+            </div>
+            <button type="button" class="mt-1 shrink-0 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100" data-action="remove-faq" aria-label="Remove FAQ">Remove</button>
+          </div>
+        `;
+        return wrapper;
+      };
+
+      addFaqButton.addEventListener("click", () => {
+        faqContainer.appendChild(createFaqCard());
+      });
+
+      faqContainer.addEventListener("click", (event) => {
+        const trigger = event.target.closest('[data-action="remove-faq"]');
+        if (!trigger) return;
+        const card = trigger.closest("[data-faq-item]");
+        if (card) {
+          card.remove();
+          if (!faqContainer.querySelector("[data-faq-item]")) {
+            faqContainer.appendChild(createFaqCard());
+          }
+        }
+      });
+
+      if (!faqContainer.querySelector("[data-faq-item]")) {
+        faqContainer.appendChild(createFaqCard());
+      }
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends 'admin/base_admin.html' %} {% block title %}Prospectus Manager
+&middot; LMSC Admin{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="Upload new prospectus PDFs, manage historic versions and choose which edition appears on the public prospectus page."
+/>
+{% endblock %} {% block content %}
+<div class="lg:pl-72">
+  <div class="px-6 py-10 lg:px-10">
+    <header
+      class="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <div>
+        <h1 class="text-3xl font-bold text-slate-900">Prospectus Manager</h1>
+        <p class="mt-2 max-w-2xl text-sm text-slate-500">
+          Keep the latest London Maths &amp; Science College prospectus online.
+          Upload the PDF, store previous editions for reference and choose which
+          version students can browse on the public page.
+        </p>
+      </div>
+    </header>
+
+    <section class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
+      <div class="rounded-3xl border border-slate-200 bg-white shadow-sm">
+        <div class="border-b border-slate-100 px-6 py-4">
+          <h2 class="text-lg font-semibold text-slate-900">
+            Upload new prospectus
+          </h2>
+        </div>
+        <form
+          method="post"
+          enctype="multipart/form-data"
+          class="space-y-6 px-6 py-6"
+        >
+          <div>
+            <label
+              class="text-sm font-medium text-slate-700"
+              for="version_label"
+              >Edition name</label
+            >
+            <p class="mt-1 text-xs text-slate-400">
+              Leave blank to auto-name by today&#39;s date.
+            </p>
+            <input
+              type="text"
+              id="version_label"
+              name="version_label"
+              class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-primary focus:outline-none"
+              placeholder="Prospectus Spring 2025"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-700" for="description"
+              >Short summary</label
+            >
+            <p class="mt-1 text-xs text-slate-400">
+              Optional note to describe what changed in this version (visible
+              only to admin users).
+            </p>
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+              class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-primary focus:outline-none"
+              placeholder="Updated STEM pathways overview and new student outcomes section."
+            ></textarea>
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-700" for="document"
+              >Prospectus PDF</label
+            >
+            <input
+              type="file"
+              id="document"
+              name="document"
+              accept="application/pdf"
+              required
+              class="mt-2 block w-full text-sm text-slate-600 file:mr-4 file:rounded-full file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
+            />
+          </div>
+          <div
+            class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/60 px-4 py-3"
+          >
+            <div>
+              <p class="text-sm font-semibold text-slate-800">
+                Make live straight away
+              </p>
+              <p class="text-xs text-slate-400">
+                Tick to replace the current public prospectus immediately.
+              </p>
+            </div>
+            <label class="inline-flex cursor-pointer items-center gap-2">
+              <input
+                type="checkbox"
+                id="activate_now"
+                name="activate_now"
+                class="h-5 w-5 rounded border border-slate-300 text-primary focus:ring-2 focus:ring-primary"
+              />
+              <span
+                class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"
+                >Activate</span
+              >
+            </label>
+          </div>
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+          >
+            Upload prospectus
+          </button>
+        </form>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white shadow-sm">
+        <div class="border-b border-slate-100 px-6 py-4">
+          <h2 class="text-lg font-semibold text-slate-900">Version history</h2>
+        </div>
+        <div class="px-6 py-6">
+          {% if versions %}
+          <ul class="space-y-4">
+            {% for version in versions %}
+            <li
+              class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 {% if version['id'] == active_id %}ring-2 ring-primary/40{% endif %}"
+            >
+              <div
+                class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+              >
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-lg font-semibold text-slate-900">
+                      {{ version['version_label'] }}
+                    </h3>
+                    {% if version['id'] == active_id %}
+                    <span
+                      class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+                    >
+                      Active
+                    </span>
+                    {% endif %}
+                  </div>
+                  <p class="mt-1 text-xs text-slate-400">
+                    Uploaded {{ version['created_at']|format_date('%d %b %Y') }}
+                    {% if version['updated_at'] and version['updated_at'] !=
+                    version['created_at'] %} &middot; Updated {{
+                    version['updated_at']|format_date('%d %b %Y') }} {% endif %}
+                  </p>
+                  {% if version['description'] %}
+                  <p class="mt-3 text-sm text-slate-600">
+                    {{ version['description'] }}
+                  </p>
+                  {% endif %}
+                </div>
+                <div class="flex flex-col items-start gap-2 sm:items-end">
+                  <div class="flex flex-wrap items-center gap-2">
+                    {% if version['id'] != active_id %}
+                    <form
+                      method="post"
+                      action="{{ url_for('admin_prospectus_activate', version_id=version['id']) }}"
+                    >
+                      <button
+                        type="submit"
+                        class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-primary/90"
+                      >
+                        <i class="fas fa-bolt text-xs"></i>
+                        Set active
+                      </button>
+                    </form>
+                    {% endif %}
+                    <a
+                      href="{{ url_for('static', filename=version['document_path']) }}"
+                      download
+                      class="inline-flex items-center gap-2 rounded-full border border-primary/30 px-4 py-2 text-xs font-semibold text-primary transition hover:bg-primary/5"
+                    >
+                      <i class="fas fa-download text-xs"></i>
+                      Download
+                    </a>
+                    <a
+                      href="{{ url_for('static', filename=version['document_path']) }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+                    >
+                      <i class="fas fa-eye text-xs"></i>
+                      Preview
+                    </a>
+                  </div>
+                  <form
+                    method="post"
+                    action="{{ url_for('admin_prospectus_delete', version_id=version['id']) }}"
+                    onsubmit="return confirm('Delete this prospectus version? This cannot be undone.');"
+                    class="self-stretch sm:self-auto"
+                  >
+                    <button
+                      type="submit"
+                      class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+                    >
+                      <i class="fas fa-trash text-xs"></i>
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div
+            class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500"
+          >
+            No prospectus versions uploaded yet. Add your first PDF to publish
+            it on the public page.
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}
