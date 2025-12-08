@@ -7,6 +7,11 @@
     .nav-cta .text-part {
       font-size: 0.703125rem;
     }
+
+    .dropdown-content h4 {
+      font-size: 0.7em;
+      font-weight: 700;
+    }
   </style>
   {% set hidden_nav_slugs = [ 'courses', 'course-details', 'course_details',
   'course-overview', 'co', 'a-level-math', 'a_level_math', 'pricing',
@@ -23,6 +28,23 @@
               class="header-logo"
               alt="London Maths &amp; Science College logo"
           /></a>
+        </div>
+        <div class="hidden xl:flex items-center gap-1">
+          <div class="dropdown relative group">
+            <button
+              class="nav-item-text px-4 py-2 text-gray-700 hover:text-primary font-bold flex items-center gap-1"
+            >
+              Study at LMSC
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
@@ -30,7 +52,7 @@
             <div
               class="dropdown-content absolute left-0 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
             >
-              <div class="grid grid-cols-3 gap-6">
+              <div class="grid grid-cols-2 gap-6">
                 <div class="space-y-2">
                   <a
                     href="{{ url_for('about') }}"
@@ -129,7 +151,7 @@
                     </div>
                   </a>
                 </div>
-                <div class="col-span-2">
+                <div class="h-full">
                   <div
                     id="previewBox"
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
@@ -1176,20 +1198,6 @@
                 <i class="fa fa-flask w-4"></i>
                 <span class="text-sm">Academic Facilities &amp; Labs</span>
               </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='research-innovation-centre') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-microscope w-4"></i>
-                <span class="text-sm">Research &amp; Innovation Centre</span>
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='exam-information-results') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-certificate w-4"></i>
-                <span class="text-sm">Exam Information &amp; Results</span>
-              </a>
             </div>
           </div>
           <div class="border-b border-gray-200 pb-2">
@@ -1450,50 +1458,6 @@
               >
                 <i class="fa fa-handshake w-4"></i>
                 <span class="text-sm">Partnerships &amp; Outreach</span>
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='history-of-lmsc') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-history w-4"></i>
-                <span class="text-sm"
-                  >History of London Maths &amp; Science College</span
-                >
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='facilities-learning-spaces') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-school w-4"></i>
-                <span class="text-sm">Facilities &amp; Learning Spaces</span>
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='alumni-network') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-user-graduate w-4"></i>
-                <span class="text-sm">Alumni Network</span>
-              </a>
-              <a
-                href="{{ url_for('policies_page') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-file-alt w-4"></i>
-                <span class="text-sm">Policies &amp; Reports</span>
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='work-with-us') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-briefcase w-4"></i>
-                <span class="text-sm">Work With Us</span>
-              </a>
-              <a
-                href="{{ url_for('placeholder_page', slug='lmsc-glossary') }}"
-                class="flex items-center gap-3 py-2 text-gray-600 hover:text-primary"
-              >
-                <i class="fa fa-book-open w-4"></i>
-                <span class="text-sm">LMSC Glossary</span>
               </a>
             </div>
           </div>
