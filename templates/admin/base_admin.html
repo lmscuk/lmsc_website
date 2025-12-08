@@ -219,6 +219,58 @@
                           Blog Articles
                         </a>
                       </li>
+                      <li>
+                        <a
+                          href="{{ url_for('admin_courses') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_courses') and request.endpoint != 'admin_courses_new' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M3.75 4.5h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm10 0h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm-10 10h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm10 0h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Z"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Courses
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="{{ url_for('admin_courses_new') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint == 'admin_courses_new' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M12 5v14m7-7H5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Create course
+                        </a>
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -542,7 +594,7 @@
                 <li>
                   <a
                     href="{{ url_for('admin_courses') }}"
-                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_courses') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_courses') and request.endpoint != 'admin_courses_new' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
                   >
                     <span
                       class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
@@ -567,8 +619,8 @@
                 </li>
                 <li>
                   <a
-                    href="{{ url_for('admin_courses') }}"
-                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_courses') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                    href="{{ url_for('admin_courses_new') }}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint == 'admin_courses_new' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
                   >
                     <span
                       class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
@@ -582,13 +634,13 @@
                         class="h-4 w-4"
                       >
                         <path
-                          d="M3.75 4.5h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm10 0h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm-10 10h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Zm10 0h6.5a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Z"
+                          d="M12 5v14m7-7H5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
                         />
                       </svg>
                     </span>
-                    Courses
+                    Create course
                   </a>
                 </li>
               </ul>

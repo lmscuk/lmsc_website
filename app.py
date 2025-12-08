@@ -14,6 +14,7 @@ from flask import (Flask, abort, flash, g, redirect, render_template, request,
                    send_from_directory, session, url_for)
 from flask.typing import ResponseReturnValue
 from flask_mail import Mail, Message
+from markupsafe import Markup, escape
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
@@ -75,7 +76,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "About LMSC",
         "template_name": "about.html",
         "nav_order": 20,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "About London Maths & Science College | Who We Are",
         "meta_description": (
             "Learn about our mission, values and leadership at London Maths & Science College, the "
@@ -87,7 +88,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "STEM Pathways",
         "template_name": "stem_pathways.html",
         "nav_order": 30,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "STEM Pathways | A Level & GCSE Courses at LMSC",
         "meta_description": (
             "Explore the specialist STEM pathways at LMSC, from A Level Mathematics and Sciences to "
@@ -99,7 +100,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Study Options",
         "template_name": "study_options.html",
         "nav_order": 40,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Study Options | Learn Online or On Campus with LMSC",
         "meta_description": (
             "See the flexible study options at LMSC, combining online lessons and in-person teaching so "
@@ -111,7 +112,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Prospectus",
         "template_name": "prospectus.html",
         "nav_order": 45,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Download the LMSC Prospectus | STEM Sixth Form",
         "meta_description": (
             "Browse the London Maths & Science College prospectus, explore specialist STEM pathways and "
@@ -123,7 +124,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Fees & Finance",
         "template_name": "fees.html",
         "nav_order": 50,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Fees & Finance | London Maths & Science College",
         "meta_description": (
             "Review tuition fees, funding information and payment schedules for London Maths & Science "
@@ -135,7 +136,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "How We Teach",
         "template_name": "how_we_teach.html",
         "nav_order": 60,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "How We Teach STEM | London Maths & Science College",
         "meta_description": (
             "Understand how LMSC blends subject mastery, structured practice and one-to-one support to "
@@ -147,7 +148,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Our Teacher Experts",
         "template_name": "our_teacher_expert.html",
         "nav_order": 70,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Our Teachers & Expert Tutors | LMSC Faculty",
         "meta_description": (
             "Meet the specialist STEM teachers and tutors at LMSC who deliver expert instruction, "
@@ -159,7 +160,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Informed Teaching",
         "template_name": "informed_teaching.html",
         "nav_order": 80,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Evidence-Informed Teaching | London Maths & Science College",
         "meta_description": (
             "See how LMSC uses evidence-informed strategies, assessment insights and research to shape "
@@ -220,7 +221,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Blogs",
         "template_name": "blogs.html",
         "nav_order": 120,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "LMSC Blog | Insights & Updates",
         "meta_description": (
             "Read the latest articles, insights and stories from London Maths & Science College covering "
@@ -269,7 +270,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Our Mission",
         "template_name": "our_mission.html",
         "nav_order": 160,
-        "nav_display": "footer",
+        "nav_display": "dropdown",
         "seo_title": "Our Mission & Values | London Maths & Science College",
         "meta_description": (
             "Discover the mission, values and ambitions that shape London Maths & Science College as a "
@@ -281,7 +282,7 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "page_name": "Contact",
         "template_name": "contact.html",
         "nav_order": 170,
-        "nav_display": "footer",
+        "nav_display": "main",
         "seo_title": "Contact London Maths & Science College",
         "meta_description": (
             "Reach the admissions and support teams at LMSC to discuss courses, entry requirements or "
@@ -308,6 +309,281 @@ DEFAULT_PAGE_SEEDS: list[dict[str, str | int | None]] = [
         "seo_title": "School Policies & Documents | LMSC",
         "meta_description": (
             "Access statutory policies, safeguarding documents and official reports from London Maths & Science College."
+        ),
+    },
+    {
+        "slug": "open-events",
+        "page_name": "Open Events",
+        "template_name": "development.html",
+        "nav_order": 200,
+        "nav_display": "dropdown",
+        "seo_title": "Open Events | London Maths & Science College",
+        "meta_description": (
+            "Discover upcoming open days, meet-the-team evenings and campus tours at London Maths & Science College."
+        ),
+    },
+    {
+        "slug": "support-send-learners",
+        "page_name": "Support for SEND Learners",
+        "template_name": "development.html",
+        "nav_order": 210,
+        "nav_display": "dropdown",
+        "seo_title": "SEND Support | London Maths & Science College",
+        "meta_description": (
+            "Learn how LMSC supports students with special educational needs and disabilities through tailored provision."
+        ),
+    },
+    {
+        "slug": "digital-learning-devices",
+        "page_name": "Digital Learning & Devices",
+        "template_name": "development.html",
+        "nav_order": 220,
+        "nav_display": "dropdown",
+        "seo_title": "Digital Learning & Devices | LMSC",
+        "meta_description": (
+            "Review device guidance, connectivity requirements and the digital platforms used by LMSC learners."
+        ),
+    },
+    {
+        "slug": "academic-facilities-labs",
+        "page_name": "Academic Facilities & Labs",
+        "template_name": "development.html",
+        "nav_order": 230,
+        "nav_display": "dropdown",
+        "seo_title": "Academic Facilities & Labs | LMSC",
+        "meta_description": (
+            "Explore the specialist laboratories, classrooms and learning spaces available to LMSC students."
+        ),
+    },
+    {
+        "slug": "life-at-lmsc",
+        "page_name": "Life at LMSC",
+        "template_name": "development.html",
+        "nav_order": 240,
+        "nav_display": "dropdown",
+        "seo_title": "Life at LMSC | London Maths & Science College",
+        "meta_description": (
+            "Get a feel for daily life, culture and community at London Maths & Science College."
+        ),
+    },
+    {
+        "slug": "student-community",
+        "page_name": "Our Student Community",
+        "template_name": "development.html",
+        "nav_order": 250,
+        "nav_display": "dropdown",
+        "seo_title": "Student Community | London Maths & Science College",
+        "meta_description": (
+            "Meet the diverse student community at LMSC and learn how we celebrate every learner."
+        ),
+    },
+    {
+        "slug": "pastoral-care-wellbeing",
+        "page_name": "Pastoral Care & Wellbeing",
+        "template_name": "development.html",
+        "nav_order": 260,
+        "nav_display": "dropdown",
+        "seo_title": "Pastoral Care & Wellbeing | LMSC",
+        "meta_description": (
+            "See how LMSC supports student wellbeing through pastoral programmes and mentoring."
+        ),
+    },
+    {
+        "slug": "tutor-system-mentoring",
+        "page_name": "Tutor System & Mentoring",
+        "template_name": "development.html",
+        "nav_order": 270,
+        "nav_display": "dropdown",
+        "seo_title": "Tutor System & Mentoring | LMSC",
+        "meta_description": (
+            "Understand the tutor system and mentoring pathways that guide every learner at LMSC."
+        ),
+    },
+    {
+        "slug": "inclusion-student-voice",
+        "page_name": "Inclusion & Student Voice",
+        "template_name": "development.html",
+        "nav_order": 280,
+        "nav_display": "dropdown",
+        "seo_title": "Inclusion & Student Voice | LMSC",
+        "meta_description": (
+            "Learn how students influence college life through councils, feedback forums and inclusive initiatives."
+        ),
+    },
+    {
+        "slug": "sphere-programme",
+        "page_name": "SPHERE Programme",
+        "template_name": "development.html",
+        "nav_order": 290,
+        "nav_display": "dropdown",
+        "seo_title": "SPHERE Programme | LMSC",
+        "meta_description": (
+            "Discover the SPHERE enrichment programme that broadens horizons beyond the core curriculum."
+        ),
+    },
+    {
+        "slug": "faith-religious-provision",
+        "page_name": "Faith & Religious Provision",
+        "template_name": "development.html",
+        "nav_order": 300,
+        "nav_display": "dropdown",
+        "seo_title": "Faith & Religious Provision | LMSC",
+        "meta_description": (
+            "Explore how LMSC accommodates faith observance, prayer spaces and cultural celebrations."
+        ),
+    },
+    {
+        "slug": "assemblies-events",
+        "page_name": "Assemblies & Events",
+        "template_name": "development.html",
+        "nav_order": 310,
+        "nav_display": "dropdown",
+        "seo_title": "Assemblies & Events | London Maths & Science College",
+        "meta_description": (
+            "Stay informed about assemblies, guest speakers and signature events at LMSC."
+        ),
+    },
+    {
+        "slug": "summer-camps-enrichment",
+        "page_name": "Summer Camps & Enrichment",
+        "template_name": "development.html",
+        "nav_order": 320,
+        "nav_display": "dropdown",
+        "seo_title": "Summer Camps & Enrichment | LMSC",
+        "meta_description": (
+            "Review summer schools, enrichment camps and holiday programmes offered by LMSC."
+        ),
+    },
+    {
+        "slug": "online-homeschooling-programmes",
+        "page_name": "Online Homeschooling Programmes",
+        "template_name": "development.html",
+        "nav_order": 330,
+        "nav_display": "dropdown",
+        "seo_title": "Online Homeschooling Programmes | LMSC",
+        "meta_description": (
+            "Discover flexible online and homeschooling programmes delivered by LMSC tutors."
+        ),
+    },
+    {
+        "slug": "homeschooling-advice-support",
+        "page_name": "Homeschooling Advice & Support",
+        "template_name": "development.html",
+        "nav_order": 340,
+        "nav_display": "dropdown",
+        "seo_title": "Homeschooling Advice & Support | LMSC",
+        "meta_description": (
+            "Access guidance, toolkits and helplines for families undertaking homeschooling with LMSC."
+        ),
+    },
+    {
+        "slug": "computer-requirements",
+        "page_name": "Computer Requirements",
+        "template_name": "development.html",
+        "nav_order": 350,
+        "nav_display": "dropdown",
+        "seo_title": "Computer Requirements | LMSC",
+        "meta_description": (
+            "Check recommended hardware and software specifications for successful online study at LMSC."
+        ),
+    },
+    {
+        "slug": "it-helpdesk-support",
+        "page_name": "IT Helpdesk & Support",
+        "template_name": "development.html",
+        "nav_order": 360,
+        "nav_display": "dropdown",
+        "seo_title": "IT Helpdesk & Support | LMSC",
+        "meta_description": (
+            "Find out how to reach the LMSC IT helpdesk for technical support and troubleshooting."
+        ),
+    },
+    {
+        "slug": "student-parent-faqs",
+        "page_name": "Student & Parent FAQs",
+        "template_name": "development.html",
+        "nav_order": 370,
+        "nav_display": "dropdown",
+        "seo_title": "Student & Parent FAQs | LMSC",
+        "meta_description": (
+            "Browse answers to frequently asked questions from students and parents about LMSC."
+        ),
+    },
+    {
+        "slug": "university-careers-guidance",
+        "page_name": "University & Careers Guidance",
+        "template_name": "development.html",
+        "nav_order": 380,
+        "nav_display": "dropdown",
+        "seo_title": "University & Careers Guidance | LMSC",
+        "meta_description": (
+            "See how LMSC provides careers coaching, UCAS support and destination planning for every learner."
+        ),
+    },
+    {
+        "slug": "study-guidance",
+        "page_name": "Study Guidance",
+        "template_name": "development.html",
+        "nav_order": 390,
+        "nav_display": "dropdown",
+        "seo_title": "Study Guidance | London Maths & Science College",
+        "meta_description": (
+            "Unlock study strategies, revision techniques and subject guidance curated by LMSC teachers."
+        ),
+    },
+    {
+        "slug": "exam-information-policies",
+        "page_name": "Exam Information & Policies",
+        "template_name": "development.html",
+        "nav_order": 400,
+        "nav_display": "dropdown",
+        "seo_title": "Exam Information & Policies | LMSC",
+        "meta_description": (
+            "Find exam timetables, regulations and guidance notes for assessments at LMSC."
+        ),
+    },
+    {
+        "slug": "strategy-vision",
+        "page_name": "Strategy & Vision",
+        "template_name": "development.html",
+        "nav_order": 410,
+        "nav_display": "dropdown",
+        "seo_title": "Strategy & Vision | London Maths & Science College",
+        "meta_description": (
+            "Read about the college strategy, long-term vision and development priorities at LMSC."
+        ),
+    },
+    {
+        "slug": "meet-the-principal",
+        "page_name": "Meet the Principal",
+        "template_name": "development.html",
+        "nav_order": 420,
+        "nav_display": "dropdown",
+        "seo_title": "Meet the Principal | London Maths & Science College",
+        "meta_description": (
+            "Hear from the Principal of LMSC about our ethos, ambitions and student successes."
+        ),
+    },
+    {
+        "slug": "leadership-governance",
+        "page_name": "Leadership & Governance",
+        "template_name": "development.html",
+        "nav_order": 430,
+        "nav_display": "dropdown",
+        "seo_title": "Leadership & Governance | LMSC",
+        "meta_description": (
+            "Meet the leadership team and governance partners who steward London Maths & Science College."
+        ),
+    },
+    {
+        "slug": "partnerships-outreach",
+        "page_name": "Partnerships & Outreach",
+        "template_name": "development.html",
+        "nav_order": 440,
+        "nav_display": "dropdown",
+        "seo_title": "Partnerships & Outreach | London Maths & Science College",
+        "meta_description": (
+            "Discover outreach projects, employer links and partnerships that enrich learning at LMSC."
         ),
     },
 ]
@@ -698,14 +974,14 @@ COURSE_DB_COLUMNS: tuple[str, ...] = (
 )
 
 COURSE_MULTILINE_FIELDS: tuple[str, ...] = (
-    "study_topics",
-    "skills_built",
-    "audience_notes",
     "includes_items",
 )
 
 COURSE_TEXT_BLOCK_FIELDS: tuple[str, ...] = (
     "about_course",
+    "study_topics",
+    "skills_built",
+    "audience_notes",
     "exam_details",
     "entry_requirements",
     "course_outcome",
@@ -1025,6 +1301,26 @@ def create_app() -> Flask:
             # Fall back to single newlines if double-newline paragraphs absent
             return split_multiline(value)
         return paragraphs
+
+    def build_rich_html(value: str | None, *, as_list: bool = False) -> Markup | None:
+        if not value:
+            return None
+        trimmed = value.strip()
+        if not trimmed:
+            return None
+        if "<" in trimmed and ">" in trimmed:
+            return Markup(trimmed)
+        if as_list:
+            items = split_multiline(trimmed)
+            if not items:
+                return None
+            list_items = "".join(f"<li>{escape(item)}</li>" for item in items)
+            return Markup(f"<ul>{list_items}</ul>")
+        paragraphs = split_paragraphs(trimmed)
+        if not paragraphs:
+            return None
+        html = "".join(f"<p>{escape(paragraph)}</p>" for paragraph in paragraphs)
+        return Markup(html)
 
     def is_probably_bot(user_agent: str) -> bool:
         if not user_agent:
@@ -1457,8 +1753,6 @@ def create_app() -> Flask:
     def seed_existing_pages() -> None:
         db = get_db()
         placement_choices = {"main", "dropdown", "footer", "hidden"}
-        existing_count = db.execute("SELECT COUNT(*) AS total FROM pages").fetchone()["total"]
-        allow_seed_inserts = existing_count == 0
 
         for seed in DEFAULT_PAGE_SEEDS:
             slug = str(seed["slug"])
@@ -1477,8 +1771,6 @@ def create_app() -> Flask:
                 (slug,),
             ).fetchone()
             if existing is None:
-                if not allow_seed_inserts:
-                    continue
                 now = current_timestamp()
                 db.execute(
                     """
@@ -1522,11 +1814,11 @@ def create_app() -> Flask:
                 updates.append("meta_description = ?")
                 params.append(meta_description)
 
-            if nav_display != "hidden" and existing["nav_display"] == "hidden":
+            if nav_display and nav_display != existing["nav_display"]:
                 updates.append("nav_display = ?")
                 params.append(nav_display)
 
-            if nav_order and existing["nav_order"] == 0:
+            if nav_order and nav_order != existing["nav_order"]:
                 updates.append("nav_order = ?")
                 params.append(nav_order)
 
@@ -1977,16 +2269,6 @@ def create_app() -> Flask:
         if not sidebar_fees:
             errors.append("Please add fee information for the course sidebar.")
         data["sidebar_fees"] = sidebar_fees or None
-
-        for field in ("study_topics", "skills_built", "audience_notes"):
-            raw_value = request.form.get(field)
-            normalised = normalise_multiline(raw_value)
-            data[field] = normalised
-            field_items = split_multiline(normalised)
-            list_values[field] = field_items
-            if not field_items:
-                readable = field.replace("_", " ")
-                errors.append(f"Please add at least one entry for {readable}.")
 
         includes_items = [item.strip() for item in request.form.getlist("includes_items[]") if item.strip()]
         if not includes_items:
@@ -2747,16 +3029,16 @@ def create_app() -> Flask:
         course_dict = dict(course_row)
         course_id = int(course_dict["id"])
 
-        study_topics = split_multiline(course_dict.get("study_topics"))
-        skills_built = split_multiline(course_dict.get("skills_built"))
-        audience_notes = split_multiline(course_dict.get("audience_notes"))
+        study_topics_html = build_rich_html(course_dict.get("study_topics"), as_list=True)
+        skills_built_html = build_rich_html(course_dict.get("skills_built"), as_list=True)
+        audience_notes_html = build_rich_html(course_dict.get("audience_notes"), as_list=True)
         includes_items = split_multiline(course_dict.get("includes_items"))
 
-        about_paragraphs = split_paragraphs(course_dict.get("about_course"))
-        exam_paragraphs = split_paragraphs(course_dict.get("exam_details"))
-        entry_paragraphs = split_paragraphs(course_dict.get("entry_requirements"))
-        outcome_paragraphs = split_paragraphs(course_dict.get("course_outcome"))
-        progression_paragraphs = split_paragraphs(course_dict.get("progression"))
+        about_html = build_rich_html(course_dict.get("about_course"))
+        exam_html = build_rich_html(course_dict.get("exam_details"))
+        entry_html = build_rich_html(course_dict.get("entry_requirements"))
+        outcome_html = build_rich_html(course_dict.get("course_outcome"))
+        progression_html = build_rich_html(course_dict.get("progression"))
 
         faq_rows = fetch_course_faqs(course_id)
         faq_items = [dict(row) for row in faq_rows]
@@ -2773,14 +3055,14 @@ def create_app() -> Flask:
             page_title=page_title,
             meta_description=meta_description,
             canonical_url=url_for("course_details", slug=course_dict["slug"], _external=True),
-            about_paragraphs=about_paragraphs,
-            study_topics=study_topics,
-            skills_built=skills_built,
-            audience_notes=audience_notes,
-            exam_paragraphs=exam_paragraphs,
-            entry_paragraphs=entry_paragraphs,
-            outcome_paragraphs=outcome_paragraphs,
-            progression_paragraphs=progression_paragraphs,
+            about_html=about_html,
+            study_topics_html=study_topics_html,
+            skills_built_html=skills_built_html,
+            audience_notes_html=audience_notes_html,
+            exam_html=exam_html,
+            entry_html=entry_html,
+            outcome_html=outcome_html,
+            progression_html=progression_html,
             includes_items=includes_items,
             faq_items=faq_items,
             related_courses=related_courses,

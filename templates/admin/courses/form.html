@@ -9,8 +9,132 @@ nav_title %}Course Library{% endblock %} {% block meta_description %}
 form_data.get(name) not in (none, '') -%} {{ form_data.get(name) }} {%- elif
 course_data and course_data.get(name) not in (none, '') -%} {{
 course_data.get(name) }} {%- else -%} {{ default }} {%- endif -%} {%- endmacro
-%} {% set list_values = list_values or {} %} {% set includes_items =
-list_values.get('includes_items') or [''] %} {% set faq_seed = faq_items if
+%} {% macro render_rich_editor(field_name, placeholder='', min_height='18rem',
+label_id='', required=false) -%}
+<div
+  class="space-y-3"
+  data-rich-editor
+  data-field="{{ field_name }}"
+  {%
+  if
+  placeholder
+  %}data-placeholder="{{ placeholder }}"
+  {%
+  endif
+  %}
+>
+  <div
+    class="cms-editor-toolbar"
+    role="toolbar"
+    aria-label="Formatting options for {{ field_name.replace('_', ' ') }}"
+  >
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="formatBlock"
+      data-editor-value="h2"
+    >
+      H2
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="formatBlock"
+      data-editor-value="h3"
+    >
+      H3
+    </button>
+    <button type="button" class="cms-editor-button" data-editor-command="bold">
+      Bold
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="italic"
+    >
+      Italic
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="insertUnorderedList"
+    >
+      Bullets
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="insertOrderedList"
+    >
+      Numbers
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="formatBlock"
+      data-editor-value="blockquote"
+    >
+      Quote
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="createLink"
+    >
+      Link
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="unlink"
+    >
+      Unlink
+    </button>
+    <button
+      type="button"
+      class="cms-editor-button"
+      data-editor-command="removeFormat"
+    >
+      Clear
+    </button>
+  </div>
+  <div
+    class="cms-editor-area empty"
+    contenteditable="true"
+    data-editor-area
+    style="min-height: {{ min_height }};"
+    {%
+    if
+    placeholder
+    %}data-placeholder="{{ placeholder }}"
+    {%
+    endif
+    %}
+    {%
+    if
+    label_id
+    %}aria-labelledby="{{ label_id }}"
+    {%
+    endif
+    %}
+  ></div>
+  <textarea
+    id="{{ field_name }}"
+    name="{{ field_name }}"
+    data-editor-input
+    {%
+    if
+    required
+    %}required{%
+    endif
+    %}
+    hidden
+  >
+{{- resolve_value(field_name)|safe -}}</textarea
+  >
+</div>
+{%- endmacro %} {% set list_values = list_values or {} %} {% set includes_items
+= list_values.get('includes_items') or [''] %} {% set faq_seed = faq_items if
 faq_items else [{'question':'', 'answer':''}] %} {% block extra_head %} {{
 super() }}
 <style>
@@ -288,92 +412,9 @@ super() }}
           build here.
         </p>
       </div>
-      <div data-editor="custom-content" class="space-y-3">
-        <div class="cms-editor-toolbar">
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="formatBlock"
-            data-editor-value="h2"
-          >
-            H2
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="formatBlock"
-            data-editor-value="h3"
-          >
-            H3
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="bold"
-          >
-            Bold
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="italic"
-          >
-            Italic
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="insertUnorderedList"
-          >
-            Bullets
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="insertOrderedList"
-          >
-            Numbers
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="formatBlock"
-            data-editor-value="blockquote"
-          >
-            Quote
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="createLink"
-          >
-            Link
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="unlink"
-          >
-            Unlink
-          </button>
-          <button
-            type="button"
-            class="cms-editor-button"
-            data-editor-command="removeFormat"
-          >
-            Clear
-          </button>
-        </div>
-        <div
-          class="cms-editor-area empty"
-          contenteditable="true"
-          data-editor-area
-          data-placeholder="Start typing to add custom content..."
-          aria-label="Course custom content editor"
-        ></div>
-        <textarea id="custom_content" name="custom_content" hidden>
-{{- resolve_value('custom_content')|safe -}}</textarea
-        >
+      <div>
+        {{ render_rich_editor('custom_content', "Start typing to add custom
+        content...") }}
         <p class="text-xs text-slate-500">
           Tip: paste plain text to avoid unwanted formatting. Links open in a
           new tab on the public site.
@@ -387,8 +428,8 @@ super() }}
       <div>
         <h2 class="text-lg font-semibold text-slate-900">Course narrative</h2>
         <p class="text-sm text-slate-500">
-          Populate the main content sections on the detail page. Separate bullet
-          points with line breaks where noted.
+          Populate each section with rich formatting. Use headings, lists and
+          links to mirror how content should appear on the public course page.
         </p>
       </div>
       <div class="grid gap-6">
@@ -396,73 +437,69 @@ super() }}
           <label
             class="block text-sm font-semibold text-slate-700"
             for="about_course"
+            id="label_about_course"
             >About the course</label
           >
-          <textarea
-            id="about_course"
-            name="about_course"
-            rows="5"
-            required
-            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-            placeholder="Introduce the structure, delivery and experience students can expect."
-          >
-{{ resolve_value('about_course')|trim }}</textarea
-          >
+          <p class="mt-2 text-xs text-slate-500">
+            Share the story of the programme, delivery format and student
+            experience.
+          </p>
+          <div class="mt-3">
+            {{ render_rich_editor('about_course', "Introduce the structure,
+            delivery and experience students can expect.",
+            label_id='label_about_course', required=true) }}
+          </div>
         </div>
         <div class="grid gap-6 md:grid-cols-3">
           <div class="md:col-span-1">
             <label
               class="block text-sm font-semibold text-slate-700"
               for="study_topics"
+              id="label_study_topics"
               >What you'll study</label
             >
-            <textarea
-              id="study_topics"
-              name="study_topics"
-              rows="6"
-              required
-              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-              placeholder="Add one topic per line."
-            >
-{{ resolve_value('study_topics')|trim }}</textarea
-            >
             <p class="mt-2 text-xs text-slate-500">
-              Each line becomes a bullet point.
+              Use bullet, heading and link controls to outline core modules.
             </p>
+            <div class="mt-3">
+              {{ render_rich_editor('study_topics', "Highlight the key topics
+              covered across the course.", min_height='14rem',
+              label_id='label_study_topics', required=true) }}
+            </div>
           </div>
           <div class="md:col-span-1">
             <label
               class="block text-sm font-semibold text-slate-700"
               for="skills_built"
-              >Skills you'll build</label
+              id="label_skills_built"
+              >What you'll study</label
             >
-            <textarea
-              id="skills_built"
-              name="skills_built"
-              rows="6"
-              required
-              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-              placeholder="Add one skill per line."
-            >
-{{ resolve_value('skills_built')|trim }}</textarea
-            >
+            <p class="mt-2 text-xs text-slate-500">
+              Detail the capabilities learners build, using lists or short
+              paragraphs.
+            </p>
+            <div class="mt-3">
+              {{ render_rich_editor('skills_built', "Explain the skills, habits
+              or knowledge learners develop.", min_height='14rem',
+              label_id='label_skills_built', required=true) }}
+            </div>
           </div>
           <div class="md:col-span-1">
             <label
               class="block text-sm font-semibold text-slate-700"
               for="audience_notes"
-              >Is this course for me?</label
+              id="label_audience_notes"
+              >What you'll study</label
             >
-            <textarea
-              id="audience_notes"
-              name="audience_notes"
-              rows="6"
-              required
-              class="mt-2 h-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-              placeholder="Describe ideal learners, one per line."
-            >
-{{ resolve_value('audience_notes')|trim }}</textarea
-            >
+            <p class="mt-2 text-xs text-slate-500">
+              Describe who thrives on the programme and any preferred
+              preparation.
+            </p>
+            <div class="mt-3">
+              {{ render_rich_editor('audience_notes', "Describe ideal learner
+              profiles and recommended preparation.", min_height='14rem',
+              label_id='label_audience_notes', required=true) }}
+            </div>
           </div>
         </div>
       </div>
@@ -485,69 +522,65 @@ super() }}
           <label
             class="block text-sm font-semibold text-slate-700"
             for="exam_details"
+            id="label_exam_details"
             >Exam details</label
           >
-          <textarea
-            id="exam_details"
-            name="exam_details"
-            rows="4"
-            required
-            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-            placeholder="Summarise assessment structure, moderation and timeframes."
-          >
-{{ resolve_value('exam_details')|trim }}</textarea
-          >
+          <p class="mt-2 text-xs text-slate-500">
+            Outline assessment structure, moderation approach and timelines.
+          </p>
+          <div class="mt-3">
+            {{ render_rich_editor('exam_details', "Summarise the assessment
+            structure, moderation and key timeframes.", min_height='12rem',
+            label_id='label_exam_details', required=true) }}
+          </div>
         </div>
         <div>
           <label
             class="block text-sm font-semibold text-slate-700"
             for="entry_requirements"
+            id="label_entry_requirements"
             >Entry requirements</label
           >
-          <textarea
-            id="entry_requirements"
-            name="entry_requirements"
-            rows="4"
-            required
-            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-            placeholder="List academic grades, interview expectations or portfolio submissions."
-          >
-{{ resolve_value('entry_requirements')|trim }}</textarea
-          >
+          <p class="mt-2 text-xs text-slate-500">
+            Include academic expectations, interviews or portfolio needs.
+          </p>
+          <div class="mt-3">
+            {{ render_rich_editor('entry_requirements', "List academic grades,
+            interviews or supporting evidence required.", min_height='12rem',
+            label_id='label_entry_requirements', required=true) }}
+          </div>
         </div>
         <div>
           <label
             class="block text-sm font-semibold text-slate-700"
             for="course_outcome"
+            id="label_course_outcome"
             >Course outcome</label
           >
-          <textarea
-            id="course_outcome"
-            name="course_outcome"
-            rows="4"
-            required
-            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-            placeholder="Describe the tangible outputs or qualifications students leave with."
-          >
-{{ resolve_value('course_outcome')|trim }}</textarea
-          >
+          <p class="mt-2 text-xs text-slate-500">
+            Describe tangible outputs, qualifications and learner growth.
+          </p>
+          <div class="mt-3">
+            {{ render_rich_editor('course_outcome', "Explain what students leave
+            with and how progress is evidenced.", min_height='12rem',
+            label_id='label_course_outcome', required=true) }}
+          </div>
         </div>
         <div>
           <label
             class="block text-sm font-semibold text-slate-700"
             for="progression"
+            id="label_progression"
             >Progression to university</label
           >
-          <textarea
-            id="progression"
-            name="progression"
-            rows="4"
-            required
-            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none"
-            placeholder="Detail typical university pathways, degree options or apprenticeships."
-          >
-{{ resolve_value('progression')|trim }}</textarea
-          >
+          <p class="mt-2 text-xs text-slate-500">
+            Highlight common university pathways or apprenticeships.
+          </p>
+          <div class="mt-3">
+            {{ render_rich_editor('progression', "Detail typical destinations,
+            degree options or apprenticeship routes.", min_height='12rem',
+            label_id='label_progression', required=true) }}
+          </div>
         </div>
       </div>
     </section>
@@ -726,23 +759,24 @@ super() }}
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
 
-    const editorWrapper = document.querySelector(
-      '[data-editor="custom-content"]'
-    );
-    if (editorWrapper) {
-      const editableArea = editorWrapper.querySelector("[data-editor-area]");
-      const hiddenField = editorWrapper.querySelector(
-        'textarea[name="custom_content"]'
-      );
-      const toolbarButtons = editorWrapper.querySelectorAll(
-        "[data-editor-command]"
-      );
-      const form = editorWrapper.closest("form");
+    const isHtmlContent = (value) => /<[a-z][\s\S]*>/i.test(value);
+    const listFieldNames = new Set([
+      "study_topics",
+      "skills_built",
+      "audience_notes",
+    ]);
+
+    const initialiseRichEditor = (wrapper) => {
+      const editableArea = wrapper.querySelector("[data-editor-area]");
+      const hiddenField = wrapper.querySelector("[data-editor-input]");
+      const toolbarButtons = wrapper.querySelectorAll("[data-editor-command]");
+      if (!editableArea || !hiddenField) {
+        return;
+      }
+
+      const fieldName = wrapper.dataset.field || "";
 
       const syncEmptyState = () => {
-        if (!editableArea) {
-          return;
-        }
         const stripped = editableArea.innerHTML
           .replace(/<br\s*\/?>(\s|&nbsp;)*/gi, "")
           .replace(/&nbsp;/gi, " ")
@@ -755,46 +789,90 @@ super() }}
         }
       };
 
-      if (editableArea && hiddenField && form) {
-        editableArea.innerHTML = hiddenField.value || "";
-        syncEmptyState();
+      const rawValue = hiddenField.value || "";
+      const trimmedValue = rawValue.trim();
+      let initialHtml = trimmedValue;
 
-        toolbarButtons.forEach((button) => {
-          button.addEventListener("click", (event) => {
-            event.preventDefault();
-            const command = button.dataset.editorCommand;
-            if (!command) {
-              return;
+      if (!trimmedValue) {
+        initialHtml = "";
+      } else if (!isHtmlContent(trimmedValue)) {
+        if (listFieldNames.has(fieldName)) {
+          const items = trimmedValue
+            .split(/\r?\n+/)
+            .map((item) => item.trim())
+            .filter(Boolean);
+          if (items.length > 0) {
+            initialHtml = `<ul>${items
+              .map((item) => `<li>${escapeHtml(item)}</li>`)
+              .join("")}</ul>`;
+          }
+        } else {
+          const paragraphs = trimmedValue
+            .split(/\n{2,}/)
+            .map((block) => block.trim())
+            .filter(Boolean);
+          if (paragraphs.length === 0) {
+            const fallbackLines = trimmedValue
+              .split(/\r?\n+/)
+              .map((line) => line.trim())
+              .filter(Boolean);
+            initialHtml = fallbackLines
+              .map((line) => `<p>${escapeHtml(line)}</p>`)
+              .join("");
+          } else {
+            initialHtml = paragraphs
+              .map((para) => `<p>${escapeHtml(para)}</p>`)
+              .join("");
+          }
+        }
+      }
+
+      editableArea.innerHTML = initialHtml;
+      hiddenField.value = initialHtml;
+      syncEmptyState();
+
+      toolbarButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          const command = button.dataset.editorCommand;
+          if (!command) {
+            return;
+          }
+
+          editableArea.focus();
+
+          if (command === "createLink") {
+            const url = prompt("Enter URL", "https://");
+            if (url) {
+              document.execCommand("createLink", false, url.trim());
             }
-
-            editableArea.focus();
-
-            if (command === "createLink") {
-              const url = prompt("Enter URL", "https://");
-              if (url) {
-                document.execCommand("createLink", false, url.trim());
-              }
-              syncEmptyState();
-              return;
-            }
-
-            const value = button.dataset.editorValue || null;
-            const execValue =
-              command === "formatBlock" && value ? `<${value}>` : value;
-            document.execCommand(command, false, execValue);
-            editableArea.focus();
             syncEmptyState();
-          });
+            return;
+          }
+
+          const value = button.dataset.editorValue || null;
+          const execValue =
+            command === "formatBlock" && value ? `<${value}>` : value;
+          document.execCommand(command, false, execValue);
+          editableArea.focus();
+          syncEmptyState();
         });
+      });
 
-        editableArea.addEventListener("input", syncEmptyState);
-        editableArea.addEventListener("blur", syncEmptyState);
+      editableArea.addEventListener("input", syncEmptyState);
+      editableArea.addEventListener("blur", syncEmptyState);
 
-        form.addEventListener("submit", () => {
+      const parentForm = wrapper.closest("form");
+      if (parentForm) {
+        parentForm.addEventListener("submit", () => {
           hiddenField.value = editableArea.innerHTML.trim();
         });
       }
-    }
+    };
+
+    document
+      .querySelectorAll("[data-rich-editor]")
+      .forEach(initialiseRichEditor);
 
     const includesContainer = document.getElementById("includes-items");
     const addIncludeButton = document.querySelector(

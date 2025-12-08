@@ -184,16 +184,10 @@ if meta_description %}
   <div class="container mx-auto px-6">
     <div class="grid md:grid-cols-3 gap-16">
       <div class="md:col-span-2 space-y-16">
-        {% if about_paragraphs %}
+        {% if about_html %}
         <div>
-          <h2 class="font-bold text-primary mb-6 text-2xl">
-            About this course
-          </h2>
-          <div class="space-y-4 text-gray-600 leading-relaxed">
-            {% for paragraph in about_paragraphs %}
-            <p>{{ paragraph }}</p>
-            {% endfor %}
-          </div>
+          <h2 class="font-bold text-primary mb-6 text-2xl">About the course</h2>
+          <div class="cms-rich-content fade-in">{{ about_html|safe }}</div>
         </div>
         {% endif %} {% if course['custom_content'] %}
         <div>
@@ -201,89 +195,60 @@ if meta_description %}
             {{ course['custom_content'] | safe }}
           </div>
         </div>
-        {% endif %} {% if study_topics %}
+        {% endif %} {% if study_topics_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            What you will cover
+            What you'll study
           </h2>
-          <ul class="space-y-3">
-            {% for topic in study_topics %}
-            <li class="flex items-start gap-3 text-gray-600">
-              <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-              <span>{{ topic }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+          <div class="cms-rich-content fade-in">
+            {{ study_topics_html|safe }}
+          </div>
         </div>
-        {% endif %} {% if skills_built %}
+        {% endif %} {% if skills_built_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            Skills you will build
+            What you'll study
           </h2>
-          <ul class="space-y-3">
-            {% for skill in skills_built %}
-            <li class="flex items-start gap-3 text-gray-600">
-              <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-              <span>{{ skill }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+          <div class="cms-rich-content fade-in">
+            {{ skills_built_html|safe }}
+          </div>
         </div>
-        {% endif %} {% if audience_notes %}
+        {% endif %} {% if audience_notes_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            Who is it designed for?
+            What you'll study
           </h2>
-          <ul class="space-y-3">
-            {% for note in audience_notes %}
-            <li class="flex items-start gap-3 text-gray-600">
-              <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-              <span>{{ note }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+          <div class="cms-rich-content fade-in">
+            {{ audience_notes_html|safe }}
+          </div>
         </div>
-        {% endif %} {% if exam_paragraphs or entry_paragraphs or
-        outcome_paragraphs or progression_paragraphs %}
+        {% endif %} {% if exam_html or entry_html or outcome_html or
+        progression_html %}
         <div class="grid md:grid-cols-2 gap-10">
-          {% if exam_paragraphs %}
+          {% if exam_html %}
           <div>
-            <h3 class="font-semibold text-gray-900 mb-3">
-              Assessment &amp; exams
-            </h3>
-            <div class="space-y-3 text-gray-600 text-sm md:text-base">
-              {% for paragraph in exam_paragraphs %}
-              <p>{{ paragraph }}</p>
-              {% endfor %}
-            </div>
+            <h2 class="font-bold text-primary mb-4 text-2xl">Exam details</h2>
+            <div class="cms-rich-content fade-in">{{ exam_html|safe }}</div>
           </div>
-          {% endif %} {% if entry_paragraphs %}
+          {% endif %} {% if entry_html %}
           <div>
-            <h3 class="font-semibold text-gray-900 mb-3">Entry requirements</h3>
-            <div class="space-y-3 text-gray-600 text-sm md:text-base">
-              {% for paragraph in entry_paragraphs %}
-              <p>{{ paragraph }}</p>
-              {% endfor %}
-            </div>
+            <h2 class="font-bold text-primary mb-4 text-2xl">
+              Entry requirements
+            </h2>
+            <div class="cms-rich-content fade-in">{{ entry_html|safe }}</div>
           </div>
-          {% endif %} {% if outcome_paragraphs %}
+          {% endif %} {% if outcome_html %}
           <div>
-            <h3 class="font-semibold text-gray-900 mb-3">Course outcomes</h3>
-            <div class="space-y-3 text-gray-600 text-sm md:text-base">
-              {% for paragraph in outcome_paragraphs %}
-              <p>{{ paragraph }}</p>
-              {% endfor %}
-            </div>
+            <h2 class="font-bold text-primary mb-4 text-2xl">Course outcome</h2>
+            <div class="cms-rich-content fade-in">{{ outcome_html|safe }}</div>
           </div>
-          {% endif %} {% if progression_paragraphs %}
+          {% endif %} {% if progression_html %}
           <div>
-            <h3 class="font-semibold text-gray-900 mb-3">
-              Next steps &amp; progression
-            </h3>
-            <div class="space-y-3 text-gray-600 text-sm md:text-base">
-              {% for paragraph in progression_paragraphs %}
-              <p>{{ paragraph }}</p>
-              {% endfor %}
+            <h2 class="font-bold text-primary mb-4 text-2xl">
+              Progression to university
+            </h2>
+            <div class="cms-rich-content fade-in">
+              {{ progression_html|safe }}
             </div>
           </div>
           {% endif %}
