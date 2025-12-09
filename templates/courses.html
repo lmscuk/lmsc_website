@@ -5,7 +5,8 @@
   name="description"
   content="Explore A Level, BTEC and hybrid STEM courses at London Maths & Science College, built for motivated 16–19 learners aiming for top universities."
 />
-{% endblock %} {% block extra_head %}{% endblock %} {% block content %}
+{% endblock %} {% block extra_head %}{% endblock %} {% block content %}{% set
+courses_per_batch = 12 %}
 <section class="py-20 px-6">
   <div class="container mx-auto text-center max-w-4xl">
     <span
@@ -27,12 +28,21 @@
 
 <section class="py-12">
   <div class="container mx-auto px-6">
-    <div class="grid md:grid-cols-3 gap-8">
+    <div
+      class="grid md:grid-cols-3 gap-8"
+      id="course-grid"
+      data-courses-per-page="{{ courses_per_batch }}"
+    >
       {% if courses %} {% for course in courses %} {% set stagger_index =
       loop.index if loop.index <= 6 else 6 %} {% set stagger_class = 'stagger-'
       ~ stagger_index %} {% set image_src = course['image_path'] if
       course['image_path'] else None %}
-      <a href="{{ url_for('course_details', slug=course['slug']) }}">
+      <a
+        href="{{ url_for('course_details', slug=course['slug']) }}"
+        class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 {% if loop.index > courses_per_batch %}hidden{% endif %}"
+        data-course-card
+        data-course-index="{{ loop.index0 }}"
+      >
         <article
           class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow scale-in {{ stagger_class }}"
         >
@@ -97,14 +107,15 @@
       {% endif %}
     </div>
 
-    {% if courses and courses|length > 6 %}
+    {% if courses and courses|length > courses_per_batch %}
     <div class="text-center mt-12 fade-in">
-      <a
-        href="{{ url_for('book_consultation') }}"
+      <button
+        type="button"
+        id="loadMoreCourses"
         class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full inline-flex items-center gap-2"
       >
-        Talk to admissions
-      </a>
+        Load More
+      </button>
     </div>
     {% endif %}
   </div>
@@ -322,4 +333,50 @@
     </div>
   </div>
 </section>
+{% endblock %} {% block extra_scripts %} {{ super() }}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const grid = document.getElementById("course-grid");
+    if (!grid) {
+      return;
+    }
+
+    const cards = Array.from(grid.querySelectorAll("[data-course-card]"));
+    if (cards.length === 0) {
+      return;
+    }
+
+    const perPage = parseInt(grid.dataset.coursesPerPage || "12", 10);
+    const loadMoreButton = document.getElementById("loadMoreCourses");
+
+    let visibleCount = cards.filter(
+      (card) => !card.classList.contains("hidden")
+    ).length;
+
+    const updateButtonState = () => {
+      if (!loadMoreButton) {
+        return;
+      }
+
+      if (visibleCount >= cards.length) {
+        loadMoreButton.classList.add("hidden");
+      } else {
+        loadMoreButton.classList.remove("hidden");
+      }
+    };
+
+    if (loadMoreButton) {
+      loadMoreButton.addEventListener("click", () => {
+        const nextVisible = visibleCount + perPage;
+        cards.slice(visibleCount, nextVisible).forEach((card) => {
+          card.classList.remove("hidden");
+        });
+        visibleCount = Math.min(nextVisible, cards.length);
+        updateButtonState();
+      });
+    }
+
+    updateButtonState();
+  });
+</script>
 {% endblock %}

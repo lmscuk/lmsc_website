@@ -975,6 +975,9 @@ COURSE_DB_COLUMNS: tuple[str, ...] = (
     "sidebar_summary",
     "includes_items",
     "custom_content",
+    "related_course_1_slug",
+    "related_course_2_slug",
+    "related_course_3_slug",
 )
 
 COURSE_MULTILINE_FIELDS: tuple[str, ...] = (
@@ -993,6 +996,12 @@ COURSE_TEXT_BLOCK_FIELDS: tuple[str, ...] = (
     "sidebar_summary",
 )
 
+COURSE_RELATION_FIELDS: tuple[str, ...] = (
+    "related_course_1_slug",
+    "related_course_2_slug",
+    "related_course_3_slug",
+)
+
 COURSE_SCHEMA_ADDITIONAL_COLUMNS: dict[str, str] = {
     "slug": "TEXT",
     "about_course": "TEXT",
@@ -1007,6 +1016,9 @@ COURSE_SCHEMA_ADDITIONAL_COLUMNS: dict[str, str] = {
     "sidebar_summary": "TEXT",
     "includes_items": "TEXT",
     "custom_content": "TEXT",
+    "related_course_1_slug": "TEXT",
+    "related_course_2_slug": "TEXT",
+    "related_course_3_slug": "TEXT",
 }
 
 
@@ -2007,6 +2019,23 @@ def create_app() -> Flask:
             params.append(limit)
         return db.execute(query, params).fetchall()
 
+    def build_related_course_options(*, exclude_id: int | None = None) -> list[dict[str, Any]]:
+        options: list[dict[str, Any]] = []
+        for row in fetch_courses():
+            row_id = int(row["id"])
+            if exclude_id is not None and row_id == exclude_id:
+                continue
+            slug_value = (row.get("slug") if isinstance(row, dict) else row["slug"]) or ""
+            title_value = (row.get("title") if isinstance(row, dict) else row["title"]) or ""
+            if not slug_value or not title_value:
+                continue
+            options.append({
+                "id": row_id,
+                "slug": slug_value,
+                "title": title_value,
+            })
+        return options
+
     def fetch_course_stats() -> dict[str, Any]:
         db = get_db()
         row = db.execute(
@@ -2335,6 +2364,40 @@ def create_app() -> Flask:
             notices.append("The course slug was adjusted to remain unique.")
         elif not slug_input and unique_slug != base_slug:
             notices.append("A unique slug was generated for this course.")
+
+        seen_relations: set[str] = set()
+        for index, field in enumerate(COURSE_RELATION_FIELDS, start=1):
+            raw_value = request.form.get(field, "") or ""
+            cleaned_value = raw_value.strip()
+            if not cleaned_value:
+                data[field] = None
+                continue
+
+            relation_slug = slugify(cleaned_value)
+            data[field] = relation_slug
+
+            if not relation_slug:
+                errors.append(f"Related course {index} is invalid.")
+                continue
+
+            if relation_slug == unique_slug:
+                errors.append(f"Related course {index} cannot reference the same course.")
+                continue
+
+            if relation_slug in seen_relations:
+                errors.append("Please choose different related courses.")
+                continue
+
+            related_course = get_course_by_slug(relation_slug)
+            if related_course is None:
+                errors.append(f"Related course {index} could not be found.")
+                continue
+
+            if existing_dict.get("id") and int(related_course["id"]) == int(existing_dict["id"]):
+                errors.append(f"Related course {index} cannot reference the same course.")
+                continue
+
+            seen_relations.add(relation_slug)
 
         for field in COURSE_TEXT_BLOCK_FIELDS:
             value = request.form.get(field, "")
@@ -3126,8 +3189,33 @@ def create_app() -> Flask:
         faq_rows = fetch_course_faqs(course_id)
         faq_items = [dict(row) for row in faq_rows]
 
-        related_candidates = [dict(row) for row in fetch_courses() if int(row["id"]) != course_id]
-        related_courses = related_candidates[:3]
+        relation_slugs = [course_dict.get(field) for field in COURSE_RELATION_FIELDS]
+        related_courses: list[dict[str, Any]] = []
+        seen_course_ids: set[int] = {course_id}
+
+        for slug in relation_slugs:
+            if not slug:
+                continue
+            candidate = get_course_by_slug(str(slug))
+            if candidate is None:
+                continue
+            candidate_id = int(candidate["id"])
+            if candidate_id in seen_course_ids:
+                continue
+            related_courses.append(dict(candidate))
+            seen_course_ids.add(candidate_id)
+            if len(related_courses) >= 3:
+                break
+
+        if len(related_courses) < 3:
+            for row in fetch_courses():
+                row_id = int(row["id"])
+                if row_id in seen_course_ids:
+                    continue
+                related_courses.append(dict(row))
+                seen_course_ids.add(row_id)
+                if len(related_courses) >= 3:
+                    break
 
         page_title = f"{course_dict['title']} | London Maths & Science College"
         meta_description = course_dict.get("short_description") or course_dict.get("sidebar_summary")
@@ -4580,6 +4668,7 @@ def create_app() -> Flask:
                     course_data=None,
                     faq_items=faq_items,
                     list_values=list_values,
+                    related_course_options=build_related_course_options(),
                 )
 
             course_id = create_course(data)
@@ -4613,6 +4702,7 @@ def create_app() -> Flask:
             course_data=None,
             faq_items=[],
             list_values=list_defaults,
+            related_course_options=build_related_course_options(),
         )
 
     @app.route("/admin/courses/<int:course_id>/edit", methods=["GET", "POST"])
@@ -4671,6 +4761,7 @@ def create_app() -> Flask:
                     course_data=course_dict,
                     faq_items=faq_items,
                     list_values=list_values,
+                    related_course_options=build_related_course_options(exclude_id=course_id),
                 )
 
             update_course(course_id, data)
@@ -4693,6 +4784,7 @@ def create_app() -> Flask:
             course_data=course_dict,
             faq_items=existing_faqs,
             list_values=existing_lists,
+            related_course_options=build_related_course_options(exclude_id=course_id),
         )
 
     @app.post("/admin/courses/<int:course_id>/delete")

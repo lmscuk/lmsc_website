@@ -150,26 +150,47 @@ const toggleAccordion = (button) => {
     }
 
     const content = button.nextElementSibling;
-    const sign = button.querySelector("span:last-child");
+    const indicator = button.querySelector(".faq-indicator");
 
-    if (!content || !sign) {
+    if (!content || !indicator) {
         return;
     }
 
+    const isOpen = content.classList.contains("open");
+
     document.querySelectorAll(".accordion-content").forEach((panel) => {
-        if (panel !== content) {
-            panel.classList.remove("open");
+        if (panel === content) {
+            return;
+        }
+
+        panel.classList.remove("open");
+        panel.classList.add("hidden");
+        panel.style.maxHeight = null;
+
+        const panelButton = panel.previousElementSibling;
+        if (panelButton) {
+            panelButton.setAttribute("aria-expanded", "false");
+            const panelIndicator = panelButton.querySelector(".faq-indicator");
+            if (panelIndicator) {
+                panelIndicator.textContent = "+";
+            }
         }
     });
 
-    document.querySelectorAll(".faq-button span:last-child").forEach((icon) => {
-        if (icon !== sign) {
-            icon.textContent = "+";
-        }
-    });
+    if (isOpen) {
+        content.classList.remove("open");
+        content.classList.add("hidden");
+        content.style.maxHeight = null;
+        indicator.textContent = "+";
+        button.setAttribute("aria-expanded", "false");
+        return;
+    }
 
-    content.classList.toggle("open");
-    sign.textContent = content.classList.contains("open") ? "−" : "+";
+    content.classList.remove("hidden");
+    content.classList.add("open");
+    content.style.maxHeight = `${content.scrollHeight}px`;
+    indicator.textContent = "−";
+    button.setAttribute("aria-expanded", "true");
 };
 
 const gap = 8;

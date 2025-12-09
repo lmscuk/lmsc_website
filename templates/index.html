@@ -1127,15 +1127,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       </h2>
       <div class="space-y-4">
         <!-- FAQ 1 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Is this the same A Level as in a school or college?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 Yes. You sit Pearson Edexcel A Level Mathematics (9MA0). The
@@ -1146,15 +1147,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 2 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Do I have to sit exams in London?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 For this hybrid one-year route, yes. All exams are taken at the
@@ -1164,15 +1166,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 3 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Can I study from outside the UK?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 Yes. You can join all online teaching from overseas, but you
@@ -1184,15 +1187,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 4 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Why choose hybrid instead of fully online?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 You get online flexibility while learning new content, then
@@ -1203,15 +1207,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 5 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>How many hours a week should I plan?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 Expect around 14–18 hours per week in total: 6–8 hours live
@@ -1221,15 +1226,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 6 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Do you record lessons?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 Yes. All online sessions are recorded for your cohort so you can
@@ -1239,15 +1245,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 7 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>What calculator do I need?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 An exam-compliant scientific or graphing calculator acceptable
@@ -1258,15 +1265,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 8 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>Can I pay in monthly instalments?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 No. For this accelerated Hybrid course, we offer Full Advance
@@ -1277,15 +1285,16 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           </div>
         </div>
         <!-- FAQ 9 -->
-        <div class="accordion-item border-bottom-2 overflow-hidden">
+        <div class="accordion-item border-b border-gray-200 overflow-hidden">
           <button
             class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
             onclick="toggleAccordion(this)"
+            aria-expanded="false"
           >
             <span>What if I still have questions?</span>
-            <span class="text-2xl">+</span>
+            <span class="faq-indicator text-2xl">+</span>
           </button>
-          <div class="accordion-content">
+          <div class="accordion-content hidden" role="region">
             <div class="px-6 pb-6 text-gray-700">
               <p>
                 Contact our team to arrange a call, a taster lesson or a parent

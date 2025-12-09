@@ -135,7 +135,8 @@ label_id='', required=false) -%}
 </div>
 {%- endmacro %} {% set list_values = list_values or {} %} {% set includes_items
 = list_values.get('includes_items') or [''] %} {% set faq_seed = faq_items if
-faq_items else [{'question':'', 'answer':''}] %} {% block extra_head %} {{
+faq_items else [{'question':'', 'answer':''}] %} {% set related_course_options
+= related_course_options or [] %} {% block extra_head %} {{
 super() }}
 <style>
   .cms-editor-toolbar {
@@ -666,6 +667,55 @@ super() }}
           + Add item
         </button>
       </div>
+    </section>
+
+    <section
+      class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6"
+    >
+      <div class="flex flex-col gap-1">
+        <h2 class="text-lg font-semibold text-slate-900">Related courses</h2>
+        <p class="text-sm text-slate-500">
+          Choose up to three companion programmes to surface in the carousel on the
+          public course page.
+        </p>
+      </div>
+      {% if related_course_options %}
+      <div class="grid gap-4 md:grid-cols-3">
+        {% for idx in [1, 2, 3] %}
+        {% set field_name = 'related_course_' ~ idx ~ '_slug' %}
+        {% set current_value = resolve_value(field_name)|trim %}
+        <div>
+          <label
+            class="block text-sm font-semibold text-slate-700"
+            for="{{ field_name }}"
+            >Related course {{ idx }}</label
+          >
+          <select
+            id="{{ field_name }}"
+            name="{{ field_name }}"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-900 focus:border-primary focus:outline-none"
+          >
+            <option value="">No selection</option>
+            {% for option in related_course_options %}
+            <option
+              value="{{ option.slug }}"
+              {% if option.slug == current_value %}selected{% endif %}
+            >
+              {{ option.title }}
+            </option>
+            {% endfor %}
+          </select>
+          <p class="mt-2 text-xs text-slate-500">
+            Leave blank if you do not want to show a recommendation in this slot.
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-sm text-slate-500">
+        Add another course first to enable related course recommendations.
+      </p>
+      {% endif %}
     </section>
 
     <section

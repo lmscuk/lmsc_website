@@ -76,7 +76,7 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
   }
 </style>
 {% endblock %} {% block content %}
-<section class="py-8 px-6 text-sm">
+<section class="py-12 px-6">
   <div class="container mx-auto px-0">
     <a
       href="{{ url_for('courses') }}"
@@ -98,43 +98,52 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
       </svg>
       <span>Back to courses</span>
     </a>
-    {% if course['level'] %}
-    <span
-      class="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-emerald-900"
-    >
-      {{ course['level'] }} pathway
-    </span>
-    {% endif %}
-    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 fade-in">
-      {{ course['title'] }}
-    </h1>
-    {% if course['short_description'] %}
-    <p class="text-gray-600 max-w-2xl mx-auto fade-in">
-      {{ course['short_description'] }}
-    </p>
-    {% endif %}
   </div>
 </section>
 
-<section class="py-8 px-6">
-  <div class="container mx-auto">
-    <div
-      class="rounded-3xl overflow-hidden bg-gray-200 flex items-center justify-center h-72 md:h-[420px] scale-in"
-    >
+<section class="py-20 px-6">
+  <div class="container mx-auto px-6 text-center">
+    <div class="max-w-5xl mx-auto">
+      {% if course['level'] %}
+      <span
+        class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-emerald-900"
+      >
+        {{ course['level'] }} pathway
+      </span>
+      {% endif %}
+      <h1 class="mt-6 text-4xl md:text-5xl font-bold text-primary">
+        {{ course['title'] }}
+      </h1>
+      {% if course['short_description'] %}
+      <p class="mt-6 text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+        {{ course['short_description'] }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="py-12 px-6">
+  <div class="mx-auto max-w-screen-xl">
+    <div class="rounded-3xl overflow-hidden shadow-lg">
       {% set image_path = course['image_path'] if course['image_path'] else None
       %} {% if image_path %}
       <img
         src="{{ url_for('static', filename=image_path) }}"
         alt="{{ course['image_alt'] or course['title'] }}"
-        class="w-full h-full object-cover"
+        class="w-full h-96 md:h-[500px] object-cover"
         loading="lazy"
       />
       {% else %}
-      <div class="text-emerald-900 text-center px-6">
-        <p class="font-semibold">Course imagery coming soon</p>
-        <p class="text-sm text-emerald-800/80 mt-1">
-          The admissions team can share the full visual prospectus on request.
-        </p>
+      <div
+        class="bg-gradient-to-br from-gray-100 to-gray-200 flex h-96 md:h-[500px] items-center justify-center px-6"
+      >
+        <div class="text-emerald-900 text-center">
+          <p class="font-semibold">Course imagery coming soon</p>
+          <p class="text-sm text-emerald-800/80 mt-1">
+            The admissions team can share the full visual prospectus on request.
+          </p>
+        </div>
       </div>
       {% endif %}
     </div>
@@ -159,7 +168,7 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
         {% endif %} {% if study_topics_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            What you'll study
+            What you will learn
           </h2>
           <div class="cms-rich-content fade-in">
             {{ study_topics_html|safe }}
@@ -168,7 +177,7 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
         {% endif %} {% if skills_built_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            What you'll study
+            Skills you'll develop
           </h2>
           <div class="cms-rich-content fade-in">
             {{ skills_built_html|safe }}
@@ -177,7 +186,7 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
         {% endif %} {% if audience_notes_html %}
         <div>
           <h2 class="font-bold text-primary mb-6 text-2xl">
-            What you'll study
+            Who should take this course
           </h2>
           <div class="cms-rich-content fade-in">
             {{ audience_notes_html|safe }}
@@ -185,7 +194,7 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
         </div>
         {% endif %} {% if exam_html or entry_html or outcome_html or
         progression_html %}
-        <div class="grid md:grid-cols-2 gap-10">
+        <div class="space-y-12">
           {% if exam_html %}
           <div>
             <h2 class="font-bold text-primary mb-4 text-2xl">Exam details</h2>
@@ -219,14 +228,26 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
           <h2 class="font-bold text-primary mb-6 text-2xl">
             Frequently asked questions
           </h2>
-          <div class="space-y-6">
+          <div class="space-y-4">
             {% for item in faq_items %}
-            <article class="border border-emerald-100 rounded-2xl p-6">
-              <h3 class="font-semibold text-gray-900 mb-3">
-                {{ item['question'] }}
-              </h3>
-              <p class="text-gray-600 leading-relaxed">{{ item['answer'] }}</p>
-            </article>
+            <div
+              class="accordion-item border-b border-gray-200 overflow-hidden"
+            >
+              <button
+                class="faq-button w-full p-6 flex justify-between items-center font-bold text-primary"
+                onclick="toggleAccordion(this)"
+                aria-expanded="false"
+                type="button"
+              >
+                <span>{{ item['question'] }}</span>
+                <span class="faq-indicator text-2xl">+</span>
+              </button>
+              <div class="accordion-content hidden" role="region">
+                <div class="px-6 pb-6 text-gray-700">
+                  <p>{{ item['answer'] }}</p>
+                </div>
+              </div>
+            </div>
             {% endfor %}
           </div>
         </div>
@@ -234,14 +255,16 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
       </div>
 
       <aside class="md:col-span-1">
-        <div class="bg-white shadow rounded-2xl p-8 sticky top-8 space-y-8">
+        <div
+          class="bg-white shadow rounded-2xl p-8 sticky top-24 md:top-28 lg:top-32 space-y-8"
+        >
           {% if course['sidebar_fees'] %}
           <div>
-            <p class="text-4xl font-bold text-primary">
+            <p class="text-5xl font-bold text-primary">
               {{ course['sidebar_fees'] }}
             </p>
             {% if course['sidebar_summary'] %}
-            <p class="text-gray-600 text-sm mt-3">
+            <p class="text-gray-600 text-sm mt-2 leading-relaxed">
               {{ course['sidebar_summary'] }}
             </p>
             {% endif %}
@@ -305,102 +328,12 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
   </div>
 </section>
 
-<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
-  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-    <div class="scale-in">
-      <span
-        class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-6deg] mb-5"
-      >
-        Next steps
-      </span>
-      <h2 class="font-bold text-primary mb-4">
-        Ready to discuss your study options?
-      </h2>
-      <p class="text-gray-700 mb-8 leading-relaxed">
-        Book a consultation for tailored guidance on admissions, timetable
-        planning and portfolio preparation. We will map a personalised
-        progression route for your ambitions.
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <a
-          href="{{ url_for('book_consultation') }}"
-          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
-        >
-          <div class="btn-content justify-center">
-            <span class="text-part">Book a Consultation</span>
-            <span
-              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-emerald-900"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2.5"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </span>
-          </div>
-        </a>
-        <a
-          href="{{ url_for('courses') }}"
-          class="px-8 py-4 rounded-full border border-emerald-900 text-emerald-900 hover:bg-emerald-50 transition"
-        >
-          View all courses
-        </a>
-      </div>
-    </div>
-    <div class="scale-in stagger-2">
-      <div class="bg-white rounded-3xl p-8 shadow-lg">
-        <p class="text-emerald-900 font-semibold mb-4">Course highlights</p>
-        <ul class="space-y-3 text-gray-600 text-sm">
-          {% if study_topics %}
-          <li class="flex items-start gap-3">
-            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-            <span
-              >Focused modules across {{ study_topics | length }} specialist
-              topic{{ 's' if study_topics | length != 1 }}</span
-            >
-          </li>
-          {% endif %} {% if skills_built %}
-          <li class="flex items-start gap-3">
-            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-            <span
-              >Build {{ skills_built | length }} career-ready skill{{ 's' if
-              skills_built | length != 1 }}</span
-            >
-          </li>
-          {% endif %}
-          <li class="flex items-start gap-3">
-            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-            <span
-              >Dedicated 1:1 support with admissions and progression
-              coaching</span
-            >
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
-            <span
-              >Hyflex learning environment combining campus and digital studio
-              sessions</span
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="py-20">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16 fade-in">
-      <h2 class="text-primary font-bold text-3xl mb-4">Related courses</h2>
+      <h2 class="text-primary font-bold text-gray-900 text-3xl mb-4">
+        Related courses
+      </h2>
       <p class="text-gray-600 max-w-2xl mx-auto">
         Explore other programmes that pair well with {{ course['title'] }} or
         extend your specialist focus.
@@ -480,6 +413,98 @@ London Maths & Science College' }} {% endblock %} {% block meta_description %}
       </p>
     </div>
     {% endif %}
+  </div>
+</section>
+
+<section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+    <div class="scale-in">
+      <span
+        class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-6deg] mb-5"
+      >
+        Next steps
+      </span>
+      <h2 class="text-primary font-bold text-gray-900 mb-4">
+        Ready to discuss your study options?
+      </h2>
+      <p class="text-gray-600 mb-8 leading-relaxed">
+        Book a consultation for tailored guidance on admissions, timetable
+        planning and portfolio preparation. We will map a personalised
+        progression route for your ambitions.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a
+          href="{{ url_for('book_consultation') }}"
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        >
+          <div class="btn-content justify-center">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </span>
+          </div>
+        </a>
+        <a
+          href="{{ url_for('courses') }}"
+          class="px-8 py-4 rounded-full border border-emerald-900 text-emerald-900 hover:bg-emerald-50 transition"
+        >
+          View all courses
+        </a>
+      </div>
+    </div>
+    <div class="scale-in stagger-2">
+      <div class="bg-white rounded-3xl p-8 shadow-lg">
+        <p class="text-emerald-900 font-semibold mb-4">Course highlights</p>
+        <ul class="space-y-3 text-gray-600 text-sm">
+          {% if study_topics %}
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
+            <span
+              >Focused modules across {{ study_topics | length }} specialist
+              topic{{ 's' if study_topics | length != 1 }}</span
+            >
+          </li>
+          {% endif %} {% if skills_built %}
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
+            <span
+              >Build {{ skills_built | length }} career-ready skill{{ 's' if
+              skills_built | length != 1 }}</span
+            >
+          </li>
+          {% endif %}
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
+            <span
+              >Dedicated 1:1 support with admissions and progression
+              coaching</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
+            <span
+              >Hyflex learning environment combining campus and digital studio
+              sessions</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %} {% block extra_scripts %}
