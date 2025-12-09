@@ -1,13 +1,13 @@
-{% extends 'base.html' %} {% block title %}{{ page_title or 'Course Details -
-London Maths & Science College' }}{% endblock %} {% block meta_description %} {%
-if meta_description %}
+{% extends 'base.html' %} {% block title %} {{ page_title or 'Course Details -
+London Maths & Science College' }} {% endblock %} {% block meta_description %}
+{% if meta_description %}
 <meta name="description" content="{{ meta_description }}" />
 {% else %}
 <meta
   name="description"
   content="Explore detailed course information at London Maths & Science College, including outcomes, enrichment and entry guidance."
 />
-{% endblock %} {% block extra_head %}
+{% endif %} {% endblock %} {% block extra_head %}
 <style>
   .cms-rich-content {
     color: #374151;
@@ -82,8 +82,25 @@ if meta_description %}
       href="{{ url_for('courses') }}"
       class="inline-flex items-center gap-2 text-emerald-900 hover:text-emerald-700 transition"
     >
-      </section>
-      {% endblock %}
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+      <span>Back to courses</span>
+    </a>
+    {% if course['level'] %}
+    <span
+      class="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-emerald-900"
     >
       {{ course['level'] }} pathway
     </span>

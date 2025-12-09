@@ -782,6 +782,7 @@ super() }}
           .replace(/&nbsp;/gi, " ")
           .replace(/<[^>]*>/g, "")
           .trim();
+        hiddenField.value = editableArea.innerHTML.trim();
         if (stripped.length === 0) {
           editableArea.classList.add("empty");
         } else {

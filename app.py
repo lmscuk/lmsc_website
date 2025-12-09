@@ -1036,6 +1036,10 @@ def create_app() -> Flask:
         static_cache_seconds = 60 * 60 * 24 * 30
     app.config.setdefault("STATIC_CACHE_SECONDS", static_cache_seconds)
     app.config.setdefault("SEND_FILE_MAX_AGE_DEFAULT", static_cache_seconds)
+    app.config.setdefault(
+        "SEED_DEFAULT_COURSES",
+        os.environ.get("SEED_DEFAULT_COURSES", "1") == "1",
+    )
 
     template_root = Path(app.root_path) / "templates"
     pages_template_dir = template_root / "pages"
@@ -2096,7 +2100,12 @@ def create_app() -> Flask:
         existing = get_course_by_id(course_id)
         if existing is None:
             return
-        image_path = existing.get("image_path") if isinstance(existing, sqlite3.Row) else None
+        if isinstance(existing, sqlite3.Row):
+            image_path = existing["image_path"]
+        elif isinstance(existing, dict):
+            image_path = existing.get("image_path")
+        else:
+            image_path = None
         if image_path and isinstance(image_path, str) and image_path.startswith("uploads/"):
             remove_static_file(image_path)
         db = get_db()
@@ -2105,10 +2114,25 @@ def create_app() -> Flask:
         db.commit()
 
     def ensure_default_courses() -> None:
+        if not app.config.get("SEED_DEFAULT_COURSES", True):
+            ensure_course_slugs()
+            return
+
+        seed_marker = Path(app.instance_path) / "courses_seeded.flag"
         db = get_db()
         row = db.execute("SELECT COUNT(*) AS total FROM courses").fetchone()
-        if row and int(row["total"] or 0) > 0:
+        existing_total = int(row["total"] or 0) if row and row["total"] is not None else 0
+
+        if existing_total > 0:
             ensure_course_slugs()
+            if not seed_marker.exists():
+                try:
+                    seed_marker.write_text(current_timestamp())
+                except OSError:
+                    pass
+            return
+
+        if seed_marker.exists():
             return
 
         for seed in DEFAULT_COURSE_SEED:
@@ -2133,6 +2157,10 @@ def create_app() -> Flask:
             create_course(payload)
 
         ensure_course_slugs()
+        try:
+            seed_marker.write_text(current_timestamp())
+        except OSError:
+            pass
 
     def ensure_course_slugs() -> None:
         db = get_db()
