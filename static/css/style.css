@@ -350,35 +350,6 @@ body.menu-open {
   right: 30px;
 }
 
-.fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.delay-1 {
-  animation-delay: 0.2s;
-}
-
-.delay-2 {
-  animation-delay: 0.4s;
-}
-
-.delay-3 {
-  animation-delay: 0.6s;
-}
-
 @media (max-width: 768px) {
   .slider-nav {
     width: 40px;
@@ -796,56 +767,31 @@ tbody tr:last-child td {
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .fade-up {
   opacity: 0;
   transform: translateX(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-up.visible {
-  opacity: 1;
-  transform: translateX(0);
+  will-change: opacity, transform;
 }
 
 .slide-in-left {
   opacity: 0;
   transform: translateX(-50px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.slide-in-left.visible {
-  opacity: 1;
-  transform: translateX(0);
+  will-change: opacity, transform;
 }
 
 .slide-in-right {
   opacity: 0;
   transform: translateX(50px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.slide-in-right.visible {
-  opacity: 1;
-  transform: translateX(0);
+  will-change: opacity, transform;
 }
 
 .scale-in {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.scale-in.visible {
-  opacity: 1;
-  transform: scale(1);
+  will-change: opacity, transform;
 }
 
 .stagger-1 {
@@ -881,6 +827,32 @@ tbody tr:last-child td {
   box-shadow: 0 12px 24px rgba(56, 121, 81, 0.15);
 }
 
+.motion-ready {
+  opacity: 1 !important;
+}
+
+.tilt-enabled {
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.tilt-enabled.is-interacting {
+  transition-duration: 0.15s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .fade-up,
+  .slide-in-left,
+  .slide-in-right,
+  .scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Component Css */
 
 .btn-content {
@@ -892,7 +864,7 @@ tbody tr:last-child td {
 
 .text-part,
 .icon-part {
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
   white-space: nowrap;
 }
 

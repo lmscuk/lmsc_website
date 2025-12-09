@@ -4,20 +4,8 @@
   name="description"
   content="{{ post.meta_description or post.summary or 'Read practical STEM study advice and college news from London Maths &amp; Science College.' }}"
 />
-{% endblock %} {% block extra_head %}
-<style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
-{% endblock %} {% macro render_paragraphs(body) -%} {% if body %} {% for part in
+{% endblock %} {% block extra_head %}{% endblock %} {% macro
+render_paragraphs(body) -%} {% if body %} {% for part in
 body.strip().split('\n\n') %}
 <p class="text-gray-700 mb-6 leading-relaxed">
   {{ part | replace('\n', ' ') }}

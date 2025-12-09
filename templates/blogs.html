@@ -4,51 +4,8 @@ College in London{% endblock %} {% block meta_description %}
   name="description"
   content="Browse London Maths & Science College articles covering STEM study tips, British curriculum guidance and university pathways for 16–19 learners."
 />
-{% endblock %} {% block extra_head %}
-<style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .stagger-1 {
-    transition-delay: 0.1s;
-  }
-  .stagger-2 {
-    transition-delay: 0.2s;
-  }
-  .stagger-3 {
-    transition-delay: 0.3s;
-  }
-  .stagger-4 {
-    transition-delay: 0.4s;
-  }
-  .stagger-5 {
-    transition-delay: 0.5s;
-  }
-  .stagger-6 {
-    transition-delay: 0.6s;
-  }
-</style>
-{% endblock %} {% block content %} {% set articles = blog_posts or [] %} {% set
-stagger_classes =
+{% endblock %} {% block extra_head %}{% endblock %} {% block content %} {% set
+articles = blog_posts or [] %} {% set stagger_classes =
 ['stagger-1','stagger-2','stagger-3','stagger-4','stagger-5','stagger-6'] %} {%
 set stagger_len = stagger_classes|length %} {% set page_size = 12 %} {% if
 articles %}
@@ -219,7 +176,7 @@ articles %}
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const loadMoreBtn = document.getElementById("loadMorePosts");
-    if (!loadMoreBtn || typeof observer === "undefined") {
+    if (!loadMoreBtn) {
       return;
     }
 
@@ -232,9 +189,7 @@ articles %}
     const revealNext = () => {
       const nextVisible = Math.min(visibleCount + pageSize, cards.length);
       for (let i = visibleCount; i < nextVisible; i += 1) {
-        const card = cards[i];
-        card.classList.remove("hidden");
-        observer.observe(card);
+        cards[i].classList.remove("hidden");
       }
       visibleCount = nextVisible;
       if (visibleCount >= cards.length) {

@@ -7,42 +7,8 @@ if meta_description %}
   name="description"
   content="Explore detailed course information at London Maths & Science College, including outcomes, enrichment and entry guidance."
 />
-{% endif %} {% endblock %} {% block extra_head %}
+{% endblock %} {% block extra_head %}
 <style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.97);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .stagger-1 {
-    transition-delay: 0.1s;
-  }
-
-  .stagger-2 {
-    transition-delay: 0.2s;
-  }
-
-  .stagger-3 {
-    transition-delay: 0.3s;
-  }
-
   .cms-rich-content {
     color: #374151;
     font-size: 1.0625rem;
@@ -116,30 +82,8 @@ if meta_description %}
       href="{{ url_for('courses') }}"
       class="inline-flex items-center gap-2 text-emerald-900 hover:text-emerald-700 transition"
     >
-      <svg
-        class="w-4 h-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 19l-7-7 7-7m11 14H5"
-        />
-      </svg>
-      Back to courses
-    </a>
-  </div>
-</section>
-
-<section class="py-14 px-6">
-  <div class="container mx-auto text-center max-w-4xl">
-    {% if course['level'] %}
-    <span
-      class="inline-block px-4 py-2 text-xs md:text-sm font-semibold bg-[#C5F3C5] text-emerald-700 rounded-full mb-5 fade-in"
+      </section>
+      {% endblock %}
     >
       {{ course['level'] }} pathway
     </span>
@@ -524,24 +468,6 @@ if meta_description %}
 {% endblock %} {% block extra_scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      }
-    );
-
-    document
-      .querySelectorAll(".fade-in, .scale-in")
-      .forEach((el) => observer.observe(el));
-
     document.querySelectorAll(".cms-rich-content a").forEach((anchor) => {
       anchor.setAttribute("target", "_blank");
       anchor.setAttribute("rel", "noopener");

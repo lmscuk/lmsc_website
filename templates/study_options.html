@@ -10,60 +10,13 @@ London Maths & Science College{% endblock %} {% block meta_description %}
     font-family: "Montserrat", sans-serif;
   }
 
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .stagger-1 {
-    transition-delay: 0.1s;
-  }
-
-  .stagger-2 {
-    transition-delay: 0.2s;
-  }
-
-  .stagger-3 {
-    transition-delay: 0.3s;
-  }
-
-  .stagger-4 {
-    transition-delay: 0.4s;
-  }
-
   .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
   }
 
   .accordion-content.active {
     max-height: 500px;
-  }
-
-  .accordion-icon {
-    transition: transform 0.3s ease;
-  }
-
-  .accordion-icon.active {
-    transform: rotate(180deg);
   }
 </style>
 {% endblock %} {% block content %}
@@ -206,7 +159,6 @@ London Maths & Science College{% endblock %} {% block meta_description %}
               clinics</span
             >
           </li>
-          <li class="flex items-start gap-3">
             <i class="fas fa-check-circle text-primary mt-1"></i>
             <span class="text-gray-700"
               >In-person assessments and mock exams under exam-style
@@ -931,4 +883,4 @@ London Maths & Science College{% endblock %} {% block meta_description %}
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
-{% endblock %} {% endblock %}
+{% endblock %} {% block extra_head %}{% endblock %} {% block content %}

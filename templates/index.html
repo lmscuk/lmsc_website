@@ -1310,51 +1310,41 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
 {% endblock %} {% block extra_scripts %}
 <script>
   let currentSlide = 0;
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  let autoplayInterval;
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const dots = Array.from(document.querySelectorAll(".dot"));
 
   function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("active");
-      dots[i].classList.remove("active");
-    });
+    if (slides.length === 0) {
+      return;
+    }
 
-    slides[index].classList.add("active");
-    dots[index].classList.add("active");
+    slides.forEach((slide, i) => {
+      const isActive = i === index;
+      slide.classList.toggle("active", isActive);
+      if (dots[i]) {
+        dots[i].classList.toggle("active", isActive);
+      }
+    });
   }
 
   function changeSlide(direction) {
-    currentSlide += direction;
+    if (slides.length === 0) {
+      return;
+    }
 
-    if (currentSlide < 0) currentSlide = slides.length - 1;
-    if (currentSlide >= slides.length) currentSlide = 0;
-
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
     showSlide(currentSlide);
-    resetAutoplay();
   }
 
   function goToSlide(index) {
+    if (index < 0 || index >= slides.length) {
+      return;
+    }
+
     currentSlide = index;
     showSlide(currentSlide);
-    resetAutoplay();
   }
 
-  // AUTO PLAY FUNCTION
-  function startAutoplay() {
-    autoplayInterval = setInterval(() => {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
-    }, 5000); // Change slide every 5 seconds
-  }
-
-  function resetAutoplay() {
-    clearInterval(autoplayInterval);
-    startAutoplay();
-  }
-
-  // Initialize slider
   showSlide(currentSlide);
-  startAutoplay();
 </script>
 {% endblock %}

@@ -10,97 +10,17 @@ Maths & Science College{% endblock %} {% block meta_description %}
     font-family: "Montserrat", sans-serif;
   }
 
-  /* Scroll Animations */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .stagger-1 {
-    transition-delay: 0.1s;
-  }
-
-  .stagger-2 {
-    transition-delay: 0.2s;
-  }
-
-  .stagger-3 {
-    transition-delay: 0.3s;
-  }
-
-  .stagger-4 {
-    transition-delay: 0.4s;
-  }
-
-  .stagger-5 {
-    transition-delay: 0.5s;
-  }
-
-  .stagger-6 {
-    transition-delay: 0.6s;
-  }
-
-  .teacher-card {
-    transition: all 0.3s ease;
-  }
-
   .teacher-card:hover {
-    transform: translateY(-8px);
     box-shadow: 0 16px 32px rgba(56, 121, 81, 0.15);
-  }
-
-  .feature-card {
-    transition: all 0.3s ease;
   }
 
   .feature-card:hover {
     background: rgba(56, 121, 81, 0.05);
-    transform: translateX(8px);
   }
 
   .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
   }
 
   .accordion-content.open {
