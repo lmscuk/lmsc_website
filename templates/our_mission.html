@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block title %}Our Mission & Values | London Maths &
-Science College{% endblock %} {% block meta_description %}
+{% extends 'base.html' %} {% from 'partials/media.html' import responsive_image
+%} {% block title %}Our Mission & Values | London Maths & Science College{%
+endblock %} {% block meta_description %}
 <meta
   name="description"
   content="Understand the mission and values of London Maths & Science College, a British 16–19 STEM specialist supporting students to excel and progress with purpose."
@@ -38,11 +39,9 @@ Science College{% endblock %} {% block meta_description %}
         </div>
       </div>
       <div class="fade-in scale-in">
-        <img
-          alt=""
-          class="rounded-lg"
-          src="{{ url_for('static', filename='Images/Image 8.jpg') }}"
-        />
+        {{ responsive_image( 'Images/Image 8.jpg', 'Students collaborating in a
+        modern classroom at LMSC', img_class='rounded-lg w-full object-cover',
+        picture_class='block' ) }}
       </div>
     </div>
   </div>
@@ -66,11 +65,9 @@ Science College{% endblock %} {% block meta_description %}
             >real learning, real progress, real options for the future</strong
           >.
         </p>
-        <img
-          alt=""
-          class="rounded h-[300px] w-full object-cover"
-          src="{{ url_for('static', filename='Images/Image 9.jpg') }}"
-        />
+        {{ responsive_image( 'Images/Image 9.jpg', 'Teacher supporting a student
+        with STEM work', img_class='rounded h-[300px] w-full object-cover',
+        picture_class='block' ) }}
       </div>
       <div class="fade-in scale-in space-y-4">
         <div class="flex gap-4 p-6 bg-accent/10 rounded-lg shadow">
@@ -193,11 +190,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-1 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 1.jpg', 'Student presenting
+          equations on a classroom whiteboard', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Excellence</h3>
         <p class="text-gray-700">
@@ -210,11 +205,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-2 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 2.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 2.jpg', 'Learners working together
+          during a science lab session', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Integrity</h3>
         <p class="text-gray-700">
@@ -227,11 +220,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-3 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 3.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 3.jpg', 'STEM teacher guiding
+          students through an experiment', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Innovation</h3>
         <p class="text-gray-700">
@@ -243,11 +234,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-4 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 4.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 4.jpg', 'Sixth form students
+          collaborating on a coding challenge', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Respect</h3>
         <p class="text-gray-700">
@@ -260,11 +249,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-5 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 5.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 5.jpg', 'Group discussing STEM
+          project work around a laptop', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Inclusion</h3>
         <p class="text-gray-700">
@@ -276,11 +263,9 @@ Science College{% endblock %} {% block meta_description %}
         class="fade-in scale-in stagger-6 value-card shadow-lg bg-white p-4 rounded-lg"
       >
         <div class="text-4xl mb-4">
-          <img
-            alt=""
-            class="rounded"
-            src="{{ url_for('static', filename='Images/Image 6.jpg') }}"
-          />
+          {{ responsive_image( 'Images/Image 6.jpg', 'Student reading academic
+          material in the college library', img_class='rounded w-full
+          object-cover', picture_class='block' ) }}
         </div>
         <h3 class="font-bold text-gray-900 mb-3">Resilience</h3>
         <p class="text-gray-700">
@@ -305,11 +290,9 @@ Science College{% endblock %} {% block meta_description %}
           lessons work day to day. In practice, this means creating environments
           where students thrive and learning is the priority.
         </p>
-        <img
-          alt=""
-          class="rounded-lg h-[300px] w-full object-cover"
-          src="{{ url_for('static', filename='Images/Image 1.jpg') }}"
-        />
+        {{ responsive_image( 'Images/Image 1.jpg', 'Student presenting maths
+        work to peers', img_class='rounded-lg h-[300px] w-full object-cover',
+        picture_class='block' ) }}
       </div>
       <div class="fade-in scale-in space-y-4">
         <div class="flex gap-4 p-4 bg-white rounded-lg">
@@ -595,11 +578,10 @@ Science College{% endblock %} {% block meta_description %}
           <div
             class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
           >
-            <img
-              alt="Person with phone"
-              class="w-full h-full object-cover object-center"
-              src="{{ url_for('static', filename='Images/user-image.png') }}"
-            />
+            {{ responsive_image( 'Images/user-image.png', 'Person using a phone
+            while considering study options', img_class='w-full h-full
+            object-cover object-center', picture_class='block w-full h-full' )
+            }}
           </div>
           <!-- Chat Bubbles Overlay -->
           <div class="chat-block">

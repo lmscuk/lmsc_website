@@ -1,0 +1,35 @@
+{% macro responsive_image( src, alt_text, img_class='', picture_class='',
+loading='lazy', decoding='async', widths=(480, 768, 1024, 1440),
+sizes='(max-width: 768px) 100vw, 768px' ) %} {% set parts = src.rsplit('.', 1)
+%} {% set base = parts[0] %} {% set width_list = widths if widths is iterable
+else (widths,) %} {% set avif_candidates = [] %} {% set webp_candidates = [] %}
+{% for width in width_list %} {% set avif_name = base ~ '-' ~ width ~ 'w.avif'
+%} {% if static_exists(avif_name) %} {% set avif_candidates = avif_candidates +
+[url_for('static', filename=avif_name) ~ ' ' ~ width ~ 'w'] %} {% endif %} {%
+set webp_name = base ~ '-' ~ width ~ 'w.webp' %} {% if static_exists(webp_name)
+%} {% set webp_candidates = webp_candidates + [url_for('static',
+filename=webp_name) ~ ' ' ~ width ~ 'w'] %} {% endif %} {% endfor %}
+
+<picture class="{{ picture_class }}">
+  {% if avif_candidates %}
+  <source
+    type="image/avif"
+    srcset="{{ avif_candidates | join(', ') }}"
+    sizes="{{ sizes }}"
+  />
+  {% endif %} {% if webp_candidates %}
+  <source
+    type="image/webp"
+    srcset="{{ webp_candidates | join(', ') }}"
+    sizes="{{ sizes }}"
+  />
+  {% endif %}
+  <img
+    src="{{ url_for('static', filename=src) }}"
+    alt="{{ alt_text }}"
+    loading="{{ loading }}"
+    decoding="{{ decoding }}"
+    class="{{ img_class }}"
+  />
+</picture>
+{% endmacro %}

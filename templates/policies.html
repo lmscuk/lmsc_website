@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block title %}School Policies | LMSC{% endblock %}
-{% block meta_description %}
+{% extends 'base.html' %} {% from 'partials/media.html' import responsive_image
+%} {% block title %}School Policies | LMSC{% endblock %} {% block
+meta_description %}
 <meta
   name="description"
   content="Download safeguarding, admissions and compliance policies from London Maths & Science College’s central policy hub."
@@ -56,11 +57,9 @@
             <div
               class="h-64 w-full bg-gradient-to-br from-primary/10 to-sky-100"
             >
-              <img
-                src="{{ url_for('static', filename='Images/Image 11.jpg') }}"
-                alt="Students reviewing policy documents"
-                class="h-full w-full object-cover"
-              />
+              {{ responsive_image( 'Images/Image 11.jpg', 'Students reviewing
+              policy documents together', img_class='h-full w-full
+              object-cover', picture_class='block h-full w-full' ) }}
             </div>
           </div>
         </div>
@@ -110,13 +109,11 @@
         data-policy-title="{{ policy['title']|lower }}"
       >
         <div class="relative h-44 w-full overflow-hidden bg-slate-900/5">
-          {% if policy['thumbnail_path'] %}
-          <img
-            src="{{ url_for('static', filename=policy['thumbnail_path']) }}"
-            alt="{{ policy['title'] }} thumbnail"
-            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-          />
-          {% else %}
+          {% if policy['thumbnail_path'] %} {{ responsive_image(
+          policy['thumbnail_path'], policy['title'] ~ ' thumbnail',
+          img_class='h-full w-full object-cover transition duration-300
+          group-hover:scale-105', picture_class='block h-full w-full' ) }} {%
+          else %}
           <div
             class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-sky-100 text-primary"
           >

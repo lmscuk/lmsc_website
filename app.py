@@ -10,14 +10,18 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, quote_plus, urlparse
 
+import click
 from flask import (Flask, abort, flash, g, redirect, render_template, request,
                    send_from_directory, session, url_for)
 from flask.typing import ResponseReturnValue
+from flask_compress import Compress
 from flask_mail import Mail, Message
 from markupsafe import Markup, escape
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
+
+from scripts import process_images as process_images_module
 
 LEAD_STATUSES = [
     "New",
@@ -1007,6 +1011,7 @@ COURSE_SCHEMA_ADDITIONAL_COLUMNS: dict[str, str] = {
 
 
 mail = Mail()
+compress = Compress()
 
 
 def create_app() -> Flask:
@@ -1018,6 +1023,19 @@ def create_app() -> Flask:
         "ENABLE_HTTPS_REDIRECT",
         os.environ.get("ENABLE_HTTPS_REDIRECT", "1") == "1",
     )
+
+    app.config.setdefault("COMPRESS_ALGORITHM", "gzip")
+    app.config.setdefault("COMPRESS_ALGORITHMS", ["gzip", "br"])
+    app.config.setdefault("COMPRESS_BR_LEVEL", 5)
+    app.config.setdefault("COMPRESS_LEVEL", 6)
+    app.config.setdefault("COMPRESS_MIN_SIZE", 512)
+
+    try:
+        static_cache_seconds = int(os.environ.get("STATIC_CACHE_SECONDS", str(60 * 60 * 24 * 30)))
+    except ValueError:
+        static_cache_seconds = 60 * 60 * 24 * 30
+    app.config.setdefault("STATIC_CACHE_SECONDS", static_cache_seconds)
+    app.config.setdefault("SEND_FILE_MAX_AGE_DEFAULT", static_cache_seconds)
 
     template_root = Path(app.root_path) / "templates"
     pages_template_dir = template_root / "pages"
@@ -1062,6 +1080,7 @@ def create_app() -> Flask:
     app.config["MAIL_ASCII_ATTACHMENTS"] = True
 
     mail.init_app(app)
+    compress.init_app(app)
 
     def send_email(
         subject: str,
@@ -1088,6 +1107,38 @@ def create_app() -> Flask:
         mail.send(message)
 
     app.send_email = send_email  # type: ignore[attr-defined]
+
+    def static_exists(filename: str) -> bool:
+        static_root = Path(app.static_folder or "")
+        return (static_root / filename).is_file()
+
+    def with_cache_headers(response, *, max_age: int | None = None):
+        cache_seconds = max_age if max_age is not None else app.config.get("STATIC_CACHE_SECONDS", 60 * 60 * 24 * 30)
+        response.cache_control.public = True
+        response.cache_control.max_age = cache_seconds
+        response.expires = datetime.utcnow() + timedelta(seconds=cache_seconds)
+        return response
+
+    def asset_url(filename: str, *, fallback: str | None = None) -> str:
+        static_root = Path(app.static_folder or "")
+        candidate = static_root / filename
+        if candidate.is_file():
+            version = int(candidate.stat().st_mtime)
+            return url_for("static", filename=filename, v=version)
+
+        if fallback:
+            fallback_path = static_root / fallback
+            if fallback_path.is_file():
+                version = int(fallback_path.stat().st_mtime)
+                return url_for("static", filename=fallback, v=version)
+            return url_for("static", filename=fallback)
+
+        return url_for("static", filename=filename)
+
+    app.jinja_env.globals.update(
+        asset_url=asset_url,
+        static_exists=static_exists,
+    )
 
     instance_path = Path(app.instance_path)
     instance_path.mkdir(parents=True, exist_ok=True)
@@ -2961,19 +3012,23 @@ def create_app() -> Flask:
 
     @app.route("/robots.txt")
     def robots_txt():
-        return send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
+        response = send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
+        return with_cache_headers(response)
 
     @app.route("/llms.txt")
     def llms_txt():
-        return send_from_directory(app.static_folder, "llms.txt", mimetype="text/plain")
+        response = send_from_directory(app.static_folder, "llms.txt", mimetype="text/plain")
+        return with_cache_headers(response)
 
     @app.route("/sitemap.xml")
     def sitemap_xml():
-        return send_from_directory(app.static_folder, "sitemap.xml", mimetype="application/xml")
+        response = send_from_directory(app.static_folder, "sitemap.xml", mimetype="application/xml")
+        return with_cache_headers(response)
 
     @app.route("/sitemap_index.xml")
     def sitemap_index_xml():
-        return send_from_directory(app.static_folder, "sitemap_index.xml", mimetype="application/xml")
+        response = send_from_directory(app.static_folder, "sitemap_index.xml", mimetype="application/xml")
+        return with_cache_headers(response)
 
     @app.route("/")
     def index() -> str:
@@ -5057,6 +5112,29 @@ def create_app() -> Flask:
             canonical_url=canonical_url,
             meta_robots=robots_meta,
         )
+
+    @app.cli.command("process-images")
+    @click.option("--sizes", default=None, help="Comma-separated list of widths")
+    @click.option("--quality", default=85, type=int, show_default=True, help="Fallback JPEG quality")
+    @click.option("--webp-quality", default=80, type=int, show_default=True, help="WebP quality")
+    @click.option("--avif-quality", default=45, type=int, show_default=True, help="AVIF quality")
+    @click.option("--overwrite", is_flag=True, help="Overwrite existing derivatives")
+    def process_images_command(**options):
+        """Expose the responsive image pipeline via ``flask process-images``."""
+
+        argv: list[str] = []
+        if options["sizes"]:
+            argv.extend(["--sizes", options["sizes"]])
+        if options["quality"] != 85:
+            argv.extend(["--quality", str(options["quality"])])
+        if options["webp_quality"] != 80:
+            argv.extend(["--webp-quality", str(options["webp_quality"])])
+        if options["avif_quality"] != 45:
+            argv.extend(["--avif-quality", str(options["avif_quality"])])
+        if options["overwrite"]:
+            argv.append("--overwrite")
+
+        process_images_module.main(argv)
 
     return app
 
