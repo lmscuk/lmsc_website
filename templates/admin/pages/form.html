@@ -148,8 +148,19 @@
               class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
             >
               <option value="">Select parent page</option>
+              {% set allowed_parent_labels = [
+                'Teaching & Learning',
+                'College Life',
+                'Online & Homeschooling',
+                'Support & Guidance',
+                'About',
+                'Study at LMSC',
+                'Contact'
+              ] %}
               {% for option in parent_choices %}
-                <option value="{{ option['id'] }}" {% if selected_parent and selected_parent|string == option['id']|string %}selected{% endif %}>{{ option['page_name'] }}</option>
+                {% if option['page_name'] in allowed_parent_labels %}
+                  <option value="{{ option['id'] }}" {% if selected_parent and selected_parent|string == option['id']|string %}selected{% endif %}>{{ option['page_name'] }}</option>
+                {% endif %}
               {% endfor %}
             </select>
           </div>

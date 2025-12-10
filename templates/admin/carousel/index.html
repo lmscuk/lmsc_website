@@ -1,0 +1,170 @@
+{% extends 'admin/base_admin.html' %} {% block title %}Hero Carousel | LMSC
+Admin{% endblock %} {% block nav_title %}Hero Carousel{% endblock %} {% block
+meta_description %}
+<meta
+  name="description"
+  content="Manage homepage hero carousel slides for the LMSC website. Create, edit and organise the hero messaging blocks."
+/>
+{% endblock %} {% block content %}
+<div class="flex flex-col gap-6">
+  <div
+    class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Hero Carousel</h1>
+      <p class="text-sm text-slate-500">
+        Control the slides that appear at the top of the homepage, including
+        headlines, imagery and CTAs.
+      </p>
+    </div>
+    <a
+      href="{{ url_for('admin_carousel_new') }}"
+      class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      + New Slide
+    </a>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">Total slides</p>
+      <p class="mt-2 text-3xl font-semibold text-primary">{{ stats.total }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">
+        Active slides
+      </p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.active }}
+      </p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+      <p class="text-xs uppercase tracking-wide text-slate-400">Last updated</p>
+      <p class="mt-2 text-lg font-semibold text-slate-800">
+        {{ stats.last_updated|format_date('%b %d, %Y') if stats.last_updated
+        else '–' }}
+      </p>
+    </div>
+  </div>
+
+  {% if slides %}
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead
+        class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Headline</th>
+          <th scope="col" class="px-6 py-3">CTA</th>
+          <th scope="col" class="px-6 py-3">Display order</th>
+          <th scope="col" class="px-6 py-3">Status</th>
+          <th scope="col" class="px-6 py-3">Imagery</th>
+          <th scope="col" class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
+        {% for slide in slides %}
+        <tr class="hover:bg-slate-50">
+          <td class="px-6 py-4">
+            <p class="font-semibold text-slate-900">{{ slide['headline'] }}</p>
+            <p class="text-xs text-slate-500">
+              {{ slide['body'][:120] ~ ('…' if slide['body'] and
+              slide['body']|length > 120 else '') if slide['body'] else 'No
+              supporting copy yet.' }}
+            </p>
+          </td>
+          <td class="px-6 py-4">
+            {% if slide['cta_label'] and slide['cta_url'] %}
+            <div class="flex flex-col text-xs">
+              <span class="font-semibold text-slate-800"
+                >{{ slide['cta_label'] }}</span
+              >
+              <span class="text-slate-400">{{ slide['cta_url'] }}</span>
+            </div>
+            {% else %}
+            <span class="text-xs text-slate-400">No CTA</span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4">
+            {{ slide['display_order'] if slide['display_order'] is not none else
+            '–' }}
+          </td>
+          <td class="px-6 py-4">
+            {% if slide['is_active'] %}
+            <span
+              class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600"
+            >
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              Active
+            </span>
+            {% else %}
+            <span
+              class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500"
+            >
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Hidden
+            </span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4">
+            {% if slide['image_path'] %} {% set image_url = slide['image_path']
+            %} {% if '://' not in image_url %} {% set image_url =
+            asset_url(image_url) %} {% endif %}
+            <a
+              href="{{ image_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/20"
+            >
+              Preview
+            </a>
+            {% else %}
+            <span class="text-xs text-slate-400">No image</span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center justify-end gap-2">
+              <a
+                href="{{ url_for('admin_carousel_edit', slide_id=slide['id']) }}"
+                class="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/15"
+              >
+                Edit
+              </a>
+              <form
+                method="post"
+                action="{{ url_for('admin_carousel_delete', slide_id=slide['id']) }}"
+                onsubmit="return confirm('Delete this carousel slide? This action cannot be undone.');"
+              >
+                <button
+                  type="submit"
+                  class="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div
+    class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center"
+  >
+    <h2 class="text-lg font-semibold text-slate-800">No slides yet</h2>
+    <p class="mt-2 text-sm text-slate-500">
+      Add your first hero slide to populate the homepage carousel with dynamic
+      content.
+    </p>
+    <a
+      href="{{ url_for('admin_carousel_new') }}"
+      class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      Create a Slide
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

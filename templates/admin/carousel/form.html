@@ -1,0 +1,267 @@
+{% extends 'admin/base_admin.html' %} {% set is_edit = mode == 'edit' %} {%
+block title %}{{ 'Edit Slide' if is_edit else 'Create Slide' }} | Hero
+Carousel{% endblock %} {% block nav_title %}{{ 'Edit Slide' if is_edit else
+'Create Slide' }}{% endblock %} {% block meta_description %}
+<meta
+  name="description"
+  content="{{ 'Update an existing hero carousel slide' if is_edit else 'Create a new hero carousel slide' }} for the LMSC homepage."
+/>
+{% endblock %} {% block content %} {% set heading = 'Edit hero slide' if is_edit
+else 'Create hero slide' %} {% set slide_data = slide or {} %} {% set
+form_values = form_data or {} %} {% set active_flag = false %} {% if
+form_values.get('is_active') %} {% set active_flag = true %} {% elif
+form_values.get('is_active') is not defined and slide_data.get('is_active') %}
+{% set active_flag = slide_data.get('is_active') %} {% endif %}
+<div class="flex flex-col gap-6">
+  <div>
+    <a
+      href="{{ url_for('admin_carousel') }}"
+      class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        class="h-4 w-4"
+        aria-hidden="true"
+      >
+        <path
+          d="m15 6-6 6 6 6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      Back to all slides
+    </a>
+  </div>
+
+  <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="mb-6 flex flex-col gap-2">
+      <h1 class="text-2xl font-semibold text-slate-900">{{ heading }}</h1>
+      <p class="text-sm text-slate-500">
+        {{ 'Adjust the messaging, button and imagery for this hero slide.' if
+        is_edit else 'Define the content that appears on the homepage hero
+        carousel.' }}
+      </p>
+    </div>
+
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      class="flex flex-col gap-8"
+    >
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="space-y-4">
+          <div>
+            <label for="headline" class="text-sm font-semibold text-slate-800"
+              >Headline</label
+            >
+            <input
+              type="text"
+              id="headline"
+              name="headline"
+              required
+              value="{{ form_values.get('headline', slide_data.get('headline', '')) }}"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            />
+            <p class="mt-1 text-xs text-slate-400">
+              Keep this focused and under 90 characters where possible.
+            </p>
+          </div>
+          <div>
+            <label
+              for="headline_highlights"
+              class="text-sm font-semibold text-slate-800"
+              >Headline highlights</label
+            >
+            <textarea
+              id="headline_highlights"
+              name="headline_highlights"
+              rows="3"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            >
+{{ form_values.get('headline_highlights', slide_data.get('headline_highlights', '')) }}</textarea
+            >
+            <p class="mt-1 text-xs text-slate-400">
+              Add each phrase on a new line to underline it within the headline.
+            </p>
+          </div>
+          <div>
+            <label for="body" class="text-sm font-semibold text-slate-800"
+              >Supporting copy</label
+            >
+            <textarea
+              id="body"
+              name="body"
+              rows="6"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            >
+{{ form_values.get('body', slide_data.get('body', '')) }}</textarea
+            >
+            <p class="mt-1 text-xs text-slate-400">
+              Use 2-3 sentences to expand on the headline. Blank entries hide
+              this paragraph.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                for="cta_label"
+                class="text-sm font-semibold text-slate-800"
+                >CTA label</label
+              >
+              <input
+                type="text"
+                id="cta_label"
+                name="cta_label"
+                value="{{ form_values.get('cta_label', slide_data.get('cta_label', '')) }}"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+            <div>
+              <label for="cta_url" class="text-sm font-semibold text-slate-800"
+                >CTA link</label
+              >
+              <input
+                type="text"
+                id="cta_url"
+                name="cta_url"
+                value="{{ form_values.get('cta_url', slide_data.get('cta_url', '')) }}"
+                placeholder="e.g. /courses"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+          </div>
+          <p class="text-xs text-slate-400">
+            Provide both the label and URL to show the button. Use a full URL or
+            a site-relative path such as <code>/courses</code>.
+          </p>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                for="display_order"
+                class="text-sm font-semibold text-slate-800"
+                >Display order</label
+              >
+              <input
+                type="number"
+                id="display_order"
+                name="display_order"
+                min="0"
+                value="{{ form_values.get('display_order', slide_data.get('display_order', 0)) }}"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+            <div class="flex items-center gap-3 pt-6">
+              <input
+                type="checkbox"
+                id="is_active"
+                name="is_active"
+                {%
+                if
+                active_flag
+                %}checked{%
+                endif
+                %}
+                class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary/60"
+              />
+              <label
+                for="is_active"
+                class="text-sm font-semibold text-slate-800"
+                >Slide is active</label
+              >
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="text-sm font-semibold text-slate-800" for="image"
+                >Hero image</label
+              >
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                class="mt-1 w-full text-sm text-slate-600 file:mr-4 file:rounded-full file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20"
+              />
+            </div>
+            <div>
+              <label
+                for="image_alt"
+                class="text-sm font-semibold text-slate-800"
+                >Image alt text</label
+              >
+              <input
+                type="text"
+                id="image_alt"
+                name="image_alt"
+                value="{{ form_values.get('image_alt', slide_data.get('image_alt', '')) }}"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-900 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+              <p class="mt-1 text-xs text-slate-400">
+                Required when an image is uploaded. Describe what appears in the
+                photo.
+              </p>
+            </div>
+
+            {% if is_edit and slide_data.get('image_path') %}
+            <div
+              class="flex items-start gap-4 rounded-xl border border-slate-200 p-4"
+            >
+              {% set image_url = slide_data.get('image_path') %} {% if image_url
+              and '://' not in image_url %} {% set image_url =
+              asset_url(image_url) %} {% endif %}
+              <img
+                src="{{ image_url }}"
+                alt="{{ slide_data.get('image_alt', '') }}"
+                class="h-24 w-32 rounded-lg object-cover"
+              />
+              <div class="flex flex-1 flex-col gap-2 text-sm text-slate-600">
+                <span class="font-semibold text-slate-800">Current image</span>
+                <label
+                  class="inline-flex items-center gap-2 text-xs text-slate-500"
+                >
+                  <input type="checkbox" name="remove_image" value="on" {% if
+                  form_values.get('remove_image') == 'on' %}checked{% endif %}
+                  class="h-4 w-4 rounded border-slate-300 text-primary
+                  focus:ring-primary/60" /> Remove this image
+                </label>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <p class="text-xs text-slate-400">
+          Changes go live as soon as you save. Hidden slides stay unpublished
+          until reactivated.
+        </p>
+        <div class="flex gap-3">
+          <a
+            href="{{ url_for('admin_carousel') }}"
+            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-300"
+          >
+            Cancel
+          </a>
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+          >
+            {{ 'Save changes' if is_edit else 'Create slide' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

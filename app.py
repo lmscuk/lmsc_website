@@ -1021,6 +1021,64 @@ COURSE_SCHEMA_ADDITIONAL_COLUMNS: dict[str, str] = {
     "related_course_3_slug": "TEXT",
 }
 
+CAROUSEL_DB_COLUMNS: tuple[str, ...] = (
+    "headline",
+    "headline_highlights",
+    "body",
+    "cta_label",
+    "cta_url",
+    "image_path",
+    "image_alt",
+    "display_order",
+    "is_active",
+)
+
+DEFAULT_CAROUSEL_SLIDES: list[dict[str, Any]] = [
+    {
+        "headline": "British 16-19 STEM College in London",
+        "headline_highlights": "STEM College\nLondon",
+        "body": (
+            "London Maths & Science College (LMSC) is a British sixth form college based in London, "
+            "specialising in A Levels and BTECs in Maths, Sciences, Computing and Business. Ambitious "
+            "students from the UK and overseas study in small classes with rigorous teaching and clear expectations."
+        ),
+        "cta_label": "Explore our courses",
+        "cta_url": "/courses",
+        "image_path": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+        "image_alt": "Students studying together",
+        "display_order": 1,
+        "is_active": 1,
+    },
+    {
+        "headline": "Study the Full British Curriculum from Anywhere",
+        "headline_highlights": "British Curriculum\nAnywhere",
+        "body": (
+            "Follow the same British curriculum studied in leading UK schools, taught from London by specialist teachers. "
+            "LMSC prepares students worldwide for British A Levels and BTEC qualifications recognised by universities across the UK and beyond."
+        ),
+        "cta_label": "Learn about the British curriculum",
+        "cta_url": "/stem-pathways",
+        "image_path": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&h=800&fit=crop",
+        "image_alt": "Students attending an online lesson",
+        "display_order": 2,
+        "is_active": 1,
+    },
+    {
+        "headline": "In-Person, Online or Hybrid - You Choose",
+        "headline_highlights": "Online or Hybrid",
+        "body": (
+            "Study on campus in London, fully online, or through a flexible hybrid route. Whichever study mode you choose, "
+            "you follow the same British curriculum, timetable structure and assessment, with live lessons and full lesson recordings."
+        ),
+        "cta_label": "Compare study modes",
+        "cta_url": "/study-options",
+        "image_path": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop",
+        "image_alt": "Students collaborating during a lesson",
+        "display_order": 3,
+        "is_active": 1,
+    },
+]
+
 
 mail = Mail()
 compress = Compress()
@@ -1069,6 +1127,10 @@ def create_app() -> Flask:
     course_images_dir = Path(app.root_path) / "static" / "uploads" / "courses"
     course_images_dir.mkdir(parents=True, exist_ok=True)
     app.config["COURSE_IMAGE_UPLOAD_FOLDER"] = str(course_images_dir)
+
+    carousel_images_dir = Path(app.root_path) / "static" / "uploads" / "carousel"
+    carousel_images_dir.mkdir(parents=True, exist_ok=True)
+    app.config["CAROUSEL_IMAGE_UPLOAD_FOLDER"] = str(carousel_images_dir)
 
     policy_docs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "documents"
     policy_thumbs_dir = Path(app.root_path) / "static" / "uploads" / "policies" / "thumbnails"
@@ -1333,6 +1395,19 @@ def create_app() -> Flask:
         file_storage.save(destination)
         return f"uploads/courses/{final_name}"
 
+    def save_carousel_image(file_storage):
+        if not file_storage or not file_storage.filename:
+            raise ValueError("Please choose an image for the carousel slide.")
+        if not allowed_image_file(file_storage.filename):
+            raise ValueError("Carousel slide images must be JPG, JPEG, PNG, WEBP, or GIF files.")
+
+        filename = secure_filename(file_storage.filename)
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        final_name = f"{timestamp}_{filename}"
+        destination = Path(app.config["CAROUSEL_IMAGE_UPLOAD_FOLDER"]) / final_name
+        file_storage.save(destination)
+        return f"uploads/carousel/{final_name}"
+
     def remove_static_file(relative_path: str | None) -> None:
         if not relative_path:
             return
@@ -1369,6 +1444,30 @@ def create_app() -> Flask:
             return split_multiline(value)
         return paragraphs
 
+    def apply_hero_highlights(text: str | None, highlights: str | None = None) -> Markup:
+        if not text:
+            return Markup("")
+
+        highlighted: Markup = Markup(escape(text))
+        if not highlights:
+            return highlighted
+
+        seen_phrases: set[str] = set()
+        for phrase in split_multiline(highlights):
+            trimmed = phrase.strip()
+            if not trimmed or trimmed in seen_phrases:
+                continue
+            seen_phrases.add(trimmed)
+            escaped_phrase = str(escape(trimmed))
+            if escaped_phrase not in highlighted:
+                continue
+            replacement = Markup(
+                f"<span class=\"hero-underline\">{escaped_phrase}</span>"
+            )
+            highlighted = Markup(highlighted.replace(escaped_phrase, replacement, 1))
+
+        return highlighted
+
     def build_rich_html(value: str | None, *, as_list: bool = False) -> Markup | None:
         if not value:
             return None
@@ -1388,6 +1487,15 @@ def create_app() -> Flask:
             return None
         html = "".join(f"<p>{escape(paragraph)}</p>" for paragraph in paragraphs)
         return Markup(html)
+
+    def render_rich_text(value: str | None) -> Markup:
+        rich_value = build_rich_html(value)
+        if rich_value is None:
+            return Markup("")
+        return rich_value
+
+    app.jinja_env.filters["hero_highlight"] = apply_hero_highlights
+    app.jinja_env.filters["richtext"] = render_rich_text
 
     def is_probably_bot(user_agent: str) -> bool:
         if not user_agent:
@@ -1746,6 +1854,27 @@ def create_app() -> Flask:
             """
         )
         ensure_course_schema(db)
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS carousel_slides (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                headline TEXT NOT NULL,
+                headline_highlights TEXT,
+                body TEXT,
+                cta_label TEXT,
+                cta_url TEXT,
+                image_path TEXT,
+                image_alt TEXT,
+                display_order INTEGER NOT NULL DEFAULT 0,
+                is_active INTEGER NOT NULL DEFAULT 1,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_carousel_order ON carousel_slides(is_active, display_order, id)"
+        )
         db.execute(
             """
             CREATE TABLE IF NOT EXISTS prospectus_versions (
@@ -2143,6 +2272,119 @@ def create_app() -> Flask:
         db.execute("DELETE FROM courses WHERE id = ?", (course_id,))
         db.commit()
 
+    def fetch_carousel_slides(*, include_inactive: bool = False) -> list[sqlite3.Row]:
+        db = get_db()
+        query = "SELECT * FROM carousel_slides"
+        params: list[Any] = []
+        if not include_inactive:
+            query += " WHERE is_active = 1"
+        query += " ORDER BY COALESCE(display_order, 0) ASC, id ASC"
+        return db.execute(query, params).fetchall()
+
+    def get_carousel_slide(slide_id: int) -> sqlite3.Row | None:
+        db = get_db()
+        return db.execute("SELECT * FROM carousel_slides WHERE id = ?", (slide_id,)).fetchone()
+
+    def create_carousel_slide(data: dict[str, Any]) -> int:
+        db = get_db()
+        now = current_timestamp()
+        cursor = db.execute(
+            """
+            INSERT INTO carousel_slides (
+                headline,
+                headline_highlights,
+                body,
+                cta_label,
+                cta_url,
+                image_path,
+                image_alt,
+                display_order,
+                is_active,
+                created_at,
+                updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                data.get("headline"),
+                data.get("headline_highlights"),
+                data.get("body"),
+                data.get("cta_label"),
+                data.get("cta_url"),
+                data.get("image_path"),
+                data.get("image_alt"),
+                int(data.get("display_order") or 0),
+                1 if data.get("is_active") else 0,
+                now,
+                now,
+            ),
+        )
+        db.commit()
+        return int(cursor.lastrowid)
+
+    def update_carousel_slide(slide_id: int, data: dict[str, Any]) -> None:
+        db = get_db()
+        now = current_timestamp()
+        db.execute(
+            """
+            UPDATE carousel_slides
+            SET headline = ?,
+                headline_highlights = ?,
+                body = ?,
+                cta_label = ?,
+                cta_url = ?,
+                image_path = ?,
+                image_alt = ?,
+                display_order = ?,
+                is_active = ?,
+                updated_at = ?
+            WHERE id = ?
+            """,
+            (
+                data.get("headline"),
+                data.get("headline_highlights"),
+                data.get("body"),
+                data.get("cta_label"),
+                data.get("cta_url"),
+                data.get("image_path"),
+                data.get("image_alt"),
+                int(data.get("display_order") or 0),
+                1 if data.get("is_active") else 0,
+                now,
+                slide_id,
+            ),
+        )
+        db.commit()
+
+    def delete_carousel_slide(slide_id: int) -> None:
+        slide = get_carousel_slide(slide_id)
+        if slide is None:
+            return
+        image_path = slide["image_path"]
+        if image_path and isinstance(image_path, str) and image_path.startswith("uploads/"):
+            remove_static_file(image_path)
+        db = get_db()
+        db.execute("DELETE FROM carousel_slides WHERE id = ?", (slide_id,))
+        db.commit()
+
+    def fetch_carousel_stats() -> dict[str, Any]:
+        db = get_db()
+        row = db.execute(
+            """
+            SELECT
+                COUNT(*) AS total,
+                SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) AS active_count,
+                MAX(updated_at) AS last_updated
+            FROM carousel_slides
+            """
+        ).fetchone()
+        total = int(row["total"]) if row and row["total"] is not None else 0
+        active = int(row["active_count"]) if row and row["active_count"] is not None else 0
+        return {
+            "total": total,
+            "active": active,
+            "last_updated": row["last_updated"] if row else None,
+        }
+
     def ensure_default_courses() -> None:
         if not app.config.get("SEED_DEFAULT_COURSES", True):
             ensure_course_slugs()
@@ -2209,6 +2451,28 @@ def create_app() -> Flask:
                 (slug_value, now, row["id"]),
             )
         db.commit()
+
+    def ensure_default_carousel_slides() -> None:
+        db = get_db()
+        row = db.execute("SELECT COUNT(*) AS total FROM carousel_slides").fetchone()
+        existing_total = int(row["total"]) if row and row["total"] is not None else 0
+        if existing_total > 0:
+            return
+
+        for index, seed in enumerate(DEFAULT_CAROUSEL_SLIDES, start=1):
+            create_carousel_slide(
+                {
+                    "headline": seed.get("headline", ""),
+                    "headline_highlights": normalise_multiline(seed.get("headline_highlights")),
+                    "body": seed.get("body"),
+                    "cta_label": seed.get("cta_label"),
+                    "cta_url": seed.get("cta_url"),
+                    "image_path": seed.get("image_path"),
+                    "image_alt": seed.get("image_alt"),
+                    "display_order": int(seed.get("display_order", index) or index),
+                    "is_active": 1 if seed.get("is_active", 1) else 0,
+                }
+            )
 
     def fetch_related_blog_posts(
         related_slugs: Sequence[str | None], *, exclude_id: int | None = None, limit: int = 3
@@ -2451,6 +2715,55 @@ def create_app() -> Flask:
         list_values["faq_items"] = faq_items
 
         return data, errors, notices, faq_items, list_values
+
+    def collect_carousel_payload(
+        existing: sqlite3.Row | None = None,
+    ) -> tuple[dict[str, Any], list[str]]:
+        data: dict[str, Any] = {}
+        errors: list[str] = []
+        existing_dict = dict(existing) if existing is not None else {}
+
+        def clean(field_name: str) -> str:
+            return request.form.get(field_name, "").strip()
+
+        headline = clean("headline")
+        if not headline:
+            errors.append("Please provide a headline for the slide.")
+        data["headline"] = headline
+
+        highlights_input = request.form.get("headline_highlights")
+        data["headline_highlights"] = (
+            normalise_multiline(highlights_input) if highlights_input is not None else None
+        )
+
+        body_value = request.form.get("body", "")
+        data["body"] = body_value.strip() or None
+
+        cta_label = clean("cta_label") or None
+        cta_url = clean("cta_url") or None
+        if bool(cta_label) != bool(cta_url):
+            errors.append("Please provide both a CTA label and URL, or leave both blank.")
+        data["cta_label"] = cta_label
+        if cta_url and not re.match(r"^https?://", cta_url) and not cta_url.startswith("/"):
+            cta_url = f"/{cta_url}"
+        data["cta_url"] = cta_url
+
+        image_alt = clean("image_alt") or None
+        data["image_alt"] = image_alt
+
+        display_raw = request.form.get("display_order", "").strip()
+        display_value = safe_int(display_raw)
+        if display_value is None:
+            if display_raw:
+                errors.append("Display order must be a whole number.")
+            display_value = existing_dict.get("display_order") or 0
+        elif display_value < 0:
+            errors.append("Display order cannot be negative.")
+        data["display_order"] = display_value
+
+        data["is_active"] = 1 if request.form.get("is_active") == "on" else 0
+
+        return data, errors
 
     def process_blog_images(
         data: dict[str, Any], *, existing: sqlite3.Row | None = None, require_primary: bool = False
@@ -3101,6 +3414,7 @@ def create_app() -> Flask:
         seed_existing_pages()
         ensure_consultation_page_seed()
         ensure_default_courses()
+        ensure_default_carousel_slides()
 
     @app.route("/robots.txt")
     def robots_txt():
@@ -3124,7 +3438,11 @@ def create_app() -> Flask:
 
     @app.route("/")
     def index() -> str:
-        return render_site_page("index.html", "home")
+        slide_rows = fetch_carousel_slides()
+        slides = [dict(row) for row in slide_rows]
+        if not slides:
+            slides = [dict(seed) for seed in DEFAULT_CAROUSEL_SLIDES]
+        return render_site_page("index.html", "home", carousel_slides=slides)
 
     @app.route("/about")
     def about() -> str:
@@ -4800,6 +5118,155 @@ def create_app() -> Flask:
         flash("Course removed.", "info")
         return redirect(url_for("admin_courses"))
 
+    @app.route("/admin/carousel")
+    @login_required
+    def admin_carousel() -> str:
+        slides = fetch_carousel_slides(include_inactive=True)
+        stats = fetch_carousel_stats()
+        return render_template(
+            "admin/carousel/index.html",
+            slides=slides,
+            stats=stats,
+        )
+
+    @app.route("/admin/carousel/new", methods=["GET", "POST"])
+    @login_required
+    def admin_carousel_new() -> str:
+        if request.method == "POST":
+            data, errors = collect_carousel_payload()
+            upload = request.files.get("image")
+            pending_image_path: str | None = None
+
+            if upload and upload.filename:
+                try:
+                    pending_image_path = save_carousel_image(upload)
+                    data["image_path"] = pending_image_path
+                except ValueError as exc:
+                    errors.append(str(exc))
+            else:
+                data["image_path"] = None
+
+            if data.get("image_path"):
+                if not data.get("image_alt"):
+                    errors.append("Please provide alt text for the slide image.")
+            else:
+                data["image_alt"] = None
+
+            if errors:
+                if pending_image_path:
+                    remove_static_file(pending_image_path)
+                for message in errors:
+                    flash(message, "error")
+                form_snapshot = request.form.to_dict()
+                form_snapshot["is_active"] = "on" if request.form.get("is_active") == "on" else ""
+                return render_template(
+                    "admin/carousel/form.html",
+                    mode="create",
+                    form_data=form_snapshot,
+                    slide=None,
+                )
+
+            slide_id = create_carousel_slide(data)
+            flash("Carousel slide created successfully.", "success")
+            return redirect(url_for("admin_carousel_edit", slide_id=slide_id))
+
+        slides = fetch_carousel_slides(include_inactive=True)
+        existing_orders: list[int] = []
+        for row in slides:
+            value = row["display_order"]
+            if value is None:
+                continue
+            try:
+                existing_orders.append(int(value))
+            except (TypeError, ValueError):
+                continue
+        suggested_order = max(existing_orders) + 1 if existing_orders else 1
+        form_defaults = {"display_order": str(suggested_order), "is_active": "on"}
+        return render_template(
+            "admin/carousel/form.html",
+            mode="create",
+            form_data=form_defaults,
+            slide=None,
+        )
+
+    @app.route("/admin/carousel/<int:slide_id>/edit", methods=["GET", "POST"])
+    @login_required
+    def admin_carousel_edit(slide_id: int) -> str:
+        slide = get_carousel_slide(slide_id)
+        if slide is None:
+            flash("Carousel slide not found.", "error")
+            return redirect(url_for("admin_carousel"))
+
+        slide_dict = dict(slide)
+
+        if request.method == "POST":
+            data, errors = collect_carousel_payload(slide)
+            upload = request.files.get("image")
+            pending_image_path: str | None = None
+            remove_existing = request.form.get("remove_image") == "on"
+
+            if upload and upload.filename:
+                try:
+                    pending_image_path = save_carousel_image(upload)
+                    data["image_path"] = pending_image_path
+                except ValueError as exc:
+                    errors.append(str(exc))
+            elif remove_existing:
+                data["image_path"] = None
+            else:
+                data["image_path"] = slide_dict.get("image_path")
+
+            if data.get("image_path"):
+                if not data.get("image_alt"):
+                    errors.append("Please provide alt text for the slide image.")
+            else:
+                data["image_alt"] = None
+
+            if errors:
+                if pending_image_path:
+                    remove_static_file(pending_image_path)
+                for message in errors:
+                    flash(message, "error")
+                form_snapshot = request.form.to_dict()
+                form_snapshot["is_active"] = "on" if request.form.get("is_active") == "on" else ""
+                if remove_existing:
+                    form_snapshot["remove_image"] = "on"
+                return render_template(
+                    "admin/carousel/form.html",
+                    mode="edit",
+                    form_data=form_snapshot,
+                    slide=slide_dict,
+                )
+
+            update_carousel_slide(slide_id, data)
+            old_path = slide_dict.get("image_path")
+            if pending_image_path and old_path and old_path != pending_image_path:
+                if isinstance(old_path, str) and old_path.startswith("uploads/"):
+                    remove_static_file(old_path)
+            elif remove_existing and old_path and isinstance(old_path, str) and old_path.startswith("uploads/"):
+                remove_static_file(old_path)
+
+            flash("Carousel slide updated successfully.", "success")
+            return redirect(url_for("admin_carousel_edit", slide_id=slide_id))
+
+        return render_template(
+            "admin/carousel/form.html",
+            mode="edit",
+            form_data=slide_dict,
+            slide=slide_dict,
+        )
+
+    @app.post("/admin/carousel/<int:slide_id>/delete")
+    @login_required
+    def admin_carousel_delete(slide_id: int) -> str:
+        slide = get_carousel_slide(slide_id)
+        if slide is None:
+            flash("Carousel slide not found.", "error")
+        else:
+            delete_carousel_slide(slide_id)
+            flash("Carousel slide removed.", "info")
+        return redirect(url_for("admin_carousel"))
+
     @app.route("/admin/prospectus", methods=["GET", "POST"])
     @login_required
     def admin_prospectus() -> str:
@@ -4946,7 +5413,8 @@ def create_app() -> Flask:
             if exclude_id is not None and page["id"] == exclude_id:
                 continue
 
-            if page["nav_display"] == "main":
+            is_top_level = page["nav_parent_id"] is None
+            if is_top_level:
                 choices.append(page)
             elif include_parent_id is not None and page["id"] == include_parent_id:
                 fallback_parent = page

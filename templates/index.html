@@ -7,119 +7,170 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
 {% endblock %} {% block extra_head %}
 <style>
   /* Slider Container */
+  .hero-wrapper {
+    position: relative;
+    max-width: min(100%, 1920px);
+    margin: 0 auto;
+    padding-top: clamp(0.35rem, 1.25vw, 1rem);
+  }
+
   .hero-slider {
     position: relative;
+    display: grid;
+    align-items: stretch;
     overflow: hidden;
-    max-width: min(100vw - 1rem, 1680px);
+    width: 100%;
+    min-height: clamp(420px, 55vw, 640px);
+  }
+
+  .hero-slider .slide {
+    position: relative !important;
+    grid-area: 1 / 1;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .hero-slider .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .hero-slider .slide:not(.active) {
+    transform: translateX(3%);
+  }
+
+  .hero-slide-section {
+    padding-block: clamp(0.2rem, 0.6vw, 0.7rem);
+  }
+
+  .hero-slide-inner {
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
-    padding-inline: clamp(0.75rem, 4.5vw, 3.5rem);
+  }
+
+  .slide-content {
+    width: 100%;
+    max-width: min(100%, 1920px);
+    margin: 0 auto;
+    display: block;
+  }
+
+  .hero-panel-content {
+    padding: clamp(1.25rem, 3vw, 2.75rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+  }
+
+  .hero-headline {
+    max-width: min(100%, 44rem);
+  }
+
+  .hero-body {
+    max-width: min(100%, 38rem);
+  }
+
+  .hero-image-group {
+    width: 100%;
+    margin-top: clamp(0.25rem, 1.5vw, 1.25rem);
+    margin-bottom: clamp(-2.25rem, -5vw, -1.5rem);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .hero-card-image {
+    width: 100%;
+    height: clamp(170px, 22vw, 300px);
+    object-fit: cover;
+    display: block;
   }
 
   .hero-panel {
     position: relative;
     overflow: hidden;
     z-index: 0;
+    width: 100%;
   }
 
-  .hero-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Crect fill='%232F5F41' width='1600' height='800'/%3E%3Cg fill-opacity='1'%3E%3Cpath fill='%233d7652' d='M486 705.8c-109.3-21.8-223.4-32.2-335.3-19.4C99.5 692.1 49 703 0 719.8V800h843.8c-115.9-33.2-230.8-68.1-347.6-92.2C492.8 707.1 489.4 706.5 486 705.8z'/%3E%3Cpath fill='%23498a5e' d='M1600 0H0v719.8c49-16.8 99.5-27.8 150.7-33.5c111.9-12.7 226-2.4 335.3 19.4c3.4 0.7 6.8 1.4 10.2 2c116.8 24 231.7 59 347.6 92.2H1600V0z'/%3E%3Cpath fill='%23559f6b' d='M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z'/%3E%3Cpath fill='%2361b478' d='M0 0v429.4c55.6-18.4 113.5-27.3 171.4-27.7c102.8-0.8 203.2 22.7 299.3 54.5c3 1 5.9 2 8.9 3c183.6 62 365.7 146.1 562.4 192.1c186.7 43.7 376.3 34.4 557.9-12.6V0H0z'/%3E%3Cpath fill='%236dca85' d='M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z'/%3E%3Cpath fill='%2378d894' d='M1600 0H0v136.3c62.3-20.9 127.7-27.5 192.2-19.2c93.6 12.1 180.5 47.7 263.3 89.6c2.6 1.3 5.1 2.6 7.7 3.9c158.4 81.1 319.7 170.9 500.3 223.2c210.5 61 430.8 49 636.6-16.6V0z'/%3E%3Cpath fill='%2384e3a2' d='M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z'/%3E%3Cpath fill='%2390edb0' d='M1600 0H498c118.1 85.8 243.5 164.5 386.8 216.2c191.8 69.2 400 74.7 595 21.1c40.8-11.2 81.1-25.2 120.3-41.7V0z'/%3E%3Cpath fill='%239cf8be' d='M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z'/%3E%3Cpath fill='%23a9ffcc' d='M1315.3 72.4c75.3-12.6 148.9-37.1 216.8-72.4h-723C966.8 71 1144.7 101 1315.3 72.4z'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.35;
-    pointer-events: none;
-    z-index: 0;
-  }
-
+  .hero-panel::before,
   .hero-panel::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Crect fill='transparent' width='1600' height='800'/%3E%3Cg fill-opacity='0.7'%3E%3Cpath fill='%23d5f7e5' d='M486 705.8c-109.3-21.8-223.4-32.2-335.3-19.4C99.5 692.1 49 703 0 719.8V800h843.8c-115.9-33.2-230.8-68.1-347.6-92.2C492.8 707.1 489.4 706.5 486 705.8z'/%3E%3Cpath fill='%23c4f0d9' d='M1600 0H0v719.8c49-16.8 99.5-27.8 150.7-33.5c111.9-12.7 226-2.4 335.3 19.4c3.4 0.7 6.8 1.4 10.2 2c116.8 24 231.7 59 347.6 92.2H1600V0z'/%3E%3Cpath fill='%23b2e9cd' d='M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z'/%3E%3Cpath fill='%23a1e2c1' d='M0 0v429.4c55.6-18.4 113.5-27.3 171.4-27.7c102.8-0.8 203.2 22.7 299.3 54.5c3 1 5.9 2 8.9 3c183.6 62 365.7 146.1 562.4 192.1c186.7 43.7 376.3 34.4 557.9-12.6V0H0z'/%3E%3Cpath fill='%238fdbb4' d='M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z'/%3E%3Cpath fill='%237ed4a8' d='M1600 0H0v136.3c62.3-20.9 127.7-27.5 192.2-19.2c93.6 12.1 180.5 47.7 263.3 89.6c2.6 1.3 5.1 2.6 7.7 3.9c158.4 81.1 319.7 170.9 500.3 223.2c210.5 61 430.8 49 636.6-16.6V0z'/%3E%3Cpath fill='%236ccc9b' d='M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z'/%3E%3Cpath fill='%235bc58f' d='M1600 0H498c118.1 85.8 243.5 164.5 386.8 216.2c191.8 69.2 400 74.7 595 21.1c40.8-11.2 81.1-25.2 120.3-41.7V0z'/%3E%3Cpath fill='%2349bd82' d='M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z'/%3E%3Cpath fill='%2338b676' d='M1315.3 72.4c75.3-12.6 148.9-37.1 216.8-72.4h-723C966.8 71 1144.7 101 1315.3 72.4z'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.35;
-    mix-blend-mode: screen;
+    border-radius: 999px;
+    opacity: 0.6;
     pointer-events: none;
-    z-index: 0;
+    transition: opacity 0.3s ease;
   }
 
-  .hero-underline {
-    position: relative;
-    display: inline-block;
-    z-index: 1;
-    padding-inline: 0.2rem;
+  .hero-panel::before {
+    width: clamp(180px, 26vw, 360px);
+    height: clamp(180px, 26vw, 360px);
+    top: -18%;
+    right: -18%;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.32),
+      rgba(255, 255, 255, 0)
+    );
+    filter: blur(0.5px);
   }
 
-  .hero-underline::after {
-    content: "";
-    position: absolute;
-    left: -0.15rem;
-    bottom: -1.8rem;
-    width: calc(100% + 0.3rem);
-    height: 0.7em;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1418 125'%3E%3Cpath d='M1412.29 72.17c-11.04-5.78-20.07-14.33-85.46-25.24-22.37-3.63-44.69-7.56-67.07-11.04-167.11-22.06-181.65-21.24-304.94-30.56C888.78 1.39 822.57 1.1 756.44 0c-46.63-.11-93.27 1.56-139.89 2.5C365.5 13.55 452.86 7.68 277.94 23.15 202.57 33.32 127.38 45.01 52.07 55.69c-11.23 2.41-22.63 4.17-33.71 7.22C6.1 66.33 5.64 66.19 3.89 67.79c-7.99 5.78-2.98 20.14 8.72 17.5 33.99-9.47 32.28-8.57 178.06-29.66 4.26 4.48 7.29 3.38 18.42 3.11 13.19-.32 26.38-.53 39.56-1.12 53.51-3.81 106.88-9.62 160.36-13.95 18.41-1.3 36.8-3.12 55.21-4.7 23.21-1.16 46.43-2.29 69.65-3.4 120.28-2.16 85.46-3.13 234.65-1.52 23.42.99 1.57-.18 125.72 6.9 96.61 8.88 200.92 27.94 295.42 46.12 40.87 7.91 116.67 23.2 156.31 36.78 3.81 1.05 8.28-.27 10.51-3.58 3.17-3.72 2.66-9.7-.78-13.13-3.25-3.12-8.14-3.44-12.18-5.08-17.89-5.85-44.19-12.09-63.67-16.56l26.16 3.28c23.02 3.13 46.28 3.92 69.34 6.75 10.8.96 25.43 1.81 34.34-4.39 2.26-1.54 4.86-2.75 6.21-5.27 2.76-4.59 1.13-11.06-3.59-13.68ZM925.4 23.77c37.64 1.4 153.99 10.85 196.64 14.94 45.95 5.51 91.89 11.03 137.76 17.19 24.25 4.77 74.13 11.21 101.72 18.14-11.87-1.15-23.77-1.97-35.65-3.06-133.46-15.9-266.8-33.02-400.47-47.21Z' fill='%23C59D6F'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.85;
-    z-index: -1;
+  .hero-panel::after {
+    width: clamp(200px, 30vw, 420px);
+    height: clamp(200px, 30vw, 420px);
+    bottom: -28%;
+    left: -18%;
+    background: radial-gradient(
+      circle at center,
+      rgba(186, 230, 253, 0.3),
+      rgba(13, 148, 136, 0)
+    );
+    filter: blur(6px);
   }
 
-  .slide {
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    position: absolute;
-    inset: 0;
-    transform: translateX(20px);
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-  }
-
-  .slide.active {
-    opacity: 1;
-    transform: translateX(0);
-    position: relative;
-  }
-
-  /* Navigation Arrows */
   .slider-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
-    color: rgb(56 121 81 / var(--tw-text-opacity, 1));
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
     cursor: pointer;
-    transition: 0.3s;
+    transition: transform 0.3s ease, background-color 0.3s ease;
     z-index: 20;
   }
 
   .slider-nav:hover {
-    background: #fff;
-    transform: translateY(-50%) scale(1.1);
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-50%) scale(1.08);
   }
 
-  /* .slider-nav.prev {
-        left: 15px;
-    }
+  .slider-nav.prev {
+    left: 20px;
+  }
 
-    .slider-nav.next {
-        right: 15px;
-    } */
+  .slider-nav.next {
+    right: 20px;
+  }
 
-  /* Dots */
   .slider-dots {
     position: absolute;
     bottom: 15%;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center;
     gap: 10px;
     z-index: 20;
   }
@@ -127,19 +178,26 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
   .dot {
     width: 12px;
     height: 12px;
-    background: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.45);
+    transition: transform 0.3s ease, background-color 0.3s ease;
   }
 
   .dot.active {
-    background: #fff;
+    background: #ffffff;
     transform: scale(1.3);
   }
 
   /* Mobile Responsive Styles */
   @media (max-width: 768px) {
+    .hero-slider {
+      min-height: clamp(360px, 100vw, 520px);
+    }
+
+    .hero-slider .slide:not(.active) {
+      transform: translateX(0);
+    }
+
     .slide {
       min-height: 400px;
     }
@@ -174,6 +232,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
 
     .hero-slider {
       padding-inline: 1rem;
+      padding-block: 1.5rem;
     }
 
     .hero-panel::before,
@@ -181,8 +240,22 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       opacity: 0.35;
     }
 
+    .hero-slider {
+      min-height: clamp(320px, 120vw, 480px);
+    }
+
     .hero-underline::after {
       bottom: -1.2rem;
+    }
+
+    .hero-image-group {
+      margin-inline: -0.5rem;
+      margin-bottom: -1rem;
+      border-radius: 0.75rem;
+    }
+
+    .hero-card-image {
+      height: clamp(160px, 56vw, 260px);
     }
   }
 </style>
@@ -190,265 +263,100 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
 <!-- Navigation -->
 
 <!-- Hero Slider -->
-<div class="hero-slider mx-auto">
-  <!-- Slide 1: British STEM College in London -->
-  <div class="slide active">
-    <div class="slide-content">
-      <section class="py-8 md:py-20">
-        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
-          <div
-            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
-          >
+{% set slides = carousel_slides or [] %}
+<div class="hero-wrapper px-4 md:px-8">
+  <div class="hero-slider mx-auto w-full">
+    {% if slides %} {% for slide in slides %}
+    <div class="slide {% if loop.first %}active{% endif %}">
+      <div class="slide-content mx-auto">
+        <section class="hero-slide-section">
+          <div class="hero-slide-inner w-full">
             <div
-              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
+              class="hero-panel w-full relative bg-primary rounded-2xl overflow-hidden shadow-xl"
             >
-              <div
-                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
-              >
+              <div class="hero-panel-content text-white relative z-10">
+                {% if slide.headline %}
                 <h1
-                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
+                  class="hero-headline text-2xl md:text-3xl lg:text-4xl font-bold fade-in-up"
                 >
-                  British 16–19
-                  <span class="hero-underline">STEM College</span> in
-                  <span class="hero-underline">London</span>
+                  {{ slide.headline | hero_highlight(slide.headline_highlights)
+                  }}
                 </h1>
-                <p
-                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
+                {% endif %} {% if slide.body %}
+                <div
+                  class="hero-body text-sm md:text-base lg:text-lg fade-in-up delay-1"
                 >
-                  London Maths &amp; Science College (LMSC) is a British sixth
-                  form college based in London, specialising in A Levels and
-                  BTECs in Maths, Sciences, Computing and Business. Ambitious
-                  students from the UK and overseas study in small classes with
-                  rigorous teaching and clear expectations.
-                </p>
+                  {{ slide.body | richtext }}
+                </div>
+                {% endif %} {% if slide.cta_label and slide.cta_url %} {% set
+                cta_href = slide.cta_url %} {% set cta_external =
+                cta_href.startswith('http') %}
                 <a
-                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
-                  href="{{ url_for('courses') }}"
+                  class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex items-center fade-in-up delay-2 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/60"
+                  href="{{ cta_href }}"
+                  {%
+                  if
+                  cta_external
+                  %}target="_blank"
+                  rel="noopener"
+                  {%
+                  endif
+                  %}
                 >
-                  Explore our courses
-                  <svg
-                    class="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewbox="0 0 24 24"
-                  >
-                    <path
-                      d="M9 5l7 7-7 7"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                    ></path>
-                  </svg>
+                  <div class="btn-content">
+                    <span class="text-part">{{ slide.cta_label }}</span>
+                    <span
+                      class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+                    >
+                      <svg
+                        class="h-5 w-5 text-emerald-900"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2.5"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
                 </a>
-              </div>
-              <div class="p-2 relative z-10">
-                <div class="flex justify-center md:justify-end">
+                {% endif %} {% set image_src = slide.image_path %} {% if
+                image_src %} {% if '://' not in image_src %} {% set image_src =
+                asset_url(image_src) %} {% endif %}
+                <div class="hero-image-group fade-in-up delay-3">
                   <img
-                    alt="Students"
-                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&amp;h=600&amp;fit=crop"
+                    alt="{{ slide.image_alt or 'Hero slide image' }}"
+                    class="hero-card-image"
+                    src="{{ image_src }}"
                   />
                 </div>
+                {% endif %}
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
-  </div>
-  <!-- Slide 2: British Curriculum for International Families -->
-  <div class="slide">
-    <div class="slide-content">
-      <section class="py-12 md:py-20">
-        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
-          <div
-            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
-          >
-            <div
-              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
-            >
-              <div
-                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
-              >
-                <h1
-                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
-                >
-                  Study the Full
-                  <span class="hero-underline">British Curriculum</span> from
-                  <span class="hero-underline">Anywhere</span>
-                </h1>
-                <p
-                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
-                >
-                  Follow the same British curriculum studied in leading UK
-                  schools, taught from London by specialist teachers. LMSC
-                  prepares students worldwide for British A Levels and BTEC
-                  qualifications recognised by universities across the UK and
-                  beyond.
-                </p>
-                <a
-                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
-                  href="{{ url_for('stem_pathways') }}"
-                >
-                  Learn about the British curriculum
-                  <svg
-                    class="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewbox="0 0 24 24"
-                  >
-                    <path
-                      d="M9 5l7 7-7 7"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-              <div class="p-2 relative z-10">
-                <div class="flex justify-center md:justify-end">
-                  <img
-                    alt="British Curriculum"
-                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
-                    src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&amp;h=800&amp;fit=crop"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    {% endfor %} {% else %}
+    <div class="hero-slide-inner w-full">
+      <div
+        class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center text-slate-600"
+      >
+        <h2 class="text-lg font-semibold text-slate-800">
+          Carousel content coming soon
+        </h2>
+        <p class="mt-2 text-sm text-slate-500">
+          Add slides from the admin dashboard to populate this hero section.
+        </p>
+      </div>
     </div>
+    {% endif %}
   </div>
-  <!-- Slide 3: Study Modes -->
-  <div class="slide">
-    <div class="slide-content">
-      <section class="py-12 md:py-20">
-        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
-          <div
-            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
-          >
-            <div
-              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
-            >
-              <div
-                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
-              >
-                <h1
-                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
-                >
-                  In-Person,
-                  <span class="hero-underline">Online or Hybrid</span> – You
-                  Choose
-                </h1>
-                <p
-                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
-                >
-                  Study on campus in London, fully online, or through a flexible
-                  hybrid route. Whichever study mode you choose, you follow the
-                  same British curriculum, timetable structure and assessment,
-                  with live lessons and full lesson recordings.
-                </p>
-                <a
-                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
-                  href="{{ url_for('study_options') }}"
-                >
-                  Compare study modes
-                  <svg
-                    class="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewbox="0 0 24 24"
-                  >
-                    <path
-                      d="M9 5l7 7-7 7"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-              <div class="p-2 relative z-10">
-                <div class="flex justify-center md:justify-end">
-                  <img
-                    alt="Study Modes"
-                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
-                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&amp;h=600&amp;fit=crop"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-  <!-- Slide 4: Pathways to Universities -->
-  <div class="slide">
-    <div class="slide-content">
-      <section class="py-12 md:py-20">
-        <div class="max-w-[1580px] mx-auto px-4 md:px-12">
-          <div
-            class="hero-panel relative bg-primary rounded-2xl overflow-hidden shadow-xl"
-          >
-            <div
-              class="grid md:grid-cols-2 lg:grid-cols-[1.45fr_1fr] gap-4 md:gap-10 items-center"
-            >
-              <div
-                class="p-8 md:p-16 md:py-20 lg:pr-24 text-white relative z-10"
-              >
-                <h1
-                  class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 fade-in-up"
-                >
-                  Pathways to
-                  <span class="hero-underline">Top UK Universities</span> and
-                  Careers
-                </h1>
-                <p
-                  class="text-sm md:text-base lg:text-lg mb-6 md:mb-8 fade-in-up delay-1"
-                >
-                  From subject choices to UCAS applications, LMSC helps you
-                  build the grades, skills and profile needed for competitive
-                  courses such as Medicine, Engineering, Computer Science and
-                  Business at leading universities.
-                </p>
-                <a
-                  class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
-                  href="{{ url_for('book_consultation') }}"
-                >
-                  Plan your progression
-                  <svg
-                    class="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewbox="0 0 24 24"
-                  >
-                    <path
-                      d="M9 5l7 7-7 7"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-              <div class="p-2 relative z-10">
-                <div class="flex justify-center md:justify-end">
-                  <img
-                    alt="University Pathways"
-                    class="w-full md:max-w-[85%] min-h-[300px] md:min-h-[600px] object-cover rounded-lg"
-                    src="https://images.unsplash.com/photo-1577985043696-8bd54d9f093f?w=800&amp;h=600&amp;fit=crop"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
+
   <!-- Navigation Arrows -->
   <div class="slider-nav prev" onclick="changeSlide(-1)">
     <i class="fas fa-chevron-left"></i>
@@ -794,7 +702,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       <!-- Step 1 -->
       <div class="pathway-step fade-in stagger-1">
         <div class="pathway-number">1</div>
-        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+        <div
+          class="bg-white border-2 border-primary rounded-xl p-6 shadow-md pathway-card"
+        >
           <h3 class="font-bold text-primary mb-3">Academic foundations</h3>
           <p class="text-gray-700">
             Secure strong grades in Maths, Sciences and English, with targeted
@@ -806,7 +716,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       <!-- Step 2 -->
       <div class="pathway-step fade-in stagger-2">
         <div class="pathway-number">2</div>
-        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+        <div
+          class="bg-white border-2 border-primary rounded-xl p-6 shadow-md pathway-card"
+        >
           <h3 class="font-bold text-primary mb-3">Stretch and challenge</h3>
           <p class="text-gray-700">
             Extension tasks, problem-solving and exam-style questions prepare
@@ -817,7 +729,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       <!-- Step 3 -->
       <div class="pathway-step fade-in stagger-3">
         <div class="pathway-number">3</div>
-        <div class="bg-white border-2 border-primary rounded-xl p-6 shadow-md">
+        <div
+          class="bg-white border-2 border-primary rounded-xl p-6 shadow-md pathway-card"
+        >
           <h3 class="font-bold text-primary mb-3">Guidance and applications</h3>
           <p class="text-gray-700">
             Support with subject choices, UCAS applications, personal statements
@@ -829,7 +743,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       <div class="pathway-step fade-in stagger-4">
         <div class="pathway-number">4</div>
         <div
-          class="bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 shadow-md"
+          class="bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 shadow-md pathway-card pathway-card--highlight"
         >
           <h3 class="font-bold mb-3">
             Progression to university or professional routes
@@ -1047,7 +961,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
         <!-- BTN 1 -->
         <a
-          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex"
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex items-center"
           href="{{ url_for('book_consultation') }}"
         >
           <div class="btn-content">

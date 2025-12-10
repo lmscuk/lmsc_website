@@ -230,6 +230,32 @@
                       </li>
                       <li>
                         <a
+                          href="{{ url_for('admin_carousel') }}"
+                          class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_carousel') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                        >
+                          <span
+                            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              aria-hidden="true"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                d="M4 7h16M7 12h10M5 17h14"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          Hero Carousel
+                        </a>
+                      </li>
+                      <li>
+                        <a
                           href="{{ url_for('admin_courses') }}"
                           class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_courses') and request.endpoint != 'admin_courses_new' %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
                         >
@@ -598,6 +624,32 @@
                       </svg>
                     </span>
                     Blog Articles
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ url_for('admin_carousel') }}"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm/6 transition {% if request.endpoint and request.endpoint.startswith('admin_carousel') %}bg-primary/10 text-primary{% else %}text-slate-600 hover:bg-primary/10 hover:text-primary{% endif %}"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-slate-200 group-hover:border-primary"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          d="M4 7h16M7 12h10M5 17h14"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    Hero Carousel
                   </a>
                 </li>
                 <li>
