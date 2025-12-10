@@ -275,6 +275,12 @@ const motionPresets = {
         },
         duration: 0.7,
     },
+    fadeOpacity: {
+        keyframes: {
+            opacity: [0, 1],
+        },
+        duration: 0.55,
+    },
     fadeUp: {
         keyframes: {
             opacity: [0, 1],
@@ -306,6 +312,9 @@ const motionPresets = {
 };
 
 const getMotionPreset = (element) => {
+    if (element.classList.contains("fade-opacity") || element.hasAttribute("data-tilt-card")) {
+        return motionPresets.fadeOpacity;
+    }
     if (element.classList.contains("slide-in-left")) {
         return motionPresets.slideLeft;
     }
@@ -315,7 +324,7 @@ const getMotionPreset = (element) => {
     if (element.classList.contains("scale-in")) {
         return motionPresets.scaleIn;
     }
-    if (element.classList.contains("fade-up")) {
+    if (element.classList.contains("fade-up") || element.classList.contains("fade-in-up")) {
         return motionPresets.fadeUp;
     }
     return motionPresets.fadeIn;
@@ -354,15 +363,57 @@ const getMotionDelay = (element) => {
 
 const signalMotionReady = (element) => {
     element.classList.add("motion-ready");
+    element.classList.remove("fade-in", "fade-up", "fade-in-up", "fade-opacity", "slide-in-left", "slide-in-right", "scale-in");
     element.style.opacity = "";
     element.style.transform = "";
+    element.style.willChange = "";
     element.dispatchEvent(new CustomEvent("motion:ready"));
+};
+
+const setInitialMotionState = (element) => {
+    if (element.dataset.motionInitialized === "true") {
+        return;
+    }
+
+    element.classList.add("motion-no-transition");
+
+    const preset = getMotionPreset(element);
+    const { opacity, transform } = preset.keyframes;
+
+    if (opacity !== undefined) {
+        const initialOpacity = Array.isArray(opacity) ? opacity[0] : opacity;
+        if (initialOpacity !== undefined) {
+            element.style.opacity = initialOpacity;
+        }
+    }
+
+    if (transform !== undefined) {
+        const initialTransform = Array.isArray(transform) ? transform[0] : transform;
+        if (initialTransform !== undefined) {
+            element.style.transform = initialTransform;
+        }
+    }
+
+    element.style.willChange = "opacity, transform";
+    element.dataset.motionInitialized = "true";
+
+    const releaseTransitions = () => {
+        element.classList.remove("motion-no-transition");
+    };
+
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(releaseTransitions);
+    } else {
+        setTimeout(releaseTransitions, 0);
+    }
 };
 
 const setupViewportMotion = () => {
     const motionSelectors = [
         ".fade-in",
+        ".fade-in-up",
         ".fade-up",
+        ".fade-opacity",
         ".slide-in-left",
         ".slide-in-right",
         ".scale-in",
@@ -375,7 +426,12 @@ const setupViewportMotion = () => {
     }
 
     if (prefersReducedMotionQuery.matches) {
-        motionTargets.forEach(signalMotionReady);
+        motionTargets.forEach((element) => {
+            element.style.opacity = "";
+            element.style.transform = "";
+            element.style.willChange = "";
+            signalMotionReady(element);
+        });
         return;
     }
 
@@ -416,30 +472,33 @@ const setupViewportMotion = () => {
     );
 
     motionTargets.forEach((element) => {
+        setInitialMotionState(element);
         observer.observe(element);
     });
 };
 
-const enableTilt = (element, { maxTilt = 8, scale = 1.02 } = {}) => {
-    if (!element || tiltRegistry.has(element)) {
+const enableTilt = (element, { maxTilt = 6, scale = 1.02 } = {}) => {
+    if (
+        !element ||
+        tiltRegistry.has(element) ||
+        prefersReducedMotionQuery.matches ||
+        !pointerFineQuery.matches
+    ) {
         return;
     }
 
     tiltRegistry.add(element);
     element.classList.add("tilt-enabled");
 
-    let rafId = 0;
+    if (!/transform/.test(element.style.transition || "")) {
+        const existingTransition = element.style.transition?.trim();
+        element.style.transition = existingTransition
+            ? `${existingTransition}, transform 0.18s ease-out`
+            : "transform 0.18s ease-out";
+    }
 
     const clamp = (value, limit) => {
         return Math.max(Math.min(value, limit), -limit);
-    };
-
-    const resetTransform = () => {
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => {
-            element.classList.remove("is-interacting");
-            element.style.transform = "";
-        });
     };
 
     const updateTransform = (event) => {
@@ -453,86 +512,92 @@ const enableTilt = (element, { maxTilt = 8, scale = 1.02 } = {}) => {
         const rotateX = clamp(-relativeY * maxTilt * 2, maxTilt);
         const rotateY = clamp(relativeX * maxTilt * 2, maxTilt);
 
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => {
-            element.classList.add("is-interacting");
-            element.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-        });
+        element.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
     };
 
-    element.addEventListener("pointerenter", updateTransform);
+    const resetTransform = () => {
+        element.classList.remove("is-interacting");
+        element.style.transform = "";
+    };
+
+    element.addEventListener("pointerenter", (event) => {
+        element.classList.add("is-interacting");
+        updateTransform(event);
+    });
+
     element.addEventListener("pointermove", updateTransform);
+
     ["pointerleave", "pointercancel", "pointerup"].forEach((eventName) => {
         element.addEventListener(eventName, resetTransform);
     });
-
-    resetTransform();
 };
 
 const registerTiltTarget = (element, options) => {
-    if (!pointerFineQuery.matches || !element) {
+    if (!element) {
         return;
     }
 
-    const activateTilt = () => enableTilt(element, options);
-    const participatesInMotion = element.matches(
-        ".fade-in, .fade-up, .slide-in-left, .slide-in-right, .scale-in"
-    );
-
-    if (
-        element.classList.contains("motion-ready") ||
-        prefersReducedMotionQuery.matches ||
-        !participatesInMotion
-    ) {
-        activateTilt();
-    } else {
-        element.addEventListener("motion:ready", activateTilt, { once: true });
-    }
+    enableTilt(element, options);
 };
 
 const setupTiltTargets = () => {
-    if (!pointerFineQuery.matches) {
-        return;
-    }
-
-    const pageSlug = document.body?.dataset?.pageSlug || "";
-    if (pageSlug === "contact") {
-        return;
-    }
-
-    const cardSelectors = [
-        ".scale-in",
-        ".pricing-card",
-        ".value-card",
-        "[data-tilt-card]",
-        ".tilt-card",
-    ];
-
-    document.querySelectorAll(cardSelectors.join(",")).forEach((card) => {
-        registerTiltTarget(card, { maxTilt: 6, scale: 1.02 });
-        const imageCandidates = card.querySelectorAll("img");
-        imageCandidates.forEach((image) => {
-            if (
-                image.dataset.tiltIgnore === "true" ||
-                (!image.dataset.tiltImage &&
-                    !image.classList.contains("object-cover") &&
-                    !image.classList.contains("rounded") &&
-                    !image.classList.contains("rounded-xl") &&
-                    !image.closest("figure"))
-            ) {
-                return;
-            }
-            registerTiltTarget(image, { maxTilt: 4, scale: 1.01 });
-        });
-    });
-
-    document.querySelectorAll("[data-tilt], [data-tilt-image], .tilt-image").forEach((element) => {
-        registerTiltTarget(element, { maxTilt: 5, scale: 1.02 });
+    const cards = document.querySelectorAll("[data-tilt-card]");
+    cards.forEach((card) => {
+        const maxTilt = Number.parseFloat(card.dataset.tiltMax ?? "") || 6;
+        const scale = Number.parseFloat(card.dataset.tiltScale ?? "") || 1.02;
+        registerTiltTarget(card, { maxTilt, scale });
     });
 };
 
-setupTiltTargets();
+const relatedCourseSelects = document.querySelectorAll("[data-related-course-select]");
+
+if (relatedCourseSelects.length > 0) {
+    const slugInput = document.querySelector('input[name="slug"]');
+    let currentSlug = slugInput ? slugInput.value.trim() : "";
+
+    const updateSelections = () => {
+        const activeValues = new Set();
+
+        relatedCourseSelects.forEach((select) => {
+            const value = select.value.trim();
+            if (value) {
+                activeValues.add(value);
+            }
+        });
+
+        relatedCourseSelects.forEach((select) => {
+            const thisValue = select.value.trim();
+
+            Array.from(select.options).forEach((option) => {
+                if (!option.value) {
+                    option.disabled = false;
+                    return;
+                }
+
+                const isSelf = currentSlug && option.value === currentSlug;
+                const isSelectedElsewhere = option.value !== thisValue && activeValues.has(option.value);
+
+                option.disabled = isSelf || isSelectedElsewhere;
+            });
+        });
+    };
+
+    relatedCourseSelects.forEach((select) => {
+        select.addEventListener("change", updateSelections);
+    });
+
+    if (slugInput) {
+        slugInput.addEventListener("input", () => {
+            currentSlug = slugInput.value.trim();
+            updateSelections();
+        });
+    }
+
+    updateSelections();
+}
+
 setupViewportMotion();
+setupTiltTargets();
 
 window.toggleSubmenu = toggleSubmenu;
 window.setImage = setImage;

@@ -58,13 +58,7 @@ endblock %} {% block meta_description %}
           combines academic rigour with clear structure and personalised
           support.
         </p>
-        <p class="text-gray-700 mb-6 leading-relaxed">
-          Whether students study on campus in London, fully online or through a
-          hybrid route, our mission remains the same:
-          <strong
-            >real learning, real progress, real options for the future</strong
-          >.
-        </p>
+
         {{ responsive_image( 'Images/Image 9.jpg', 'Teacher supporting a student
         with STEM work', img_class='rounded h-[300px] w-full object-cover',
         picture_class='block' ) }}
@@ -522,6 +516,7 @@ endblock %} {% block meta_description %}
   </div>
 </section>
 <!-- Section 8: Next Steps -->
+
 <section class="py-20 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
   <div class="container mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-20 items-center">
@@ -534,7 +529,7 @@ endblock %} {% block meta_description %}
           </span>
         </div>
         <h2 class="font-bold text-primary mb-4">
-          See if our mission &amp; values align with your goals
+          See if our mission & values align with your goals
         </h2>
         <p class="text-opacity-90 mb-8 leading-relaxed">
           Choosing a college is about more than courses and timetables — it's
@@ -542,10 +537,10 @@ endblock %} {% block meta_description %}
           and values resonate with you, we'd be happy to discuss whether our
           programmes are a good fit for your situation.
         </p>
+
         <!-- BTN 1 -->
-        <a
+        <button
           class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
-          href="{{ url_for('book_consultation') }}"
         >
           <div class="btn-content">
             <span class="text-part">Book a Consultation</span>
@@ -553,22 +548,22 @@ endblock %} {% block meta_description %}
               class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
             >
               <svg
+                xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 text-emerald-900"
                 fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
-                viewbox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2.5"
-                ></path>
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </span>
           </div>
-        </a>
+        </button>
       </div>
       <!-- Right Side - Image with Chat Bubbles -->
       <div class="relative flex items-center justify-end scale-in">
@@ -578,11 +573,13 @@ endblock %} {% block meta_description %}
           <div
             class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
           >
-            {{ responsive_image( 'Images/user-image.png', 'Person using a phone
-            while considering study options', img_class='w-full h-full
-            object-cover object-center', picture_class='block w-full h-full' )
-            }}
+            <img
+              src="assets/Images/user-image.png"
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+            />
           </div>
+
           <!-- Chat Bubbles Overlay -->
           <div class="chat-block">
             <!-- User Message -->
@@ -593,13 +590,12 @@ endblock %} {% block meta_description %}
                 <div class="text">I need help with my budget.</div>
               </div>
             </div>
+
             <!-- AI Response -->
             <div class="ai-message chat-bubble-ai">
               <div class="ai-avatar-bubble">
-                <svg fill="currentColor" viewbox="0 0 24 24">
-                  <path
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="ai-message-bubble">

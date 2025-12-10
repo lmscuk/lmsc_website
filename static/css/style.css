@@ -764,34 +764,51 @@ tbody tr:last-child td {
 }
 
 /* animation css */
-.fade-in {
+html.js-motion .fade-in,
+html.js-motion .fade-in,
+html.js-motion .fade-in-up,
+html.js-motion .fade-up,
+html.js-motion .fade-opacity,
+html.js-motion .slide-in-left,
+html.js-motion .slide-in-right,
+html.js-motion .scale-in {
+  will-change: opacity, transform;
+}
+
+html.js-motion .fade-in {
   opacity: 0;
   transform: translateY(30px);
-  will-change: opacity, transform;
 }
 
-.fade-up {
+html.js-motion .fade-in-up {
+  opacity: 0;
+  transform: translateY(45px);
+}
+
+html.js-motion .fade-up {
   opacity: 0;
   transform: translateX(30px);
-  will-change: opacity, transform;
 }
 
-.slide-in-left {
+html.js-motion .fade-opacity {
+  opacity: 0;
+  transform: none;
+  will-change: opacity;
+}
+
+html.js-motion .slide-in-left {
   opacity: 0;
   transform: translateX(-50px);
-  will-change: opacity, transform;
 }
 
-.slide-in-right {
+html.js-motion .slide-in-right {
   opacity: 0;
   transform: translateX(50px);
-  will-change: opacity, transform;
 }
 
-.scale-in {
+html.js-motion .scale-in {
   opacity: 0;
   transform: scale(0.9);
-  will-change: opacity, transform;
 }
 
 .stagger-1 {
@@ -818,23 +835,25 @@ tbody tr:last-child td {
   transition-delay: 0.6s;
 }
 
-.value-card {
-  transition: all 0.3s ease;
+.card-online-tilt {
+  background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
 }
 
-.value-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(56, 121, 81, 0.15);
+.card-hybrid-tilt {
+  background: linear-gradient(135deg, #ecfdf5 0%, #eef8ff 100%);
 }
 
 .motion-ready {
   opacity: 1 !important;
 }
 
+.motion-no-transition {
+  transition: none !important;
+}
+
 .tilt-enabled {
   transform-origin: center;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -847,7 +866,9 @@ tbody tr:last-child td {
   .fade-up,
   .slide-in-left,
   .slide-in-right,
-  .scale-in {
+  .scale-in,
+  .card-hover-lift,
+  .card-hover-lift:hover {
     opacity: 1 !important;
     transform: none !important;
   }

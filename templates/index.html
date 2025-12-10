@@ -221,8 +221,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                   students from the UK and overseas study in small classes with
                   rigorous teaching and clear expectations.
                 </p>
-                <button
+                <a
                   class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                  href="{{ url_for('courses') }}"
                 >
                   Explore our courses
                   <svg
@@ -238,7 +239,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                       stroke-width="2"
                     ></path>
                   </svg>
-                </button>
+                </a>
               </div>
               <div class="p-2 relative z-10">
                 <div class="flex justify-center md:justify-end">
@@ -285,8 +286,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                   qualifications recognised by universities across the UK and
                   beyond.
                 </p>
-                <button
+                <a
                   class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                  href="{{ url_for('stem_pathways') }}"
                 >
                   Learn about the British curriculum
                   <svg
@@ -302,7 +304,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                       stroke-width="2"
                     ></path>
                   </svg>
-                </button>
+                </a>
               </div>
               <div class="p-2 relative z-10">
                 <div class="flex justify-center md:justify-end">
@@ -348,8 +350,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                   same British curriculum, timetable structure and assessment,
                   with live lessons and full lesson recordings.
                 </p>
-                <button
+                <a
                   class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                  href="{{ url_for('study_options') }}"
                 >
                   Compare study modes
                   <svg
@@ -365,7 +368,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                       stroke-width="2"
                     ></path>
                   </svg>
-                </button>
+                </a>
               </div>
               <div class="p-2 relative z-10">
                 <div class="flex justify-center md:justify-end">
@@ -411,8 +414,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                   courses such as Medicine, Engineering, Computer Science and
                   Business at leading universities.
                 </p>
-                <button
+                <a
                   class="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-sm md:text-lg transition inline-flex items-center gap-2 fade-in-up delay-2 hover:shadow-lg hover:scale-105"
+                  href="{{ url_for('book_consultation') }}"
                 >
                   Plan your progression
                   <svg
@@ -428,7 +432,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
                       stroke-width="2"
                     ></path>
                   </svg>
-                </button>
+                </a>
               </div>
               <div class="p-2 relative z-10">
                 <div class="flex justify-center md:justify-end">
@@ -546,19 +550,13 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
             Computing · Business · Health &amp; Social Care
           </p>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-gray-200">
-          <h3 class="font-bold text-primary mb-3">
-            Professional &amp; Exam Services
-          </h3>
-          <p class="text-gray-600 text-sm">
-            If you want to mention AAT / Pearson VUE here later
-          </p>
-        </div>
-        <button
-          class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+
+        <a
+          class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold inline-flex justify-center"
+          href="{{ url_for('courses') }}"
         >
           View all A Level &amp; BTEC courses
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -574,7 +572,10 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       aligned to the same British curriculum and high expectations.
     </p>
     <div class="grid md:grid-cols-3 gap-8 mb-12">
-      <div class="bg-blue-50 p-6 shadow rounded-xl fade-in stagger-1">
+      <div
+        class="bg-blue-50 p-6 shadow rounded-xl fade-opacity stagger-1"
+        data-tilt-card
+      >
         <div class="mb-4">
           <img
             alt=""
@@ -595,7 +596,10 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           <li>✓ In-person mocks, revision sessions and mentoring</li>
         </ul>
       </div>
-      <div class="bg-indigo-50 p-6 shadow rounded-xl fade-in stagger-2">
+      <div
+        class="card-online-tilt p-6 shadow rounded-xl fade-opacity stagger-2"
+        data-tilt-card
+      >
         <div class="mb-4">
           <img
             alt=""
@@ -616,7 +620,10 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           <li>✓ Homework, assessments and feedback via online platform</li>
         </ul>
       </div>
-      <div class="bg-blue-100 p-6 shadow rounded-xl fade-in stagger-3">
+      <div
+        class="card-hybrid-tilt p-6 shadow rounded-xl fade-opacity stagger-3"
+        data-tilt-card
+      >
         <div class="mb-4">
           <img
             alt=""
@@ -639,11 +646,12 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       </div>
     </div>
     <div class="text-center">
-      <button
-        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+      <a
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold inline-flex items-center justify-center"
+        href="{{ url_for('study_options') }}"
       >
         Compare study modes
-      </button>
+      </a>
     </div>
   </div>
 </section>
@@ -661,7 +669,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
     </p>
     <div class="grid md:grid-cols-3 gap-8">
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-1"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -677,7 +686,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
       </div>
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-2"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -694,7 +704,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
       </div>
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-1"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-3"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -711,7 +722,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
       </div>
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-4"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -729,7 +741,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
       </div>
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-5"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -747,7 +760,8 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
         </p>
       </div>
       <div
-        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-in stagger-2"
+        class="bg-white shadow p-6 rounded-xl border border-gray-200 fade-opacity stagger-6"
+        data-tilt-card
       >
         <div class="mb-4">
           <img
@@ -829,11 +843,12 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
       </div>
     </div>
     <div class="text-center mt-12">
-      <button
-        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
+      <a
+        class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold inline-flex items-center justify-center"
+        href="{{ url_for('book_consultation') }}"
       >
         Talk to us about your progression plan
-      </button>
+      </a>
     </div>
   </div>
 </section>
@@ -878,21 +893,6 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
             class="img-fluid rounded-lg"
             src="{{ url_for('static', filename='Images/Image 10.jpg') }}"
           />
-        </div>
-        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
-          <p class="font-semibold text-primary">
-            British curriculum, taught from London
-          </p>
-        </div>
-        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
-          <p class="font-semibold text-primary">
-            Flexible study for international time zones
-          </p>
-        </div>
-        <div class="bg-white p-6 rounded-xl border-l-4 border-primary">
-          <p class="font-semibold text-primary">
-            Advice on UK applications and entry routes
-          </p>
         </div>
       </div>
     </div>
@@ -1046,8 +1046,9 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
           plan the right pathway.
         </p>
         <!-- BTN 1 -->
-        <button
-          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden"
+        <a
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex"
+          href="{{ url_for('book_consultation') }}"
         >
           <div class="btn-content">
             <span class="text-part">Book a Consultation</span>
@@ -1070,7 +1071,7 @@ British 16–19 STEM College in London{% endblock %} {% block meta_description %
               </svg>
             </span>
           </div>
-        </button>
+        </a>
       </div>
       <!-- Right Side - Image with Chat Bubbles -->
       <div class="relative flex items-center justify-end scale-in stagger-2">

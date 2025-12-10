@@ -2034,6 +2034,7 @@ def create_app() -> Flask:
                 "slug": slug_value,
                 "title": title_value,
             })
+        options.sort(key=lambda option: option["title"].casefold())
         return options
 
     def fetch_course_stats() -> dict[str, Any]:
