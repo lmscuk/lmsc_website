@@ -1044,7 +1044,7 @@ DEFAULT_CAROUSEL_SLIDES: list[dict[str, Any]] = [
         ),
         "cta_label": "Explore our courses",
         "cta_url": "/courses",
-        "image_path": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+        "image_path": "Images/Image 1.jpg",
         "image_alt": "Students studying together",
         "display_order": 1,
         "is_active": 1,
@@ -1058,7 +1058,7 @@ DEFAULT_CAROUSEL_SLIDES: list[dict[str, Any]] = [
         ),
         "cta_label": "Learn about the British curriculum",
         "cta_url": "/stem-pathways",
-        "image_path": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&h=800&fit=crop",
+        "image_path": "Images/Image 2.jpg",
         "image_alt": "Students attending an online lesson",
         "display_order": 2,
         "is_active": 1,
@@ -1072,7 +1072,7 @@ DEFAULT_CAROUSEL_SLIDES: list[dict[str, Any]] = [
         ),
         "cta_label": "Compare study modes",
         "cta_url": "/study-options",
-        "image_path": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop",
+        "image_path": "Images/Image 3.jpg",
         "image_alt": "Students collaborating during a lesson",
         "display_order": 3,
         "is_active": 1,
@@ -1462,7 +1462,12 @@ def create_app() -> Flask:
             if escaped_phrase not in highlighted:
                 continue
             replacement = Markup(
-                f"<span class=\"hero-underline\">{escaped_phrase}</span>"
+                "<span class=\"hero-underline\" data-hero-underline>"
+                f"<span class=\"hero-underline__text\">{escaped_phrase}</span>"
+                "<svg class=\"hero-underline__svg\" viewBox=\"0 0 200 44\" preserveAspectRatio=\"none\" aria-hidden=\"true\">"
+                "<path class=\"hero-underline__path\" d=\"M4 28 Q 70 44 132 30 Q 178 20 196 26\" fill=\"none\" stroke-linecap=\"round\" stroke-width=\"6\"></path>"
+                "</svg>"
+                "</span>"
             )
             highlighted = Markup(highlighted.replace(escaped_phrase, replacement, 1))
 

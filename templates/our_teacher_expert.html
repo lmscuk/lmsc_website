@@ -61,7 +61,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
         <img
           alt="Teacher with students"
           class="rounded-2xl shadow-lg w-full h-96 object-cover"
-          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&amp;h=400&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/Image 4.jpg') }}"
         />
       </div>
     </div>
@@ -504,7 +504,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
           alt="Dr James Harper"
           loading="lazy"
           class="w-full h-64 object-cover"
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&amp;h=300&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/user-2.jpg') }}"
         />
         <div class="p-6">
           <h3 class="font-bold text-gray-900 mb-2">Dr James Harper</h3>
@@ -527,7 +527,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
           alt="Dr Sarah Chen"
           loading="lazy"
           class="w-full h-64 object-cover"
-          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&amp;h=300&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/user.png') }}"
         />
         <div class="p-6">
           <h3 class="font-bold text-gray-900 mb-2">Dr Sarah Chen</h3>
@@ -549,7 +549,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
           alt="Marcus Williams"
           loading="lazy"
           class="w-full h-64 object-cover"
-          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&amp;h=300&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/user-image.png') }}"
         />
         <div class="p-6">
           <h3 class="font-bold text-gray-900 mb-2">Marcus Williams</h3>
@@ -864,24 +864,62 @@ Maths & Science College{% endblock %} {% block meta_description %}
     </div>
   </div>
 </section>
-<!-- Scroll to Top Button -->
-{% endblock %}
-        <!-- Main Image Container -->
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="scale-in stagger-2">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
+        >
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          Ready to Explore LMSC?
+        </h2>
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          If you're considering a British sixth form education in London or from
+          overseas, our admissions team can help you understand your options and
+          plan the right pathway.
+        </p>
+        <a
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex items-center"
+          href="{{ url_for('book_consultation') }}"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+      <div class="relative flex items-center justify-end scale-in stagger-2">
         <div class="main-image relative w-full max-w-sm">
-          <!-- Background placeholder for the person image -->
           <div
             class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
           >
             <img
               alt="Person with phone"
-              loading="lazy"
               class="w-full h-full object-cover object-center"
-              src="https://framerusercontent.com/images/2SzQ6rrTJBxG90pWM1Es2ozqWk.png"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
             />
           </div>
-          <!-- Chat Bubbles Overlay -->
           <div class="chat-block">
-            <!-- User Message -->
             <div class="user-message chat-bubble-user">
               <div class="user-avatar"></div>
               <div class="user-message-bubble">
@@ -889,10 +927,9 @@ Maths & Science College{% endblock %} {% block meta_description %}
                 <div class="text">I need help with my budget.</div>
               </div>
             </div>
-            <!-- AI Response -->
             <div class="ai-message chat-bubble-ai">
               <div class="ai-avatar-bubble">
-                <svg fill="currentColor" viewbox="0 0 24 24">
+                <svg fill="currentColor" viewBox="0 0 24 24">
                   <path
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
@@ -914,4 +951,47 @@ Maths & Science College{% endblock %} {% block meta_description %}
 <!-- Footer -->
 
 <!-- Scroll to Top Button -->
+{% endblock %} {% block extra_scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".accordion-item > button").forEach((button) => {
+      button.setAttribute("aria-expanded", "false");
+      const indicator = button.querySelector(".faq-indicator, .text-2xl");
+      if (indicator) {
+        indicator.textContent = "+";
+      }
+    });
+  });
+
+  function toggleAccordion(button) {
+    const item = button?.closest(".accordion-item");
+    if (!item) {
+      return;
+    }
+
+    const content = item.querySelector(".accordion-content");
+    if (!content) {
+      return;
+    }
+
+    const indicator = button.querySelector(".faq-indicator, .text-2xl");
+    const isOpen = content.classList.contains("open");
+
+    if (isOpen) {
+      content.classList.remove("open");
+      content.style.maxHeight = null;
+      button.setAttribute("aria-expanded", "false");
+      if (indicator) {
+        indicator.textContent = "+";
+      }
+    } else {
+      content.classList.add("open");
+      content.style.maxHeight = `${content.scrollHeight}px`;
+      button.setAttribute("aria-expanded", "true");
+      if (indicator) {
+        indicator.textContent = "-";
+      }
+    }
+  }
+</script>
 {% endblock %}

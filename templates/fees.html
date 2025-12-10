@@ -21,11 +21,12 @@ Science College{% endblock %} {% block meta_description %}
         and international families.
       </p>
       <div class="flex flex-wrap justify-center gap-4">
-        <button
+        <a
+          href="{{ url_for('pricing') }}"
           class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all inline-flex items-center gap-2"
         >
           Download full fee schedule
-        </button>
+        </a>
         <button
           class="bg-transparent border-2 border-primary text-primary px-8 py-4 rounded-full font-medium hover:bg-primary hover:text-white"
         >
@@ -63,7 +64,7 @@ Science College{% endblock %} {% block meta_description %}
         <img
           alt="Financial clarity"
           class="rounded-2xl shadow-lg mb-6"
-          src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/shutterstock_2102451193.jpg') }}"
         />
         <div class="space-y-3">
           <div class="flex items-start gap-3">
@@ -500,7 +501,7 @@ Science College{% endblock %} {% block meta_description %}
         <img
           alt="Payment options"
           class="rounded-2xl shadow-lg"
-          src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/shutterstock_2458397799.jpg') }}"
         />
       </div>
       <div class="slide-in-right space-y-6">
@@ -740,7 +741,7 @@ Science College{% endblock %} {% block meta_description %}
         <img
           alt="International payments"
           class="rounded-2xl shadow-lg"
-          src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/shutterstock_2478347519.jpg') }}"
         />
       </div>
       <div class="slide-in-right">

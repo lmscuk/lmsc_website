@@ -57,51 +57,52 @@ const toggleSubmenu = (id) => {
 };
 
 const images = {
-    "why-lmsc": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800",
-    "stem-pathways": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800",
-    "study-options": "https://images.unsplash.com/photo-1554774853-b415df9eeb92?w=800",
-    "fees-finance": "https://images.unsplash.com/photo-1563013544-824ae1b704d3",
-    "open-events": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800",
-    prospectus: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-    "teach-stem": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800",
-    teachers: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800",
-    "evidence-teaching": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
-    "learning-support": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
-    "send-support": "https://images.unsplash.com/photo-1526925539332-aa3b66e35444?w=800",
-    "digital-learning": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800",
-    facilities: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
-    research: "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800",
-    "exam-info": "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
-    "life-lmsc": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-    "student-community": "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
-    "pastoral-care": "https://images.unsplash.com/photo-1521747116042-5a810fda9664?w=800",
-    "tutor-system": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800",
-    inclusion: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
-    sphere: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
-    faith: "https://images.unsplash.com/photo-1521747116042-5a810fda9664?w=800",
-    assemblies: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-    "summer-camps": "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
-    "online-programmes": "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800",
-    "homeschool-advice": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800",
-    "computer-req": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800",
-    "it-support": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800",
-    faqs: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-    careers: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
-    "study-guidance": "https://images.unsplash.com/photo-1513258496099-48168024aec0",
-    "exam-policies": "https://images.unsplash.com/photo-1509223197845-458d87318791",
-    "payment-plans": "https://images.unsplash.com/photo-1563013544-824ae1b704d3",
-    blog: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
-    mission: "https://images.unsplash.com/photo-1454165205744-3b78555e5572",
-    vision: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
-    principal: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
-    governance: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-    partnerships: "https://images.unsplash.com/photo-1521791136064-7986c2920216",
-    history: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-    "learning-space": "https://images.unsplash.com/photo-1509223197845-458d87318791",
-    alumni: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
-    reports: "https://images.unsplash.com/photo-1554224155-6726b3ff858f",
-    "careers-lmsc": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
-    glossary: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
+    "why-lmsc": "/static/Images/Image 8.jpg",
+    "stem-pathways": "/static/Images/Image 9.jpg",
+    "study-options": "/static/Images/Image 10.jpg",
+    "fees-finance": "/static/Images/shutterstock_2102457391.jpg",
+    "open-events": "/static/Images/Image 11.jpg",
+    prospectus: "/static/Images/shutterstock_2102451193.jpg",
+    "teach-stem": "/static/Images/shutterstock_2458397799.jpg",
+    teachers: "/static/Images/Image 12.jpg",
+    "evidence-teaching": "/static/Images/shutterstock_2478347519.jpg",
+    "learning-support": "/static/Images/shutterstock_2590377907.jpg",
+    "send-support": "/static/Images/shutterstock_2458397799.jpg",
+    "digital-learning": "/static/Images/shutterstock_2102451193.jpg",
+    facilities: "/static/Images/shutterstock_2102451331.jpg",
+    research: "/static/Images/shutterstock_2478347519.jpg",
+    "exam-info": "/static/Images/shutterstock_2590377907.jpg",
+    "life-lmsc": "/static/Images/Image 8.jpg",
+    "student-community": "/static/Images/Image 9.jpg",
+    "pastoral-care": "/static/Images/Image 10.jpg",
+    "tutor-system": "/static/Images/Image 11.jpg",
+    inclusion: "/static/Images/Image 12.jpg",
+    sphere: "/static/Images/shutterstock_2102451193.jpg",
+    faith: "/static/Images/shutterstock_2458397799.jpg",
+    assemblies: "/static/Images/Image 9.jpg",
+    "summer-camps": "/static/Images/Image 10.jpg",
+    "online-programmes": "/static/Images/Image 11.jpg",
+    "homeschool-advice": "/static/Images/Image 12.jpg",
+    "computer-req": "/static/Images/shutterstock_2102451193.jpg",
+    "it-support": "/static/Images/shutterstock_2102457391.jpg",
+    faqs: "/static/Images/shutterstock_2102451331.jpg",
+    careers: "/static/Images/Image 8.jpg",
+    "study-guidance": "/static/Images/Image 9.jpg",
+    "exam-policies": "/static/Images/shutterstock_2590377907.jpg",
+    policies: "/static/Images/shutterstock_2102451331.jpg",
+    "payment-plans": "/static/Images/shutterstock_2102457391.jpg",
+    blog: "/static/Images/Image 10.jpg",
+    mission: "/static/Images/Image 11.jpg",
+    vision: "/static/Images/Image 12.jpg",
+    principal: "/static/Images/user.png",
+    governance: "/static/Images/user-2.jpg",
+    partnerships: "/static/Images/Image 1.jpg",
+    history: "/static/Images/Image 2.jpg",
+    "learning-space": "/static/Images/Image 3.jpg",
+    alumni: "/static/Images/Image 4.jpg",
+    reports: "/static/Images/Image 5.jpg",
+    "careers-lmsc": "/static/Images/Image 6.jpg",
+    glossary: "/static/Images/Image 7.jpg",
 };
 
 const setImage = (type) => {
@@ -311,6 +312,165 @@ const motionPresets = {
     },
 };
 
+const heroUnderlineAnimations = new WeakMap();
+
+const collectHeroUnderlineTargets = (root) => {
+    const selector = "[data-hero-underline]";
+    if (!root) {
+        return [];
+    }
+
+    if (root instanceof Element && root.matches(selector)) {
+        return [root, ...root.querySelectorAll(selector)];
+    }
+
+    return Array.from(root.querySelectorAll?.(selector) ?? []);
+};
+
+const prepareHeroUnderlinePath = (path) => {
+    if (!path) {
+        return 1;
+    }
+
+    let pathLength = Number.parseFloat(path.dataset.heroPathLength ?? "");
+
+    if (!Number.isFinite(pathLength) || pathLength <= 0) {
+        try {
+            pathLength = path.getTotalLength();
+        } catch (error) {
+            console.warn("Unable to measure hero underline path length", error);
+            pathLength = path.getBBox?.().width || 1;
+        }
+        path.dataset.heroPathLength = String(pathLength);
+    }
+
+    path.style.setProperty("--path-length", pathLength);
+    path.style.strokeDasharray = pathLength;
+
+    return pathLength;
+};
+
+const playHeroUnderline = (target, { delay = 0, immediate = false } = {}) => {
+    if (!target) {
+        return;
+    }
+
+    const path = target.querySelector?.(".hero-underline__path");
+
+    if (!path) {
+        return;
+    }
+
+    const length = prepareHeroUnderlinePath(path);
+
+    if (immediate || prefersReducedMotionQuery.matches) {
+        path.style.strokeDashoffset = 0;
+        heroUnderlineAnimations.get(path)?.cancel?.();
+        heroUnderlineAnimations.delete(path);
+        return;
+    }
+
+    const activeAnimation = heroUnderlineAnimations.get(path);
+    if (activeAnimation) {
+        activeAnimation.cancel();
+        heroUnderlineAnimations.delete(path);
+    }
+
+    path.style.strokeDashoffset = length;
+
+    const animation = animate(
+        path,
+        { strokeDashoffset: [length, 0] },
+        {
+            duration: 0.85,
+            easing: defaultMotionEase,
+            delay,
+            fill: "forwards",
+        }
+    );
+
+    heroUnderlineAnimations.set(path, animation);
+
+    animation.finished
+        .catch(() => undefined)
+        .finally(() => {
+            heroUnderlineAnimations.delete(path);
+            path.style.strokeDashoffset = 0;
+        });
+};
+
+const playHeroUnderlinesInScope = (root, options = {}) => {
+    collectHeroUnderlineTargets(root).forEach((target, index) => {
+        const delay = options.immediate ? 0 : index * 0.08;
+        playHeroUnderline(target, { ...options, delay: (options.delay ?? 0) + delay });
+    });
+};
+
+const initHeroUnderlines = () => {
+    const initializeScope = (root) => {
+        collectHeroUnderlineTargets(root).forEach((target) => {
+            const path = target.querySelector?.(".hero-underline__path");
+            if (path) {
+                prepareHeroUnderlinePath(path);
+            }
+        });
+    };
+
+    initializeScope(document);
+
+    if (prefersReducedMotionQuery.matches) {
+        playHeroUnderlinesInScope(document, { immediate: true });
+    } else {
+        const activeSlide = document.querySelector(".slide.active");
+        if (activeSlide) {
+            playHeroUnderlinesInScope(activeSlide);
+        } else {
+            playHeroUnderlinesInScope(document);
+        }
+    }
+
+    document.addEventListener("hero:slidechange", (event) => {
+        const slide = event.detail?.slide;
+
+        if (prefersReducedMotionQuery.matches) {
+            playHeroUnderlinesInScope(slide ?? document, { immediate: true });
+            return;
+        }
+
+        if (slide) {
+            initializeScope(slide);
+            playHeroUnderlinesInScope(slide);
+            return;
+        }
+
+        playHeroUnderlinesInScope(document);
+    });
+
+    if (typeof prefersReducedMotionQuery.addEventListener === "function") {
+        prefersReducedMotionQuery.addEventListener("change", (event) => {
+            if (event.matches) {
+                playHeroUnderlinesInScope(document, { immediate: true });
+                return;
+            }
+            const activeSlide = document.querySelector(".slide.active");
+            if (activeSlide) {
+                playHeroUnderlinesInScope(activeSlide);
+            } else {
+                playHeroUnderlinesInScope(document);
+            }
+        });
+    }
+
+    window.playHeroUnderlines = (scope) => {
+        if (!scope) {
+            playHeroUnderlinesInScope(document, { immediate: prefersReducedMotionQuery.matches });
+            return;
+        }
+
+        playHeroUnderlinesInScope(scope, { immediate: prefersReducedMotionQuery.matches });
+    };
+};
+
 const getMotionPreset = (element) => {
     if (element.classList.contains("fade-opacity") || element.hasAttribute("data-tilt-card")) {
         return motionPresets.fadeOpacity;
@@ -420,6 +580,12 @@ const setupViewportMotion = () => {
     ];
 
     const motionTargets = document.querySelectorAll(motionSelectors.join(","));
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHeroUnderlines, { once: true });
+} else {
+    initHeroUnderlines();
+}
+
 
     if (motionTargets.length === 0) {
         return;

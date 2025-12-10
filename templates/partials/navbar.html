@@ -52,104 +52,114 @@
             <div
               class="dropdown-content absolute left-0 mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
             >
-              <div class="grid grid-cols-2 gap-6">
-                <div class="space-y-2">
-                  <a
-                    href="{{ url_for('about') }}"
-                    onmouseenter="setImage('why-lmsc')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-user px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">Why LMSC?</h4>
-                      <p class="text-xs text-gray-500">About our college</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('stem_pathways') }}"
-                    onmouseenter="setImage('stem-pathways')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-graduation-cap px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">STEM Pathways</h4>
-                      <p class="text-xs text-gray-500">
-                        A Level &amp; GCSE courses
-                      </p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('study_options') }}"
-                    onmouseenter="setImage('study-options')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">Study Options</h4>
-                      <p class="text-xs text-gray-500">
-                        Online &amp; in-person
-                      </p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('fees') }}"
-                    onmouseenter="setImage('fees-finance')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-pound-sign px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Fees &amp; Finance
-                      </h4>
-                      <p class="text-xs text-gray-500">Transparent pricing</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='open-events') }}"
-                    onmouseenter="setImage('open-events')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-calendar-alt px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">Open Events</h4>
-                      <p class="text-xs text-gray-500">Visit our college</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('prospectus') }}"
-                    onmouseenter="setImage('prospectus')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-file-pdf px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">Prospectus</h4>
-                      <p class="text-xs text-gray-500">Download our guide</p>
-                    </div>
-                  </a>
+              <div
+                class="grid lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.9fr)] gap-6 items-stretch"
+              >
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="space-y-2 flex flex-col h-full">
+                    <a
+                      href="{{ url_for('about') }}"
+                      onmouseenter="setImage('why-lmsc')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-user px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">Why LMSC?</h4>
+                        <p class="text-xs text-gray-500">About our college</p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('stem_pathways') }}"
+                      onmouseenter="setImage('stem-pathways')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-graduation-cap px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          STEM Pathways
+                        </h4>
+                        <p class="text-xs text-gray-500">
+                          A Level &amp; GCSE courses
+                        </p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('study_options') }}"
+                      onmouseenter="setImage('study-options')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-book px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Study Options
+                        </h4>
+                        <p class="text-xs text-gray-500">
+                          Online &amp; in-person
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="space-y-2 flex flex-col h-full">
+                    <a
+                      href="{{ url_for('fees') }}"
+                      onmouseenter="setImage('fees-finance')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-pound-sign px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Fees &amp; Finance
+                        </h4>
+                        <p class="text-xs text-gray-500">Transparent pricing</p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('placeholder_page', slug='open-events') }}"
+                      onmouseenter="setImage('open-events')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-calendar-alt px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">Open Events</h4>
+                        <p class="text-xs text-gray-500">Visit our college</p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('prospectus') }}"
+                      onmouseenter="setImage('prospectus')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-file-pdf px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">Prospectus</h4>
+                        <p class="text-xs text-gray-500">Download our guide</p>
+                      </div>
+                    </a>
+                  </div>
                 </div>
                 <div class="h-full">
                   <div
@@ -157,7 +167,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&amp;h=400&amp;fit=crop"
+                      src="{{ url_for('static', filename='Images/Image 8.jpg') }}"
                       alt="Study"
                       class="w-full h-full object-cover"
                     />
@@ -305,7 +315,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&amp;h=400&amp;fit=crop"
+                      src="{{ url_for('static', filename='Images/Image 9.jpg') }}"
                       alt="Teaching"
                       class="w-full h-full object-cover"
                     />
@@ -500,7 +510,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      src="{{ url_for('static', filename='Images/Image 10.jpg') }}"
                       alt="College life"
                       class="w-full h-full object-cover"
                     />
@@ -608,7 +618,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      src="{{ url_for('static', filename='Images/Image 11.jpg') }}"
                       alt="Online learning"
                       class="w-full h-full object-cover"
                     />
@@ -736,7 +746,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&amp;h=400&amp;fit=crop"
+                      src="{{ url_for('static', filename='Images/Image 12.jpg') }}"
                       alt="Support"
                       class="w-full h-full object-cover"
                     />
@@ -767,93 +777,120 @@
             <div
               class="dropdown-content absolute right-0 lg:right-auto lg:left-[30%] mt-0 w-[750px] bg-white rounded-3xl shadow-2xl p-6"
             >
-              <div class="grid grid-cols-3 gap-5 items-stretch">
-                <div class="space-y-2 flex flex-col h-full">
-                  <a
-                    href="{{ url_for('our_mission') }}"
-                    onmouseenter="setImage('mission')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-bullseye px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Our Mission &amp; Values
-                      </h4>
-                      <p class="text-xs text-gray-500">What we stand for</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='strategy-vision') }}"
-                    onmouseenter="setImage('vision')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-lightbulb px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Our Strategy &amp; Vision
-                      </h4>
-                      <p class="text-xs text-gray-500">Future goals</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='meet-the-principal') }}"
-                    onmouseenter="setImage('principal')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-user-tie px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Meet the Principal
-                      </h4>
-                      <p class="text-xs text-gray-500">Leadership welcome</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='leadership-governance') }}"
-                    onmouseenter="setImage('governance')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-users px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Leadership &amp; Governance
-                      </h4>
-                      <p class="text-xs text-gray-500">Management structure</p>
-                    </div>
-                  </a>
-                  <a
-                    href="{{ url_for('placeholder_page', slug='partnerships-outreach') }}"
-                    onmouseenter="setImage('partnerships')"
-                    class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
-                  >
-                    <div>
-                      <i
-                        class="fa fa-handshake px-2 py-2 rounded bg-gray-500 text-white"
-                      ></i>
-                    </div>
-                    <div>
-                      <h4 class="font-semibold text-gray-800">
-                        Partnerships &amp; Outreach
-                      </h4>
-                      <p class="text-xs text-gray-500">Collaborations</p>
-                    </div>
-                  </a>
+              <div
+                class="grid lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.9fr)] gap-5 items-stretch"
+              >
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="space-y-2 flex flex-col h-full">
+                    <a
+                      href="{{ url_for('our_mission') }}"
+                      onmouseenter="setImage('mission')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-bullseye px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Our Mission &amp; Values
+                        </h4>
+                        <p class="text-xs text-gray-500">What we stand for</p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('placeholder_page', slug='strategy-vision') }}"
+                      onmouseenter="setImage('vision')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-lightbulb px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Our Strategy &amp; Vision
+                        </h4>
+                        <p class="text-xs text-gray-500">Future goals</p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('placeholder_page', slug='meet-the-principal') }}"
+                      onmouseenter="setImage('principal')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-user-tie px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Meet the Principal
+                        </h4>
+                        <p class="text-xs text-gray-500">Leadership welcome</p>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="space-y-2 flex flex-col h-full">
+                    <a
+                      href="{{ url_for('placeholder_page', slug='leadership-governance') }}"
+                      onmouseenter="setImage('governance')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-users px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Leadership &amp; Governance
+                        </h4>
+                        <p class="text-xs text-gray-500">
+                          Management structure
+                        </p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('policies_page') }}"
+                      onmouseenter="setImage('policies')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-file-lines px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Policies &amp; Compliance
+                        </h4>
+                        <p class="text-xs text-gray-500">
+                          Safeguarding information
+                        </p>
+                      </div>
+                    </a>
+                    <a
+                      href="{{ url_for('placeholder_page', slug='partnerships-outreach') }}"
+                      onmouseenter="setImage('partnerships')"
+                      class="group flex items-center space-x-3 p-4 rounded-xl cursor-pointer hover:bg-gray-50"
+                    >
+                      <div>
+                        <i
+                          class="fa fa-handshake px-2 py-2 rounded bg-gray-500 text-white"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-800">
+                          Partnerships &amp; Outreach
+                        </h4>
+                        <p class="text-xs text-gray-500">Collaborations</p>
+                      </div>
+                    </a>
+                  </div>
                 </div>
                 <div class="h-full">
                   <div
@@ -861,7 +898,7 @@
                     class="w-full h-full rounded-2xl overflow-hidden transition-all"
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1454165205744-3b78555e5572"
+                      src="{{ url_for('static', filename='Images/shutterstock_2102451331.jpg') }}"
                       alt="About LMSC"
                       class="w-full h-full object-cover"
                     />

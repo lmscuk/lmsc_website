@@ -25,11 +25,11 @@ Maths & Science College{% endblock %} {% block meta_description %}
           <button
             class="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
           >
-            Explore how we teach STEM
-          </button>
-          <button
-            class="bg-secondary hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold"
-          >
+            <img
+              alt="Teacher explaining concept"
+              class="rounded-3xl shadow-lg"
+              src="{{ url_for('static', filename='Images/Image 6.jpg') }}"
+            />
             Meet our teachers
           </button>
         </div>
@@ -38,7 +38,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
         <img
           alt="Teacher at whiteboard"
           class="rounded-2xl shadow-2xl"
-          src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/Image 8.jpg') }}"
         />
       </div>
     </div>
@@ -486,7 +486,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
         <img
           alt="STEM Teaching"
           class="rounded-2xl shadow-lg"
-          src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/shutterstock_2590377907.jpg') }}"
         />
       </div>
       <div class="fade-in space-y-6">
@@ -676,7 +676,7 @@ Maths & Science College{% endblock %} {% block meta_description %}
         <img
           alt="Professional Development"
           class="rounded-2xl shadow-lg"
-          src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&amp;h=600&amp;fit=crop"
+          src="{{ url_for('static', filename='Images/shutterstock_2478347519.jpg') }}"
         />
       </div>
       <div class="fade-in">

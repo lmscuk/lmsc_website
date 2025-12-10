@@ -4,51 +4,73 @@
 </script>
 {% endif %} {% if prospectus_url %}
 <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"
+  src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 ></script>
-<script
-  src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"
-  crossorigin="anonymous"
-></script>
 <style>
-  .prospectus-flip-wrapper {
+  .prospectus-viewer-wrapper {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     transition: transform 0.2s ease, filter 0.2s ease;
     transform-origin: center top;
+    width: 100%;
   }
 
-  .prospectus-flip-wrapper.is-loading {
+  .prospectus-viewer-wrapper.is-loading {
     filter: grayscale(0.2);
   }
 
-  .prospectus-flip-root {
+  .prospectus-viewer {
     width: 100%;
-    max-width: 1100px;
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
+    touch-action: pan-y;
+  }
+
+  .prospectus-page-frame {
+    min-height: 520px;
+    border-radius: 28px;
+    background: #ffffff;
+    box-shadow: 0 24px 45px -30px rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .prospectus-page-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 28px;
+    max-height: min(85vh, 1100px);
     margin-left: auto;
     margin-right: auto;
   }
 
-  .prospectus-flip-root .page {
-    width: 100%;
-    height: 100%;
-  }
-
-  .prospectus-flip-root .page-content {
-    width: 100%;
-    height: 100%;
-  }
-
-  .prospectus-flip-placeholder {
+  .prospectus-viewer-placeholder {
     min-height: 520px;
+    border-radius: 28px;
   }
 
   @media (max-width: 768px) {
-    .prospectus-flip-placeholder {
+    .prospectus-viewer {
+      max-width: none;
+    }
+
+    .prospectus-page-frame,
+    .prospectus-viewer-placeholder {
       min-height: 420px;
+      border-radius: 22px;
+    }
+
+    .prospectus-page-image {
+      border-radius: 22px;
+      max-height: 75vh;
     }
   }
 </style>
@@ -176,31 +198,6 @@
 
 <section class="bg-white py-16">
   <div class="mx-auto max-w-6xl px-6 lg:px-8">
-    <div
-      class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
-    >
-      <div>
-        <p
-          class="text-xs font-semibold uppercase tracking-[0.35em] text-primary"
-        >
-          Interactive preview
-        </p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">
-          Browse the prospectus online
-        </h2>
-        <p class="mt-3 max-w-2xl text-sm text-slate-500">
-          Flip through the pages, zoom into areas of interest and switch to
-          full-screen for a distraction-free read.
-        </p>
-      </div>
-      {% if prospectus_url %}
-      <div
-        class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500"
-      >
-        PDF viewer &middot; Works on desktop, tablet and mobile
-      </div>
-      {% endif %}
-    </div>
     {% if prospectus_url %}
     <div
       id="prospectusViewer"
@@ -208,14 +205,8 @@
       class="rounded-3xl border border-slate-200 bg-slate-50/60 p-6 shadow-inner"
     >
       <div
-        class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+        class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end"
       >
-        <div
-          class="flex items-center gap-2 text-sm font-semibold text-slate-600"
-          data-role="page"
-        >
-          Loading prospectus...
-        </div>
         <div
           class="flex flex-wrap items-center gap-2"
           role="toolbar"
@@ -277,15 +268,15 @@
         class="mt-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow"
       >
         <div
-          class="prospectus-flip-wrapper is-loading px-4 py-6 sm:px-8"
-          data-role="flip-wrapper"
+          class="prospectus-viewer-wrapper is-loading px-4 py-6 sm:px-8"
+          data-role="viewer-wrapper"
         >
-          <div class="prospectus-flip-root" data-role="flip-root">
+          <div class="prospectus-viewer" data-role="viewer">
             <div
-              class="prospectus-flip-placeholder flex h-full w-full items-center justify-center rounded-[28px] border border-dashed border-slate-200 bg-slate-50 text-sm font-medium text-slate-500"
+              class="prospectus-viewer-placeholder flex h-full w-full items-center justify-center border border-dashed border-slate-200 bg-slate-50 text-sm font-medium text-slate-500"
               data-role="placeholder"
             >
-              Preparing interactive flipbook…
+              Preparing prospectus…
             </div>
           </div>
         </div>
@@ -314,104 +305,107 @@
   </div>
 </section>
 
-<section class="bg-slate-900 py-16 text-white">
-  <div class="mx-auto max-w-6xl px-6 lg:px-8">
-    <div class="grid gap-10 lg:grid-cols-2">
-      <div>
-        <p
-          class="text-xs font-semibold uppercase tracking-[0.4em] text-primary/60"
+<section class="py-20 px-6 bg-gradient-to-br from-[#fefffe] to-[#ecf8f4]">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+      <div class="scale-in stagger-2">
+        <span
+          class="inline-block px-4 py-2 font-bold bg-[#C5F3C5] text-lime-700 text-sm rounded-full rotate-[-8deg] mb-5"
         >
-          What&#39;s inside
-        </p>
-        <h2 class="mt-3 text-3xl font-bold">
-          Plan your path into STEM success
+          Next steps
+        </span>
+        <h2 class="text-primary font-bold text-primary mb-4">
+          Ready to Explore LMSC?
         </h2>
-        <p class="mt-4 text-sm text-slate-200">
-          The LMSC prospectus distils our approach to STEM excellence. It
-          signposts the pathways, support and expectations that help students
-          accomplish ambitious goals.
+        <p class="text-opacity-90 mb-8 leading-relaxed">
+          If you're considering a British sixth form education in London or from
+          overseas, our admissions team can help you understand your options and
+          plan the right pathway.
         </p>
+        <a
+          class="switch-btn bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 overflow-hidden inline-flex items-center"
+          href="{{ url_for('book_consultation') }}"
+        >
+          <div class="btn-content">
+            <span class="text-part">Book a Consultation</span>
+            <span
+              class="icon-part flex items-center justify-center w-8 h-8 bg-lime-300 rounded-full"
+            >
+              <svg
+                class="h-5 w-5 text-emerald-900"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </a>
       </div>
-      <div class="grid gap-4 text-sm text-slate-100">
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h3 class="text-base font-semibold text-white">
-            Curriculum breakdowns
-          </h3>
-          <p class="mt-2 text-sm text-slate-200">
-            Term-by-term outlines for Maths, Sciences, Computing and enrichment
-            so you understand exactly how we sequence mastery.
-          </p>
-        </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h3 class="text-base font-semibold text-white">
-            Wellbeing and mentoring
-          </h3>
-          <p class="mt-2 text-sm text-slate-200">
-            Learn how students benefit from one-to-one coaching, pastoral
-            support and university preparation clinics.
-          </p>
-        </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h3 class="text-base font-semibold text-white">
-            Admissions checklist
-          </h3>
-          <p class="mt-2 text-sm text-slate-200">
-            Clear application steps, key dates and entry requirements so you can
-            plan the transition with confidence.
-          </p>
+      <div class="relative flex items-center justify-end scale-in stagger-2">
+        <div class="main-image relative w-full max-w-sm">
+          <div
+            class="absolute inset-0 rounded-3xl overflow-hidden flex items-center justify-center"
+          >
+            <img
+              alt="Person with phone"
+              class="w-full h-full object-cover object-center"
+              src="{{ url_for('static', filename='Images/user-image.png') }}"
+            />
+          </div>
+          <div class="chat-block">
+            <div class="user-message chat-bubble-user">
+              <div class="user-avatar"></div>
+              <div class="user-message-bubble">
+                <div class="name">Oliver Moy</div>
+                <div class="text">I need help with my budget.</div>
+              </div>
+            </div>
+            <div class="ai-message chat-bubble-ai">
+              <div class="ai-avatar-bubble">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="ai-message-bubble">
+                <div class="name">AI Assistant</div>
+                <div class="text">
+                  Sure! Let's carefully review your income and expenses.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bg-white py-16">
-  <div
-    class="mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 text-center shadow-sm lg:px-12"
-  >
-    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-      Take the next step
-    </p>
-    <h2 class="mt-3 text-3xl font-bold text-slate-900">
-      Let&#39;s map your personalised study plan
-    </h2>
-    <p class="mt-4 text-sm text-slate-500">
-      Share your goals with our admissions team. We&#39;ll review your academic
-      profile, advise on pathways and answer curriculum questions.
-    </p>
-    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-      <a
-        href="{{ url_for('book_consultation') }}"
-        class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
-      >
-        Book your consultation
-      </a>
-      <a
-        href="mailto:info@lmsc.org.uk"
-        class="inline-flex items-center justify-center rounded-full border border-primary/30 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
-      >
-        Email the admissions team
-      </a>
-    </div>
-  </div>
-</section>
 {% endblock %} {% block extra_scripts %} {% if prospectus_url %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const viewer = document.getElementById("prospectusViewer");
-    if (
-      !viewer ||
-      typeof window.pdfjsLib === "undefined" ||
-      typeof window.St === "undefined"
-    ) {
+    if (!viewer || typeof window.pdfjsLib === "undefined") {
       return;
     }
 
     const pdfUrl = viewer.dataset.pdf;
-    const pageIndicator = viewer.querySelector('[data-role="page"]');
+    if (!pdfUrl) {
+      return;
+    }
+
     const statusText = viewer.querySelector('[data-role="status"]');
-    const flipWrapper = viewer.querySelector('[data-role="flip-wrapper"]');
-    const flipRoot = viewer.querySelector('[data-role="flip-root"]');
+    const viewerWrapper = viewer.querySelector('[data-role="viewer-wrapper"]');
+    const viewerRoot = viewer.querySelector('[data-role="viewer"]');
     const placeholder = viewer.querySelector('[data-role="placeholder"]');
     const prevBtn = viewer.querySelector('[data-action="prev"]');
     const nextBtn = viewer.querySelector('[data-action="next"]');
@@ -421,7 +415,7 @@
     const fullscreenBtn = viewer.querySelector('[data-action="fullscreen"]');
 
     const workerSrc =
-      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js";
     if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) {
       window.pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
     }
@@ -429,9 +423,15 @@
     const MIN_ZOOM = 0.8;
     const MAX_ZOOM = 1.6;
     const ZOOM_STEP = 0.12;
+    const SWIPE_THRESHOLD = 48;
 
-    let pageFlip = null;
+    let pages = [];
+    let currentPageIndex = 0;
+    let pageImage = null;
     let zoomLevel = 1;
+    let hasShownTip = false;
+    let pointerStartX = 0;
+    let pointerTracking = false;
 
     function setButtonState(button, disabled) {
       if (!button) {
@@ -443,137 +443,106 @@
     }
 
     function setLoadingMessage(message) {
-      if (pageIndicator) {
-        pageIndicator.textContent = message;
+      if (statusText) {
+        statusText.textContent = message;
       }
     }
 
     function applyZoom(reportStatus = true) {
-      if (!flipWrapper) {
+      if (!viewerWrapper) {
         return;
       }
-      flipWrapper.style.transform = `scale(${zoomLevel})`;
-      flipWrapper.style.transformOrigin = "center top";
-      setButtonState(zoomInBtn, zoomLevel >= MAX_ZOOM - 0.01);
-      setButtonState(zoomOutBtn, zoomLevel <= MIN_ZOOM + 0.01);
+
+      const noPages = pages.length === 0;
+
+      viewerWrapper.style.transform = `scale(${zoomLevel})`;
+      viewerWrapper.style.transformOrigin = "center top";
+
+      setButtonState(zoomInBtn, noPages || zoomLevel >= MAX_ZOOM - 0.01);
+      setButtonState(zoomOutBtn, noPages || zoomLevel <= MIN_ZOOM + 0.01);
+      setButtonState(zoomResetBtn, noPages || Math.abs(zoomLevel - 1) < 0.01);
+
       if (statusText && reportStatus) {
-        statusText.textContent = `Zoom ${Math.round(zoomLevel * 100)}%`;
+        const zoomMessage = `Zoom ${Math.round(zoomLevel * 100)}%`;
+        if (pages.length) {
+          const page = pages[currentPageIndex];
+          statusText.textContent = `Page ${page.number} of ${pages.length} · ${zoomMessage}`;
+        } else {
+          statusText.textContent = zoomMessage;
+        }
       }
     }
 
-    function updateNavigation() {
-      if (!pageFlip || !pageIndicator) {
+    function updatePage(reportStatus = true) {
+      if (!pageImage || !pages.length) {
         return;
       }
-      const total = pageFlip.getPageCount();
-      const currentIndex = pageFlip.getCurrentPageIndex() + 1;
-      pageIndicator.textContent =
-        total > 1 ? `Page ${currentIndex} of ${total}` : `Page ${currentIndex}`;
-      setButtonState(prevBtn, currentIndex <= 1);
-      setButtonState(nextBtn, currentIndex >= total);
-      if (statusText && !statusText.textContent) {
-        statusText.textContent =
-          "Tip: drag a corner or use the arrows to turn pages.";
+
+      const page = pages[currentPageIndex];
+      pageImage.src = page.dataUrl;
+      pageImage.alt = `Prospectus page ${page.number}`;
+      pageImage.setAttribute("data-page-number", String(page.number));
+      pageImage.loading = currentPageIndex === 0 ? "eager" : "lazy";
+
+      setButtonState(prevBtn, currentPageIndex <= 0);
+      setButtonState(nextBtn, currentPageIndex >= pages.length - 1);
+
+      if (statusText && reportStatus) {
+        let message = `Page ${page.number} of ${pages.length}`;
+        if (!hasShownTip && pages.length > 1) {
+          message += " · Use the arrows or swipe to change pages.";
+          hasShownTip = true;
+        }
+        statusText.textContent = message;
       }
     }
 
-    function enableControls() {
-      [
-        prevBtn,
-        nextBtn,
-        zoomInBtn,
-        zoomOutBtn,
-        zoomResetBtn,
-        fullscreenBtn,
-      ].forEach((btn) => setButtonState(btn, false));
-      flipWrapper?.classList.remove("is-loading");
-      applyZoom(false);
-      updateNavigation();
-    }
-
-    function buildFlipbook(pages) {
-      if (!flipRoot || !pages.length) {
+    function buildViewer(pagesData) {
+      if (!viewerRoot || !pagesData.length) {
+        setLoadingMessage(
+          "Unable to display this prospectus. Please use the download button instead."
+        );
+        viewerWrapper?.classList.remove("is-loading");
         return;
       }
-      const fragment = document.createDocumentFragment();
-      pages
-        .sort((a, b) => a.number - b.number)
-        .forEach((page, index) => {
-          const pageElement = document.createElement("div");
-          pageElement.className = "page";
-          pageElement.dataset.density =
-            index === 0 || index === pages.length - 1 ? "hard" : "soft";
 
-          const content = document.createElement("div");
-          content.className =
-            "page-content overflow-hidden rounded-[30px] bg-white shadow-md";
+      pages = pagesData.sort((a, b) => a.number - b.number);
+      currentPageIndex = 0;
+      hasShownTip = false;
 
-          const image = document.createElement("img");
-          image.src = page.dataUrl;
-          image.alt = `Prospectus page ${page.number}`;
-          image.decoding = "async";
-          image.loading = index === 0 ? "eager" : "lazy";
-          image.className = "h-full w-full bg-white object-contain";
+      viewerRoot.innerHTML = "";
 
-          content.appendChild(image);
-          pageElement.appendChild(content);
-          fragment.appendChild(pageElement);
-        });
+      const frame = document.createElement("div");
+      frame.className = "prospectus-page-frame";
 
-      flipRoot.innerHTML = "";
-      flipRoot.appendChild(fragment);
+      const image = document.createElement("img");
+      image.className = "prospectus-page-image";
+      image.decoding = "async";
+      image.loading = "eager";
 
-      const basePage = pages[0];
-      const aspectRatio =
-        basePage.width && basePage.height
-          ? basePage.width / basePage.height
-          : 0.75;
-      const baseHeight = Math.min(820, basePage.height || 820);
-      const baseWidth = Math.round(baseHeight * aspectRatio);
+      frame.appendChild(image);
+      viewerRoot.appendChild(frame);
 
-      pageFlip = new window.St.PageFlip(flipRoot, {
-        width: baseWidth,
-        height: baseHeight,
-        size: "stretch",
-        minWidth: 320,
-        maxWidth: Math.min(1200, baseWidth * 2),
-        minHeight: 420,
-        maxHeight: 1200,
-        maxShadowOpacity: 0.35,
-        showCover: pages.length > 1,
-        usePortrait: true,
-        autoSize: true,
-        mobileScrollSupport: true,
-        clickEventForward: false,
-        drawShadow: true,
-      });
-
-      pageFlip.loadFromHTML(flipRoot.querySelectorAll(".page"));
-      pageFlip.on("flip", () => updateNavigation());
-      pageFlip.on("changeOrientation", () => {
-        zoomLevel = 1;
-        applyZoom(false);
-        updateNavigation();
-      });
-
+      pageImage = image;
       placeholder?.remove();
-      enableControls();
-      if (statusText) {
-        statusText.textContent =
-          "Tip: drag a corner or use the arrows to turn pages.";
-      }
+
+      viewerWrapper?.classList.remove("is-loading");
+      setButtonState(fullscreenBtn, false);
+      zoomLevel = 1;
+      applyZoom(false);
+      updatePage(true);
     }
 
     function renderPages(doc) {
       const total = doc.numPages;
-      const pages = [];
+      const renderedPages = [];
       const queue = Array.from({ length: total }, (_, index) => index + 1);
       const baseScale = 1.2;
 
       const renderNext = () => {
         const pageNumber = queue.shift();
         if (!pageNumber) {
-          buildFlipbook(pages);
+          buildViewer(renderedPages);
           return;
         }
 
@@ -589,7 +558,7 @@
             const context = canvas.getContext("2d", {
               willReadFrequently: true,
             });
-            const outputScale = window.devicePixelRatio || 1;
+            const outputScale = Math.min(window.devicePixelRatio || 1, 2);
 
             canvas.width = viewport.width * outputScale;
             canvas.height = viewport.height * outputScale;
@@ -600,7 +569,7 @@
             return page
               .render({ canvasContext: context, viewport })
               .promise.then(() => {
-                pages.push({
+                renderedPages.push({
                   number: pageNumber,
                   dataUrl: canvas.toDataURL("image/jpeg", 0.92),
                   width: viewport.width,
@@ -613,13 +582,29 @@
           .catch(() => {
             if (statusText) {
               statusText.textContent =
-                "Unable to display one of the pages. Please download the PDF instead.";
+                "We couldn't render one of the pages. It will be skipped.";
             }
             renderNext();
           });
       };
 
       renderNext();
+    }
+
+    function goToPreviousPage() {
+      if (currentPageIndex <= 0) {
+        return;
+      }
+      currentPageIndex -= 1;
+      updatePage();
+    }
+
+    function goToNextPage() {
+      if (currentPageIndex >= pages.length - 1) {
+        return;
+      }
+      currentPageIndex += 1;
+      updatePage();
     }
 
     [
@@ -631,49 +616,36 @@
       fullscreenBtn,
     ].forEach((btn) => setButtonState(btn, true));
 
-    setLoadingMessage("Preparing flipbook…");
+    setLoadingMessage("Preparing prospectus…");
 
     window.pdfjsLib
       .getDocument({ url: pdfUrl })
       .promise.then((doc) => {
-        if (statusText) {
-          statusText.textContent = "Rendering pages…";
-        }
         renderPages(doc);
       })
       .catch(() => {
-        setLoadingMessage("Unable to load this prospectus.");
-        setButtonState(fullscreenBtn, false);
-        if (statusText) {
-          statusText.textContent =
-            "Please try again later or download the PDF using the button above.";
-        }
+        setLoadingMessage(
+          "Unable to load this prospectus. Please download the PDF instead."
+        );
       });
 
-    prevBtn?.addEventListener("click", () => {
-      pageFlip?.flipPrev();
-    });
+    prevBtn?.addEventListener("click", goToPreviousPage);
 
-    nextBtn?.addEventListener("click", () => {
-      pageFlip?.flipNext();
-    });
+    nextBtn?.addEventListener("click", goToNextPage);
 
     zoomInBtn?.addEventListener("click", () => {
       zoomLevel = Math.min(MAX_ZOOM, zoomLevel + ZOOM_STEP);
-      applyZoom();
+      applyZoom(true);
     });
 
     zoomOutBtn?.addEventListener("click", () => {
       zoomLevel = Math.max(MIN_ZOOM, zoomLevel - ZOOM_STEP);
-      applyZoom();
+      applyZoom(true);
     });
 
     zoomResetBtn?.addEventListener("click", () => {
       zoomLevel = 1;
-      applyZoom();
-      if (statusText) {
-        statusText.textContent = "Zoom reset.";
-      }
+      applyZoom(true);
     });
 
     fullscreenBtn?.addEventListener("click", () => {
@@ -685,6 +657,38 @@
         document.exitFullscreen?.();
         fullscreenBtn?.setAttribute("aria-label", "Enter fullscreen");
       }
+    });
+
+    viewerRoot?.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+      pointerTracking = true;
+      pointerStartX = event.clientX;
+    });
+
+    viewerRoot?.addEventListener("pointerup", (event) => {
+      if (!pointerTracking) {
+        return;
+      }
+      const deltaX = event.clientX - pointerStartX;
+      pointerTracking = false;
+      if (Math.abs(deltaX) < SWIPE_THRESHOLD) {
+        return;
+      }
+      if (deltaX > 0) {
+        goToPreviousPage();
+      } else {
+        goToNextPage();
+      }
+    });
+
+    viewerRoot?.addEventListener("pointercancel", () => {
+      pointerTracking = false;
+    });
+
+    viewerRoot?.addEventListener("pointerleave", () => {
+      pointerTracking = false;
     });
 
     document.addEventListener("fullscreenchange", () => {
